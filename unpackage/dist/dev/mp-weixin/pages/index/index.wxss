@@ -1,0 +1,146 @@
+
+view,scroll-view {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+}
+#root-view {
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+}
+#container-view {
+	background:-webkit-linear-gradient(300deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
+	background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
+	height: 661px;
+	width: 750rpx;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+}
+#ads-view {
+	height:188px;
+	width:750rpx;
+}
+#icon-view {
+	margin-left:60rpx;
+	margin-right:60rpx;
+}
+.icon-class {
+	max-width:112rpx;
+	max-height: 112rpx;
+}
+.icon-view-text {
+	margin-top:8px;
+	height: 33px;
+}
+.icon-text {
+	font-size:12px;
+	font-family:PingFangSC-Regular,PingFang SC;
+	font-weight:400;
+	color:rgba(255,255,255,1);
+}
+.second-nav,.first-nav {
+	margin-left:34rpx;
+	margin-right:34rpx;
+}
+.second-nav {
+	margin-top:13px;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+}
+.first-nav-icon {
+	display: -webkit-inline-box;
+	display: -webkit-inline-flex;
+	display: inline-flex;
+	width:3px;
+	height:17px;
+	background:rgba(255,255,255,1);
+	border-radius:2px;
+}
+.first-nav-label {
+	height:25px;
+	display: -webkit-inline-box;
+	display: -webkit-inline-flex;
+	display: inline-flex;
+	margin-left: 10rpx;
+}
+.first-nav-label>text {
+	font-size:14px;
+	font-family:PingFangSC-Semibold,PingFang SC;
+	font-weight:600;
+	color:rgba(255,255,255,1);
+}
+.second-nav-label {
+	width:206rpx;
+	height:30px;
+	background:rgba(255,255,255,1);
+	border-radius:30rpx;
+	opacity:0.4;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+.second-nav-text {
+	font-size:12px;
+	font-family:PingFangSC-Regular,PingFang SC;
+	font-weight:400;
+}
+#icon-view {
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+}
+#upgrade-vipinfo-view, #help-center-view, #contact-customer-view, #complaint-view {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	width:157.5rpx;
+}
+#search-view {
+	width:686rpx;
+	height:40px;
+	background:rgba(255,255,255,1);
+	border-radius:20px;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	margin-top:12px;
+	margin-bottom:20px;
+	margin-left: 32rpx;
+	margin-right: 32rpx;
+}
+.search-class {
+	font-size:28rpx;
+	font-family:PingFangSC-Regular,PingFang SC;
+	font-weight:400;
+	color:rgba(170,170,170,1);
+}
+#search-text {
+	display: inline-block;
+	width:90%;
+}
+#content-view {
+	height:150px;
+}
+

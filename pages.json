@@ -1,0 +1,71 @@
+{
+	"pages": [
+			{
+				"path": "pages/index/index",
+				"style": {
+					"navigationBarTitleText": "恋爱话术"
+				}
+			},
+			{
+			    "path": "pages/cases/index",
+			    "style": {
+			        "navigationBarTitleText": "恋爱技巧",
+			        "navigationBarBackgroundColor": "#FFFFFF"
+			    }
+			},
+	        {
+	            "path": "pages/user/index",
+	            "style": {
+	                "navigationBarTitleText": "个人中心",
+	                "navigationBarBackgroundColor": "#FFFFFF"
+	            }
+	        },
+			{
+			    "path": "pages/user/complaint",
+			    "style": {
+			        "navigationBarTitleText": "投诉建议",
+			        "navigationBarBackgroundColor": "#2369E6"
+			    }
+			},
+			{
+				"path" : "pages/user/upgrade_user_vip",
+				"style" : {
+					"navigationBarTitleText": "升级VIP",
+					"navigationBarBackgroundColor": "#2987EF"
+				}
+			},
+			{
+				"path" : "pages/user/new_user_page",
+				"style" : {
+					"navigationBarTitleText": "新手必看",
+					"navigationBarBackgroundColor": "#2987EF"
+				}
+			}
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#F8F8F8"
+	},
+	 "condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式（list 的索引项）
+		"list": [
+			{
+				"name": "恋爱话术", //模式名称
+				"path": "pages/index/index", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到。
+			},
+			{
+				"name": "恋爱技巧", //模式名称
+				"path": "pages/cases/index", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到。uid=100&t=1535987051
+			},
+			{
+				"name": "个人中心", //模式名称
+				"path": "pages/user/index", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到。
+			}
+		]
+	}
+}

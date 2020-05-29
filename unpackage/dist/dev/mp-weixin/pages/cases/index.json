@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "恋爱技巧",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "usingComponents": {
+    "tab-bar": "/common/tabbar"
+  }
+}

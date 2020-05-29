@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "恋爱话术",
+  "usingComponents": {
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "tab-bar": "/common/tabbar"
+  }
+}
