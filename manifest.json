@@ -42,9 +42,11 @@
     },
     "quickapp" : {},
     "mp-weixin" : {
-        "appid" : "wxcee753e453f17aef",
+        "appid" : "wx056d66f83be0fb0a",
         "setting" : {
-            "urlCheck" : true
+            "urlCheck" : true,
+            "es6" : false,
+            "minified" : true
         }
     }
 }

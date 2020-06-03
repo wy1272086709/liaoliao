@@ -82,7 +82,7 @@
 <style>
 	.tabbar-view {
 		display: flex;
-		height: 140rpx;
+		height: 82px;
 		background:linear-gradient(90deg,rgba(34,121,239,1) 0%,rgba(61,177,242,1) 100%);
 		position: fixed;
 		bottom: 0rpx;
@@ -90,7 +90,7 @@
 	}
 	.tabbar-icon-class {
 		max-width: 48rpx;
-		max-height: 48rpx;
+		max-height: 24px;
 	}
 	
 	
@@ -106,11 +106,11 @@
 		
 	}
 	.tabbar-text {
-		height: 40rpx;
-		font-size:12rpx;
+		height: 20px;
+		font-size:12px;
 		font-family:PingFangSC-Regular,PingFang SC;
 		font-weight:400;
 		color:rgba(255,255,255,1);
-		line-height:40rpx;
+		line-height:20px;
 	}
 </style>

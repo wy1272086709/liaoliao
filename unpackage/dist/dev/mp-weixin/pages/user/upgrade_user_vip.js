@@ -130,7 +130,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
 //
 //
 //
@@ -191,27 +192,87 @@ var _default =
 {
   data: function data() {
     return {
-      style: "",
-      secondStyle: "",
-      thirdStyle: "" };
+      borderStyle: "",
+      borderSecondStyle: "",
+      borderThirdStyle: "",
+      scrollHeight: 0,
+      comboHeight: 0,
+      rightViewTop: 0,
+      rightViewBottom: 0,
+      secondLineMarginTop: 0 };
 
+  },
+  onLoad: function onLoad() {
+    var scrollHeight = uni.getSystemInfoSync().windowHeight;
+    console.log(scrollHeight);
+    var ratio = scrollHeight / 724;
+    ratio = ratio.toFixed(2);
+    this.scrollHeight = scrollHeight - 60 * ratio - 74 * ratio;
+    this.comboHeight = 120 * ratio;
+    this.rightViewTop = 25 * ratio;
+    this.rightViewBottom = 28 * ratio;
+    this.secondLineMarginTop = 9 * ratio;
+    console.log('comboHeight', this.comboHeight);
   },
   methods: {
     selectCombo: function selectCombo() {
-      this.style = "border:2px solid rgba(249,177,127,1);";
-      this.secondStyle = "";
-      this.thirdStyle = "";
+      this.borderStyle = "2px solid rgba(249,177,127,1);";
+      this.borderSecondStyle = "";
+      this.borderThirdStyle = "";
     },
     selectCombo2: function selectCombo2() {
-      this.style = "";
-      this.secondStyle = "border:2px solid rgba(249,177,127,1);";
-      this.thirdStyle = "";
+      this.borderStyle = "";
+      this.borderSecondStyle = "2px solid rgba(249,177,127,1);";
+      this.borderThirdStyle = "";
     },
     selectCombo3: function selectCombo3() {
-      this.style = "";
-      this.secondStyle = "";
-      this.thirdStyle = "border:2px solid rgba(249,177,127,1);";
+      this.borderStyle = "";
+      this.borderSecondStyle = "";
+      this.borderThirdStyle = "2px solid rgba(249,177,127,1);";
+    },
+    wxPay: function wxPay() {
+      this.comboPay();
+    },
+    comboPay: function comboPay() {
+      uni.login({
+        provider: 'weixin',
+        success: function success(loginRes) {
+          var code = loginRes.code;
+          // 请求后台数据 prepay_id paySign nonceStr timeStamp
+          uni.request({
+            url: '',
+            data: {
+              code: code,
+              payMoney: 1,
+              uid: '',
+              type: '1' },
+
+            header: {
+              'custom-header': '' //自定义请求头信息
+            },
+            success: function success(res) {
+              console.log(res);
+              // 调起支付
+              uni.requestPayment({
+                provider: 'wxpay',
+                timeStamp: String(Date.now()),
+                nonceStr: res.nonceStr,
+                package: res.package,
+                signType: 'MD5',
+                paySign: res.paySign,
+                success: function success(res) {
+                  console.log('success:' + JSON.stringify(res));
+                },
+                fail: function fail(err) {
+                  console.log('fail:' + JSON.stringify(err));
+                } });
+
+            } });
+
+        } });
+
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

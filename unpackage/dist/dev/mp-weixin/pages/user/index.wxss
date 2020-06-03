@@ -22,7 +22,6 @@ view {
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
 	        flex-direction: column;
-	height: 1462rpx;
 }
 #content-view {
 	display: -webkit-box;
@@ -39,7 +38,6 @@ view {
 	        justify-content: center;
 	background:-webkit-linear-gradient(300deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 	background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
-	height: 1324rpx;
 }
 #no-login-view {
 	display: -webkit-box;
@@ -55,7 +53,7 @@ view {
 	border-bottom: 1px solid #ccc;
 	text-align: center;
 	width: 650rpx;
-	height: 300rpx;
+	height: 150px;
 	line-height: 450rpx;
 }
 .header image {
@@ -76,10 +74,6 @@ view {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: ;
-	        flex-direction: ;
 }
 .content {
 	width:750rpx;
@@ -116,6 +110,7 @@ view {
 	width:160rpx;
 	height:160rpx;
 	border-radius: 50%;
+	margin-top:-80rpx;
 }
 .name,.member-class {
 	display: -webkit-box;
@@ -141,7 +136,6 @@ view {
 	-webkit-box-pack: end;
 	-webkit-justify-content: flex-end;
 	        justify-content: flex-end;
-	margin-top:-80rpx;
 	width:424rpx;
 }
 .member-level-text {
@@ -164,7 +158,7 @@ view {
 }
 #member-level-btn {
 	width:104rpx;
-	height: 40rpx;
+	height: 20px;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -189,7 +183,7 @@ view {
 	margin-top:20rpx;
 }
 .nickname {
-	height:50rpx;
+	height:25px;
 	font-size:36rpx;
 	font-family:PingFangSC-Medium,PingFang SC;
 	font-weight:500;
@@ -210,7 +204,7 @@ view {
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
 	        flex-direction: column;
-	margin-top:-24rpx;
+	margin-top:-12px;
 	background:rgba(255,255,255,1);
 	-webkit-box-shadow:0rpx 4rpx 8rpx 0px rgba(0,0,0,0.01);
 	        box-shadow:0rpx 4rpx 8rpx 0px rgba(0,0,0,0.01);
@@ -243,11 +237,11 @@ view {
 	-webkit-box-shadow:0px 4rpx 8rpx 0px rgba(0,0,0,0.01);
 	        box-shadow:0px 4rpx 8rpx 0px rgba(0,0,0,0.01);
 	border-radius:20rpx 20rpx 20rpx 20rpx;
-	margin-bottom: 20rpx;
+	margin-bottom: 10px;
 	width:686rpx;
 }
 #top_list {
-	margin-top:50rpx;
+	margin-top:25px;
 }
 
 

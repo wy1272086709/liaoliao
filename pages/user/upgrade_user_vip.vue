@@ -3,12 +3,12 @@
 		<view class="upgrade-header">
 			<text id="combo-text">请先选择VIP套餐</text>
 		</view>
-		<scroll-view class="upgrade-content">
-			<view class="combo" @tap="selectCombo()" :style="style">
+		<scroll-view class="upgrade-content" :style="'height:'+scrollHeight+'px'">
+			<view class="combo" @tap="selectCombo()" :style="'border:'+borderStyle+'px;'+'height:'+comboHeight+'px;'">
 				<view class="left-image">
 					<image class="image-vip-info" src="../../static/img/yuedu.png"></image>
 				</view>
-				<view class="right-view">
+				<view class="right-view" :style="'margin-top:'+rightViewTop+'px;margin-bottom:'+rightViewBottom+'px;'">
 					<view class="first-line">
 						<text>月度会员套餐</text>
 						<text class="price-text">¥28</text>
@@ -18,25 +18,25 @@
 					</view>
 				</view>
 			</view>
-			<view class="combo" @tap="selectCombo2()" :style="secondStyle">
+			<view class="combo" @tap="selectCombo2()" :style="'border:'+borderSecondStyle+'px;'+'height:'+comboHeight+'px;'">
 				<view class="left-image">
 					<image class="image-vip-info" src="../../static/img/jidu.png"></image>
 				</view>
-				<view class="right-view">
+				<view class="right-view" :style="'margin-top:'+rightViewTop+'px;margin-bottom:'+rightViewBottom+'px;'">
 					<view class="first-line">
 						<text>季度会员套餐</text>
 						<text class="price-text">¥98</text>
 					</view>
-					<view class="second-line">
+					<view class="second-line" :style="'margin-top:'+secondLineMarginTop+'px;'">
 						<text>10万恋爱话术、搜索功能、AI聊天、无广告、搜索、表情包、装逼图</text>
 					</view>
 				</view>
 			</view>
-			<view class="combo" @tap="selectCombo3()" :style="thirdStyle">
+			<view class="combo" @tap="selectCombo3()" :style="'border:'+borderThirdStyle+'px;'+'height:'+comboHeight+'px;'">
 				<view class="left-image">
 					<image class="image-vip-info" src="../../static/img/niandu.png"></image>
 				</view>
-				<view class="right-view">
+				<view class="right-view" :style="'margin-top:'+rightViewTop+'px;margin-bottom:'+rightViewBottom+'px;'">
 					<view class="first-line">
 						<text class="combo-member-text">年度会员套餐</text>
 						<text class="price-text">¥198</text>
@@ -48,10 +48,11 @@
 			</view>
 		</scroll-view>
 		<view class="upgrade-bottom">
-			<button>购买</button>
+			<button @click="wxPay()">购买</button>
 		</view>
 	</view>
 </template>
+
 
 
 
@@ -59,32 +60,92 @@
 	export default {
 		data() {
 			return {
-				style: "",
-				secondStyle: "",
-				thirdStyle: ""
+				borderStyle: "",
+				borderSecondStyle: "",
+				borderThirdStyle: "",
+				scrollHeight: 0,
+				comboHeight: 0,
+				rightViewTop: 0,
+				rightViewBottom: 0,
+				secondLineMarginTop: 0,
 			}
+		},
+		onLoad() {
+			let scrollHeight  = uni.getSystemInfoSync().windowHeight;
+			console.log(scrollHeight);
+			let ratio = scrollHeight/724;
+			ratio = ratio.toFixed(2);
+			this.scrollHeight = scrollHeight - 60*ratio-74*ratio; 
+			this.comboHeight  = 120*ratio;
+			this.rightViewTop = 25*ratio;
+			this.rightViewBottom = 28*ratio;
+			this.secondLineMarginTop = 9*ratio;
+			console.log('comboHeight', this.comboHeight);
 		},
 		methods: {
 			selectCombo() {
-				this.style = "border:2px solid rgba(249,177,127,1);";
-				this.secondStyle = "";
-				this.thirdStyle  = "";
+				this.borderStyle = "2px solid rgba(249,177,127,1);";
+				this.borderSecondStyle = "";
+				this.borderThirdStyle  = "";
 			},
 			selectCombo2() {
-				this.style = "";
-				this.secondStyle = "border:2px solid rgba(249,177,127,1);";
-				this.thirdStyle  = "";
+				this.borderStyle = "";
+				this.borderSecondStyle = "2px solid rgba(249,177,127,1);";
+				this.borderThirdStyle  = "";
 			},
 			selectCombo3() {
-				this.style = "";
-				this.secondStyle = "";
-				this.thirdStyle  = "border:2px solid rgba(249,177,127,1);";
+				this.borderStyle = "";
+				this.borderSecondStyle = "";
+				this.borderThirdStyle  = "2px solid rgba(249,177,127,1);";
+			},
+			wxPay() {
+				this.comboPay();
+			},
+			comboPay() {
+				uni.login({
+					provider: 'weixin',
+					success: function(loginRes) {
+						let code = loginRes.code;
+						// 请求后台数据 prepay_id paySign nonceStr timeStamp
+						uni.request({
+							url: '',
+							data: {
+								code: code,
+								payMoney: 1,
+								uid: '',
+								type: '1'
+							},
+							header: {
+								'custom-header': '' //自定义请求头信息
+							},
+							success: (res) => {
+								console.log(res);
+								// 调起支付
+								uni.requestPayment({
+									provider: 'wxpay',
+									timeStamp: String(Date.now()),
+									nonceStr: res.nonceStr,
+									package: res.package,
+									signType: 'MD5',
+									paySign: res.paySign,
+									success: function(res) {
+										console.log('success:' + JSON.stringify(res));
+									},
+									fail: function(err) {
+										console.log('fail:' + JSON.stringify(err));
+									}
+								});
+							}
+						});
+					}
+				});
 			}
 		}
 	}
 </script>
 
 <style>
+	
 page {
 	background-color: #2369E6;
 }
@@ -127,8 +188,6 @@ view,scroll-view {
 	width:462rpx;
 	margin-left:40rpx;
 	margin-right:40rpx;
-	margin-top:25px;
-	margin-bottom: 28px;
 }
 
 .second-line {
@@ -140,7 +199,6 @@ view,scroll-view {
 	justify-content: center;
 	align-items: center;
 	width:100px;
-	height:116px;
 	box-sizing: border-box;
 	background:linear-gradient(90deg,rgba(244,245,246,1) 0%,rgba(255,247,209,1) 100%);
 	border-radius:20rpx 0rpx 0rpx 20rpx;
@@ -161,7 +219,7 @@ view,scroll-view {
 }
 
 .second-line>text {
-	font-size:12px;
+	font-size:24rpx;
 	font-family:PingFangSC-Regular,PingFang SC;
 	font-weight:400;
 	color:rgba(102,102,102,1);
@@ -176,18 +234,18 @@ view,scroll-view {
 }
 
 .first-line:first-child {
-	font-size:16px;
+	font-size:32rpx;
 	font-family:PingFangSC-Semibold,PingFang SC;
 	font-weight:600;
 	color:rgba(51,51,51,1);
 }
 
 .combo-text::before {
-	width:5px;
+	width:10px;
 }
 
 .price-text {
-	font-size:18px;
+	font-size:36rpx;
 	font-family:PingFangSC-Semibold,PingFang SC;
 	font-weight:600;
 	color:rgba(249,177,127,1);

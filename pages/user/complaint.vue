@@ -25,7 +25,24 @@
 			}
 		},
 		methods: {
-			
+			onSubmit() {
+				uni.showModal({
+					title: '提示',
+					content: '感谢你提交的投诉和建议',
+					showCancel: false,
+					cancelText: '',
+					confirmText: '确定',
+					success: res => {
+						uni.navigateBack({
+							url: '/pages/user/index'
+						});
+					},
+					fail: () => {},
+					complete: () => {
+						
+					}
+				});
+			}
 		},onLoad() {
 			let winHeight = uni.getSystemInfoSync().windowHeight;
 			this.winHeight = winHeight+'px';

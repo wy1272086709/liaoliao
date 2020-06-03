@@ -130,7 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var tabBar = function tabBar() {__webpack_require__.e(/*! require.ensure | common/tabbar */ "common/tabbar").then((function () {return resolve(__webpack_require__(/*! ../../common/tabbar.vue */ 71));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var tabBar = function tabBar() {__webpack_require__.e(/*! require.ensure | common/tabbar */ "common/tabbar").then((function () {return resolve(__webpack_require__(/*! ../../common/tabbar.vue */ 73));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -180,8 +180,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         thumbUrl: '/static/img/love_skills/thumb.png',
         title: '套路女朋友的多种方法，全程高能',
         readTime: '4.28 18:00',
-        readNum: '2.77万' }] };
+        readNum: '2.77万' }],
 
+      scrollHeight: 0,
+      winHeight: 0 };
 
   },
   onLoad: function onLoad() {var _this = this;
@@ -189,6 +191,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     setTimeout(function () {
       _this.triggered = true;
     }, 1000);
+    this.winHeight = uni.getSystemInfoSync().windowHeight;
+    this.scrollHeight = this.winHeight - 82 - 50;
   },
   mounted: function mounted() {
 
@@ -233,6 +237,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       // 这里要发送请求更新内容
 
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

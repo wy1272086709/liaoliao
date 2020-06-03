@@ -3,21 +3,23 @@
 			{
 				"path": "pages/index/index",
 				"style": {
-					"navigationBarTitleText": "恋爱话术"
+					"navigationBarTitleText": "恋爱话术",
+					"navigationBarBackgroundColor": "#2369E6"
 				}
 			},
 			{
 			    "path": "pages/cases/index",
 			    "style": {
 			        "navigationBarTitleText": "恋爱技巧",
-			        "navigationBarBackgroundColor": "#FFFFFF"
+			        "navigationBarBackgroundColor": "#FFFFFF",
+					"navigationBarBackgroundColor": "#2369E6"
 			    }
 			},
 	        {
 	            "path": "pages/user/index",
 	            "style": {
 	                "navigationBarTitleText": "个人中心",
-	                "navigationBarBackgroundColor": "#FFFFFF"
+					"navigationBarBackgroundColor": "#2369E6"
 	            }
 	        },
 			{
@@ -31,14 +33,20 @@
 				"path" : "pages/user/upgrade_user_vip",
 				"style" : {
 					"navigationBarTitleText": "升级VIP",
-					"navigationBarBackgroundColor": "#2987EF"
+					"navigationBarBackgroundColor": "#2369E6"
 				}
 			},
 			{
 				"path" : "pages/user/new_user_page",
 				"style" : {
 					"navigationBarTitleText": "新手必看",
-					"navigationBarBackgroundColor": "#2987EF"
+					"navigationBarBackgroundColor": "#2369E6"
+				}
+			},
+			{
+				"path" : "pages/index/huashu",
+				"style" : {
+					"navigationStyle": "custom"
 				}
 			}
     ],

@@ -1,0 +1,100 @@
+
+.navigation.data-v-5e343daf {
+	height: 88px;
+	background:rgba(35,105,230,1);
+}
+#root-view.data-v-5e343daf {
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+}
+.status_bar.data-v-5e343daf {
+    height: 25px;
+    width: 100%;
+	background:rgba(35,105,230,1);
+}
+.left.data-v-5e343daf {
+	background-color: rgba(35,105,230,1);
+	height:40px;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+#huashu-title.data-v-5e343daf {
+	margin-left:256rpx;
+}
+view.data-v-5e343daf, scroll-view.data-v-5e343daf {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-sizing:border-box;
+	        box-sizing:border-box;
+}
+#content-view.data-v-5e343daf {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	width:750rpx;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-align-content: center;
+	        align-content: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	background:-webkit-linear-gradient(300deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
+	background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
+}
+.huashu-article.data-v-5e343daf {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	width: 686rpx;
+	background:rgba(255,255,255,1);
+	margin-left:32rpx;
+	margin-right:32rpx;
+	border-radius:10px;
+}
+.huashu-article-first.data-v-5e343daf {
+	margin-top:23px;
+}
+.huashu-line.data-v-5e343daf {
+	margin-top:34rpx;
+	margin-bottom:32rpx;
+}
+.huashu-sex.data-v-5e343daf,.huashu-copy-btn.data-v-5e343daf {
+	margin-right:32rpx;
+}
+.huashu-sex.data-v-5e343daf {
+	margin-left:32rpx;
+}
+.huashu-sex-image.data-v-5e343daf {
+	max-width: 40rpx;
+	max-height: 40rpx;
+}
+.huashu-copy-image.data-v-5e343daf {
+	max-width: 32rpx;
+	max-height: 32rpx;
+}
+.huashu-content.data-v-5e343daf {
+	width:486rpx;
+	margin-right:40rpx;
+}
+.huashu-content-text.data-v-5e343daf {
+	font-size:14px;
+	font-family:PingFangSC-Regular,PingFang SC;
+	font-weight:400;
+	color:rgba(51,51,51,1);
+	line-height:20px;
+}
+

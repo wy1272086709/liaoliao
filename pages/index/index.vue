@@ -1,9 +1,17 @@
 <template>
 	<view id="root-view">
 		<view id="container-view" :style="'height:'+winHeight+'px;'">
-			<view id="ads-view"></view>
-			<view id="icon-view">
-				<view id="upgrade-vipinfo-view">
+			<view id="ads-view" :style="'height:'+adsHeight+'px;'"></view>
+			<view id="icon-view" :style="'height:'+iconHeight+'px;'">
+				<view id="help-center-view"  @tap="help_center()">
+					<view>
+						<image class="icon-class" src="../../static/img/huashu/help_center.png"></image>
+					</view>
+					<view class="icon-view-text">
+						<text class="icon-text">表情包</text>
+					</view>
+				</view>
+				<view id="upgrade-vipinfo-view" @tap="upgrade_vip()">
 					<view class="">
 						<image class="icon-class" src="../../static/img/huashu/upgrade_vip.png"></image>
 					</view>
@@ -11,23 +19,19 @@
 						<text class="icon-text">VIP升级</text>
 					</view>
 				</view>
-				<view id="help-center-view">
-					<view>
-						<image class="icon-class" src="../../static/img/huashu/help_center.png"></image>
+				<view id="contact-customer-view" @tap="contact_consumer()">
+					<view>	
+						<button open-type="contact" @contact="handleContact()" class="contact-btn">
+							<image class="icon-class" src="../../static/img/huashu/contact_consumer.png"></image>
+						</button>
 					</view>
 					<view class="icon-view-text">
-						<text class="icon-text">帮助中心</text>
+						<button open-type="contact" @contact="handleContact()" class="contact-btn">
+							<text class="icon-text">联系客服</text>
+						</button>
 					</view>
 				</view>
-				<view id="contact-customer-view">
-					<view>
-						<image class="icon-class" src="../../static/img/huashu/contact_consumer.png"></image>
-					</view>
-					<view class="icon-view-text">
-						<text class="icon-text">联系客服</text>
-					</view>
-				</view>
-				<view id="complaint-view">
+				<view id="complaint-view" @tap="complaint()">
 					<view>
 						<image class="icon-class" src="../../static/img/huashu/complaint.png"></image>
 					</view>
@@ -37,7 +41,7 @@
 				</view>
 			</view>
 			
-			<view id="search-view">
+			<view id="search-view" :style="'height:'+searchViewHeight+'px;margin-top:'+searchViewTop+'px;'">
 				<input id="search-text" type="text" placeholder="点击这里输入对方想说的话" placeholder-class="search-class"/>
 				<uni-icons type="search"></uni-icons>
 				<!--
@@ -45,8 +49,8 @@
 				-->
 			</view>
 			<scroll-view id="content-view" :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scrolltoupper="upper" @scrolltolower="lower"
-                @scroll="scroll">
-				<view class="first-nav">
+                @scroll="scroll" :style="'height:'+scrollHeight+'px;'">
+				<view class="first-nav" :style="'margin-top:'+firstNavTop+'px;'">
 					<label class="first-nav-icon">
 					</label>
 					<label class="first-nav-label">
@@ -54,17 +58,17 @@
 					</label>
 				</view>
 				<view class="second-nav">
-					<view class="second-nav-label">
+					<view class="second-nav-label second-nav-lable-margin"  :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu('重新开场');">
 						<text class="second-nav-text">重新开场</text>
 					</view>
-					<view class="second-nav-label">
+					<view class="second-nav-label second-nav-lable-margin" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu('土味情话');">
 						<text class="second-nav-text">土味情话</text>
 					</view>
-					<view  class="second-nav-label">
+					<view  class="second-nav-label" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu('表情话术');">
 						<text class="second-nav-text">表情话术</text>
 					</view>
 				</view>
-				<view class="first-nav">
+				<view class="first-nav" :style="'margin-top:'+firstNavTop+'px;'">
 					<label class="first-nav-icon">
 					</label>
 					<label class="first-nav-label">
@@ -72,17 +76,17 @@
 					</label>
 				</view>
 				<view class="second-nav">
-					<view class="second-nav-label">
+					<view class="second-nav-label second-nav-lable-margin" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu();">
 						<text class="second-nav-text">重新开场</text>
 					</view>
-					<view class="second-nav-label">
+					<view class="second-nav-label second-nav-lable-margin" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu();">
 						<text class="second-nav-text">土味情话</text>
 					</view>
-					<view  class="second-nav-label">
+					<view  class="second-nav-label" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu();">
 						<text class="second-nav-text">表情话术</text>
 					</view>
 				</view>
-				<view class="first-nav">
+				<view class="first-nav" :style="'margin-top:'+firstNavTop+'px;'">
 					<label class="first-nav-icon">
 					</label>
 					<label class="first-nav-label">
@@ -90,13 +94,19 @@
 					</label>
 				</view>
 				<view class="second-nav">
-					<view class="second-nav-label">
+					<view class="second-nav-label second-nav-lable-margin" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu();">
 						<text class="second-nav-text">重新开场</text>
 					</view>
-					<view class="second-nav-label">
+					<view class="second-nav-label second-nav-lable-margin" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu();">
 						<text class="second-nav-text">土味情话</text>
 					</view>
-					<view  class="second-nav-label">
+					<view  class="second-nav-label" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu();">
+						<text class="second-nav-text">表情话术</text>
+					</view>
+					<view  class="second-nav-label second-nav-lable-margin second-nav-lable-top" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu();">
+						<text class="second-nav-text">表情话术</text>
+					</view>
+					<view  class="second-nav-label second-nav-lable-margin second-nav-lable-top" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu();">
 						<text class="second-nav-text">表情话术</text>
 					</view>
 				</view>
@@ -108,31 +118,82 @@
 
 <script>
 	import tabBar from '../../common/tabbar.vue';
-	import uniIcons from "../../components/uni-icons/uni-icons.vue";
-	
 	export default {
 		data() {
 			return {
-				winHeight:0
+				winHeight:0,
+				scrollHeight: 0,
+				adsHeight: 0,
+				iconHeight: 0,
+				searchViewHeight: 0,
+				searchViewTop: 0,
+				searchViewBottom: 0,
+				firstNavTop: 0,
+				secondNavLabelHeight: 0,
 			}
 		},
 		components:{
-			tabBar,
-			uniIcons
+			tabBar
 		},
 		methods: {
+			handleContact() {
+				console.log('handler...');
+			},
 			search() {
 				
+			},
+			upgrade_vip() {
+				// 升级
+				// 投诉建议
+				uni.navigateTo({
+					url: '/pages/user/upgrade_user_vip'
+				});
+			},
+			complaint() {
+				// 投诉建议
+				uni.navigateTo({
+					url: '/pages/user/complaint'
+				});
+			},
+			help_center() {
+				
+			},
+			contact_consumer() {
+			
+			},
+			scroll() {
+				
+			},
+			lower() {
+				
+			},
+			upper() {
+				
+			},
+			enter_huashu(title) {
+				uni.navigateTo({
+					url:'/pages/index/huashu?title='+encodeURIComponent(title)
+				});
 			}
 		},
 		onLoad() {
 			let winHeight = uni.getSystemInfoSync().windowHeight;
+			let ratio     = winHeight/731;
+			ratio = ratio.toFixed(2);
+			this.iconHeight = ratio *102; 
+			this.adsHeight= ratio*188;
 			this.winHeight = winHeight;
+			this.searchViewHeight = 40* ratio;
+			this.searchViewTop    = 20*ratio;
+			this.searchViewBottom = 0;
+			this.firstNavTop = 20*ratio;
+			this.secondNavLabelHeight = 30*ratio;
+			this.scrollHeight = winHeight - 188*ratio - 102*ratio - 80*ratio - 82;
 		}
 	}
 </script>
 
-<style>
+<style scoped>
 	* {
 		border-sizing:border-box;
 	}
@@ -146,13 +207,11 @@
 	
 	#container-view {
 		background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
-		height: 661px;
 		width: 750rpx;
 		flex-direction: column;
 	}
 	
 	#ads-view {
-		height:188px;
 		width:750rpx;
 	}
 	
@@ -185,7 +244,7 @@
 	
 	.second-nav {
 		margin-top:13px;
-		justify-content: space-between;
+		flex-wrap: wrap;
 	}
 	
 	.first-nav-icon {
@@ -219,6 +278,15 @@
 		align-items: center;
 	}
 	
+	/* 除了第一个元素外的元素,需要添加这个  */
+	.second-nav-lable-margin {
+		margin-right:32rpx;
+	}
+	
+	.second-nav-lable-top {
+		margin-top:24rpx;
+	}
+	
 	.second-nav-text {
 		font-size:12px;
 		font-family:PingFangSC-Regular,PingFang SC;
@@ -244,14 +312,12 @@
 		background:rgba(255,255,255,1);
 		border-radius:20px;
 		align-items: center;
-		margin-top:12px;
-		margin-bottom:20px;
 		margin-left: 32rpx;
 		margin-right: 32rpx;
 	}
 	
 	.search-class {
-		font-size:28rpx;
+		font-size:14px;
 		font-family:PingFangSC-Regular,PingFang SC;
 		font-weight:400;
 		color:rgba(170,170,170,1);
@@ -259,10 +325,26 @@
 	
 	#search-text {
 		display: inline-block;
+		font-size:14px;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(170,170,170,1);
 		width:90%;
 	}
 	
 	#content-view {
 		height:150px;
+	}
+	
+	.contact-btn {
+		display: flex;
+		line-height: 1;
+		background-color:transparent;
+		padding-top: 1px;
+		padding-left:0px;
+		padding-right: 0px;
+	}
+	button::after {
+		border: none;
 	}
 </style>

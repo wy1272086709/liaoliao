@@ -94,10 +94,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   "uni-list": function() {
-    return __webpack_require__.e(/*! import() | components/uni-list/uni-list */ "components/uni-list/uni-list").then(__webpack_require__.bind(null, /*! @/components/uni-list/uni-list.vue */ 78))
+    return __webpack_require__.e(/*! import() | components/uni-list/uni-list */ "components/uni-list/uni-list").then(__webpack_require__.bind(null, /*! @/components/uni-list/uni-list.vue */ 80))
   },
   "uni-list-item": function() {
-    return __webpack_require__.e(/*! import() | components/uni-list-item/uni-list-item */ "components/uni-list-item/uni-list-item").then(__webpack_require__.bind(null, /*! @/components/uni-list-item/uni-list-item.vue */ 85))
+    return __webpack_require__.e(/*! import() | components/uni-list-item/uni-list-item */ "components/uni-list-item/uni-list-item").then(__webpack_require__.bind(null, /*! @/components/uni-list-item/uni-list-item.vue */ 87))
   }
 }
 var render = function() {
@@ -137,10 +137,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var tabbar = function tabbar() {__webpack_require__.e(/*! require.ensure | common/tabbar */ "common/tabbar").then((function () {return resolve(__webpack_require__(/*! ../../common/tabbar.vue */ 71));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
-
-
-
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var tabbar = function tabbar() {__webpack_require__.e(/*! require.ensure | common/tabbar */ "common/tabbar").then((function () {return resolve(__webpack_require__(/*! ../../common/tabbar.vue */ 73));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -215,6 +212,7 @@ __webpack_require__.r(__webpack_exports__);
       weichat: 'wangquietforyou',
       sessionKey: '',
       openId: '',
+      contentHeight: 0,
       isCanUse: uni.getStorageSync('wx_user_info') || true };
 
   },
@@ -223,6 +221,12 @@ __webpack_require__.r(__webpack_exports__);
 
   onLoad: function onLoad() {
     //this.login();
+    var winHeight = uni.getSystemInfoSync().windowHeight;
+    // 设计稿731 高度
+    var ratio = winHeight / 731;
+    ratio = ratio.toFixed(2);
+    this.contentHeight = winHeight - 82 * ratio + 130 * ratio;
+    console.log(winHeight, this.contentHeight);
     console.log(uni.getStorageSync('wx_user_info'));
     console.log('onLoad....');
   },
@@ -235,7 +239,14 @@ __webpack_require__.r(__webpack_exports__);
     } },
 
   methods: {
+    // 填写个人信息
+    personal_info: function personal_info() {
+      uni.navigateTo({
+        url: '/pages/user/complaint' });
+
+    },
     handleComplaint: function handleComplaint() {
+      this.getUserInfoFromWeixin();
       uni.navigateTo({
         url: '/pages/user/complaint' });
 
@@ -266,18 +277,31 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.commit('setUserInfo', userInfo);
     },
     addWechat: function addWechat() {
+      this.getUserInfoFromWeixin();
       // 这里弹框,弹出微信
-      uni.showModal({
-        title: '提示',
-        content: '请添加导师微信',
-        showCancel: false,
-        mask: true,
-        success: function success(res) {
-          if (res.confirm) {
-            console.log('用户点击确定');
-          } else if (res.cancel) {
-            console.log('用户点击取消');
+      /*uni.showModal({
+          title: '提示',
+          content: '请添加导师微信',
+      	showCancel: false,
+      	mask: true,
+          success: function (res) {
+              if (res.confirm) {
+                  console.log('用户点击确定');
+              } else if (res.cancel) {
+                  console.log('用户点击取消');
+              }
           }
+      });*/
+    },
+    getUserInfoFromWeixin: function getUserInfoFromWeixin() {
+      var _this = this;
+      uni.getUserInfo({
+        provider: 'weixin',
+        success: function success(infoRes) {
+          //获取用户信息后向调用信息更新方法
+          console.log('infoRes', infoRes);
+          _this.setUserInfo(infoRes.userInfo);
+          _this.updateUserInfo(); //调用更新信息方法
         } });
 
     },
@@ -294,17 +318,7 @@ __webpack_require__.r(__webpack_exports__);
           console.log('code' + code);
           uni.hideLoading();
           //非第一次授权获取用户信息
-          uni.getUserInfo({
-            provider: 'weixin',
-            success: function success(infoRes) {
-              //获取用户信息后向调用信息更新方法
-              console.log(infoRes);
-              _this.setUserInfo(infoRes.userInfo);
-              _this.updateUserInfo(); //调用更新信息方法
-            } });
-
-
-
+          this.getUserInfoFromWeixin();
           //2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
           /*uni.request({
           	url: '服务器地址',
@@ -341,17 +355,20 @@ __webpack_require__.r(__webpack_exports__);
       return JSON.parse(userStr);
     },
     // 手动授权方法,授权登录的时候,只调用一次
-    wxGetUserInfo: function wxGetUserInfo(e) {
+    wxGetUserInfo: function wxGetUserInfo(e) {var _this2 = this;
       console.log('hehe');
-      console.log(e.detail.userInfo);
-      try {
-        var userInfo = e.detail.userInfo;
-        this.setUserInfo(userInfo);
-        this.setUserInfoToStrorage(userInfo);
-        // 这里发送ajax 请求,将用户信息发送给后端,让它保存起来
-      } catch (e) {
+      uni.getUserInfo({
+        success: function success(res) {
+          console.log('res:', res);
+          var userInfo = res.userInfo;
+          console.log(userInfo);
+          _this2.setUserInfo(userInfo);
+          _this2.setUserInfoToStrorage(userInfo);
+        },
+        fail: function fail() {
+          console.log("未授权");
+        } });
 
-      }
     },
     // 手机登录时获取手机号码相关信息的函数
     getPhoneNumber: function getPhoneNumber(e) {

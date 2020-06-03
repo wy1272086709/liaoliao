@@ -21,7 +21,7 @@
 			</view>
 		</template>
 		<template v-else>
-			<view id="content-view">
+			<view id="content-view" :style="'height:'+contentHeight+'px'">
 				<!-- 如果用微信登录，获取微信相关用户信息 -->
 				<view class="li-view">
 					<view id="header-member-info">
@@ -47,16 +47,12 @@
 						</view>
 					</view>
 					<view id="top_list">
-						<uni-list>
-							<uni-list-item title="升级VIP" thumb="/static/img/user/upgrade_vip.png" @tap="upgrade_vip()"></uni-list-item>
-							<uni-list-item title="激活码解锁" thumb="/static/img/user/active.png"></uni-list-item>
-							<uni-list-item title="AI导师" thumb="/static/img/user/ai.png"></uni-list-item>
-						</uni-list>
+						
 					</view>
 				</view>
 				<view id="bottom_list">
 					<uni-list>
-						<uni-list-item title="联系客服" thumb="/static/img/user/contact_customer.png"  @tap="copy_customer_wechat()"  rightText="点击复制客服微信" :showArrow="false"></uni-list-item>
+						<uni-list-item title="专属客服" thumb="/static/img/user/contact_customer.png"  @tap="copy_customer_wechat()"  rightText="点击复制客服微信" :showArrow="false"></uni-list-item>
 						<uni-list-item title="投诉建议" thumb="/static/img/user/complaint.png"  @tap="handleComplaint()"></uni-list-item>
 						<uni-list-item title="当前版本" thumb="/static/img/user/cur_version.png"  thumbrightText="1.9.3" :showArrow="false"></uni-list-item>
 					</uni-list>
@@ -68,6 +64,7 @@
 	
 </template>
 
+
 <script>
 	import tabbar from '../../common/tabbar.vue';
 	export default {
@@ -76,6 +73,7 @@
 				weichat: 'wangquietforyou',
 				sessionKey: '',
 				openId: '',
+				contentHeight: 0,
 				isCanUse:uni.getStorageSync('wx_user_info') || true
 			}
 		},
@@ -84,6 +82,12 @@
 		},
 		onLoad() {
 			//this.login();
+			let winHeight      = uni.getSystemInfoSync().windowHeight;
+			// 设计稿731 高度
+			let ratio = winHeight/731;
+			ratio = ratio.toFixed(2);
+			this.contentHeight = winHeight-82*ratio+130*ratio;
+			console.log(winHeight, this.contentHeight);
 			console.log(uni.getStorageSync('wx_user_info'));
 			console.log('onLoad....');
 		},
@@ -96,7 +100,14 @@
 			}
 		},
 		methods: {
+			// 填写个人信息
+			personal_info() {
+				uni.navigateTo({
+					url:'/pages/user/complaint'
+				});
+			},
 			handleComplaint() {
+				this.getUserInfoFromWeixin();
 				uni.navigateTo({
 					url:'/pages/user/complaint'
 				});
@@ -127,8 +138,9 @@
 				this.$store.commit('setUserInfo', userInfo);
 			},
 			addWechat() {
+				this.getUserInfoFromWeixin();
 				// 这里弹框,弹出微信
-				uni.showModal({
+				/*uni.showModal({
 				    title: '提示',
 				    content: '请添加导师微信',
 					showCancel: false,
@@ -140,6 +152,18 @@
 				            console.log('用户点击取消');
 				        }
 				    }
+				});*/
+			},
+			getUserInfoFromWeixin() {
+				let _this = this;
+				uni.getUserInfo({
+					provider: 'weixin',
+					success: function(infoRes) {
+　　　　　　　　　　　　　　　　　　　	//获取用户信息后向调用信息更新方法
+						console.log('infoRes', infoRes);
+						_this.setUserInfo(infoRes.userInfo);
+						_this.updateUserInfo();//调用更新信息方法
+					}
 				});
 			},
 			login() {
@@ -155,17 +179,7 @@
 						console.log('code'+code);
 						uni.hideLoading();
 						//非第一次授权获取用户信息
-						uni.getUserInfo({
-							provider: 'weixin',
-							success: function(infoRes) {
-　　　　　　　　　　　　　　　　　　　	//获取用户信息后向调用信息更新方法
-								console.log(infoRes);
-								_this.setUserInfo(infoRes.userInfo);
-								_this.updateUserInfo();//调用更新信息方法
-							}
-						});
-						
-			
+						this.getUserInfoFromWeixin()
 						//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
 						/*uni.request({
 							url: '服务器地址',
@@ -181,7 +195,7 @@
 								uni.hideLoading();
 							}
 						});*/
-					},
+					}
 				});
 			},
 			setUserInfoToStrorage(userInfo) {
@@ -204,15 +218,18 @@
 			// 手动授权方法,授权登录的时候,只调用一次
 			wxGetUserInfo(e) {
 				console.log('hehe');
-				console.log(e.detail.userInfo);
-				try {
-					const userInfo = e.detail.userInfo;
-					this.setUserInfo(userInfo);
-					this.setUserInfoToStrorage(userInfo);
-					// 这里发送ajax 请求,将用户信息发送给后端,让它保存起来
-				} catch (e) {
-				    
-				}
+				uni.getUserInfo({
+					success: (res) => {
+						console.log('res:', res);
+						let userInfo = res.userInfo;
+						console.log(userInfo);
+						this.setUserInfo(userInfo);
+						this.setUserInfoToStrorage(userInfo);
+					},
+					fail: () => {
+						console.log("未授权");
+					}
+				});
 			},
 			// 手机登录时获取手机号码相关信息的函数
 			getPhoneNumber(e) {
@@ -247,8 +264,9 @@
 		display: -webkit-flex;
 		display: flex;
 		flex-direction: column;
-		height: 1462rpx;
 	}
+	
+	
 	#content-view {
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -257,7 +275,6 @@
 		flex-wrap:wrap;
 		justify-content: center;
 		background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
-		height: 1324rpx;
 	}
 
 	#no-login-view {
@@ -270,7 +287,7 @@
 		border-bottom: 1px solid #ccc;
 		text-align: center;
 		width: 650rpx;
-		height: 300rpx;
+		height: 150px;
 		line-height: 450rpx;
 	}
 
@@ -286,7 +303,6 @@
 	}
 	#header-member-info {
 		display: flex;
-		flex-direction: ;
 	}
 	.content {
 		width:750rpx;
@@ -323,6 +339,7 @@
 		width:160rpx;
 		height:160rpx;
 		border-radius: 50%;
+		margin-top:-80rpx;
 	}
 
 	.name,.member-class {
@@ -338,7 +355,6 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: flex-end;
-		margin-top:-80rpx;
 		width:424rpx;
 	}
 	
@@ -358,7 +374,7 @@
 	
 	#member-level-btn {
 		width:104rpx;
-		height: 40rpx;
+		height: 20px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -378,7 +394,7 @@
 	}
 	
 	.nickname {
-		height:50rpx;
+		height:25px;
 		font-size:36rpx;
 		font-family:PingFangSC-Medium,PingFang SC;
 		font-weight:500;
@@ -396,7 +412,7 @@
 	.li-view {
 		display:flex;
 		flex-direction: column;
-		margin-top:-24rpx;
+		margin-top:-12px;
 		background:rgba(255,255,255,1);
 		box-shadow:0rpx 4rpx 8rpx 0px rgba(0,0,0,0.01);
 		border-radius:20rpx;
@@ -420,12 +436,12 @@
 		background:rgba(255,255,255,1);
 		box-shadow:0px 4rpx 8rpx 0px rgba(0,0,0,0.01);
 		border-radius:20rpx 20rpx 20rpx 20rpx;
-		margin-bottom: 20rpx;
+		margin-bottom: 10px;
 		width:686rpx;
 	}
 	
 	#top_list {
-		margin-top:50rpx;
+		margin-top:25px;
 	}
 	
 	

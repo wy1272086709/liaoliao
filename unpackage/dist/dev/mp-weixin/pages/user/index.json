@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "个人中心",
-  "navigationBarBackgroundColor": "#FFFFFF",
+  "navigationBarBackgroundColor": "#2369E6",
   "usingComponents": {
     "uni-list": "/components/uni-list/uni-list",
     "uni-list-item": "/components/uni-list-item/uni-list-item",

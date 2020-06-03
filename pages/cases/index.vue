@@ -14,7 +14,7 @@
 		
 		<scroll-view id="content-view" scroll-y="true" refresher-enabled="true" :refresher-triggered="triggered"
             :refresher-threshold="100" refresher-background="lightgreen" @refresherpulling="onPulling"
-            @refresherrefresh="onRefresh" @refresherrestore="onRestore" @refresherabort="onAbort">
+            @refresherrefresh="onRefresh" @refresherrestore="onRestore" @refresherabort="onAbort" :style="'height:'+scrollHeight+'px'">
 			<view v-for="item in list" class="content-root-view">
 				<view class="content-img-view">
 					<image :src="item.thumbUrl" class="thumb-class"></image>
@@ -49,7 +49,9 @@
 					title: '套路女朋友的多种方法，全程高能',
 					readTime: '4.28 18:00',
 					readNum: '2.77万'
-				}]
+				}],
+				scrollHeight: 0,
+				winHeight: 0,
 			}
 		},
 		onLoad() {
@@ -57,6 +59,8 @@
 			setTimeout(() => {
 				this.triggered = true;
 			}, 1000);
+			this.winHeight    = uni.getSystemInfoSync().windowHeight;
+			this.scrollHeight = this.winHeight - 82 - 50;
 		},
 		mounted() {
 			

@@ -156,8 +156,25 @@ var _default =
       winHeight: 0 };
 
   },
-  methods: {},
+  methods: {
+    onSubmit: function onSubmit() {
+      uni.showModal({
+        title: '提示',
+        content: '感谢你提交的投诉和建议',
+        showCancel: false,
+        cancelText: '',
+        confirmText: '确定',
+        success: function success(res) {
+          uni.navigateBack({
+            url: '/pages/user/index' });
 
+        },
+        fail: function fail() {},
+        complete: function complete() {
+
+        } });
+
+    } },
   onLoad: function onLoad() {
     var winHeight = uni.getSystemInfoSync().windowHeight;
     this.winHeight = winHeight + 'px';

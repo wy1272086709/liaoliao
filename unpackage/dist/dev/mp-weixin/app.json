@@ -5,7 +5,8 @@
     "pages/user/index",
     "pages/user/complaint",
     "pages/user/upgrade_user_vip",
-    "pages/user/new_user_page"
+    "pages/user/new_user_page",
+    "pages/index/huashu"
   ],
   "subPackages": [],
   "window": {
@@ -14,6 +15,5 @@
     "navigationBarBackgroundColor": "#FFFFFF",
     "backgroundColor": "#F8F8F8"
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap55.json"
+  "usingComponents": {}
 }
