@@ -107,7 +107,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   "uni-icons": function() {
-    return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 65))
+    return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 81))
   }
 }
 var render = function() {
@@ -145,53 +145,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var tabBar = function tabBar() {__webpack_require__.e(/*! require.ensure | common/tabbar */ "common/tabbar").then((function () {return resolve(__webpack_require__(/*! ../../common/tabbar.vue */ 73));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var tabBar = function tabBar() {__webpack_require__.e(/*! require.ensure | common/tabbar */ "common/tabbar").then((function () {return resolve(__webpack_require__(/*! ../../common/tabbar.vue */ 89));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -276,7 +230,18 @@ __webpack_require__.r(__webpack_exports__);
       searchViewTop: 0,
       searchViewBottom: 0,
       firstNavTop: 0,
-      secondNavLabelHeight: 0 };
+      secondNavLabelHeight: 0,
+      iconSize: 0,
+      navList: [{
+        firstNav: '开场助手',
+        secondNav: [
+        { title: '重新开场', navClass: 'second-nav-label second-nav-lable-margin' },
+        { title: '土味情话', navClass: 'second-nav-label second-nav-lable-margin' },
+        { title: '表情话术', navClass: 'second-nav-label' },
+        { title: '表情话术', navClass: 'second-nav-label second-nav-lable-margin second-nav-lable-top' },
+        { title: '表情话术', navClass: 'second-nav-label second-nav-lable-margin second-nav-lable-top' }] }] };
+
+
 
   },
   components: {
@@ -303,6 +268,8 @@ __webpack_require__.r(__webpack_exports__);
 
     },
     help_center: function help_center() {
+      uni.navigateTo({
+        url: '/pages/index/meme' });
 
     },
     contact_consumer: function contact_consumer() {
@@ -336,6 +303,7 @@ __webpack_require__.r(__webpack_exports__);
     this.firstNavTop = 20 * ratio;
     this.secondNavLabelHeight = 30 * ratio;
     this.scrollHeight = winHeight - 188 * ratio - 102 * ratio - 80 * ratio - 82;
+    this.iconSize = this.searchViewHeight - 10;
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

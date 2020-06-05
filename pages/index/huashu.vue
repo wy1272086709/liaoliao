@@ -12,35 +12,31 @@
 			  <!-- 这里是状态栏 -->
 		</view>
 		<view class="left">
-			<uni-icons type="back" @tap="back()"></uni-icons>
+			<uni-icons type="back" @tap="back()" :size="iconSize"></uni-icons>
 			<text id="huashu-title">{{navigation.title}}</text>
 		</view>
-		<scroll-view id="content-view" :style="'height:'+scrollHeight+'px;'">
-			<view class="huashu-article huashu-article-first">
-				<view class="huashu-line">
+		<!--  -->
+		<view id="content-view" :style="'min-height:'+scrollHeight+'px;'">
+			<view class="huashu-article huashu-article-first" v-for="item in articleList" >
+				<view class="huashu-line" v-for="line in item">
 					<view class="huashu-sex">
-						<image class="huashu-sex-image" src="../../static/img/index/man.png"></image>
+						<template v-if="line.sex == 1">
+							<image class="huashu-sex-image" src="../../static/img/index/man.png"></image>
+						</template>
+						<template v-else>
+							<image class="huashu-sex-image" src="../../static/img/index/female.png"></image>
+						</template>
 					</view>
 					<view class="huashu-content">
-						<text class="huashu-content-text">能不能和我拍个照</text>
+						<text class="huashu-content-text">{{line.content}}</text>
 					</view>
 					<view class="huashu-copy-btn">
-						<image class="huashu-copy-image" src="../../static/img/index/copy.png" @tap="copyHuashu('能不能和我拍个照')"></image>
-					</view>
-				</view>
-				<view class="huashu-line">
-					<view class="huashu-sex">
-						<image class="huashu-sex-image" src="../../static/img/index/female.png"></image>
-					</view>
-					<view class="huashu-content">
-						<text class="huashu-content-text">为什么</text>
-					</view>
-					<view class="huashu-copy-btn">
-						<image class="huashu-copy-image" src="../../static/img/index/copy.png" @tap="copyHuashu('为什么')"></image>
+						<image class="huashu-copy-image" src="../../static/img/index/copy.png" @tap="copyHuashu(line.content)"></image>
 					</view>
 				</view>
 			</view>
-		</scroll-view>
+			<uni-load-more :status="loadingType"></uni-load-more>
+		</view>
 		<tab-bar></tab-bar>
 	</view>
 </template>
@@ -56,11 +52,70 @@
 					top: 30,
 					left:17,
 					title: ""
-				}
+				},
+				contentText: '加载更多',
+				loadingType: 'more', //加载更多状态
+				iconSize: 20,
+				page: 1,
+				articleList: [
+					[
+						{
+							// 1男,2女,content 为对话内容
+							sex:1,
+							content: "能不能和我拍个照"
+						},
+						{
+							sex:2,
+							content: "为什么"
+						}
+					],
+					[
+						{
+							// 1男,2女,content 为对话内容
+							sex:2,
+							content: "能不能和我拍个照"
+						},
+						{
+							sex:1,
+							content: "为什么"
+						}
+					],
+					[
+						{
+							// 1男,2女,content 为对话内容
+							sex:1,
+							content: "能不能和我拍个照"
+						},
+						{
+							sex:2,
+							content: "为什么"
+						}
+					],
+					[
+						{
+							// 1男,2女,content 为对话内容
+							sex:2,
+							content: "能不能和我拍个照"
+						},
+						{
+							sex:1,
+							content: "为什么"
+						}
+					]
+				]
 			}
+		},
+		onPullDownRefresh:function(){
+			this.getArticleList();
 		},
 		components: {
 			tabBar:tabBar,
+		},
+		onPullDownRefresh() {
+			console.log('页面下拉刷新');
+			setTimeout(function() {
+				uni.stopPullDownRefresh();
+			}, 1000);
 		},
 		onLoad(option) {
 			console.log('option', option);
@@ -73,14 +128,45 @@
 			//this.navigation.height = statusBarHeight;
 			let scrollHeight = windowHeight - 82;
 			this.scrollHeight = scrollHeight;
+			setTimeout(function() {
+				console.log('start pulldown');
+			}, 1000);
+			uni.startPullDownRefresh();
 		},
 		methods: {
+			getArticleList() {
+				
+			},
+			lower() {
+				console.log('拉倒底部,加载下一页....');
+				this.articleList.push([
+					{
+						// 1男,2女,content 为对话内容
+						sex:1,
+						content: "能不能和我拍个照"
+					},
+					{
+						sex:2,
+						content: "为什么"
+					},
+					{
+						// 1男,2女,content 为对话内容
+						sex:1,
+						content: "能不能和我拍个照"
+					},
+					{
+						sex:2,
+						content: "为什么"
+					}
+				]);
+			},
 			back() {
 				uni.navigateBack({
 					url:'/pages/index/index',
 				});
 			},
 			copyHuashu(content) {
+				console.log('content', content);
 				uni.setClipboardData({
 					data: content,
 					success: function(res) {
@@ -94,6 +180,36 @@
 					}
 				});
 			}
+		},
+		onReachBottom() {
+			console.log("上滑动");
+			uni.showNavigationBarLoading();
+			console.log('reach');
+			let _self = this;
+			if(_self.page > 3) {
+				console.log('page');
+				_self.loadingType = 'nomore';
+				return;
+			}
+			let t = setTimeout(function() {
+				_self.articleList.push([
+					{
+						// 1男,2女,content 为对话内容
+						sex:1,
+						content: "能不能和我拍个照"
+					},
+					{
+						sex:2,
+						content: "为什么"
+					}
+				]);
+				_self.page++;
+				uni.hideNavigationBarLoading();
+			}, 500);
+			// more = contentdown: "上拉显示更多",
+			// loading =contentrefresh: "正在加载...",
+			// nomore = contentnomore: "没有更多数据了"
+		    // 在此进行上拉刷新的业务逻辑
 		}
 	}
 </script>

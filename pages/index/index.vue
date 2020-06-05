@@ -43,71 +43,25 @@
 			
 			<view id="search-view" :style="'height:'+searchViewHeight+'px;margin-top:'+searchViewTop+'px;'">
 				<input id="search-text" type="text" placeholder="点击这里输入对方想说的话" placeholder-class="search-class"/>
-				<uni-icons type="search"></uni-icons>
+				<uni-icons type="search" :size="iconSize"></uni-icons>
 				<!--
 				<uni-search-bar></uni-search-bar>
 				-->
 			</view>
 			<scroll-view id="content-view" :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scrolltoupper="upper" @scrolltolower="lower"
                 @scroll="scroll" :style="'height:'+scrollHeight+'px;'">
-				<view class="first-nav" :style="'margin-top:'+firstNavTop+'px;'">
-					<label class="first-nav-icon">
-					</label>
-					<label class="first-nav-label">
-						<text class="first-nav-text">开场助手</text>
-					</label>
-				</view>
-				<view class="second-nav">
-					<view class="second-nav-label second-nav-lable-margin"  :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu('重新开场');">
-						<text class="second-nav-text">重新开场</text>
+				<view v-for="item in navList" class="nav-view">
+					<view class="first-nav" :style="'margin-top:'+firstNavTop+'px;'">
+						<label class="first-nav-icon">
+						</label>
+						<label class="first-nav-label">
+							<text class="first-nav-text">{{item.firstNav}}</text>
+						</label>
 					</view>
-					<view class="second-nav-label second-nav-lable-margin" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu('土味情话');">
-						<text class="second-nav-text">土味情话</text>
-					</view>
-					<view  class="second-nav-label" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu('表情话术');">
-						<text class="second-nav-text">表情话术</text>
-					</view>
-				</view>
-				<view class="first-nav" :style="'margin-top:'+firstNavTop+'px;'">
-					<label class="first-nav-icon">
-					</label>
-					<label class="first-nav-label">
-						<text class="first-nav-text">开场助手</text>
-					</label>
-				</view>
-				<view class="second-nav">
-					<view class="second-nav-label second-nav-lable-margin" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu();">
-						<text class="second-nav-text">重新开场</text>
-					</view>
-					<view class="second-nav-label second-nav-lable-margin" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu();">
-						<text class="second-nav-text">土味情话</text>
-					</view>
-					<view  class="second-nav-label" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu();">
-						<text class="second-nav-text">表情话术</text>
-					</view>
-				</view>
-				<view class="first-nav" :style="'margin-top:'+firstNavTop+'px;'">
-					<label class="first-nav-icon">
-					</label>
-					<label class="first-nav-label">
-						<text class="first-nav-text">开场助手</text>
-					</label>
-				</view>
-				<view class="second-nav">
-					<view class="second-nav-label second-nav-lable-margin" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu();">
-						<text class="second-nav-text">重新开场</text>
-					</view>
-					<view class="second-nav-label second-nav-lable-margin" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu();">
-						<text class="second-nav-text">土味情话</text>
-					</view>
-					<view  class="second-nav-label" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu();">
-						<text class="second-nav-text">表情话术</text>
-					</view>
-					<view  class="second-nav-label second-nav-lable-margin second-nav-lable-top" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu();">
-						<text class="second-nav-text">表情话术</text>
-					</view>
-					<view  class="second-nav-label second-nav-lable-margin second-nav-lable-top" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu();">
-						<text class="second-nav-text">表情话术</text>
+					<view class="second-nav">
+						<view :class="nav.navClass" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu(nav.title);" v-for="nav in item.secondNav">
+							<text class="second-nav-text">{{nav.title}}</text>
+						</view>
 					</view>
 				</view>
 			</scroll-view>
@@ -130,6 +84,17 @@
 				searchViewBottom: 0,
 				firstNavTop: 0,
 				secondNavLabelHeight: 0,
+				iconSize: 0,
+				navList: [{
+					firstNav: '开场助手',
+					secondNav: [ 
+						{ title: '重新开场', navClass:'second-nav-label second-nav-lable-margin' }, 
+						{ title: '土味情话', navClass:'second-nav-label second-nav-lable-margin' }, 
+						{ title: '表情话术', navClass:'second-nav-label' }, 
+						{ title: '表情话术', navClass:'second-nav-label second-nav-lable-margin second-nav-lable-top' }, 
+						{ title: '表情话术', navClass:'second-nav-label second-nav-lable-margin second-nav-lable-top' },
+					]
+				}]
 			}
 		},
 		components:{
@@ -156,7 +121,9 @@
 				});
 			},
 			help_center() {
-				
+				uni.navigateTo({
+					url: '/pages/index/meme'
+				});
 			},
 			contact_consumer() {
 			
@@ -189,6 +156,7 @@
 			this.firstNavTop = 20*ratio;
 			this.secondNavLabelHeight = 30*ratio;
 			this.scrollHeight = winHeight - 188*ratio - 102*ratio - 80*ratio - 82;
+			this.iconSize = this.searchViewHeight - 10;
 		}
 	}
 </script>
@@ -236,6 +204,12 @@
 		font-weight:400;
 		color:rgba(255,255,255,1);
 	}
+	
+	.nav-view {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 20px;
+	}
 
 	.second-nav,.first-nav {
 		margin-left:34rpx;
@@ -244,6 +218,7 @@
 	
 	.second-nav {
 		margin-top:13px;
+		flex-direction: row;
 		flex-wrap: wrap;
 	}
 	
@@ -330,6 +305,7 @@
 		font-weight:400;
 		color:rgba(170,170,170,1);
 		width:90%;
+		margin-left:5px;
 	}
 	
 	#content-view {

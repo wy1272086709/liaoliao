@@ -54,6 +54,7 @@ view {
 	        flex-direction: column;
 }
 .content-root-view {
+	margin-bottom: 16px;
 }
 .thumb-class {
 	max-width: 200rpx;

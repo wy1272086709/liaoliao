@@ -9650,11 +9650,23 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "恋爱话术", "navigationBarBackgroundColor": "#2369E6", "usingComponents": { "tab-bar": "/common/tabbar" }, "usingAutoImportComponents": { "uni-icons": "/components/uni-icons/uni-icons" } }, "pages/cases/index": { "navigationBarTitleText": "恋爱技巧", "navigationBarBackgroundColor": "#2369E6", "usingComponents": { "tab-bar": "/common/tabbar" }, "usingAutoImportComponents": {} }, "pages/user/index": { "navigationBarTitleText": "个人中心", "navigationBarBackgroundColor": "#2369E6", "usingComponents": { "tab-bar": "/common/tabbar" }, "usingAutoImportComponents": { "uni-list": "/components/uni-list/uni-list", "uni-list-item": "/components/uni-list-item/uni-list-item" } }, "pages/user/complaint": { "navigationBarTitleText": "投诉建议", "navigationBarBackgroundColor": "#2369E6", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/user/upgrade_user_vip": { "navigationBarTitleText": "升级VIP", "navigationBarBackgroundColor": "#2369E6", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/user/new_user_page": { "navigationBarTitleText": "新手必看", "navigationBarBackgroundColor": "#2369E6", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/index/huashu": { "navigationStyle": "custom", "usingComponents": { "tab-bar": "/common/tabbar" }, "usingAutoImportComponents": { "uni-icons": "/components/uni-icons/uni-icons" } } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "恋爱话术", "navigationBarBackgroundColor": "#2369E6", "enablePullDownRefresh": true, "usingComponents": { "tab-bar": "/common/tabbar" }, "usingAutoImportComponents": { "uni-icons": "/components/uni-icons/uni-icons" } }, "pages/cases/index": { "navigationBarTitleText": "恋爱技巧", "navigationBarBackgroundColor": "#2369E6", "enablePullDownRefresh": true, "usingComponents": { "tab-bar": "/common/tabbar" }, "usingAutoImportComponents": {} }, "pages/user/index": { "navigationBarTitleText": "个人中心", "navigationBarBackgroundColor": "#2369E6", "usingComponents": { "tab-bar": "/common/tabbar" }, "usingAutoImportComponents": { "uni-list": "/components/uni-list/uni-list", "uni-list-item": "/components/uni-list-item/uni-list-item" } }, "pages/user/complaint": { "navigationBarTitleText": "投诉建议", "navigationBarBackgroundColor": "#2369E6", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/user/upgrade_user_vip": { "navigationBarTitleText": "升级VIP", "navigationBarBackgroundColor": "#2369E6", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/user/new_user_page": { "navigationBarTitleText": "新手必看", "navigationBarBackgroundColor": "#2369E6", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/index/huashu": { "navigationStyle": "custom", "enablePullDownRefresh": true, "usingComponents": { "tab-bar": "/common/tabbar" }, "usingAutoImportComponents": { "uni-icons": "/components/uni-icons/uni-icons", "uni-load-more": "/components/uni-load-more/uni-load-more" } }, "pages/index/meme": { "navigationBarTitleText": "表情包", "navigationBarBackgroundColor": "#2369E6", "usingComponents": {}, "usingAutoImportComponents": { "uni-icons": "/components/uni-icons/uni-icons" } }, "common/vipinfo/vipinfo": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 
-/***/ 70:
+/***/ 8:
+/*!******************************************************!*\
+  !*** D:/uniapptest/myapp/pages.json?{"type":"stat"} ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "appid": "" };exports.default = _default;
+
+/***/ }),
+
+/***/ 86:
 /*!*********************************************************!*\
   !*** D:/uniapptest/myapp/components/uni-icons/icons.js ***!
   \*********************************************************/
@@ -9793,18 +9805,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   "cloud-download-filled": "\uE8E9",
   "headphones": "\uE8BF",
   "shop": "\uE609" };exports.default = _default;
-
-/***/ }),
-
-/***/ 8:
-/*!******************************************************!*\
-  !*** D:/uniapptest/myapp/pages.json?{"type":"stat"} ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "appid": "" };exports.default = _default;
 
 /***/ })
 

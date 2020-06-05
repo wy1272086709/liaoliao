@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///D:/uniapptest/myapp/main.js"],"names":["createPage","Page"],"mappings":";;;;;;;;;;kDAAA,wCAAmB;AACnB;AACA,2F;AACAA,UAAU,CAACC,aAAD,CAAV,C","file":"pages/cases/meme.js","sourcesContent":["import 'uni-pages';import '@dcloudio/uni-stat';\nimport Vue from 'vue'\nimport Page from './pages/cases/meme.vue'\ncreatePage(Page)"],"sourceRoot":""}

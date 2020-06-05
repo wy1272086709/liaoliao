@@ -1,65 +1,81 @@
 <template>
 	<view class="root-view">
-		<template v-if="userInfo.nickName==undefined">
-			<view id="no-login-view">
-				<view class='header'>
-					<image src='../../static/img/default_avatar.png'></image>
-				</view>
-				<view class='content'>
-					<view id="content-first-line">
-						<text>申请获取以下权限</text>
-					</view>
-					<view id="content-second-line">
-						<text>获得你的公开信息(昵称，头像、地区等)</text>
-					</view>
-				</view>
-				<view id="grant-view">
-					<button class='bottom' type='primary' open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="wxGetUserInfo">
-						授权登录
-					</button>
-				</view>
-			</view>
-		</template>
-		<template v-else>
 			<view id="content-view" :style="'height:'+contentHeight+'px'">
 				<!-- 如果用微信登录，获取微信相关用户信息 -->
-				<view class="li-view">
-					<view id="header-member-info">
-						<view class="zx">
-							<image class="tx-img" :src="userInfo.avatarUrl"></image>
+				<template v-if="userInfo.nickName==undefined">
+					<view id="no-login-view">
+						<view id="header-member-info">
+							<view class="zx">
+								<image class="tx-img" src="../../static/img/user/default_avatar.png"></image>
+							</view>
 						</view>
-						<view class="member-level-text">
-							<label id="member-level-btn">
-								<text class="member-level">
-									普通会员
+						<view id="grant-view">
+							<button  type='primary' open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="wxGetUserInfo" id="login-btn">
+								<text>点击登录/注册</text>
+							</button>
+						</view>
+						<view id='header-vip-view'>
+							<view id="left-vip-image-view">
+								<image src="../../static/img/user/left_vip_logo.png" id="left-vip-image"></image>
+							</view>
+							<view id="right-vip-info">
+								<view id="vip-text-view">
+									<text id="vip-info-text">VIP会员</text>
+								</view>
+								<view id="discount-view">
+									<text id="limit-time-discount">普通会员</text>
+								</view>
+							</view>
+							<view id="right-vip-image-view">
+								<image src="../../static/img/user/arrow.png" id="vipinfo_arrow"></image>
+							</view>
+						</view>
+					</view>
+				</template>
+				<template v-if="userInfo.nickName!=undefined">
+					<view class="li-view">
+						<view id="header-member-info">
+							<view class="zx">
+								<image class="tx-img" :src="userInfo.avatarUrl"></image>
+							</view>
+						</view>
+						<view id="header-view">
+							<view class="name">
+								<text class="nickname">
+									{{userInfo.nickName}}
 								</text>
-							</label>
+							</view>
+							<view class="member-class">
+								<text>会员ID:   </text>
+							</view>
+						</view>
+						<view id='header-vip-view'>
+							<view id="left-vip-image-view">
+								<image src="../../static/img/user/left_vip_logo.png" id="left-vip-image"></image>
+							</view>
+							<view id="right-vip-info">
+								<view id="vip-text-view">
+									<text id="vip-info-text">VIP会员</text>
+								</view>
+								<view id="discount-view">
+									<text id="limit-time-discount">普通会员</text>
+								</view>
+							</view>
+							<view id="right-vip-image-view">
+								<image src="../../static/img/user/arrow.png" id="vipinfo_arrow"></image>
+							</view>
 						</view>
 					</view>
-					<view id="header-view">
-						<view class="name">
-							<text class="nickname">
-								{{userInfo.nickName}}
-							</text>
-						</view>
-						<view class="member-class">
-							<text>会员ID:   </text>
-						</view>
-					</view>
-					<view id="top_list">
-						
-					</view>
-				</view>
+				</template>
 				<view id="bottom_list">
 					<uni-list>
+						<uni-list-item title="关于我们" thumb="/static/img/user/about_us.png"></uni-list-item>
 						<uni-list-item title="专属客服" thumb="/static/img/user/contact_customer.png"  @tap="copy_customer_wechat()"  rightText="点击复制客服微信" :showArrow="false"></uni-list-item>
-						<uni-list-item title="投诉建议" thumb="/static/img/user/complaint.png"  @tap="handleComplaint()"></uni-list-item>
-						<uni-list-item title="当前版本" thumb="/static/img/user/cur_version.png"  thumbrightText="1.9.3" :showArrow="false"></uni-list-item>
+						<uni-list-item title="当前版本" thumb="/static/img/user/setting.png"  thumbrightText="1.9.3" :showArrow="false"></uni-list-item>
 					</uni-list>
 				</view>
 			</view>
 			<tabBar></tabBar>
-		</template>
 	</view>
 	
 </template>
@@ -84,9 +100,9 @@
 			//this.login();
 			let winHeight      = uni.getSystemInfoSync().windowHeight;
 			// 设计稿731 高度
-			let ratio = winHeight/731;
-			ratio = ratio.toFixed(2);
-			this.contentHeight = winHeight-82*ratio+130*ratio;
+			//let ratio = winHeight/731;
+			//ratio = ratio.toFixed(2);
+			this.contentHeight = winHeight-82+20;
 			console.log(winHeight, this.contentHeight);
 			console.log(uni.getStorageSync('wx_user_info'));
 			console.log('onLoad....');
@@ -219,6 +235,7 @@
 			wxGetUserInfo(e) {
 				console.log('hehe');
 				uni.getUserInfo({
+					provider:'weixin',
 					success: (res) => {
 						console.log('res:', res);
 						let userInfo = res.userInfo;
@@ -241,14 +258,9 @@
 </script>
 
 <style>
-	page {
-		
-	}
-	* {
-		border-sizing:border-box;
-	}
 	view {
 		display: flex;
+		border-sizing:border-box;
 	}
 	.uni-list {	
 		background:rgba(255,255,255,1) !important;
@@ -280,6 +292,12 @@
 	#no-login-view {
 		display: flex;
 		flex-direction: column;
+		width:686rpx;
+		margin-left:32rpx;
+		margin-right: 32rpx;
+		background:rgba(255,255,255,1);
+		box-shadow:0px 2px 4px 0px rgba(0,0,0,0.01);
+		border-radius:10px;
 	}
 	
 	.header {
@@ -313,16 +331,56 @@
 	.content-first-line {
 		justify-content: center;
 	}
-
-
-	.bottom {
-		border-radius: 80rpx;
-		margin: 70rpx 50rpx;
-		font-size: 35rpx;
+	
+	#header-vip-view {
+		width:606rpx;
+		display: flex;
+		height:80px;
+		background:linear-gradient(90deg,rgba(234,186,118,1) 0%,rgba(255,224,160,1) 100%);
+		border-radius:10px;
+		margin-left:40rpx;
+		margin-right: 40rpx;
+		margin-top:32px;
+		margin-bottom: 20px;
+		align-items: center;
 	}
 	
-	.tx {
-		height: 200rpx;
+	#vip-info-text {
+		font-size:16px;
+		font-family:PingFangSC-Semibold,PingFang SC;
+		font-weight:600;
+		color:rgba(119,79,37,1);
+	}
+	
+	#limit-time-discount {
+		font-size:12px;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(119,79,37,1);
+	}
+	
+	#left-vip-image {
+		max-width:68rpx;
+		max-height: 68rpx;
+	}
+	
+	#left-vip-image-view {
+		margin-left:38rpx;
+		margin-right:32rpx;
+	}
+	
+	#right-vip-info {
+		flex-direction: column;
+		width:394rpx;
+	}
+	
+	#vip-text-view {
+		margin-bottom: 6px;
+	}
+	
+	#grant-view {
+		justify-content: center;
+		margin-top:33px;
 	}
 	
 	.member-btn {
@@ -334,6 +392,33 @@
 		padding-right:5rpx;
 	}
 	
+	#login-btn {
+		background-color: transparent;
+		line-height: 1;
+		display: flex;
+		border: 0px solid rgba(0,0,0,.2);
+		padding-left:0px;
+		padding-right:0px;
+		border-radius: 0px;
+	}
+	
+	#login-btn>text {
+		font-size:18px;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:600;
+		color:rgba(51,51,51,1);
+	}
+	
+	#right-vip-image-view {
+		margin-right:24rpx;
+		margin-top:32px;
+		margin-bottom: 32px;
+	}
+	
+	#vipinfo_arrow {
+		max-width: 32rpx;
+		max-height: 32rpx;
+	}
 	
 	.tx-img {
 		width:160rpx;
@@ -414,8 +499,8 @@
 		flex-direction: column;
 		margin-top:-12px;
 		background:rgba(255,255,255,1);
-		box-shadow:0rpx 4rpx 8rpx 0px rgba(0,0,0,0.01);
-		border-radius:20rpx;
+		box-shadow:0px 2px 4px 0px rgba(0,0,0,0.01);
+		border-radius:10px;
 	}
 	
 	#top_list, #bottom_list {
@@ -434,8 +519,8 @@
 		display:flex;
 		flex-direction: column;
 		background:rgba(255,255,255,1);
-		box-shadow:0px 4rpx 8rpx 0px rgba(0,0,0,0.01);
-		border-radius:20rpx 20rpx 20rpx 20rpx;
+		box-shadow:0px 2px 4px 0px rgba(0,0,0,0.01);
+		border-radius:10px 10px 10px 10px;
 		margin-bottom: 10px;
 		width:686rpx;
 	}

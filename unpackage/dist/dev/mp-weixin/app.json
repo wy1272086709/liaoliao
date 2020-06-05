@@ -6,7 +6,9 @@
     "pages/user/complaint",
     "pages/user/upgrade_user_vip",
     "pages/user/new_user_page",
-    "pages/index/huashu"
+    "pages/index/huashu",
+    "pages/index/meme",
+    "common/vipinfo/vipinfo"
   ],
   "subPackages": [],
   "window": {

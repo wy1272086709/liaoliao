@@ -1,75 +1,76 @@
 <template>
     <view>
-        <view class="uni-padding-wrap">
-            <view class="page-section swiper">
-                <view class="page-section-spacing">
-                    <swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
-                        <swiper-item>
-                            <view class="swiper-item uni-bg-red">A</view>
-                        </swiper-item>
-                        <swiper-item>
-                            <view class="swiper-item uni-bg-green">B</view>
-                        </swiper-item>
-                        <swiper-item>
-                            <view class="swiper-item uni-bg-blue">C</view>
-                        </swiper-item>
-                    </swiper>
-                </view>
-            </view>
-        </view>
-        <view class="swiper-list">
-            <view class="uni-list-cell uni-list-cell-pd">
-                <view class="uni-list-cell-db">指示点</view>
-                <switch :checked="indicatorDots" @change="changeIndicatorDots" />
-            </view>
-            <view class="uni-list-cell uni-list-cell-pd">
-                <view class="uni-list-cell-db">自动播放</view>
-                <switch :checked="autoplay" @change="changeAutoplay" />
-            </view>
-        </view>
-        <view class="uni-padding-wrap">
-            <view class="uni-common-mt">
-                <text>幻灯片切换时长(ms)</text>
-                <text class="info">{{duration}}</text>
-            </view>
-            <slider @change="durationChange" :value="duration" min="500" max="2000" />
-            <view class="uni-common-mt">
-                <text>自动播放间隔时长(ms)</text>
-                <text class="info">{{interval}}</text>
-            </view>
-            <slider @change="intervalChange" :value="interval" min="2000" max="10000" />
-        </view>
+        <vip-info :level="level"></vip-info>
     </view>
 </template>
 
 <script>
+import vipInfo from '../../common/vipinfo/vipinfo.vue';
 export default {
     data() {
         return {
-            background: ['color1', 'color2', 'color3'],
-            indicatorDots: true,
-            autoplay: true,
-            interval: 2000,
-            duration: 500
+            level:1,
         }
     },
+	components: {
+		vipInfo:vipInfo
+	},
     methods: {
-        changeIndicatorDots(e) {
-            this.indicatorDots = !this.indicatorDots
-        },
-        changeAutoplay(e) {
-            this.autoplay = !this.autoplay
-        },
-        intervalChange(e) {
-            this.interval = e.target.value
-        },
-        durationChange(e) {
-            this.duration = e.target.value
-        }
+        
     }
 }
 </script>
 
 <style>
 	@import "../../common/uni.css";
+	#header-vip-view {
+		width:606rpx;
+		display: flex;
+		height:80px;
+		background:linear-gradient(90deg,rgba(234,186,118,1) 0%,rgba(255,224,160,1) 100%);
+		border-radius:10px;
+		margin-left:40rpx;
+		margin-right: 40rpx;
+		margin-top:32px;
+		margin-bottom: 20px;
+		align-items: center;
+	}
+	
+	#vip-info-text {
+		font-size:16px;
+		font-family:PingFangSC-Semibold,PingFang SC;
+		font-weight:600;
+		color:rgba(119,79,37,1);
+	}
+	
+	#limit-time-discount {
+		font-size:12px;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(119,79,37,1);
+	}
+	
+	#left-vip-image {
+		max-width:68rpx;
+		max-height: 68rpx;
+	}
+	
+	#left-vip-image-view {
+		margin-left:38rpx;
+		margin-right:32rpx;
+	}
+	
+	#right-vip-info {
+		flex-direction: column;
+		width:394rpx;
+	}
+	
+	#vip-text-view {
+		margin-bottom: 6px;
+	}
+	
+	#grant-view {
+		justify-content: center;
+		margin-top:33px;
+	}
 </style>

@@ -4,15 +4,16 @@
 				"path": "pages/index/index",
 				"style": {
 					"navigationBarTitleText": "恋爱话术",
-					"navigationBarBackgroundColor": "#2369E6"
+					"navigationBarBackgroundColor": "#2369E6",
+					"enablePullDownRefresh":true
 				}
 			},
 			{
 			    "path": "pages/cases/index",
 			    "style": {
 			        "navigationBarTitleText": "恋爱技巧",
-			        "navigationBarBackgroundColor": "#FFFFFF",
-					"navigationBarBackgroundColor": "#2369E6"
+					"navigationBarBackgroundColor": "#2369E6",
+					"enablePullDownRefresh":true
 			    }
 			},
 	        {
@@ -46,9 +47,21 @@
 			{
 				"path" : "pages/index/huashu",
 				"style" : {
-					"navigationStyle": "custom"
+					"navigationStyle": "custom",
+					"enablePullDownRefresh":true
+				}
+			},
+			{
+				"path" : "pages/index/meme",
+				"style" : {
+					"navigationBarTitleText": "表情包",
+					"navigationBarBackgroundColor": "#2369E6"
 				}
 			}
+        ,{
+            "path" : "common/vipinfo/vipinfo",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

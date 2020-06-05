@@ -94,10 +94,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   "uni-list": function() {
-    return __webpack_require__.e(/*! import() | components/uni-list/uni-list */ "components/uni-list/uni-list").then(__webpack_require__.bind(null, /*! @/components/uni-list/uni-list.vue */ 80))
+    return __webpack_require__.e(/*! import() | components/uni-list/uni-list */ "components/uni-list/uni-list").then(__webpack_require__.bind(null, /*! @/components/uni-list/uni-list.vue */ 96))
   },
   "uni-list-item": function() {
-    return __webpack_require__.e(/*! import() | components/uni-list-item/uni-list-item */ "components/uni-list-item/uni-list-item").then(__webpack_require__.bind(null, /*! @/components/uni-list-item/uni-list-item.vue */ 87))
+    return __webpack_require__.e(/*! import() | components/uni-list-item/uni-list-item */ "components/uni-list-item/uni-list-item").then(__webpack_require__.bind(null, /*! @/components/uni-list-item/uni-list-item.vue */ 103))
   }
 }
 var render = function() {
@@ -137,7 +137,23 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var tabbar = function tabbar() {__webpack_require__.e(/*! require.ensure | common/tabbar */ "common/tabbar").then((function () {return resolve(__webpack_require__(/*! ../../common/tabbar.vue */ 73));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var tabbar = function tabbar() {__webpack_require__.e(/*! require.ensure | common/tabbar */ "common/tabbar").then((function () {return resolve(__webpack_require__(/*! ../../common/tabbar.vue */ 89));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -223,9 +239,9 @@ __webpack_require__.r(__webpack_exports__);
     //this.login();
     var winHeight = uni.getSystemInfoSync().windowHeight;
     // 设计稿731 高度
-    var ratio = winHeight / 731;
-    ratio = ratio.toFixed(2);
-    this.contentHeight = winHeight - 82 * ratio + 130 * ratio;
+    //let ratio = winHeight/731;
+    //ratio = ratio.toFixed(2);
+    this.contentHeight = winHeight - 82 + 20;
     console.log(winHeight, this.contentHeight);
     console.log(uni.getStorageSync('wx_user_info'));
     console.log('onLoad....');
@@ -358,6 +374,7 @@ __webpack_require__.r(__webpack_exports__);
     wxGetUserInfo: function wxGetUserInfo(e) {var _this2 = this;
       console.log('hehe');
       uni.getUserInfo({
+        provider: 'weixin',
         success: function success(res) {
           console.log('res:', res);
           var userInfo = res.userInfo;

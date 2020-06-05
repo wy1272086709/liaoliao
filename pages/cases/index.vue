@@ -12,9 +12,7 @@
 			</view>
 		</view>
 		
-		<scroll-view id="content-view" scroll-y="true" refresher-enabled="true" :refresher-triggered="triggered"
-            :refresher-threshold="100" refresher-background="lightgreen" @refresherpulling="onPulling"
-            @refresherrefresh="onRefresh" @refresherrestore="onRestore" @refresherabort="onAbort" :style="'height:'+scrollHeight+'px'">
+		<scroll-view id="content-view" scroll-y="true" enable-flex="true"  @scrolltolower="lower"  :style="'height:'+scrollHeight+'px'">
 			<view v-for="item in list" class="content-root-view">
 				<view class="content-img-view">
 					<image :src="item.thumbUrl" class="thumb-class"></image>
@@ -35,30 +33,71 @@
 
 <script>
 	import tabBar from '../../common/tabbar.vue';
+	let list = [{
+		thumbUrl: '/static/img/love_skills/thumb.png',
+		title: '套路女朋友的多种方法，全程高能',
+		readTime: '4.28 18:00',
+		readNum: '2.77万'
+	}, {
+		thumbUrl: '/static/img/love_skills/thumb.png',
+		title: '套路女朋友的多种方法，全程高能',
+		readTime: '4.28 18:00',
+		readNum: '2.77万'
+	}, {
+		thumbUrl: '/static/img/love_skills/thumb.png',
+		title: '套路女朋友的多种方法，全程高能',
+		readTime: '4.28 18:00',
+		readNum: '2.77万'
+	}, {
+		thumbUrl: '/static/img/love_skills/thumb.png',
+		title: '套路女朋友的多种方法，全程高能',
+		readTime: '4.28 18:00',
+		readNum: '2.77万'
+	}, {
+		thumbUrl: '/static/img/love_skills/thumb.png',
+		title: '套路女朋友的多种方法，全程高能',
+		readTime: '4.28 18:00',
+		readNum: '2.77万'
+	}, {
+		thumbUrl: '/static/img/love_skills/thumb.png',
+		title: '套路女朋友的多种方法，全程高能',
+		readTime: '4.28 18:00',
+		readNum: '2.77万'
+	}, {
+		thumbUrl: '/static/img/love_skills/thumb.png',
+		title: '套路女朋友的多种方法，全程高能',
+		readTime: '4.28 18:00',
+		readNum: '2.77万'
+	}, {
+		thumbUrl: '/static/img/love_skills/thumb.png',
+		title: '套路女朋友的多种方法，全程高能',
+		readTime: '4.28 18:00',
+		readNum: '2.77万'
+	}, {
+		thumbUrl: '/static/img/love_skills/thumb.png',
+		title: '套路女朋友的多种方法，全程高能',
+		readTime: '4.28 18:00',
+		readNum: '2.77万'
+	}, {
+		thumbUrl: '/static/img/love_skills/thumb.png',
+		title: '套路女朋友的多种方法，全程高能',
+		readTime: '4.28 18:00',
+		readNum: '2.77万'
+	}];
 	export default {
 		data() {
 			return {
-				triggered: false,
 				borderClass: '',
 				tabName: 'last_update',
 				last_update_class: 'last_update border-active',
 				love_skills_class: 'love_skills',
 				girl_area_class: 'girl_area',
-				list: [{
-					thumbUrl: '/static/img/love_skills/thumb.png',
-					title: '套路女朋友的多种方法，全程高能',
-					readTime: '4.28 18:00',
-					readNum: '2.77万'
-				}],
+				list: list,
 				scrollHeight: 0,
 				winHeight: 0,
 			}
 		},
 		onLoad() {
-			this._freshing = false;
-			setTimeout(() => {
-				this.triggered = true;
-			}, 1000);
 			this.winHeight    = uni.getSystemInfoSync().windowHeight;
 			this.scrollHeight = this.winHeight - 82 - 50;
 		},
@@ -69,6 +108,14 @@
 			tabBar:tabBar
 		},
 		methods: {
+			lower() {
+				this.list.push({
+					thumbUrl: '/static/img/love_skills/thumb.png',
+					title: '套路女朋友的多种方法22222',
+					readTime: '4.28 18:00',
+					readNum: '2.77万'
+				});
+			},
 			onPulling(e) {
 				console.log("onpulling", e);
 			},
@@ -154,7 +201,7 @@ view {
 	flex-direction: column;
 }
 .content-root-view {
-	
+	margin-bottom: 16px;
 }
 .thumb-class {
 	max-width: 200rpx;
