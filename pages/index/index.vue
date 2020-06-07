@@ -97,10 +97,16 @@
 				}]
 			}
 		},
+		mounted() {
+			this.getNavList();
+		},
 		components:{
 			tabBar
 		},
 		methods: {
+			getNavList() {
+				
+			},
 			handleContact() {
 				console.log('handler...');
 			},

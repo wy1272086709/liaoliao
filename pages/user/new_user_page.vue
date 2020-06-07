@@ -1,6 +1,6 @@
 <template>
     <view>
-        <vip-info :level="level"></vip-info>
+        <vip-info :level="level" :member_validate_dates="dates"></vip-info>
     </view>
 </template>
 
@@ -10,6 +10,7 @@ export default {
     data() {
         return {
             level:1,
+			dates: "2020.05.06~2020.06.06"
         }
     },
 	components: {

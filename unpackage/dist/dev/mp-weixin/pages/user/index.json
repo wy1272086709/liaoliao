@@ -4,6 +4,7 @@
   "usingComponents": {
     "uni-list": "/components/uni-list/uni-list",
     "uni-list-item": "/components/uni-list-item/uni-list-item",
-    "tab-bar": "/common/tabbar"
+    "tab-bar": "/common/tabbar",
+    "vip-info": "/common/vipinfo/vipinfo"
   }
 }

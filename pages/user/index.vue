@@ -14,22 +14,7 @@
 								<text>点击登录/注册</text>
 							</button>
 						</view>
-						<view id='header-vip-view'>
-							<view id="left-vip-image-view">
-								<image src="../../static/img/user/left_vip_logo.png" id="left-vip-image"></image>
-							</view>
-							<view id="right-vip-info">
-								<view id="vip-text-view">
-									<text id="vip-info-text">VIP会员</text>
-								</view>
-								<view id="discount-view">
-									<text id="limit-time-discount">普通会员</text>
-								</view>
-							</view>
-							<view id="right-vip-image-view">
-								<image src="../../static/img/user/arrow.png" id="vipinfo_arrow"></image>
-							</view>
-						</view>
+						<vip-info :level="level"></vip-info>
 					</view>
 				</template>
 				<template v-if="userInfo.nickName!=undefined">
@@ -49,22 +34,7 @@
 								<text>会员ID:   </text>
 							</view>
 						</view>
-						<view id='header-vip-view'>
-							<view id="left-vip-image-view">
-								<image src="../../static/img/user/left_vip_logo.png" id="left-vip-image"></image>
-							</view>
-							<view id="right-vip-info">
-								<view id="vip-text-view">
-									<text id="vip-info-text">VIP会员</text>
-								</view>
-								<view id="discount-view">
-									<text id="limit-time-discount">普通会员</text>
-								</view>
-							</view>
-							<view id="right-vip-image-view">
-								<image src="../../static/img/user/arrow.png" id="vipinfo_arrow"></image>
-							</view>
-						</view>
+						<vip-info :level="level"></vip-info>
 					</view>
 				</template>
 				<view id="bottom_list">
@@ -83,6 +53,7 @@
 
 <script>
 	import tabbar from '../../common/tabbar.vue';
+	import vipInfo from '../../common/vipinfo/vipinfo.vue';
 	export default {
 		data() {
 			return {
@@ -90,18 +61,18 @@
 				sessionKey: '',
 				openId: '',
 				contentHeight: 0,
+				level: -1,
 				isCanUse:uni.getStorageSync('wx_user_info') || true
 			}
 		},
 		components:{
-			tabBar:tabbar
+			tabBar:tabbar,
+			vipInfo,
 		},
 		onLoad() {
 			//this.login();
 			let winHeight      = uni.getSystemInfoSync().windowHeight;
 			// 设计稿731 高度
-			//let ratio = winHeight/731;
-			//ratio = ratio.toFixed(2);
 			this.contentHeight = winHeight-82+20;
 			console.log(winHeight, this.contentHeight);
 			console.log(uni.getStorageSync('wx_user_info'));
@@ -113,6 +84,9 @@
 		computed: {
 			userInfo: function() {
 				return this.$store.getters.userInfo;
+			},
+			level: function() {
+				return this.$store.getters.userInfo.level;
 			}
 		},
 		methods: {
@@ -140,7 +114,7 @@
 						uni.getClipboardData({
 							success: function(res) {
 								uni.showToast({
-									title: '已复制到剪贴板'
+									title: '复制成功'
 								});
 							}
 						});
@@ -216,8 +190,9 @@
 			},
 			setUserInfoToStrorage(userInfo) {
 				const userStr = JSON.stringify(userInfo);
-				uni.setStorageSync({
-					key: 'wx_user_info',
+				console.log('userStr', userStr);
+				uni.setStorage({
+					key: 'wx_userinfo',
 					data: userStr,
 					success: function () {
 						console.log('wxSetUserInfo...success');
@@ -400,6 +375,10 @@
 		padding-left:0px;
 		padding-right:0px;
 		border-radius: 0px;
+	}
+	
+	#login-btn::after{
+		border: 0px solid #007AFF;
 	}
 	
 	#login-btn>text {

@@ -19,8 +19,8 @@
 				<text class="limit-time-discount">{{memberDiscountText}}</text>
 			</view>
 		</view>
-		<view class="right-vip-action" :style="'margin-left:'+actionMarginLeft+'rpx;'">
-			<text>{{memberAction}}</text>
+		<view class="right-vip-action" :style="'margin-left:'+actionMarginLeft+'rpx;margin-right:16rpx;'">
+			<text class="action-class" @tap="payForVip()">{{memberAction}}</text>
 		</view>
 		<view class="right-vip-image-view">
 			<image src="../../static/img/user/arrow.png" class="vipinfo_arrow"></image>
@@ -42,13 +42,10 @@
 		},
 		props:['level', 'member_validate_dates'],
 		mounted() {
+			this.initDiscountText();
 			this.initBackground();
 			this.initActions();
-		},
-		onLoad() {
-			if(this.memberLevel>0) {
-				this.actionMarginLeft = 62;
-			}
+			this.initActionMargin();
 		},
 		methods: {
 			initDiscountText() {
@@ -75,12 +72,26 @@
 			},
 			initActions() {
 				if(this.memberLevel == -1) {
-					this.memberAction = '登录/注册';
+					//this.memberAction = '登录/注册';
 				} else if(this.memberLevel == 0) {
 					this.memberAction = '立即充值';
 				} else {
 					this.memberAction = '续费';
 				}
+			},
+			initActionMargin() {
+				if(this.memberLevel>0) {
+					this.actionMarginLeft = 62;
+				} else if(this.memberLevel == 0) {
+					this.actionMarginLeft = 114;
+				} else if(this.memberLevel == -1) {
+					this.actionMarginLeft = 66;
+				}
+			},
+			payForVip() {
+				uni.navigateTo({
+					url:'/pages/user/upgrade_user_vip'
+				});
 			}
 		}
 	}
@@ -126,7 +137,7 @@
 	
 	.right-vip-info {
 		flex-direction: column;
-		wclassth:394rpx;
+		width:270rpx;
 	}
 	
 	.vip-text-view {
@@ -147,7 +158,11 @@
 		margin-top:32px;
 		margin-bottom: 32px;
 	}
-	.right-vip-action {
-		
+	
+	.action-class {
+		font-size:12px;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(255,255,255,1);
 	}
 </style>

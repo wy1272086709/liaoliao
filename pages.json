@@ -47,7 +47,8 @@
 			{
 				"path" : "pages/index/huashu",
 				"style" : {
-					"navigationStyle": "custom",
+					"navigationBarTitleText": "",
+					"navigationBarBackgroundColor": "#2369E6",
 					"enablePullDownRefresh":true
 				}
 			},

@@ -1,1 +1,1 @@
-<view><vip-info vue-id="490c8ee6-1" level="{{level}}" bind:__l="__l"></vip-info></view>
+<view><vip-info vue-id="490c8ee6-1" level="{{level}}" member_validate_dates="{{dates}}" bind:__l="__l"></vip-info></view>

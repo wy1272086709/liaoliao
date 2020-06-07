@@ -8,17 +8,23 @@
 			</view>
 		</view>
 		-->
+		<!-- 这里是状态栏 -->
+		<!--
 		<view class="status_bar">
-			  <!-- 这里是状态栏 -->
+			  
 		</view>
 		<view class="left">
 			<uni-icons type="back" @tap="back()" :size="iconSize"></uni-icons>
 			<text id="huashu-title">{{navigation.title}}</text>
 		</view>
+		->
 		<!--  -->
 		<view id="content-view" :style="'min-height:'+scrollHeight+'px;'">
 			<view class="huashu-article huashu-article-first" v-for="item in articleList" >
-				<view class="huashu-line" v-for="line in item">
+				<view id="huashu-article-title">
+					<text>{{item.title}}</text>
+				</view>
+				<view class="huashu-line" v-for="line in item.list">
 					<view class="huashu-sex">
 						<template v-if="line.sex == 1">
 							<image class="huashu-sex-image" src="../../static/img/index/man.png"></image>
@@ -56,52 +62,50 @@
 				contentText: '加载更多',
 				loadingType: 'more', //加载更多状态
 				iconSize: 20,
-				page: 1,
-				articleList: [
-					[
-						{
-							// 1男,2女,content 为对话内容
-							sex:1,
-							content: "能不能和我拍个照"
-						},
-						{
-							sex:2,
-							content: "为什么"
-						}
-					],
-					[
-						{
-							// 1男,2女,content 为对话内容
-							sex:2,
-							content: "能不能和我拍个照"
-						},
-						{
-							sex:1,
-							content: "为什么"
-						}
-					],
-					[
-						{
-							// 1男,2女,content 为对话内容
-							sex:1,
-							content: "能不能和我拍个照"
-						},
-						{
-							sex:2,
-							content: "为什么"
-						}
-					],
-					[
-						{
-							// 1男,2女,content 为对话内容
-							sex:2,
-							content: "能不能和我拍个照"
-						},
-						{
-							sex:1,
-							content: "为什么"
-						}
-					]
+				page: 1, 
+				articleList: [ 
+					{
+						list:[
+							{
+								// 1男,2女,content 为对话内容
+								sex:1,
+								content: "能不能和我拍个照"
+							},
+							{
+								sex:2,
+								content: "为什么"
+							}
+						],
+						title: "关于拍照"
+					},
+					{
+						list:[
+							{
+								// 1男,2女,content 为对话内容
+								sex:2,
+								content: "能不能和我拍个照"
+							},
+							{
+								sex:1,
+								content: "为什么"
+							}
+						],
+						title: '为什么呀!'
+					},
+					{	
+						list:[
+							{
+								// 1男,2女,content 为对话内容
+								sex:1,
+								content: "能不能和我拍个照"
+							},
+							{
+								sex:2,
+								content: "为什么"
+							}
+						],
+						title: "关于拍照"
+					}
 				]
 			}
 		},
@@ -121,7 +125,10 @@
 			console.log('option', option);
 			let title = option.title;
 			if(title) {
-				this.navigation.title = decodeURIComponent(title);
+				title = decodeURIComponent(title);
+				uni.setNavigationBarTitle({
+					title:title
+				});
 			}
 			let sysinfo = uni.getSystemInfoSync();
 			let windowHeight = sysinfo.windowHeight;
@@ -173,7 +180,7 @@
 						uni.getClipboardData({
 							success: function(res) {
 								uni.showToast({
-									title: '已复制到剪贴板'
+									title: '复制成功'
 								});
 							}
 						});
