@@ -31,10 +31,42 @@ view.data-v-5e343daf, scroll-view.data-v-5e343daf {
 	-webkit-box-sizing:border-box;
 	        box-sizing:border-box;
 }
+#search-view.data-v-5e343daf{
+	width:686rpx;
+	height:40px;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	background-color: rgba(255,255,255, 1);
+	margin-left: 32rpx;
+	margin-right: 32rpx;
+	margin-bottom: 10px;
+	border-radius:4px 4px 4px 4px;
+}
+#search-view-box.data-v-5e343daf {
+	width:750rpx;
+	background-color: #2369E6;
+}
+.search-class.data-v-5e343daf {
+	font-size:14px;
+	font-family:PingFangSC-Regular,PingFang SC;
+	font-weight:400;
+	color:rgba(170,170,170,1);
+}
+#search-text.data-v-5e343daf {
+	display: inline-block;
+	font-size:14px;
+	font-family:PingFangSC-Regular,PingFang SC;
+	font-weight:400;
+	color:rgba(170,170,170,1);
+	width:90%;
+	margin-left:5px;
+}
 #content-view.data-v-5e343daf {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
+	overflow-y: scroll;
 	-webkit-box-orient: vertical;
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
@@ -45,9 +77,9 @@ view.data-v-5e343daf, scroll-view.data-v-5e343daf {
 	        align-items: center;
 	-webkit-align-content: center;
 	        align-content: center;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
+	-webkit-box-pack: start;
+	-webkit-justify-content: flex-start;
+	        justify-content: flex-start;
 	background:-webkit-linear-gradient(300deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 	background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 }
@@ -64,6 +96,18 @@ view.data-v-5e343daf, scroll-view.data-v-5e343daf {
 	margin-left:32rpx;
 	margin-right:32rpx;
 	border-radius:10px;
+}
+.huashu-article-title.data-v-5e343daf{
+	margin-top:10px;
+	margin-left:32rpx;
+	border-bottom: 1px dashed #2369E6;
+	margin-right:32rpx;
+}
+.huashu-article-title>text.data-v-5e343daf {
+	font-size: 16px;
+	font-family: PingFangSC-Regular,PingFang SC;
+	font-weight: 500;
+	color: #2369E6;
 }
 .huashu-article-first.data-v-5e343daf {
 	margin-top:23px;
@@ -97,4 +141,5 @@ view.data-v-5e343daf, scroll-view.data-v-5e343daf {
 	color:rgba(51,51,51,1);
 	line-height:20px;
 }
+
 

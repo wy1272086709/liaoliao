@@ -219,6 +219,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 {
   data: function data() {
     return {
@@ -232,6 +234,7 @@ __webpack_require__.r(__webpack_exports__);
       firstNavTop: 0,
       secondNavLabelHeight: 0,
       iconSize: 0,
+      keyword: '',
       navList: [{
         firstNav: '开场助手',
         secondNav: [
@@ -251,6 +254,12 @@ __webpack_require__.r(__webpack_exports__);
     tabBar: tabBar },
 
   methods: {
+    // 跳转到关键词页面
+    searchKeyword: function searchKeyword() {
+      uni.navigateTo({
+        url: '/pages/index/huashu?keyword=' + this.keyword });
+
+    },
     getNavList: function getNavList() {
 
     },

@@ -93,8 +93,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
-  "uni-load-more": function() {
-    return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 118))
+  "uni-icons": function() {
+    return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 89))
   }
 }
 var render = function() {
@@ -186,20 +186,42 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
   data: function data() {
     return {
       scrollHeight: 0,
+      searchKeyword: "",
       navigation: {
         height: 88,
         top: 30,
         left: 17,
         title: "" },
 
+      isFixHeight: false,
       contentText: '加载更多',
       loadingType: 'more', //加载更多状态
       iconSize: 20,
       page: 1,
       articleList: [
+      {
+        list: [
+        {
+          // 1男,2女,content 为对话内容
+          sex: 1,
+          content: "能不能和我拍个照" },
+
+        {
+          sex: 2,
+          content: "为什么" }],
+
+
+        title: "关于拍照" },
+
       {
         list: [
         {
@@ -260,6 +282,9 @@ __webpack_require__.r(__webpack_exports__);
 option) {
   console.log('option', option);
   var title = option.title;
+  // 获取keyword,
+  var key = option.keyword;
+  this.searchKeyword = key;
   if (title) {
     title = decodeURIComponent(title);
     uni.setNavigationBarTitle({
@@ -269,7 +294,7 @@ option) {
   var sysinfo = uni.getSystemInfoSync();
   var windowHeight = sysinfo.windowHeight;
   //this.navigation.height = statusBarHeight;
-  var scrollHeight = windowHeight - 82;
+  var scrollHeight = windowHeight - 82 - 50;
   this.scrollHeight = scrollHeight;
   setTimeout(function () {
     console.log('start pulldown');
@@ -282,25 +307,19 @@ option) {
   },
   lower: function lower() {
     console.log('拉倒底部,加载下一页....');
-    this.articleList.push([
-    {
-      // 1男,2女,content 为对话内容
-      sex: 1,
-      content: "能不能和我拍个照" },
+    this.articleList.push({
+      list: [
+      {
+        // 1男,2女,content 为对话内容
+        sex: 1,
+        content: "能不能和我拍个照" },
 
-    {
-      sex: 2,
-      content: "为什么" },
+      {
+        sex: 2,
+        content: "为什么" }],
 
-    {
-      // 1男,2女,content 为对话内容
-      sex: 1,
-      content: "能不能和我拍个照" },
 
-    {
-      sex: 2,
-      content: "为什么" }]);
-
+      title: "关于拍照" });
 
   },
   back: function back() {
@@ -331,20 +350,32 @@ option) {
   var _self = this;
   if (_self.page > 3) {
     console.log('page');
+    // 获取DIV 的高度,然后加上scrollHeight
+    // 计算组件的高度
+    if (!_self.isFixHeight) {
+      var view = uni.createSelectorQuery().select("#content-view");
+      view.boundingClientRect(function (data) {
+        _self.scrollHeight = data.height + 100;
+        _self.isFixHeight = true;
+      }).exec();
+    }
     _self.loadingType = 'nomore';
     return;
   }
   var t = setTimeout(function () {
-    _self.articleList.push([
-    {
-      // 1男,2女,content 为对话内容
-      sex: 1,
-      content: "能不能和我拍个照" },
+    _self.articleList.push({
+      list: [
+      {
+        // 1男,2女,content 为对话内容
+        sex: 1,
+        content: "能不能和我拍个照" },
 
-    {
-      sex: 2,
-      content: "为什么" }]);
+      {
+        sex: 2,
+        content: "为什么" }],
 
+
+      title: "关于拍照" });
 
     _self.page++;
     uni.hideNavigationBarLoading();

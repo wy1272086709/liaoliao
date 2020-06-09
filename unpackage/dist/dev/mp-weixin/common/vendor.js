@@ -757,7 +757,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -8204,7 +8204,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8225,14 +8225,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -8308,7 +8308,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -9650,7 +9650,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "恋爱话术", "navigationBarBackgroundColor": "#2369E6", "enablePullDownRefresh": true, "usingComponents": { "tab-bar": "/common/tabbar" }, "usingAutoImportComponents": { "uni-icons": "/components/uni-icons/uni-icons" } }, "pages/cases/index": { "navigationBarTitleText": "恋爱技巧", "navigationBarBackgroundColor": "#2369E6", "enablePullDownRefresh": true, "usingComponents": { "tab-bar": "/common/tabbar" }, "usingAutoImportComponents": {} }, "pages/user/index": { "navigationBarTitleText": "个人中心", "navigationBarBackgroundColor": "#2369E6", "usingComponents": { "tab-bar": "/common/tabbar", "vip-info": "/common/vipinfo/vipinfo" }, "usingAutoImportComponents": { "uni-list": "/components/uni-list/uni-list", "uni-list-item": "/components/uni-list-item/uni-list-item" } }, "pages/user/complaint": { "navigationBarTitleText": "投诉建议", "navigationBarBackgroundColor": "#2369E6", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/user/upgrade_user_vip": { "navigationBarTitleText": "升级VIP", "navigationBarBackgroundColor": "#2369E6", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/user/new_user_page": { "navigationBarTitleText": "新手必看", "navigationBarBackgroundColor": "#2369E6", "usingComponents": { "vip-info": "/common/vipinfo/vipinfo" }, "usingAutoImportComponents": {} }, "pages/index/huashu": { "navigationBarTitleText": "", "navigationBarBackgroundColor": "#2369E6", "enablePullDownRefresh": true, "usingComponents": { "tab-bar": "/common/tabbar" }, "usingAutoImportComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more" } }, "pages/index/meme": { "navigationBarTitleText": "表情包", "navigationBarBackgroundColor": "#2369E6", "usingComponents": {}, "usingAutoImportComponents": { "uni-icons": "/components/uni-icons/uni-icons" } }, "common/vipinfo/vipinfo": { "usingComponents": {}, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "恋爱话术", "navigationBarBackgroundColor": "#2369E6", "enablePullDownRefresh": true, "usingComponents": { "tab-bar": "/common/tabbar" }, "usingAutoImportComponents": {} }, "pages/cases/index": { "navigationBarTitleText": "恋爱技巧", "navigationBarBackgroundColor": "#2369E6", "enablePullDownRefresh": true, "onReachBottomDistance": 40, "usingComponents": { "tab-bar": "/common/tabbar" }, "usingAutoImportComponents": {} }, "pages/user/index": { "navigationBarTitleText": "个人中心", "navigationBarBackgroundColor": "#2369E6", "usingComponents": { "tab-bar": "/common/tabbar", "vip-info": "/common/vipinfo/vipinfo" }, "usingAutoImportComponents": {} }, "pages/user/complaint": { "navigationBarTitleText": "投诉建议", "navigationBarBackgroundColor": "#2369E6", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/user/upgrade_user_vip": { "navigationBarTitleText": "升级VIP", "navigationBarBackgroundColor": "#2369E6", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/user/new_user_page": { "navigationBarTitleText": "新手必看", "navigationBarBackgroundColor": "#2369E6", "usingComponents": { "vip-info": "/common/vipinfo/vipinfo" }, "usingAutoImportComponents": {} }, "pages/index/huashu": { "navigationBarTitleText": "", "navigationBarBackgroundColor": "#2369E6", "enablePullDownRefresh": true, "onReachBottomDistance": 40, "usingComponents": { "tab-bar": "/common/tabbar" }, "usingAutoImportComponents": {} }, "pages/index/meme": { "navigationBarTitleText": "表情包", "navigationBarBackgroundColor": "#2369E6", "usingComponents": {}, "usingAutoImportComponents": {} }, "common/vipinfo/vipinfo": { "usingComponents": {}, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 

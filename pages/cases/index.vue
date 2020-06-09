@@ -12,7 +12,7 @@
 			</view>
 		</view>
 		
-		<scroll-view id="content-view" scroll-y="true" enable-flex="true"  @scrolltolower="lower"  :style="'height:'+scrollHeight+'px'">
+		<view id="content-view"  :style="'min-height:'+scrollHeight+'px;'">
 			<view v-for="item in list" class="content-root-view">
 				<view class="content-img-view">
 					<image :src="item.thumbUrl" class="thumb-class"></image>
@@ -26,7 +26,7 @@
 					</view>
 				</view>
 			</view>
-		</scroll-view>
+		</view>
 		<tabBar></tabBar>
 	</view>
 </template>
@@ -93,6 +93,7 @@
 				love_skills_class: 'love_skills',
 				girl_area_class: 'girl_area',
 				list: list,
+				page: 1,
 				scrollHeight: 0,
 				winHeight: 0,
 			}
@@ -107,6 +108,30 @@
 		components:{
 			tabBar:tabBar
 		},
+		onReachBottom() {
+			console.log('reach bottom!');
+			let _self = this;
+			if(this.page>3) {
+				if (!_self.isFixHeight) {
+					let view = uni.createSelectorQuery().select("#content-view");
+					view.boundingClientRect(data => {
+						console.log('data:', data);
+						_self.scrollHeight = data.height+100;
+						_self.isFixHeight  = true;
+					}).exec();
+				}
+				return;
+			}
+			let t = setTimeout(function() { 
+				_self.list.push({
+					thumbUrl: '/static/img/love_skills/thumb.png',
+					title: '套路女朋友的多种方法22222',
+					readTime: '4.28 18:00',
+					readNum: '2.77万'
+				});
+				_self.page++;
+			}, 500);
+		},
 		methods: {
 			lower() {
 				this.list.push({
@@ -116,24 +141,7 @@
 					readNum: '2.77万'
 				});
 			},
-			onPulling(e) {
-				console.log("onpulling", e);
-			},
-			onRefresh() {
-				if (this._freshing) return;
-				this._freshing = true;
-				setTimeout(() => {
-					this.triggered = false;
-					this._freshing = false;
-				}, 3000)
-			},
-			onRestore() {
-				this.triggered = 'restore'; // 需要重置
-				console.log("onRestore");
-			},
-			onAbort() {
-				console.log("onAbort");
-			},
+			
 			switchTab(tabName) {
 				// 切换面板
 				if(tabName=='last_update') {
@@ -163,8 +171,8 @@ view {
 }
 
 #root-view {
-	height: 724px;
 	width: 750rpx;
+	justify-content: flex-start;
 	flex-direction: column;
 	background: linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 }
@@ -172,7 +180,7 @@ view {
 #header-view {
 	display: flex;
 	height: 50px;
-	width:100%;
+	width: 750rpx;
 	justify-content: space-around;
 	align-items: center;
 	background: rgba(35,105,230,1);
@@ -182,10 +190,12 @@ view {
 	border-bottom: 2px solid rgba(255,255,255,1);
 }
 
-.last_update, .love_skills, .girl_area {
-	height: 100%;
-	line-height: 50px;
+#last_update, #love_skills, #girl_area {
+	height: 50px;
+	display: flex;
+	align-items: center;
 }
+
 .last_update>text,.love_skills>text,.girl_area>text {
 	font-size:14px;
 	font-family:PingFangSC-Semibold,PingFang SC;
@@ -195,7 +205,7 @@ view {
 
 #content-view {
 	display: flex;
-	height: 605px;
+	overflow-y: scroll;
 	width: 100%;
 	margin-top:16px;
 	flex-direction: column;

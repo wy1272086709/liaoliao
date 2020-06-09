@@ -225,6 +225,7 @@ var list = [{
       love_skills_class: 'love_skills',
       girl_area_class: 'girl_area',
       list: list,
+      page: 1,
       scrollHeight: 0,
       winHeight: 0 };
 
@@ -239,6 +240,30 @@ var list = [{
   components: {
     tabBar: tabBar },
 
+  onReachBottom: function onReachBottom() {
+    console.log('reach bottom!');
+    var _self = this;
+    if (this.page > 3) {
+      if (!_self.isFixHeight) {
+        var view = uni.createSelectorQuery().select("#content-view");
+        view.boundingClientRect(function (data) {
+          console.log('data:', data);
+          _self.scrollHeight = data.height + 100;
+          _self.isFixHeight = true;
+        }).exec();
+      }
+      return;
+    }
+    var t = setTimeout(function () {
+      _self.list.push({
+        thumbUrl: '/static/img/love_skills/thumb.png',
+        title: '套路女朋友的多种方法22222',
+        readTime: '4.28 18:00',
+        readNum: '2.77万' });
+
+      _self.page++;
+    }, 500);
+  },
   methods: {
     lower: function lower() {
       this.list.push({
@@ -248,24 +273,7 @@ var list = [{
         readNum: '2.77万' });
 
     },
-    onPulling: function onPulling(e) {
-      console.log("onpulling", e);
-    },
-    onRefresh: function onRefresh() {var _this = this;
-      if (this._freshing) return;
-      this._freshing = true;
-      setTimeout(function () {
-        _this.triggered = false;
-        _this._freshing = false;
-      }, 3000);
-    },
-    onRestore: function onRestore() {
-      this.triggered = 'restore'; // 需要重置
-      console.log("onRestore");
-    },
-    onAbort: function onAbort() {
-      console.log("onAbort");
-    },
+
     switchTab: function switchTab(tabName) {
       // 切换面板
       if (tabName == 'last_update') {

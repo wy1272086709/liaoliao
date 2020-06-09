@@ -379,18 +379,47 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _vipinfo = _interopRequireDefault(__webpack_require__(/*! ../../common/vipinfo/vipinfo.vue */ 39));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
 //
 //
 //
-var _default = { data: function data() {return { level: 1, dates: "2020.05.06~2020.06.06" };
-  },
-  components: {
-    vipInfo: _vipinfo.default },
-
-  methods: {} };exports.default = _default;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { level: 1, dates: "2020.05.06~2020.06.06", nodes: [{ name: 'div', attrs: { class: 'div-class', style: 'line-height: 60px; color: red; text-align:center;' }, children: [{ type: 'text', text: 'Hello&nbsp;uni-app!' }] }], strings: '<div style="text-align:center;"><img src="https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png"/></div>' };}, components: { vipInfo: _vipinfo.default }, methods: {} };exports.default = _default;
 
 /***/ }),
 

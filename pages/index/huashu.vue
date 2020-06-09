@@ -19,9 +19,16 @@
 		</view>
 		->
 		<!--  -->
+		
+		<view id="search-view-box">
+			<view id="search-view">
+				<input id="search-text" type="text" placeholder="点击这里输入对方想说的话" placeholder-class="search-class" v-model="searchKeyword" />
+				<uni-icons type="search" :size="iconSize"></uni-icons>
+			</view>
+		</view>
 		<view id="content-view" :style="'min-height:'+scrollHeight+'px;'">
 			<view class="huashu-article huashu-article-first" v-for="item in articleList" >
-				<view id="huashu-article-title">
+				<view class="huashu-article-title">
 					<text>{{item.title}}</text>
 				</view>
 				<view class="huashu-line" v-for="line in item.list">
@@ -41,7 +48,6 @@
 					</view>
 				</view>
 			</view>
-			<uni-load-more :status="loadingType"></uni-load-more>
 		</view>
 		<tab-bar></tab-bar>
 	</view>
@@ -53,17 +59,33 @@
 		data() {
 			return {
 				scrollHeight: 0,
+				searchKeyword: "",
 				navigation: {
 					height: 88,
 					top: 30,
 					left:17,
 					title: ""
 				},
+				isFixHeight: false,
 				contentText: '加载更多',
 				loadingType: 'more', //加载更多状态
 				iconSize: 20,
 				page: 1, 
 				articleList: [ 
+					{
+						list:[
+							{
+								// 1男,2女,content 为对话内容
+								sex:1,
+								content: "能不能和我拍个照"
+							},
+							{
+								sex:2,
+								content: "为什么"
+							}
+						],
+						title: "关于拍照"
+					},
 					{
 						list:[
 							{
@@ -124,6 +146,9 @@
 		onLoad(option) {
 			console.log('option', option);
 			let title = option.title;
+			// 获取keyword,
+			let key  = option.keyword;
+			this.searchKeyword = key;
 			if(title) {
 				title = decodeURIComponent(title);
 				uni.setNavigationBarTitle({
@@ -133,7 +158,7 @@
 			let sysinfo = uni.getSystemInfoSync();
 			let windowHeight = sysinfo.windowHeight;
 			//this.navigation.height = statusBarHeight;
-			let scrollHeight = windowHeight - 82;
+			let scrollHeight = windowHeight - 82 -50;
 			this.scrollHeight = scrollHeight;
 			setTimeout(function() {
 				console.log('start pulldown');
@@ -146,26 +171,20 @@
 			},
 			lower() {
 				console.log('拉倒底部,加载下一页....');
-				this.articleList.push([
-					{
-						// 1男,2女,content 为对话内容
-						sex:1,
-						content: "能不能和我拍个照"
-					},
-					{
-						sex:2,
-						content: "为什么"
-					},
-					{
-						// 1男,2女,content 为对话内容
-						sex:1,
-						content: "能不能和我拍个照"
-					},
-					{
-						sex:2,
-						content: "为什么"
-					}
-				]);
+				this.articleList.push({
+					list:[
+						{
+							// 1男,2女,content 为对话内容
+							sex:1,
+							content: "能不能和我拍个照"
+						},
+						{
+							sex:2,
+							content: "为什么"
+						}
+					],
+					title: "关于拍照"
+				});
 			},
 			back() {
 				uni.navigateBack({
@@ -195,21 +214,33 @@
 			let _self = this;
 			if(_self.page > 3) {
 				console.log('page');
+				// 获取DIV 的高度,然后加上scrollHeight
+				// 计算组件的高度
+				if(!_self.isFixHeight) {
+					let view = uni.createSelectorQuery().select("#content-view");
+					view.boundingClientRect(data => {
+						_self.scrollHeight = data.height+100;
+						_self.isFixHeight  = true;
+					}).exec();
+				}
 				_self.loadingType = 'nomore';
 				return;
 			}
 			let t = setTimeout(function() {
-				_self.articleList.push([
-					{
-						// 1男,2女,content 为对话内容
-						sex:1,
-						content: "能不能和我拍个照"
-					},
-					{
-						sex:2,
-						content: "为什么"
-					}
-				]);
+				_self.articleList.push({
+					list:[
+						{
+							// 1男,2女,content 为对话内容
+							sex:1,
+							content: "能不能和我拍个照"
+						},
+						{
+							sex:2,
+							content: "为什么"
+						}
+					],
+					title: "关于拍照"
+				});
 				_self.page++;
 				uni.hideNavigationBarLoading();
 			}, 500);
@@ -248,13 +279,48 @@ view, scroll-view {
 	display: flex;
 	box-sizing:border-box;
 }
+
+#search-view{
+	width:686rpx;
+	height:40px;
+	align-items: center;
+	background-color: rgba(255,255,255, 1);
+	margin-left: 32rpx;
+	margin-right: 32rpx;
+	margin-bottom: 10px;
+	border-radius:4px 4px 4px 4px;
+}
+
+#search-view-box {
+	width:750rpx;
+	background-color: #2369E6;
+}
+
+.search-class {
+	font-size:14px;
+	font-family:PingFangSC-Regular,PingFang SC;
+	font-weight:400;
+	color:rgba(170,170,170,1);
+}
+
+#search-text {
+	display: inline-block;
+	font-size:14px;
+	font-family:PingFangSC-Regular,PingFang SC;
+	font-weight:400;
+	color:rgba(170,170,170,1);
+	width:90%;
+	margin-left:5px;
+}
+	
 #content-view {
 	display: flex;
+	overflow-y: scroll;
 	flex-direction: column;
 	width:750rpx;
 	align-items: center;
 	align-content: center;
-	justify-content: center;
+	justify-content: flex-start;
 	background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 }
 
@@ -266,6 +332,20 @@ view, scroll-view {
 	margin-left:32rpx;
 	margin-right:32rpx;
 	border-radius:10px;
+}
+
+.huashu-article-title{
+	margin-top:10px;
+	margin-left:32rpx;
+	border-bottom: 1px dashed #2369E6;
+	margin-right:32rpx;
+}
+
+.huashu-article-title>text {
+	font-size: 16px;
+	font-family: PingFangSC-Regular,PingFang SC;
+	font-weight: 500;
+	color: #2369E6;
 }
 
 .huashu-article-first {
@@ -305,4 +385,5 @@ view, scroll-view {
 	color:rgba(51,51,51,1);
 	line-height:20px;
 }
+
 </style>

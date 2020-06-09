@@ -1,7 +1,9 @@
 <template>
 	<view id="root-view">
 		<view id="container-view" :style="'height:'+winHeight+'px;'">
-			<view id="ads-view" :style="'height:'+adsHeight+'px;'"></view>
+			<view id="ads-view" :style="'height:'+adsHeight+'px;'">
+				<image class="ads-image" src="../../static/img/index/ads.png"></image>
+			</view>
 			<view id="icon-view" :style="'height:'+iconHeight+'px;'">
 				<view id="help-center-view"  @tap="help_center()">
 					<view>
@@ -42,8 +44,8 @@
 			</view>
 			
 			<view id="search-view" :style="'height:'+searchViewHeight+'px;margin-top:'+searchViewTop+'px;'">
-				<input id="search-text" type="text" placeholder="点击这里输入对方想说的话" placeholder-class="search-class"/>
-				<uni-icons type="search" :size="iconSize"></uni-icons>
+				<input id="search-text" type="text" placeholder="点击这里输入对方想说的话" placeholder-class="search-class" v-model="keyword" />
+				<uni-icons type="search" :size="iconSize" @tap="searchKeyword()"></uni-icons>
 				<!--
 				<uni-search-bar></uni-search-bar>
 				-->
@@ -85,6 +87,7 @@
 				firstNavTop: 0,
 				secondNavLabelHeight: 0,
 				iconSize: 0,
+				keyword: '',
 				navList: [{
 					firstNav: '开场助手',
 					secondNav: [ 
@@ -104,6 +107,12 @@
 			tabBar
 		},
 		methods: {
+			// 跳转到关键词页面
+			searchKeyword() {
+				uni.navigateTo({
+					url: '/pages/index/huashu?keyword='+this.keyword
+				});
+			},
 			getNavList() {
 				
 			},
@@ -187,9 +196,17 @@
 	
 	#ads-view {
 		width:750rpx;
+		margin-left:32rpx;
+		margin-right:32rpx;
+	}
+	
+	.ads-image {
+		max-width: 686rpx;
+		max-height: 100%;	
 	}
 	
 	#icon-view {
+		margin-top:20px;
 		margin-left:60rpx;
 		margin-right:60rpx;
 	}
