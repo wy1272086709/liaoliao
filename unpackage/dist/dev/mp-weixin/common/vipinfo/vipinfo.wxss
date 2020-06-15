@@ -1,6 +1,6 @@
 
 .header-vip-view.data-v-2e4fc77e {
-	wclassth:606rpx;
+	width:606rpx;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;

@@ -75,7 +75,7 @@
 			console.log(scrollHeight);
 			let ratio = scrollHeight/724;
 			ratio = ratio.toFixed(2);
-			this.scrollHeight = scrollHeight - 60*ratio-74*ratio; 
+			this.scrollHeight = scrollHeight - 25 - 74; 
 			this.comboHeight  = 120*ratio;
 			this.rightViewTop = 25*ratio;
 			this.rightViewBottom = 28*ratio;
@@ -102,41 +102,18 @@
 				this.comboPay();
 			},
 			comboPay() {
-				uni.login({
-					provider: 'weixin',
-					success: function(loginRes) {
-						let code = loginRes.code;
-						// 请求后台数据 prepay_id paySign nonceStr timeStamp
-						uni.request({
-							url: '',
-							data: {
-								code: code,
-								payMoney: 1,
-								uid: '',
-								type: '1'
-							},
-							header: {
-								'custom-header': '' //自定义请求头信息
-							},
-							success: (res) => {
-								console.log(res);
-								// 调起支付
-								uni.requestPayment({
-									provider: 'wxpay',
-									timeStamp: String(Date.now()),
-									nonceStr: res.nonceStr,
-									package: res.package,
-									signType: 'MD5',
-									paySign: res.paySign,
-									success: function(res) {
-										console.log('success:' + JSON.stringify(res));
-									},
-									fail: function(err) {
-										console.log('fail:' + JSON.stringify(err));
-									}
-								});
-							}
-						});
+				uni.requestPayment({
+					provider: 'wxpay',
+					timeStamp: String(Date.now()),
+					nonceStr: "",
+					package: "zxxxx",
+					signType: 'MD5',
+					paySign: "",
+					success: function(res) {
+						console.log('success:' + JSON.stringify(res));
+					},
+					fail: function(err) {
+						console.log('fail:' + JSON.stringify(err));
 					}
 				});
 			}

@@ -1,54 +1,52 @@
 {
-	"description": "项目配置文件。",
-	"packOptions": {
-		"ignore": []
-	},
-	"setting": {
-		"urlCheck": true,
-		"es6": false,
-		"minified": true
-	},
-	"compileType": "miniprogram",
-	"libVersion": "2.9.2",
-	"appid": "wx056d66f83be0fb0a",
-	"projectname": "myapp",
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"condition": {
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"current": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": 2,
-			"list": [
-				{
-					"name": "恋爱话术",
-					"query": "",
-					"id": 0,
-					"pathName": "pages/index/index"
-				},
-				{
-					"name": "恋爱技巧",
-					"query": "",
-					"id": 1,
-					"pathName": "pages/cases/index"
-				},
-				{
-					"name": "个人中心",
-					"query": "",
-					"id": 2,
-					"pathName": "pages/user/index"
-				}
-			]
-		}
-	}
+  "description": "项目配置文件。",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "minified": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.9.2",
+  "appid": "wx4e139ad1e1db3d80",
+  "projectname": "myapp",
+  "condition": {
+    "search": {
+      "current": -1,
+      "list": []
+    },
+    "conversation": {
+      "current": -1,
+      "list": []
+    },
+    "game": {
+      "current": -1,
+      "list": []
+    },
+    "miniprogram": {
+      "current": 2,
+      "list": [
+        {
+          "name": "恋爱话术",
+          "query": "",
+          "id": 0,
+          "pathName": "pages/index/index"
+        },
+        {
+          "name": "恋爱技巧",
+          "query": "",
+          "id": 1,
+          "pathName": "pages/cases/index"
+        },
+        {
+          "name": "个人中心",
+          "query": "",
+          "id": 2,
+          "pathName": "pages/user/index"
+        }
+      ]
+    }
+  }
 }

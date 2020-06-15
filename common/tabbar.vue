@@ -1,5 +1,5 @@
 <template>
-	<view class="tabbar-view">
+	<view class="tabbar-view" :style="'bottom:'+bottom+'px;'">
 		<view class="tabbar-navigator"  @tap="switchTab(index)" v-for="(item,index) in tabList" :key="index">
 			<view class="tabbar-icon">
 				<image :src="item.iconPath" :class="item.defaultClass"></image>
@@ -15,6 +15,7 @@
 	export default {
 		data() {
 			return {
+				bottom: 0,
 				tabList: [
 					{
 						pagePath: '/pages/index/index',
@@ -45,6 +46,11 @@
 						defaultClass: 'tabbar-icon-class',
 					}
 				]
+			}
+		},
+		mounted() {
+			if(getApp().globalData.isIphoneX) {
+				this.bottom = 34;
 			}
 		},
 		methods:{
@@ -84,13 +90,12 @@
 		display: flex;
 		height: 82px;
 		background:linear-gradient(90deg,rgba(34,121,239,1) 0%,rgba(61,177,242,1) 100%);
-		position: fixed;
 		bottom: 0rpx;
 		justify-content: space-around;
 	}
 	.tabbar-icon-class {
-		max-width: 48rpx;
-		max-height: 24px;
+		width: 24px;
+		height: 24px;
 	}
 	
 	

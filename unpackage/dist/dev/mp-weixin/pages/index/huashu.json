@@ -2,7 +2,7 @@
   "navigationBarTitleText": "",
   "navigationBarBackgroundColor": "#2369E6",
   "enablePullDownRefresh": true,
-  "onReachBottomDistance": 40,
+  "onReachBottomDistance": 10,
   "usingComponents": {
     "uni-icons": "/components/uni-icons/uni-icons",
     "tab-bar": "/common/tabbar"

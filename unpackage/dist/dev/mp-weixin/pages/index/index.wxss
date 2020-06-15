@@ -25,8 +25,8 @@ view.data-v-47b73f3f,scroll-view.data-v-47b73f3f {
 	margin-right:32rpx;
 }
 .ads-image.data-v-47b73f3f {
-	max-width: 686rpx;
-	max-height: 100%;
+	width: 686rpx;
+	height: 100%;
 }
 #icon-view.data-v-47b73f3f {
 	margin-top:20px;

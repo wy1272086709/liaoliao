@@ -46,6 +46,11 @@
 				</view>
 			</view>
 			<tabBar></tabBar>
+			<scorll-view>
+			     <view style="height:34px;" v-if="isIphoneX">
+					
+				 </view>
+			</scorll-view>
 	</view>
 	
 </template>
@@ -54,6 +59,7 @@
 <script>
 	import tabbar from '../../common/tabbar.vue';
 	import vipInfo from '../../common/vipinfo/vipinfo.vue';
+	import http from '../../common/http.js';
 	export default {
 		data() {
 			return {
@@ -62,6 +68,7 @@
 				openId: '',
 				contentHeight: 0,
 				level: -1,
+				isIphoneX: false,
 				isCanUse:uni.getStorageSync('wx_user_info') || true
 			}
 		},
@@ -72,6 +79,9 @@
 		onLoad() {
 			//this.login();
 			let winHeight      = uni.getSystemInfoSync().windowHeight;
+			if (this.isIphoneX) {
+				winHeight =  winHeight - 34;
+			}
 			// 设计稿731 高度
 			this.contentHeight = winHeight-82+20;
 			console.log(winHeight, this.contentHeight);
@@ -80,6 +90,9 @@
 		},
 		created() {
 			console.log('created....');
+		},
+		mounted() {
+			this.isIphoneX = getApp().globalData.isIphoneX;
 		},
 		computed: {
 			userInfo: function() {
@@ -166,6 +179,7 @@
 					provider: 'weixin',
 					success: function(loginRes) {
 						let code = loginRes.code;
+						
 						console.log('code'+code);
 						uni.hideLoading();
 						//非第一次授权获取用户信息
@@ -217,10 +231,25 @@
 						console.log(userInfo);
 						this.setUserInfo(userInfo);
 						this.setUserInfoToStrorage(userInfo);
+						this.userToDb(userInfo);
 					},
 					fail: () => {
 						console.log("未授权");
 					}
+				});
+			},
+			userToDb(userInfo) {
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				const url = apiPrefix + "?mod=user&ac=wx_reg_add";
+				http.request(url, {
+					auth: auth,
+					openid: "abcdef",
+					nickname: userInfo.nickName,
+					avatar: userInfo.avatarUrl
+				}).then(resp=> {
+					console.log(resp);
 				});
 			},
 			// 手机登录时获取手机号码相关信息的函数
@@ -242,15 +271,24 @@
 		box-shadow:0px 4rpx 8rpx 0px rgba(0,0,0,0.01) !important;
 		border-radius:20rpx !important;
 	}
-	
-	.uni-list-item {
-		
+	.uni-list-hover {
+		background:rgba(255,255,255,1) !important;
+		box-shadow:0px 4rpx 8rpx 0px rgba(0,0,0,0.01) !important;
+		border-radius:20rpx !important;
 	}
+	
+	.uni-list-item--hover {
+		background:rgba(255,255,255,1) !important;
+		box-shadow:0px 4rpx 8rpx 0px rgba(0,0,0,0.01) !important;
+		border-radius:20rpx !important;
+	}
+	
 	.root-view {
 		display: -webkit-box;
 		display: -webkit-flex;
 		display: flex;
 		flex-direction: column;
+		background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 	}
 	
 	
@@ -261,7 +299,6 @@
 		flex-direction: column;
 		flex-wrap:wrap;
 		justify-content: center;
-		background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 	}
 
 	#no-login-view {
@@ -274,20 +311,6 @@
 		box-shadow:0px 2px 4px 0px rgba(0,0,0,0.01);
 		border-radius:10px;
 	}
-	
-	.header {
-		margin: 90rpx 0 90rpx 50rpx;
-		border-bottom: 1px solid #ccc;
-		text-align: center;
-		width: 650rpx;
-		height: 150px;
-		line-height: 450rpx;
-	}
-
-	.header image {
-		width: 200rpx;
-		height: 200rpx;
-	}
 
 	#header-view {
 		display: flex;
@@ -297,15 +320,7 @@
 	#header-member-info {
 		display: flex;
 	}
-	.content {
-		width:750rpx;
-		flex-direction: column;
-		justify-content: center;
-	}
 
-	.content-first-line {
-		justify-content: center;
-	}
 	
 	#header-vip-view {
 		width:606rpx;
@@ -482,7 +497,7 @@
 		border-radius:10px;
 	}
 	
-	#top_list, #bottom_list {
+	#bottom_list {
 		display: flex;
 		flex-direction: column;
 	}
@@ -502,11 +517,5 @@
 		border-radius:10px 10px 10px 10px;
 		margin-bottom: 10px;
 		width:686rpx;
-	}
-	
-	#top_list {
-		margin-top:25px;
-	}
-	
-	
+	}	
 </style>

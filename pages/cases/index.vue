@@ -12,8 +12,8 @@
 			</view>
 		</view>
 		
-		<view id="content-view"  :style="'min-height:'+scrollHeight+'px;'">
-			<view v-for="item in list" class="content-root-view">
+		<view id="content-view"  :style="'min-height:'+scrollHeight+'px;bottom:'+bottom+'px;'">
+			<view v-for="item in list" class="content-root-view" @tap="getArticleView(item.id)" :key="item.id">
 				<view class="content-img-view">
 					<image :src="item.thumbUrl" class="thumb-class"></image>
 				</view>
@@ -28,57 +28,72 @@
 			</view>
 		</view>
 		<tabBar></tabBar>
+		<scorll-view>
+		     <view style="height:34px;" v-if="isIphoneX">
+				
+			 </view>
+		</scorll-view>
 	</view>
 </template>
 
 <script>
 	import tabBar from '../../common/tabbar.vue';
 	let list = [{
+		id: 1,
 		thumbUrl: '/static/img/love_skills/thumb.png',
 		title: '套路女朋友的多种方法，全程高能',
 		readTime: '4.28 18:00',
 		readNum: '2.77万'
 	}, {
+		id: 2,
 		thumbUrl: '/static/img/love_skills/thumb.png',
 		title: '套路女朋友的多种方法，全程高能',
 		readTime: '4.28 18:00',
 		readNum: '2.77万'
 	}, {
+		id: 3,
 		thumbUrl: '/static/img/love_skills/thumb.png',
 		title: '套路女朋友的多种方法，全程高能',
 		readTime: '4.28 18:00',
 		readNum: '2.77万'
 	}, {
+		id: 4,
 		thumbUrl: '/static/img/love_skills/thumb.png',
 		title: '套路女朋友的多种方法，全程高能',
 		readTime: '4.28 18:00',
 		readNum: '2.77万'
 	}, {
+		id: 5,
 		thumbUrl: '/static/img/love_skills/thumb.png',
 		title: '套路女朋友的多种方法，全程高能',
 		readTime: '4.28 18:00',
 		readNum: '2.77万'
 	}, {
+		id: 6,
 		thumbUrl: '/static/img/love_skills/thumb.png',
 		title: '套路女朋友的多种方法，全程高能',
 		readTime: '4.28 18:00',
 		readNum: '2.77万'
 	}, {
+		id: 7,
 		thumbUrl: '/static/img/love_skills/thumb.png',
 		title: '套路女朋友的多种方法，全程高能',
 		readTime: '4.28 18:00',
 		readNum: '2.77万'
 	}, {
+		id: 8,
 		thumbUrl: '/static/img/love_skills/thumb.png',
 		title: '套路女朋友的多种方法，全程高能',
 		readTime: '4.28 18:00',
 		readNum: '2.77万'
 	}, {
+		id: 9,
 		thumbUrl: '/static/img/love_skills/thumb.png',
 		title: '套路女朋友的多种方法，全程高能',
 		readTime: '4.28 18:00',
 		readNum: '2.77万'
 	}, {
+		id: 10,
 		thumbUrl: '/static/img/love_skills/thumb.png',
 		title: '套路女朋友的多种方法，全程高能',
 		readTime: '4.28 18:00',
@@ -87,19 +102,28 @@
 	export default {
 		data() {
 			return {
-				borderClass: '',
 				tabName: 'last_update',
 				last_update_class: 'last_update border-active',
 				love_skills_class: 'love_skills',
 				girl_area_class: 'girl_area',
 				list: list,
 				page: 1,
+				interval: null,
+				isIphoneX: false,
 				scrollHeight: 0,
+				bottom: 0,
 				winHeight: 0,
 			}
 		},
 		onLoad() {
-			this.winHeight    = uni.getSystemInfoSync().windowHeight;
+			let winHeight = uni.getSystemInfoSync().windowHeight;
+			let isIphoneX = getApp().globalData.isIphoneX;
+			this.isIphoneX = isIphoneX;
+			this.bottom = 82;
+			if (isIphoneX) {
+				this.winHeight    = winHeight - 34;
+				this.bottom = this.bottom+34; 
+			} 
 			this.scrollHeight = this.winHeight - 82 - 50;
 		},
 		mounted() {
@@ -108,22 +132,27 @@
 		components:{
 			tabBar:tabBar
 		},
+		beforeDestroy() {
+			this.interval || clearTimeout(this.interval);
+		},
 		onReachBottom() {
 			console.log('reach bottom!');
 			let _self = this;
 			if(this.page>3) {
+				clearTimeout(this.interval);
 				if (!_self.isFixHeight) {
 					let view = uni.createSelectorQuery().select("#content-view");
 					view.boundingClientRect(data => {
 						console.log('data:', data);
-						_self.scrollHeight = data.height+100;
+						_self.scrollHeight = data.height+20;
 						_self.isFixHeight  = true;
 					}).exec();
 				}
 				return;
 			}
-			let t = setTimeout(function() { 
+			this.interval = setTimeout(function() { 
 				_self.list.push({
+					id: 11,
 					thumbUrl: '/static/img/love_skills/thumb.png',
 					title: '套路女朋友的多种方法22222',
 					readTime: '4.28 18:00',
@@ -141,7 +170,13 @@
 					readNum: '2.77万'
 				});
 			},
-			
+			getArticleView(id) {
+				console.log('getArticleView....');
+				// 获取文章详情信息
+				uni.navigateTo({
+					url:'/pages/cases/detail'
+				})
+			},
 			switchTab(tabName) {
 				// 切换面板
 				if(tabName=='last_update') {
@@ -206,6 +241,7 @@ view {
 #content-view {
 	display: flex;
 	overflow-y: scroll;
+	-webkit-overflow-scrolling:touch;
 	width: 100%;
 	margin-top:16px;
 	flex-direction: column;

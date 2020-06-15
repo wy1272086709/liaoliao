@@ -757,7 +757,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -8204,7 +8204,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8225,14 +8225,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -8308,7 +8308,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -8699,6 +8699,37 @@ internalMixin(Vue);
 /* harmony default export */ __webpack_exports__["default"] = (Vue);
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../webpack/buildin/global.js */ 3)))
+
+/***/ }),
+
+/***/ 23:
+/*!******************************************!*\
+  !*** D:/uniapptest/myapp/common/http.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var http = /*#__PURE__*/function () {function http() {_classCallCheck(this, http);}_createClass(http, null, [{ key: "request", value: function request(
+    url) {var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};var method = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "POST";var contentType = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "application/x-www-form-urlencoded";
+      return new Promise(function (resolve, reject) {
+        uni.request({
+          url: url, //仅为示例，并非真实接口地址。
+          data: params,
+          header: {
+            'Content-Type': contentType },
+
+          method: method,
+          success: function success(res) {
+            resolve(res.data.data);
+          } });
+
+      });
+    } }]);return http;}();var _default =
+
+
+http;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
@@ -9650,7 +9681,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "恋爱话术", "navigationBarBackgroundColor": "#2369E6", "enablePullDownRefresh": true, "usingComponents": { "tab-bar": "/common/tabbar" }, "usingAutoImportComponents": {} }, "pages/cases/index": { "navigationBarTitleText": "恋爱技巧", "navigationBarBackgroundColor": "#2369E6", "enablePullDownRefresh": true, "onReachBottomDistance": 40, "usingComponents": { "tab-bar": "/common/tabbar" }, "usingAutoImportComponents": {} }, "pages/user/index": { "navigationBarTitleText": "个人中心", "navigationBarBackgroundColor": "#2369E6", "usingComponents": { "tab-bar": "/common/tabbar", "vip-info": "/common/vipinfo/vipinfo" }, "usingAutoImportComponents": {} }, "pages/user/complaint": { "navigationBarTitleText": "投诉建议", "navigationBarBackgroundColor": "#2369E6", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/user/upgrade_user_vip": { "navigationBarTitleText": "升级VIP", "navigationBarBackgroundColor": "#2369E6", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/user/new_user_page": { "navigationBarTitleText": "新手必看", "navigationBarBackgroundColor": "#2369E6", "usingComponents": { "vip-info": "/common/vipinfo/vipinfo" }, "usingAutoImportComponents": {} }, "pages/index/huashu": { "navigationBarTitleText": "", "navigationBarBackgroundColor": "#2369E6", "enablePullDownRefresh": true, "onReachBottomDistance": 40, "usingComponents": { "tab-bar": "/common/tabbar" }, "usingAutoImportComponents": {} }, "pages/index/meme": { "navigationBarTitleText": "表情包", "navigationBarBackgroundColor": "#2369E6", "usingComponents": {}, "usingAutoImportComponents": {} }, "common/vipinfo/vipinfo": { "usingComponents": {}, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "恋爱话术", "navigationBarBackgroundColor": "#2369E6", "enablePullDownRefresh": true }, "pages/cases/index": { "navigationBarTitleText": "恋爱技巧", "navigationBarBackgroundColor": "#2369E6", "enablePullDownRefresh": true, "onReachBottomDistance": 40 }, "pages/user/index": { "navigationBarTitleText": "个人中心", "navigationBarBackgroundColor": "#2369E6" }, "pages/user/complaint": { "navigationBarTitleText": "投诉建议", "navigationBarBackgroundColor": "#2369E6" }, "pages/user/upgrade_user_vip": { "navigationBarTitleText": "升级VIP", "navigationBarBackgroundColor": "#2369E6" }, "pages/user/new_user_page": { "navigationBarTitleText": "新手必看", "navigationBarBackgroundColor": "#2369E6" }, "pages/index/huashu": { "navigationBarTitleText": "", "navigationBarBackgroundColor": "#2369E6", "enablePullDownRefresh": true, "onReachBottomDistance": 10 }, "pages/index/meme": { "navigationBarTitleText": "表情包", "navigationBarBackgroundColor": "#2369E6" }, "pages/cases/detail": { "navigationBarTitleText": "恋爱技巧文章", "navigationBarBackgroundColor": "#2369E6" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 
@@ -9666,7 +9697,315 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 94:
+/***/ 88:
+/*!************************************************!*\
+  !*** D:/uniapptest/myapp/common/html_parse.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /*
+                                                                                                      * HTML5 Parser By Sam Blowes
+                                                                                                      * ----------------------------------------------------------------------------
+                                                                                                      * Usage
+                                                                                                      * ----------------------------------------------------------------------------
+                                                                                                      *
+                                                                                                      * // Use like so:
+                                                                                                      * HTMLParser(htmlString, {
+                                                                                                      *     start: function(tag, attrs, unary) {},
+                                                                                                      *     end: function(tag) {},
+                                                                                                      *     chars: function(text) {},
+                                                                                                      *     comment: function(text) {}
+                                                                                                      * });
+                                                                                                      *
+                                                                                                      * // or to get an XML string:
+                                                                                                      * HTMLtoXML(htmlString);
+                                                                                                      *
+                                                                                                      * // or to get an XML DOM Document
+                                                                                                      * HTMLtoDOM(htmlString);
+                                                                                                      *
+                                                                                                      * // or to inject into an existing document/DOM node
+                                                                                                      * HTMLtoDOM(htmlString, document);
+                                                                                                      * HTMLtoDOM(htmlString, document.body);
+                                                                                                      *
+                                                                                                      */
+// Regular Expressions for parsing tags and attributes
+var startTag = /^<([-A-Za-z0-9_]+)((?:\s+[a-zA-Z_:][-a-zA-Z0-9_:.]*(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/;
+var endTag = /^<\/([-A-Za-z0-9_]+)[^>]*>/;
+var attr = /([a-zA-Z_:][-a-zA-Z0-9_:.]*)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g; // Empty Elements - HTML 5
+
+var empty = makeMap('area,base,basefont,br,col,frame,hr,img,input,link,meta,param,embed,command,keygen,source,track,wbr'); // Block Elements - HTML 5
+// fixed by xxx 将 ins 标签从块级名单中移除
+
+var block = makeMap('a,address,article,applet,aside,audio,blockquote,button,canvas,center,dd,del,dir,div,dl,dt,fieldset,figcaption,figure,footer,form,frameset,h1,h2,h3,h4,h5,h6,header,hgroup,hr,iframe,isindex,li,map,menu,noframes,noscript,object,ol,output,p,pre,section,script,table,tbody,td,tfoot,th,thead,tr,ul,video'); // Inline Elements - HTML 5
+
+var inline = makeMap('abbr,acronym,applet,b,basefont,bdo,big,br,button,cite,code,del,dfn,em,font,i,iframe,img,input,ins,kbd,label,map,object,q,s,samp,script,select,small,span,strike,strong,sub,sup,textarea,tt,u,var'); // Elements that you can, intentionally, leave open
+// (and which close themselves)
+
+var closeSelf = makeMap('colgroup,dd,dt,li,options,p,td,tfoot,th,thead,tr'); // Attributes that have their values filled in disabled="disabled"
+
+var fillAttrs = makeMap('checked,compact,declare,defer,disabled,ismap,multiple,nohref,noresize,noshade,nowrap,readonly,selected'); // Special Elements (can contain anything)
+
+var special = makeMap('script,style');
+function HTMLParser(html, handler) {
+  var index;
+  var chars;
+  var match;
+  var stack = [];
+  var last = html;
+
+  stack.last = function () {
+    return this[this.length - 1];
+  };
+
+  while (html) {
+    chars = true; // Make sure we're not in a script or style element
+
+    if (!stack.last() || !special[stack.last()]) {
+      // Comment
+      if (html.indexOf('<!--') == 0) {
+        index = html.indexOf('-->');
+
+        if (index >= 0) {
+          if (handler.comment) {
+            handler.comment(html.substring(4, index));
+          }
+
+          html = html.substring(index + 3);
+          chars = false;
+        } // end tag
+
+      } else if (html.indexOf('</') == 0) {
+        match = html.match(endTag);
+
+        if (match) {
+          html = html.substring(match[0].length);
+          match[0].replace(endTag, parseEndTag);
+          chars = false;
+        } // start tag
+
+      } else if (html.indexOf('<') == 0) {
+        match = html.match(startTag);
+
+        if (match) {
+          html = html.substring(match[0].length);
+          match[0].replace(startTag, parseStartTag);
+          chars = false;
+        }
+      }
+
+      if (chars) {
+        index = html.indexOf('<');
+        var text = index < 0 ? html : html.substring(0, index);
+        html = index < 0 ? '' : html.substring(index);
+
+        if (handler.chars) {
+          handler.chars(text);
+        }
+      }
+    } else {
+      html = html.replace(new RegExp('([\\s\\S]*?)<\/' + stack.last() + '[^>]*>'), function (all, text) {
+        text = text.replace(/<!--([\s\S]*?)-->|<!\[CDATA\[([\s\S]*?)]]>/g, '$1$2');
+
+        if (handler.chars) {
+          handler.chars(text);
+        }
+
+        return '';
+      });
+      parseEndTag('', stack.last());
+    }
+
+    if (html == last) {
+      throw 'Parse Error: ' + html;
+    }
+
+    last = html;
+  } // Clean up any remaining tags
+
+
+  parseEndTag();
+
+  function parseStartTag(tag, tagName, rest, unary) {
+    tagName = tagName.toLowerCase();
+
+    if (block[tagName]) {
+      while (stack.last() && inline[stack.last()]) {
+        parseEndTag('', stack.last());
+      }
+    }
+
+    if (closeSelf[tagName] && stack.last() == tagName) {
+      parseEndTag('', tagName);
+    }
+
+    unary = empty[tagName] || !!unary;
+
+    if (!unary) {
+      stack.push(tagName);
+    }
+
+    if (handler.start) {
+      var attrs = [];
+      rest.replace(attr, function (match, name) {
+        var value = arguments[2] ? arguments[2] : arguments[3] ? arguments[3] : arguments[4] ? arguments[4] : fillAttrs[name] ? name : '';
+        attrs.push({
+          name: name,
+          value: value,
+          escaped: value.replace(/(^|[^\\])"/g, '$1\\\"') // "
+        });
+
+      });
+
+      if (handler.start) {
+        handler.start(tagName, attrs, unary);
+      }
+    }
+  }
+
+  function parseEndTag(tag, tagName) {
+    // If no tag name is provided, clean shop
+    if (!tagName) {
+      var pos = 0;
+    } // Find the closest opened tag of the same type
+    else {
+        for (var pos = stack.length - 1; pos >= 0; pos--) {
+          if (stack[pos] == tagName) {
+            break;
+          }
+        }
+      }
+
+    if (pos >= 0) {
+      // Close all the open elements, up the stack
+      for (var i = stack.length - 1; i >= pos; i--) {
+        if (handler.end) {
+          handler.end(stack[i]);
+        }
+      } // Remove the open elements from the stack
+
+
+      stack.length = pos;
+    }
+  }
+}
+
+function makeMap(str) {
+  var obj = {};
+  var items = str.split(',');
+
+  for (var i = 0; i < items.length; i++) {
+    obj[items[i]] = true;
+  }
+
+  return obj;
+}
+
+function removeDOCTYPE(html) {
+  return html.replace(/<\?xml.*\?>\n/, '').replace(/<!doctype.*>\n/, '').replace(/<!DOCTYPE.*>\n/, '');
+}
+
+function parseAttrs(attrs) {
+  return attrs.reduce(function (pre, attr) {
+    var value = attr.value;
+    var name = attr.name;
+
+    if (pre[name]) {
+      pre[name] = pre[name] + " " + value;
+    } else {
+      pre[name] = value;
+    }
+
+    return pre;
+  }, {});
+}
+
+function parseHtml(html) {
+  html = removeDOCTYPE(html);
+  var stacks = [];
+  var results = {
+    node: 'root',
+    children: [] };
+
+  HTMLParser(html, {
+    start: function start(tag, attrs, unary) {
+      var node = {
+        name: tag };
+
+
+      if (attrs.length !== 0) {
+        node.attrs = parseAttrs(attrs);
+      }
+
+      if (unary) {
+        var parent = stacks[0] || results;
+
+        if (!parent.children) {
+          parent.children = [];
+        }
+
+        parent.children.push(node);
+      } else {
+        stacks.unshift(node);
+      }
+    },
+    end: function end(tag) {
+      var node = stacks.shift();
+      if (node.name !== tag) console.error('invalid state: mismatch end tag');
+
+      if (stacks.length === 0) {
+        results.children.push(node);
+      } else {
+        var parent = stacks[0];
+
+        if (!parent.children) {
+          parent.children = [];
+        }
+
+        parent.children.push(node);
+      }
+    },
+    chars: function chars(text) {
+      var node = {
+        type: 'text',
+        text: text };
+
+
+      if (stacks.length === 0) {
+        results.children.push(node);
+      } else {
+        var parent = stacks[0];
+
+        if (!parent.children) {
+          parent.children = [];
+        }
+
+        parent.children.push(node);
+      }
+    },
+    comment: function comment(text) {
+      var node = {
+        node: 'comment',
+        text: text };
+
+      var parent = stacks[0];
+
+      if (!parent.children) {
+        parent.children = [];
+      }
+
+      parent.children.push(node);
+    } });
+
+  return results.children;
+}var _default =
+
+parseHtml;exports.default = _default;
+
+/***/ }),
+
+/***/ 96:
 /*!*********************************************************!*\
   !*** D:/uniapptest/myapp/components/uni-icons/icons.js ***!
   \*********************************************************/

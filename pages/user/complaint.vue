@@ -26,22 +26,77 @@
 		},
 		methods: {
 			onSubmit() {
-				uni.showModal({
-					title: '提示',
-					content: '感谢你提交的投诉和建议',
-					showCancel: false,
-					cancelText: '',
-					confirmText: '确定',
-					success: res => {
-						uni.navigateBack({
-							url: '/pages/user/index'
-						});
-					},
-					fail: () => {},
-					complete: () => {
-						
-					}
-				});
+				let isValid = this.validateFunc();
+				if(isValid) {
+					uni.showModal({
+						title: '提示',
+						content: '感谢你提交的投诉和建议',
+						showCancel: false,
+						cancelText: '',
+						confirmText: '确定',
+						success: res => {
+							uni.navigateBack({
+								url: '/pages/user/index'
+							});
+						},
+						fail: () => {},
+						complete: () => {
+							
+						}
+					});
+				}
+			},
+			// 校验方法
+			validateFunc() {
+				let isRequired = this.isRequired();
+				if(!isRequired) {
+					uni.showToast({
+						title: '手机号码和建议内容必填!',
+						icon:"none",
+						duration: 2000
+					});
+					return;
+				}
+				let isValid = this.isPoneAvailable();
+				if(!isValid) {
+					uni.showToast({
+						title: '请输入正确的手机号码',
+						icon:"none",
+						duration: 2000
+					});
+					return;
+				}
+				let isContentValid = this.isContentValid();
+				if (!isContentValid) {
+					uni.showToast({
+						title: '建议内容不超过300个字',
+						icon:"none",
+						duration: 2000
+					});
+					return;
+				}
+				return true;
+			},
+			isContentValid() {
+				let s = this.content.length;
+				if(s>300) {
+					return false;
+				}
+				return true;
+			},
+			isRequired() {
+				if (!this.tel || !this.content) {
+					return false;
+				}
+				return true;
+			},
+			isPoneAvailable() {
+				let myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+				if (!myreg.test(this.tel)) {
+					return false;
+				} else {
+					return true;
+				}
 			}
 		},onLoad() {
 			let winHeight = uni.getSystemInfoSync().windowHeight;

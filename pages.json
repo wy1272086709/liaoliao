@@ -51,7 +51,7 @@
 					"navigationBarTitleText": "",
 					"navigationBarBackgroundColor": "#2369E6",
 					"enablePullDownRefresh":true,
-					"onReachBottomDistance": 40
+					"onReachBottomDistance": 10
 				}
 			},
 			{
@@ -60,11 +60,14 @@
 					"navigationBarTitleText": "表情包",
 					"navigationBarBackgroundColor": "#2369E6"
 				}
+			},
+			{
+				"path" : "pages/cases/detail",
+				"style" : {
+					"navigationBarTitleText": "恋爱技巧文章",
+					"navigationBarBackgroundColor": "#2369E6"
+				}
 			}
-        ,{
-            "path" : "common/vipinfo/vipinfo",
-            "style" : {}
-        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

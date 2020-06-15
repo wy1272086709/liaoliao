@@ -7,14 +7,13 @@
 	background:-webkit-gradient(linear,left top, right top,from(rgba(34,121,239,1)),to(rgba(61,177,242,1)));
 	background:-webkit-linear-gradient(left,rgba(34,121,239,1) 0%,rgba(61,177,242,1) 100%);
 	background:linear-gradient(90deg,rgba(34,121,239,1) 0%,rgba(61,177,242,1) 100%);
-	position: fixed;
 	bottom: 0rpx;
 	-webkit-justify-content: space-around;
 	        justify-content: space-around;
 }
 .tabbar-icon-class {
-	max-width: 48rpx;
-	max-height: 24px;
+	width: 24px;
+	height: 24px;
 }
 .tabbar-navigator {
 	display: -webkit-box;

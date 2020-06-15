@@ -67,6 +67,7 @@ view.data-v-5e343daf, scroll-view.data-v-5e343daf {
 	display: -webkit-flex;
 	display: flex;
 	overflow-y: scroll;
+	-webkit-overflow-scrolling:touch;
 	-webkit-box-orient: vertical;
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
@@ -118,6 +119,7 @@ view.data-v-5e343daf, scroll-view.data-v-5e343daf {
 }
 .huashu-sex.data-v-5e343daf,.huashu-copy-btn.data-v-5e343daf {
 	margin-right:32rpx;
+	padding-left: 40rpx;
 }
 .huashu-sex.data-v-5e343daf {
 	margin-left:32rpx;
@@ -132,7 +134,6 @@ view.data-v-5e343daf, scroll-view.data-v-5e343daf {
 }
 .huashu-content.data-v-5e343daf {
 	width:486rpx;
-	margin-right:40rpx;
 }
 .huashu-content-text.data-v-5e343daf {
 	font-size:14px;

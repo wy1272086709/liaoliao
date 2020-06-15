@@ -52,7 +52,7 @@
 			</view>
 			<scroll-view id="content-view" :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scrolltoupper="upper" @scrolltolower="lower"
                 @scroll="scroll" :style="'height:'+scrollHeight+'px;'">
-				<view v-for="item in navList" class="nav-view">
+				<view v-for="item in navList" class="nav-view" :key="item.navId">
 					<view class="first-nav" :style="'margin-top:'+firstNavTop+'px;'">
 						<label class="first-nav-icon">
 						</label>
@@ -61,19 +61,25 @@
 						</label>
 					</view>
 					<view class="second-nav">
-						<view :class="nav.navClass" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu(nav.title);" v-for="nav in item.secondNav">
+						<view :class="nav.navClass" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu(nav.title);" v-for="nav in item.secondNav" :key="nav.navId">
 							<text class="second-nav-text">{{nav.title}}</text>
 						</view>
 					</view>
 				</view>
 			</scroll-view>
+			<tabBar></tabBar>
+			<scorll-view>
+			     <view style="height:34px;" v-if="isIphoneX">
+					 
+				 </view>
+			</scorll-view>
 		</view>
-		<tabBar></tabBar>
 	</view>
 </template>
 
 <script>
 	import tabBar from '../../common/tabbar.vue';
+	import http from '../../common/http.js';
 	export default {
 		data() {
 			return {
@@ -88,20 +94,27 @@
 				secondNavLabelHeight: 0,
 				iconSize: 0,
 				keyword: '',
+				isIphoneX: false,
 				navList: [{
 					firstNav: '开场助手',
+					navId: 1,
 					secondNav: [ 
-						{ title: '重新开场', navClass:'second-nav-label second-nav-lable-margin' }, 
-						{ title: '土味情话', navClass:'second-nav-label second-nav-lable-margin' }, 
-						{ title: '表情话术', navClass:'second-nav-label' }, 
-						{ title: '表情话术', navClass:'second-nav-label second-nav-lable-margin second-nav-lable-top' }, 
-						{ title: '表情话术', navClass:'second-nav-label second-nav-lable-margin second-nav-lable-top' },
+						{ title: '重新开场', navClass:'second-nav-label second-nav-lable-margin',navId: 2, }, 
+						{ title: '土味情话', navClass:'second-nav-label second-nav-lable-margin', navId: 3 }, 
+						{ title: '表情话术', navClass:'second-nav-label', navId: 4 }, 
+						{ title: '表情话术', navClass:'second-nav-label second-nav-lable-margin second-nav-lable-top', navId: 5 }, 
+						{ title: '表情话术', navClass:'second-nav-label second-nav-lable-margin second-nav-lable-top', navId: 6 },
 					]
 				}]
 			}
 		},
 		mounted() {
+			this.isIphoneX = getApp().globalData.isIphoneX;
 			this.getNavList();
+			let url = '/';
+			http.request(url, {}).then(resp=>{
+				console.log('resp:');
+			});
 		},
 		components:{
 			tabBar
@@ -124,6 +137,30 @@
 			},
 			upgrade_vip() {
 				// 升级
+				let userInfo = this.$store.getters.userInfo;
+				console.log('userInfo', userInfo);
+				if (userInfo.nickName === undefined) {
+					uni.showModal({
+						title: '提示',
+						content: '请先登录',
+						showCancel: false,
+						cancelText: '',
+						confirmText: '确定',
+						success: res => {
+							if(res.confirm) {
+								console.log('res...confirm');
+								uni.navigateTo({
+									url: '/pages/user/index'
+								});
+							}
+						},
+						fail: () => {},
+						complete: () => {
+							
+						}
+					});
+					return;
+				}
 				// 投诉建议
 				uni.navigateTo({
 					url: '/pages/user/upgrade_user_vip'
@@ -163,14 +200,14 @@
 			let ratio     = winHeight/731;
 			ratio = ratio.toFixed(2);
 			this.iconHeight = ratio *102; 
-			this.adsHeight= ratio*188;
+			this.adsHeight= ratio*175;
 			this.winHeight = winHeight;
 			this.searchViewHeight = 40* ratio;
 			this.searchViewTop    = 20*ratio;
 			this.searchViewBottom = 0;
 			this.firstNavTop = 20*ratio;
 			this.secondNavLabelHeight = 30*ratio;
-			this.scrollHeight = winHeight - 188*ratio - 102*ratio - 80*ratio - 82;
+			this.scrollHeight = winHeight - 175*ratio - 102*ratio - 80*ratio;
 			this.iconSize = this.searchViewHeight - 10;
 		}
 	}
@@ -201,8 +238,8 @@
 	}
 	
 	.ads-image {
-		max-width: 686rpx;
-		max-height: 100%;	
+		width: 686rpx;
+		height: 100%;	
 	}
 	
 	#icon-view {

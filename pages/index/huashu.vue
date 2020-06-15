@@ -27,11 +27,11 @@
 			</view>
 		</view>
 		<view id="content-view" :style="'min-height:'+scrollHeight+'px;'">
-			<view class="huashu-article huashu-article-first" v-for="item in articleList" >
+			<view class="huashu-article huashu-article-first" v-for="item in articleList">
 				<view class="huashu-article-title">
 					<text>{{item.title}}</text>
 				</view>
-				<view class="huashu-line" v-for="line in item.list">
+				<view class="huashu-line" v-for="line in item.list" :key="line.id">
 					<view class="huashu-sex">
 						<template v-if="line.sex == 1">
 							<image class="huashu-sex-image" src="../../static/img/index/man.png"></image>
@@ -43,8 +43,8 @@
 					<view class="huashu-content">
 						<text class="huashu-content-text">{{line.content}}</text>
 					</view>
-					<view class="huashu-copy-btn">
-						<image class="huashu-copy-image" src="../../static/img/index/copy.png" @tap="copyHuashu(line.content)"></image>
+					<view class="huashu-copy-btn" @tap="copyHuashu(line.content)">
+						<image class="huashu-copy-image" src="../../static/img/index/copy.png"></image>
 					</view>
 				</view>
 			</view>
@@ -76,10 +76,12 @@
 						list:[
 							{
 								// 1男,2女,content 为对话内容
+								id: 1,
 								sex:1,
 								content: "能不能和我拍个照"
 							},
 							{
+								id: 2,
 								sex:2,
 								content: "为什么"
 							}
@@ -89,11 +91,13 @@
 					{
 						list:[
 							{
+								id: 3,
 								// 1男,2女,content 为对话内容
 								sex:1,
 								content: "能不能和我拍个照"
 							},
 							{
+								id: 4,
 								sex:2,
 								content: "为什么"
 							}
@@ -103,11 +107,13 @@
 					{
 						list:[
 							{
+								id: 5,
 								// 1男,2女,content 为对话内容
 								sex:2,
 								content: "能不能和我拍个照"
 							},
 							{
+								id: 6,
 								sex:1,
 								content: "为什么"
 							}
@@ -117,11 +123,13 @@
 					{	
 						list:[
 							{
+								id: 7,
 								// 1男,2女,content 为对话内容
 								sex:1,
 								content: "能不能和我拍个照"
 							},
 							{
+								id: 8,
 								sex:2,
 								content: "为什么"
 							}
@@ -157,6 +165,9 @@
 			}
 			let sysinfo = uni.getSystemInfoSync();
 			let windowHeight = sysinfo.windowHeight;
+			if(getApp().globalData.isIphoneX) {
+				windowHeight = windowHeight - 68;
+			}
 			//this.navigation.height = statusBarHeight;
 			let scrollHeight = windowHeight - 82 -50;
 			this.scrollHeight = scrollHeight;
@@ -174,11 +185,13 @@
 				this.articleList.push({
 					list:[
 						{
+							id: 10,
 							// 1男,2女,content 为对话内容
 							sex:1,
 							content: "能不能和我拍个照"
 						},
 						{
+							id: 11,
 							sex:2,
 							content: "为什么"
 						}
@@ -230,11 +243,13 @@
 				_self.articleList.push({
 					list:[
 						{
+							id: 10,
 							// 1男,2女,content 为对话内容
 							sex:1,
 							content: "能不能和我拍个照"
 						},
 						{
+							id: 11,
 							sex:2,
 							content: "为什么"
 						}
@@ -316,6 +331,7 @@ view, scroll-view {
 #content-view {
 	display: flex;
 	overflow-y: scroll;
+	-webkit-overflow-scrolling:touch;
 	flex-direction: column;
 	width:750rpx;
 	align-items: center;
@@ -356,8 +372,10 @@ view, scroll-view {
 	margin-top:34rpx;
 	margin-bottom:32rpx;
 }
+
 .huashu-sex,.huashu-copy-btn {
 	margin-right:32rpx;
+	padding-left: 40rpx;
 }
 
 .huashu-sex {
@@ -375,7 +393,6 @@ view, scroll-view {
 }
 .huashu-content {
 	width:486rpx;
-	margin-right:40rpx;
 }
 
 .huashu-content-text {

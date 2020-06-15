@@ -1,7 +1,5 @@
 {
   "navigationBarTitleText": "新手必看",
   "navigationBarBackgroundColor": "#2369E6",
-  "usingComponents": {
-    "vip-info": "/common/vipinfo/vipinfo"
-  }
+  "usingComponents": {}
 }

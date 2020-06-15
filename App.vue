@@ -1,13 +1,27 @@
 <script>
 export default {
 	onLaunch: function() {
-		console.log('App Launch');
+		let _self = this;
+		uni.getSystemInfo({
+		      success: res => {
+		        let modelmes = res.model;
+		        if (modelmes.search('iPhone X') != -1) {
+		          _self.globalData.isIphoneX = true;
+		        }
+		        uni.setStorageSync('modelmes', modelmes)
+		      }
+		})
 	},
 	onShow: function() {
 		console.log('App Show');
 	},
 	onHide: function() {
 		console.log('App Hide');
+	},
+	globalData:{
+		serverUri: "https://xcx.kuxou.com/index.php",
+		isIphoneX: false,
+		auth: '376b66f9bedd4622522dce742adaaebc',
 	}
 };
 </script>

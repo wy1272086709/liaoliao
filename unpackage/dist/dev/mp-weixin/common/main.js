@@ -95,17 +95,31 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
 {
   onLaunch: function onLaunch() {
-    console.log('App Launch');
+    var _self = this;
+    uni.getSystemInfo({
+      success: function success(res) {
+        var modelmes = res.model;
+        if (modelmes.search('iPhone X') != -1) {
+          _self.globalData.isIphoneX = true;
+        }
+        uni.setStorageSync('modelmes', modelmes);
+      } });
+
   },
   onShow: function onShow() {
     console.log('App Show');
   },
   onHide: function onHide() {
     console.log('App Hide');
-  } };exports.default = _default;
+  },
+  globalData: {
+    serverUri: "https://xcx.kuxou.com/index.php",
+    isIphoneX: false,
+    auth: '376b66f9bedd4622522dce742adaaebc' } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 /* 12 */

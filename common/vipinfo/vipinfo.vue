@@ -99,7 +99,7 @@
 
 <style scoped>
 	.header-vip-view {
-		wclassth:606rpx;
+		width:606rpx;
 		display: flex;
 		height:80px;
 		background:linear-gradient(90deg,rgba(234,186,118,1) 0%,rgba(255,224,160,1) 100%);
