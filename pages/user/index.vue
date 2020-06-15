@@ -244,10 +244,10 @@
 				const auth = data.auth;
 				const url = apiPrefix + "?mod=user&ac=wx_reg_add";
 				http.request(url, {
-					auth: auth,
+					auth: auth,					
 					openid: "abcdef",
 					nickname: userInfo.nickName,
-					avatar: userInfo.avatarUrl
+					avatar: userInfo.avatarUrl,
 				}).then(resp=> {
 					console.log(resp);
 				});

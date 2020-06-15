@@ -18,8 +18,8 @@ export default {
 	onHide: function() {
 		console.log('App Hide');
 	},
-	globalData:{
-		serverUri: "https://xcx.kuxou.com/index.php",
+	globalData: {
+		serverUri: "https://kuxou.com/index.php",
 		isIphoneX: false,
 		auth: '376b66f9bedd4622522dce742adaaebc',
 	}

@@ -116,7 +116,7 @@ __webpack_require__.r(__webpack_exports__);
     console.log('App Hide');
   },
   globalData: {
-    serverUri: "https://xcx.kuxou.com/index.php",
+    serverUri: "https://kuxou.com/index.php",
     isIphoneX: false,
     auth: '376b66f9bedd4622522dce742adaaebc' } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
