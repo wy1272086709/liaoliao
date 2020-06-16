@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "恋爱话术",
+  "navigationBarBackgroundColor": "#2369E6",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "tab-bar": "/common/tabbar"
+  }
+}

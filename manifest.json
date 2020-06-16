@@ -46,7 +46,8 @@
         "setting" : {
             "urlCheck" : true,
             "es6" : false,
-            "minified" : true
+            "minified" : true,
+            "postcss" : false
         }
     }
 }

@@ -67,7 +67,6 @@
 				sessionKey: '',
 				openId: '',
 				contentHeight: 0,
-				level: -1,
 				isIphoneX: false,
 				isCanUse:uni.getStorageSync('wx_user_info') || true
 			}
@@ -83,7 +82,7 @@
 				winHeight =  winHeight - 34;
 			}
 			// 设计稿731 高度
-			this.contentHeight = winHeight-82+20;
+			this.contentHeight = winHeight-82;
 			console.log(winHeight, this.contentHeight);
 			console.log(uni.getStorageSync('wx_user_info'));
 			console.log('onLoad....');
@@ -99,7 +98,10 @@
 				return this.$store.getters.userInfo;
 			},
 			level: function() {
-				return this.$store.getters.userInfo.level;
+				if (this.$store.getters.userInfo.level) {
+					return this.$store.getters.userInfo.level;
+				}
+				return -1;
 			}
 		},
 		methods: {
@@ -110,7 +112,7 @@
 				});
 			},
 			handleComplaint() {
-				this.getUserInfoFromWeixin();
+				//this.getUserInfoFromWeixin();
 				uni.navigateTo({
 					url:'/pages/user/complaint'
 				});
@@ -179,11 +181,10 @@
 					provider: 'weixin',
 					success: function(loginRes) {
 						let code = loginRes.code;
-						
-						console.log('code'+code);
+						console.log(loginRes);
 						uni.hideLoading();
 						//非第一次授权获取用户信息
-						this.getUserInfoFromWeixin()
+						_this.getUserInfoFromWeixin()
 						//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
 						/*uni.request({
 							url: '服务器地址',
@@ -223,6 +224,8 @@
 			// 手动授权方法,授权登录的时候,只调用一次
 			wxGetUserInfo(e) {
 				console.log('hehe');
+				this.login();
+				return;
 				uni.getUserInfo({
 					provider:'weixin',
 					success: (res) => {
@@ -284,8 +287,6 @@
 	}
 	
 	.root-view {
-		display: -webkit-box;
-		display: -webkit-flex;
 		display: flex;
 		flex-direction: column;
 		background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
@@ -293,11 +294,10 @@
 	
 	
 	#content-view {
-		display: -webkit-box;
-		display: -webkit-flex;
 		display: flex;
 		flex-direction: column;
 		flex-wrap:wrap;
+		margin-top:40rpx;
 		justify-content: center;
 	}
 
@@ -317,10 +317,6 @@
 		flex-direction: column;
 		width:100%;
 	}
-	#header-member-info {
-		display: flex;
-	}
-
 	
 	#header-vip-view {
 		width:606rpx;
@@ -372,16 +368,7 @@
 		justify-content: center;
 		margin-top:33px;
 	}
-	
-	.member-btn {
-		border-radius: 20rpx;
-		max-height:55rpx;
-		line-height: 55rpx;
-		font-size: 40rpx;
-		padding-left:5rpx;
-		padding-right:5rpx;
-	}
-	
+
 	#login-btn {
 		background-color: transparent;
 		line-height: 1;
@@ -401,17 +388,6 @@
 		font-family:PingFangSC-Medium,PingFang SC;
 		font-weight:600;
 		color:rgba(51,51,51,1);
-	}
-	
-	#right-vip-image-view {
-		margin-right:24rpx;
-		margin-top:32px;
-		margin-bottom: 32px;
-	}
-	
-	#vipinfo_arrow {
-		max-width: 32rpx;
-		max-height: 32rpx;
 	}
 	
 	.tx-img {
@@ -497,10 +473,6 @@
 		border-radius:10px;
 	}
 	
-	#bottom_list {
-		display: flex;
-		flex-direction: column;
-	}
 	
 	.uni-list-item__extra-text {
 		font-family:PingFangSC-Regular,PingFang SC;

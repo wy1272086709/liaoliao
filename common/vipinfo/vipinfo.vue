@@ -19,8 +19,8 @@
 				<text class="limit-time-discount">{{memberDiscountText}}</text>
 			</view>
 		</view>
-		<view class="right-vip-action" :style="'margin-left:'+actionMarginLeft+'rpx;margin-right:16rpx;'">
-			<text class="action-class" @tap="payForVip()">{{memberAction}}</text>
+		<view class="right-vip-action" :style="'margin-left:'+actionMarginLeft+'rpx;margin-right:16rpx;'" @tap="payForVip()">
+			<text class="action-class">{{memberAction}}</text>
 		</view>
 		<view class="right-vip-image-view">
 			<image src="../../static/img/user/arrow.png" class="vipinfo_arrow"></image>
@@ -72,7 +72,7 @@
 			},
 			initActions() {
 				if(this.memberLevel == -1) {
-					//this.memberAction = '登录/注册';
+					this.memberAction = '';
 				} else if(this.memberLevel == 0) {
 					this.memberAction = '立即充值';
 				} else {

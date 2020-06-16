@@ -43,9 +43,9 @@
 				</view>
 			</view>
 			
-			<view id="search-view" :style="'height:'+searchViewHeight+'px;margin-top:'+searchViewTop+'px;'">
+			<view id="search-view" :style="'height:'+searchViewHeight+'px;margin-top:'+searchViewTop+'px;'" @tap="searchKeyword()">
 				<input id="search-text" type="text" placeholder="点击这里输入对方想说的话" placeholder-class="search-class" v-model="keyword" />
-				<uni-icons type="search" :size="iconSize" @tap="searchKeyword()"></uni-icons>
+				<uni-icons type="search" :size="iconSize"></uni-icons>
 				<!--
 				<uni-search-bar></uni-search-bar>
 				-->
@@ -61,7 +61,7 @@
 						</label>
 					</view>
 					<view class="second-nav">
-						<view :class="nav.navClass" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu(nav.title);" v-for="nav in item.secondNav" :key="nav.navId">
+						<view :class="nav.navClass" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu(nav.title, nav.navId);" v-for="nav in item.secondNav" :key="nav.navId">
 							<text class="second-nav-text">{{nav.title}}</text>
 						</view>
 					</view>
@@ -189,9 +189,9 @@
 			upper() {
 				
 			},
-			enter_huashu(title) {
+			enter_huashu(title, navId) {
 				uni.navigateTo({
-					url:'/pages/index/huashu?title='+encodeURIComponent(title)
+					url:'/pages/index/huashu?title='+encodeURIComponent(title)+'&navId='+navId
 				});
 			}
 		},

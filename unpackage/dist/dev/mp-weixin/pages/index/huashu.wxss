@@ -8,6 +8,8 @@
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
 	        flex-direction: column;
+	background:-webkit-linear-gradient(300deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
+	background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 }
 .status_bar.data-v-5e343daf {
     height: 25px;
@@ -62,6 +64,26 @@ view.data-v-5e343daf, scroll-view.data-v-5e343daf {
 	width:90%;
 	margin-left:5px;
 }
+#search-view-text.data-v-5e343daf {
+	width: 586rpx;
+	height: 100%;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+#search-view-icon.data-v-5e343daf {
+	width: 100rpx;
+	height: 100%;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
 #content-view.data-v-5e343daf {
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -81,8 +103,6 @@ view.data-v-5e343daf, scroll-view.data-v-5e343daf {
 	-webkit-box-pack: start;
 	-webkit-justify-content: flex-start;
 	        justify-content: flex-start;
-	background:-webkit-linear-gradient(300deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
-	background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 }
 .huashu-article.data-v-5e343daf {
 	display: -webkit-box;
@@ -118,7 +138,7 @@ view.data-v-5e343daf, scroll-view.data-v-5e343daf {
 	margin-bottom:32rpx;
 }
 .huashu-sex.data-v-5e343daf,.huashu-copy-btn.data-v-5e343daf {
-	margin-right:32rpx;
+	padding-right:32rpx;
 	padding-left: 40rpx;
 }
 .huashu-sex.data-v-5e343daf {
@@ -142,5 +162,14 @@ view.data-v-5e343daf, scroll-view.data-v-5e343daf {
 	color:rgba(51,51,51,1);
 	line-height:20px;
 }
-
+#user_upgrade_vip.data-v-5e343daf {
+	width:686rpx;
+	height:100px;
+}
+#user-upgrade-vip-view.data-v-5e343daf {
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	margin-bottom:57px;
+}
 

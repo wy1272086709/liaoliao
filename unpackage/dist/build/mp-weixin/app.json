@@ -1,0 +1,21 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/cases/index",
+    "pages/user/index",
+    "pages/user/complaint",
+    "pages/user/upgrade_user_vip",
+    "pages/user/new_user_page",
+    "pages/index/huashu",
+    "pages/index/meme",
+    "pages/cases/detail"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#F8F8F8"
+  },
+  "usingComponents": {}
+}

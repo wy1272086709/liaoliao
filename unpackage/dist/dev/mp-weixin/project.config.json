@@ -6,7 +6,8 @@
   "setting": {
     "urlCheck": true,
     "es6": false,
-    "minified": true
+    "minified": true,
+    "postcss": false
   },
   "compileType": "miniprogram",
   "libVersion": "2.9.2",
@@ -26,7 +27,7 @@
       "list": []
     },
     "miniprogram": {
-      "current": 2,
+      "current": 0,
       "list": [
         {
           "name": "恋爱话术",
