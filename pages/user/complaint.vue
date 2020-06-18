@@ -6,8 +6,12 @@
 				<text>您的投诉建议我们会认真对待，感谢支持</text>
 			</view>
 			<form @submit="onSubmit" class="form-class">  
-				<input name="tel" v-model="tel" placeholder="手机号码" class="complaint-input" />
-				<textarea name="content" v-model="content" placeholder="请输入投诉或者建议内容" class="complaint-textarea"></textarea>
+				<view id="complaint-tel-view">
+					<input name="tel" v-model="tel" placeholder="手机号码" class="complaint-input" />
+				</view>
+				<view id="complaint-content-view">
+					<textarea name="content" v-model="content" placeholder="请输入投诉或者建议内容" class="complaint-textarea"></textarea>
+				</view>
 				<button form-type="submit" type="default" id="submitBtn"><text id="submitBtnText">提交</text></button>  
 			</form>  
 		</scroll-view>
@@ -15,6 +19,7 @@
 </template>
 
 <script>
+	import http from '../../common/http.js';
 	export default {
 		data() {
 			return {
@@ -25,9 +30,17 @@
 			}
 		},
 		methods: {
-			onSubmit() {
-				let isValid = this.validateFunc();
-				if(isValid) {
+			// 提交投诉
+			submitComplaint() {
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				const url = apiPrefix + "?mod=lyb&ac=lyb_add";
+				http.request(url, {
+					phone: this.tel,
+					content: this.content
+				}).then(resp=>{
+					console.log('resp', resp);
 					uni.showModal({
 						title: '提示',
 						content: '感谢你提交的投诉和建议',
@@ -44,6 +57,12 @@
 							
 						}
 					});
+				});
+			},
+			onSubmit() {
+				let isValid = this.validateFunc();
+				if(isValid) {
+					this.submitComplaint();
 				}
 			},
 			// 校验方法
@@ -143,21 +162,29 @@ page {
 
 .complaint-input {
 	height:44px;
+	width:100%;
 }
-.complaint-input,.complaint-textarea {
+
+#complaint-tel-view, #complaint-content-view {
 	display:flex;
 	border-radius: 20rpx;
+	width:100%;
+	background-color: #FFFFFF;
+	margin-bottom: 25px;
+}
+
+.complaint-input,.complaint-textarea {
 	font-size:14px;
 	font-family:PingFangSC-Regular,PingFang SC;
 	font-weight:400;
-	background-color: #FFFFFF;
-	margin-bottom: 25px;
+	padding-left:5px;
+	padding-right:5px;
 	color:rgba(170,170,170,1);
-	width:100%;
 }
 
 .complaint-textarea {
 	height: 180px;
+	width:100%;
 }
 
 #submitBtn {

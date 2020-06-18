@@ -1,19 +1,19 @@
 <template>
 	<view class='header-vip-view' :style="'background:'+backgroundColor+';'">
 		<view class="left-vip-image-view">
-			<image v-if="memberLevel == -1" src="../../static/img/user/visit_left_vip_logo.png" class="left-vip-image"></image>
-			<image v-if="memberLevel == 0" src="../../static/img/user/no_member_left_vip_logo.png" class="left-vip-image"></image>
-			<image v-if="memberLevel == 1" src="../../static/img/user/month_left_vip_logo.png" class="left-vip-image"></image>
-			<image v-if="memberLevel == 2" src="../../static/img/user/quarter_left_vip_logo.png" class="left-vip-image"></image>
-			<image v-if="memberLevel == 3" src="../../static/img/user/year_left_vip_logo.png" class="left-vip-image"></image>
+			<image v-if="memberLevel == 0" src="../../static/img/user/visit_left_vip_logo.png" class="left-vip-image"></image>
+			<image v-if="memberLevel == 1" src="../../static/img/user/no_member_left_vip_logo.png" class="left-vip-image"></image>
+			<image v-if="memberLevel == 2" src="../../static/img/user/month_left_vip_logo.png" class="left-vip-image"></image>
+			<image v-if="memberLevel == 3" src="../../static/img/user/quarter_left_vip_logo.png" class="left-vip-image"></image>
+			<image v-if="memberLevel == 4" src="../../static/img/user/year_left_vip_logo.png" class="left-vip-image"></image>
 		</view>
 		<view class="right-vip-info">
 			<view class="vip-text-view">
-				<text class="vip-info-text" v-if="memberLevel == -1">游客您好</text>
-				<text class="vip-info-text" v-if="memberLevel == 0">非VIP会员</text>
-				<text class="vip-info-text" v-if="memberLevel == 1">VIP月卡会员</text>
-				<text class="vip-info-text" v-if="memberLevel == 2">VIP季卡会员</text>
-				<text class="vip-info-text" v-if="memberLevel == 3">VIP年卡会员</text>
+				<text class="vip-info-text" v-if="memberLevel == 0">游客您好</text>
+				<text class="vip-info-text" v-if="memberLevel == 1">非VIP会员</text>
+				<text class="vip-info-text" v-if="memberLevel == 2">VIP月卡会员</text>
+				<text class="vip-info-text" v-if="memberLevel == 3">VIP季卡会员</text>
+				<text class="vip-info-text" v-if="memberLevel == 4">VIP年卡会员</text>
 			</view>
 			<view class="discount-view">
 				<text class="limit-time-discount">{{memberDiscountText}}</text>
@@ -49,42 +49,42 @@
 		},
 		methods: {
 			initDiscountText() {
-				if(this.memberLevel == -1) {
+				if(this.memberLevel == 0) {
 					this.memberDiscountText = '登录/注册成为会员';
-				} else if(this.memberLevel == 0) {
+				} else if(this.memberLevel == 1) {
 					this.memberDiscountText = '会员享更多功能';
 				} else {
 					this.memberDiscountText = this.memberValidateDates;
 				}
 			},
 			initBackground() {
-				if(this.memberLevel == -1) {
+				if(this.memberLevel == 0) {
 					this.backgroundColor = 'linear-gradient(90deg,rgba(133,133,133,1) 0%,rgba(184,184,184,1) 100%);';
-				} else if(this.memberLevel == 0) {
-					this.backgroundColor = 'linear-gradient(90deg,rgba(247,178,80,1) 0%,rgba(255,210,117,1) 100%);';
 				} else if(this.memberLevel == 1) {
-					this.backgroundColor = 'linear-gradient(90deg,rgba(35,109,230,1) 0%,rgba(22,184,218,1) 100%);';
+					this.backgroundColor = 'linear-gradient(90deg,rgba(247,178,80,1) 0%,rgba(255,210,117,1) 100%);';
 				} else if(this.memberLevel == 2) {
-					this.backgroundColor = 'linear-gradient(90deg,rgba(17,182,75,1) 0%,rgba(97,240,139,1) 100%);';
+					this.backgroundColor = 'linear-gradient(90deg,rgba(35,109,230,1) 0%,rgba(22,184,218,1) 100%);';
 				} else if(this.memberLevel == 3) {
+					this.backgroundColor = 'linear-gradient(90deg,rgba(17,182,75,1) 0%,rgba(97,240,139,1) 100%);';
+				} else if(this.memberLevel == 4) {
 					this.backgroundColor = 'linear-gradient(90deg,rgba(255,136,79,1) 0%,rgba(255,184,134,1) 100%);';
 				}
 			},
 			initActions() {
-				if(this.memberLevel == -1) {
+				if(this.memberLevel == 0) {
 					this.memberAction = '';
-				} else if(this.memberLevel == 0) {
+				} else if(this.memberLevel == 1) {
 					this.memberAction = '立即充值';
 				} else {
 					this.memberAction = '续费';
 				}
 			},
 			initActionMargin() {
-				if(this.memberLevel>0) {
+				if(this.memberLevel>1) {
 					this.actionMarginLeft = 62;
+				} else if(this.memberLevel == 1) {
+					
 				} else if(this.memberLevel == 0) {
-					this.actionMarginLeft = 114;
-				} else if(this.memberLevel == -1) {
 					this.actionMarginLeft = 66;
 				}
 			},

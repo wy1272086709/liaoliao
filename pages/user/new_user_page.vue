@@ -1,33 +1,16 @@
 <template>
-    <view>
-        <view class="content">
-			<text>敬请期待...</text>
-			<!--
-			<view class="uni-padding-wrap">
-				<view class="uni-title uni-common-mt">
-					数组类型
-					<text>\nnodes属性为Array</text>
-				</view>
-				<view class="uni-common-mt" style="background:#FFF; padding:20rpx;">
-					<rich-text :nodes="nodes"></rich-text>
-				</view>
-				<view class="uni-title uni-common-mt">
-					字符串类型
-					<text>\nnodes属性为String</text>
-				</view>
-				<view class="uni-common-mt" style="background:#FFF; padding:20rpx;">
-					<rich-text :nodes="strings"></rich-text>
-				</view>
-			</view>
-			<view class="uni-common-mt" style="background:#FFF; padding:20rpx;">
-				<rich-text :nodes="htmls"></rich-text>
-			</view>
-			-->
-			<!--
-			 <web-view :webview-styles="webviewStyles" src="https://jd.115rr.com"></web-view>
-			 -->
+    <view class="padding-style">
+        <view class='overflow-company-second'>
+          <view class="special-list">
+            <view class='active'>发现简书</view>
+            <view>我的关注</view>
+            <view>消息评论</view>
+            <view>投稿请求</view>
+            <view>喜欢和赞</view>
+            <view>赞赏和付费</view>
+          </view>
         </view>
-    </view>
+      </view>
 </template>
 
 
@@ -81,55 +64,45 @@ export default {
 </script>
 
 <style>
-	@import "../../common/uni.css";
-	#header-vip-view {
-		width:606rpx;
-		display: flex;
-		height:80px;
-		background:linear-gradient(90deg,rgba(234,186,118,1) 0%,rgba(255,224,160,1) 100%);
-		border-radius:10px;
-		margin-left:40rpx;
-		margin-right: 40rpx;
-		margin-top:32px;
-		margin-bottom: 20px;
-		align-items: center;
+	.padding-style{
+	  padding: 0 28rpx;
 	}
-	
-	#vip-info-text {
-		font-size:16px;
-		font-family:PingFangSC-Semibold,PingFang SC;
-		font-weight:600;
-		color:rgba(119,79,37,1);
+	.overflow-company-second{
+	  overflow: hidden;
+	  height: 88rpx;
+	  border-bottom: 1px solid #ccc;
 	}
-	
-	#limit-time-discount {
-		font-size:12px;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(119,79,37,1);
+	.special-list{
+	    line-height: 88rpx;
+	    font-size: 30rpx;
+	    display: flex;
+	    overflow-x: auto;
+	    justify-content: space-between;
+	    padding-bottom: 40rpx;
 	}
-	
-	#left-vip-image {
-		max-width:68rpx;
-		max-height: 68rpx;
+	.special-list>view{
+	  text-align: center;
+	  font-size: 30rpx;
+	  color: #283B42;
+	  font-weight: bold;
+	  flex-basis: 172rpx;
+	  flex-shrink: 0;
+	  white-space: nowrap;
 	}
-	
-	#left-vip-image-view {
-		margin-left:38rpx;
-		margin-right:32rpx;
+	.special-list>view.active {
+	  position: relative;
 	}
-	
-	#right-vip-info {
-		flex-direction: column;
-		width:394rpx;
-	}
-	
-	#vip-text-view {
-		margin-bottom: 6px;
-	}
-	
-	#grant-view {
-		justify-content: center;
-		margin-top:33px;
+	.special-list>view.active::before {
+	  content: "";
+	  display: block;
+	  clear: both;
+	  width: 120rpx;
+	  height: 6rpx;
+	  background-image: linear-gradient(90deg, #ea6f5a 58%, #eebeb6 100%);
+	  border-radius: 40rpx;
+	  position: absolute;
+	  left: 50%;
+	  bottom: 0;
+	  transform: translateX(-50%);
 	}
 </style>

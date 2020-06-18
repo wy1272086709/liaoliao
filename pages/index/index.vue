@@ -43,9 +43,9 @@
 				</view>
 			</view>
 			
-			<view id="search-view" :style="'height:'+searchViewHeight+'px;margin-top:'+searchViewTop+'px;'" @tap="searchKeyword()">
+			<view id="search-view" :style="'height:'+searchViewHeight+'px;margin-top:'+searchViewTop+'px;'">
 				<input id="search-text" type="text" placeholder="点击这里输入对方想说的话" placeholder-class="search-class" v-model="keyword" />
-				<uni-icons type="search" :size="iconSize"></uni-icons>
+				<uni-icons type="search" :size="iconSize" @tap="searchKeyword()"></uni-icons>
 				<!--
 				<uni-search-bar></uni-search-bar>
 				-->

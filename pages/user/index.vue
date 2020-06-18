@@ -31,7 +31,7 @@
 								</text>
 							</view>
 							<view class="member-class">
-								<text>会员ID:   </text>
+								<text>会员ID:   {{userInfo.uid}}</text>
 							</view>
 						</view>
 						<vip-info :level="level"></vip-info>
@@ -101,7 +101,7 @@
 				if (this.$store.getters.userInfo.level) {
 					return this.$store.getters.userInfo.level;
 				}
-				return -1;
+				return 0;
 			}
 		},
 		methods: {
@@ -184,22 +184,51 @@
 						console.log(loginRes);
 						uni.hideLoading();
 						//非第一次授权获取用户信息
-						_this.getUserInfoFromWeixin()
+						const data = getApp().globalData;
+						const apiPrefix = data.serverUri;
+						const auth = data.auth;
+						const url = apiPrefix + "?mod=user&ac=wx_user";
 						//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
-						/*uni.request({
-							url: '服务器地址',
-							data: {
-								code: code,
-							},
-							method: 'GET',
-							header: {
-								'content-type': 'application/json'
-							},
+						uni.getUserInfo({
+							provider:'weixin',
 							success: (res) => {
-								//openId、或SessionKdy存储//隐藏loading
-								uni.hideLoading();
+								console.log('res:', res);
+								let userInfo = res.userInfo;
+								console.log(userInfo);
+								http.request(
+									url,
+									{
+										code: code,
+										auth: auth,
+										nickname: userInfo.nickName,
+										avatarurl: userInfo.avatarUrl,
+										city: userInfo.city,
+										country: userInfo.country,
+										gender: userInfo.gender,
+										province: userInfo.province
+									}
+								).then(resp=> {
+									//openId、或SessionKdy存储//隐藏loading
+									console.log(resp);
+									let uid = resp.id;
+									userInfo.uid = uid;
+									userInfo.level = resp.cid;
+									if(resp.startTime) {
+										userInfo.startTime = resp.startTime;
+									}
+									if(resp.endTime) {
+										userInfo.endTime = resp.endTime;
+									}
+									console.log('userInfo:', userInfo);
+									_this.setUserInfo(userInfo);
+									_this.setUserInfoToStrorage(userInfo);
+									uni.hideLoading();
+								});
+							},
+							fail: () => {
+								console.log("未授权");
 							}
-						});*/
+						});
 					}
 				});
 			},
@@ -225,21 +254,6 @@
 			wxGetUserInfo(e) {
 				console.log('hehe');
 				this.login();
-				return;
-				uni.getUserInfo({
-					provider:'weixin',
-					success: (res) => {
-						console.log('res:', res);
-						let userInfo = res.userInfo;
-						console.log(userInfo);
-						this.setUserInfo(userInfo);
-						this.setUserInfoToStrorage(userInfo);
-						this.userToDb(userInfo);
-					},
-					fail: () => {
-						console.log("未授权");
-					}
-				});
 			},
 			userToDb(userInfo) {
 				const data = getApp().globalData;
@@ -291,7 +305,6 @@
 		flex-direction: column;
 		background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 	}
-	
 	
 	#content-view {
 		display: flex;
@@ -398,8 +411,6 @@
 	}
 
 	.name,.member-class {
-		display: -webkit-box;
-		display: -webkit-flex;
 		display: flex;
 		flex-direction: column;
 		width: 100%;

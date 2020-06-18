@@ -45,22 +45,28 @@ page {
 }
 .complaint-input {
 	height:44px;
+	width:100%;
 }
-.complaint-input,.complaint-textarea {
+#complaint-tel-view, #complaint-content-view {
 	display:-webkit-box;
 	display:-webkit-flex;
 	display:flex;
 	border-radius: 20rpx;
+	width:100%;
+	background-color: #FFFFFF;
+	margin-bottom: 25px;
+}
+.complaint-input,.complaint-textarea {
 	font-size:14px;
 	font-family:PingFangSC-Regular,PingFang SC;
 	font-weight:400;
-	background-color: #FFFFFF;
-	margin-bottom: 25px;
+	padding-left:5px;
+	padding-right:5px;
 	color:rgba(170,170,170,1);
-	width:100%;
 }
 .complaint-textarea {
 	height: 180px;
+	width:100%;
 }
 #submitBtn {
 	background-color: rgba(255,255,255,1);
