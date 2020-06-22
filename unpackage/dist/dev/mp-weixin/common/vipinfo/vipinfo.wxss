@@ -42,7 +42,7 @@
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
 	        flex-direction: column;
-	width:270rpx;
+	width:286rpx;
 }
 .vip-text-view.data-v-2e4fc77e {
 	margin-bottom: 6px;

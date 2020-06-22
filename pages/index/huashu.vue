@@ -31,13 +31,13 @@
 			</view>
 		</view>
 		<view id="content-view" :style="'min-height:'+scrollHeight+'px;'">
-			<view class="huashu-article huashu-article-first" v-for="item in articleList">
+			<view class="huashu-article huashu-article-first" v-for="item in articleList" :key="item.id">
 				<view class="huashu-article-title">
-					<text>{{item.title}}</text>
+					<text :class="searchText">{{item.title}}</text>
 				</view>
-				<view class="huashu-line" v-for="line in item.list" :key="line.id">
+				<view class="huashu-line" v-for="(line,key,index) in item.content">
 					<view class="huashu-sex">
-						<template v-if="line.sex == 1">
+						<template v-if="key == 1">
 							<image class="huashu-sex-image" src="../../static/img/index/man.png"></image>
 						</template>
 						<template v-else>
@@ -45,17 +45,17 @@
 						</template>
 					</view>
 					<view class="huashu-content">
-						<text class="huashu-content-text">{{line.content}}</text>
+						<text class="huashu-content-text">{{line}}</text>
 					</view>
-					<view class="huashu-copy-btn" @tap="copyHuashu(line.content)">
+					<view class="huashu-copy-btn" @tap="copyHuashu(line)">
 						<image class="huashu-copy-image" src="../../static/img/index/copy.png"></image>
 					</view>
 				</view>
 			</view>
 		</view>
 		<!-- 这里 -->
-		<view id="user-upgrade-vip-view" v-if="level<=0" @tap="upgrade_vip">
-			<img src="../../static/img/huashu/user_upgrade_vip.png" id="user_upgrade_vip" />
+		<view id="user-upgrade-vip-view" v-if="level<=1" @tap="upgrade_vip">
+			<img src="https://kuxou.com/images/user_upgrade_vip.png" id="user_upgrade_vip" />
 		</view>
 	</view>
 </template>
@@ -63,6 +63,15 @@
 <script>
 	import tabBar from '../../common/tabbar.vue';
 	import http from '../../common/http.js';
+	let navId = 0;
+	let nowpage = 1;
+	let totalPage = 0;
+	let isSearch = false;
+	let interval = null;
+	// 进入界面的
+	let isFixedHeight = false;
+	// 搜索的时候的
+	let isFixedHeight2 = false;
 	export default {
 		data() {
 			return {
@@ -74,78 +83,10 @@
 					left:17,
 					title: ""
 				},
-				navId: 0,
-				isFixHeight: false,
-				contentText: '加载更多',
 				iconSize: 20,
-				page: 1, 
-				params: {},
-				totalPage: 0,
+				searchText: '',
 				articleList: [ 
-					{
-						list:[
-							{
-								// 1男,2女,content 为对话内容
-								id: 1,
-								sex:1,
-								content: "能不能和我拍个照"
-							},
-							{
-								id: 2,
-								sex:2,
-								content: "为什么"
-							}
-						],
-						title: "关于拍照"
-					},
-					{
-						list:[
-							{
-								id: 3,
-								// 1男,2女,content 为对话内容
-								sex:1,
-								content: "能不能和我拍个照"
-							},
-							{
-								id: 4,
-								sex:2,
-								content: "为什么"
-							}
-						],
-						title: "关于拍照"
-					},
-					{
-						list:[
-							{
-								id: 5,
-								// 1男,2女,content 为对话内容
-								sex:2,
-								content: "能不能和我拍个照"
-							},
-							{
-								id: 6,
-								sex:1,
-								content: "为什么"
-							}
-						],
-						title: '为什么呀!'
-					},
-					{	
-						list:[
-							{
-								id: 7,
-								// 1男,2女,content 为对话内容
-								sex:1,
-								content: "能不能和我拍个照"
-							},
-							{
-								id: 8,
-								sex:2,
-								content: "为什么"
-							}
-						],
-						title: "关于拍照"
-					}
+					
 				]
 			}
 		},
@@ -154,38 +95,48 @@
 		},
 		computed: {
 			level: function() {
+				console.log('userInfo:', this.$store.getters.userInfo);
 				if(this.$store.getters.userInfo.level) {
 					return this.$store.getters.userInfo.level;
 				} else {
-					return -1;
+					return 0;
 				}
+			},
+			uid: function() {
+				if(this.$store.getters.userInfo.uid) {
+					return this.$store.getters.userInfo.uid;
+				}
+				return 0;
 			}
+		},
+		watch:{
+			
 		},
 		onPullDownRefresh() {
 			console.log('页面下拉刷新');
 			let _self = this;
-			setTimeout(function() {
-				_self.getHuashuArticleList();
+			isFixedHeight = false;
+			_self.getHuashuArticleList();
+			setTimeout(function() {				
 				uni.stopPullDownRefresh();
-			}, 1000);
+			}, 200);
 		},
 		onLoad(option) {
 			console.log('option', option);
 			let title = option.title;
 			// 获取keyword,
 			let key  = option.keyword;
-			let navId = option.navId;
+			navId = option.navId;
 			if (key) {
 				this.searchKeyword = key;
+				// 判断从搜索框进入的。
+				isSearch = true;
 			}
 			if(title) {
 				title = decodeURIComponent(title);
 				uni.setNavigationBarTitle({
 					title:title
 				});
-			}
-			if (navId) {
-				this.navId = navId;
 			}
 			let sysinfo = uni.getSystemInfoSync();
 			let windowHeight = sysinfo.windowHeight;
@@ -195,68 +146,83 @@
 			//this.navigation.height = statusBarHeight;
 			let scrollHeight = windowHeight - 50;
 			this.scrollHeight = scrollHeight;
-			setTimeout(function() {
-				console.log('start pulldown');
-			}, 1000);
 			uni.startPullDownRefresh();
 		},
 		methods: {
 			getHuashuArticleList() {
 				let keyword = this.searchKeyword;
-				let classid = this.navId;
+				console.log('navId', navId);
+				let classid = navId;
 				let params = {};
-				if (classid) {
-					params.classid = classid;
-				}
 				if (keyword) {
-					params = { keyord: keyword };
+					params = { keyword: keyword };
+				} else if (classid) {
+					params.cid = classid;
 				}
-				params.page = 1;
-				this.params = params;
+				params.uid = this.uid;
+				params.nowpage = 1;
+				// 搜索框搜索时候,将nowpage 置位1
+				nowpage = 1;
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				params.auth = auth;
+				let url = apiPrefix + "?mod=loveword&ac=list";
+				if(keyword) {
+					url = apiPrefix + "?mod=loveword&ac=search";
+				}
+				params.filterData = true;
 				// 通过栏目获取话术列表接口
-				http.request('', params).then(resp=>{
+				http.request(url, params).then(resp=>{
 					console.log('resp', resp);
 					if(resp.status == 1) {
 						this.articleList = resp.data;
-						this.totalPage   = resp.total;
+						totalPage   = resp.totalpage;
 					}
 				});
 			},
 			searchKeywordFunc() {
 				// 调用搜索关键词接口...
 				let keyword = this.searchKeyword;
-				let params = {};
+				if(!keyword || keyword.length<2) {
+					uni.showToast({
+						title: '请输入关键词，且至少2个字符长度!',
+						icon:"none",
+						duration: 2000
+					});
+					return;
+				}
+				isFixedHeight = false;
+				let params = {
+					filterData:true
+				};
 				if (keyword) {
 					params.keyword = keyword;
 				}
-				params.page = 1;
+				// 表示搜索框的结果...
+				isSearch = true;
+				params.uid = this.uid;
+				params.nowpage = 1;
 				this.params = params;
 				// 通过关键词获取话术列表接口
-				http.request('', params).then(resp=>{
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				params.auth = auth;
+				const url = apiPrefix + "?mod=loveword&ac=search";
+				http.request(url, params).then(resp=>{
 					console.log('resp', resp);
 					if(resp.status == 1) {
-						this.articleList.push(resp.data);
-						this.totalPage   = resp.total;
+						this.articleList = resp.data;
+						this.totalPage   = resp.totalpage;
+					} else {
+						uni.showToast({
+							title: '未查询到结果',
+							icon:"none",
+							duration: 2000
+						});
+						return;
 					}
-				});
-			},
-			lower() {
-				console.log('拉倒底部,加载下一页....');
-				this.articleList.push({
-					list:[
-						{
-							id: 10,
-							// 1男,2女,content 为对话内容
-							sex:1,
-							content: "能不能和我拍个照"
-						},
-						{
-							id: 11,
-							sex:2,
-							content: "为什么"
-						}
-					],
-					title: "关于拍照"
 				});
 			},
 			back() {
@@ -265,6 +231,13 @@
 				});
 			},
 			upgrade_vip() {
+				// 这里跳转到登录界面
+				if(this.level<2) {
+					uni.navigateTo({
+						url: '/pages/user/index'
+					});
+					return;
+				}
 				uni.navigateTo({
 					url:'/pages/user/upgrade_user_vip'
 				});
@@ -287,48 +260,57 @@
 		},
 		onReachBottom() {
 			console.log("上滑动");
-			uni.showNavigationBarLoading();
 			console.log('reach');
 			let _self = this;
-			if(_self.page >=_self.totalPage) {
-				console.log('最后一页!');
-				// 获取DIV 的高度,然后加上scrollHeight
-				// 计算组件的高度
-				if(!_self.isFixHeight) {
-					let view = uni.createSelectorQuery().select("#content-view");
+			if(isSearch && (!this.searchKeyword || this.searchKeyword.length<2)) {
+				// 显示空数据给用户
+				return;
+			}
+			if (nowpage>=totalPage) {
+				if (interval) {
+					clearTimeout(interval);
+				}
+				let view = uni.createSelectorQuery().select("#content-view");
+				if(!isFixedHeight && !isSearch  && this.uid>0) {
 					view.boundingClientRect(data => {
-						_self.scrollHeight = data.height+16;
-						_self.isFixHeight  = true;
+						console.log('data:', data);
+						_self.scrollHeight = data.height+20;
+						isFixedHeight = true;
+					}).exec();
+				} else if(!isFixedHeight2 && isSearch && this.uid>0) {
+					view.boundingClientRect(data => {
+						_self.scrollHeight = data.height+20;
+						isFixedHeight2 = true;
 					}).exec();
 				}
 				return;
 			}
-			let t = setTimeout(function() {
-				_self.page++;
-				_self.params.page = _self.page;
-				http.request('', _self.params).then(resp=>{
+			uni.showNavigationBarLoading();
+			interval = setTimeout(function() {
+				nowpage++;
+				let params = {};
+				params.nowpage = nowpage;
+				params.cid = navId;
+				params.uid = _self.uid;
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				params.auth = auth;
+				let url = '';
+				if(isSearch) {
+					url = apiPrefix + "?mod=loveword&ac=search";
+					params.keyword = _self.searchKeyword;
+				} else {
+					url = apiPrefix + "?mod=loveword&ac=list";
+				}
+				params.filterData = true;
+				http.request(url, params).then(resp=>{
 					console.log('resp', resp);
 					if(resp.status == 1) {
 						_self.articleList.push(resp.data);
-						_self.totalPage   = resp.total;
+						totalPage   = resp.totalpage;
 					}
 				});
-				/*_self.articleList.push({
-					list:[
-						{
-							id: 10,
-							// 1男,2女,content 为对话内容
-							sex:1,
-							content: "能不能和我拍个照"
-						},
-						{
-							id: 11,
-							sex:2,
-							content: "为什么"
-						}
-					],
-					title: "关于拍照"
-				});*/
 				uni.hideNavigationBarLoading();
 			}, 200);
 			// more = contentdown: "上拉显示更多",
@@ -499,5 +481,9 @@ view, scroll-view {
 #user-upgrade-vip-view {
 	justify-content: center;
 	margin-bottom:57px;
+	margin-top:16px;
+}
+.searchText {
+	font-weight: bold;
 }
 </style>

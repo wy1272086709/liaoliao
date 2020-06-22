@@ -1,12 +1,12 @@
 
-view.data-v-13ffb75a, scroll-view.data-v-13ffb75a {
+view, scroll-view {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
 	-webkit-box-sizing: border-box;
 	        box-sizing: border-box;
 }
-#root-view.data-v-13ffb75a {
+#root-view {
 	-webkit-box-orient: vertical;
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
@@ -15,13 +15,13 @@ view.data-v-13ffb75a, scroll-view.data-v-13ffb75a {
 	background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 	height: 100%;
 }
-.search-class.data-v-13ffb75a,#search-view>input.data-v-13ffb75a {
+.search-class,#search-view>input {
 	font-size:14px;
 	font-family:PingFangSC-Regular,PingFang SC;
 	font-weight:400;
 	color:rgba(170,170,170,1);
 }
-#search-view.data-v-13ffb75a {
+#search-view {
 	-webkit-box-pack: center;
 	-webkit-justify-content: center;
 	        justify-content: center;
@@ -36,15 +36,15 @@ view.data-v-13ffb75a, scroll-view.data-v-13ffb75a {
 	background:rgba(255,255,255,1);
 	border-radius:20px;
 }
-#search-text.data-v-13ffb75a {
+#search-text {
 	width:542rpx;
 	margin-left: 5px;
 }
-.meme-image.data-v-13ffb75a {
+.meme-image {
 	max-width:206rpx;
 	max-height: 206rpx;
 }
-#meme-list-view.data-v-13ffb75a {
+#meme-list-view {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -52,19 +52,33 @@ view.data-v-13ffb75a, scroll-view.data-v-13ffb75a {
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: row;
 	        flex-direction: row;
+	margin-top:4px;
 	-webkit-flex-wrap: wrap;
 	        flex-wrap: wrap;
-	margin-top:4px;
 	margin-left:32rpx;
 	margin-right:32rpx;
+	-webkit-justify-content: space-around;
+	        justify-content: space-around;
 }
-.meme-image-view.data-v-13ffb75a {
-	max-width:206rpx;
+.meme-image-view {
+	height: 105px;
+	max-width:208rpx;
 	margin-top:16px;
 	margin-bottom: 16px;
 }
-.meme-second-image-view.data-v-13ffb75a {
+.meme-second-image-view {
 	margin-left:32rpx;
 	margin-right:32rpx;
+}
+#user_upgrade_vip {
+	width:686rpx;
+	height:100px;
+}
+#user-upgrade-vip-view {
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	margin-bottom:57px;
+	margin-top:16px;
 }
 

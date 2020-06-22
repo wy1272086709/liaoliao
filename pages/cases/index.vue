@@ -1,18 +1,14 @@
 <template>
 	<view id="root-view">
 		<view id="header-view">
-			<view  :class="last_update_class" id="last_update" @tap="switchTab('last_update')">
-				<text>最近更新</text>
-			</view>
-			<view :class="love_skills_class" id="love_skills" @tap="switchTab('love_skills')">
-				<text>撩妹技巧</text>
-			</view>
-			<view :class="girl_area_class" id="girl_area"  @tap="switchTab('girl_area')">
-				<text>女生专区</text>
+			<!-- 初始尺寸设置为120rpx,   去掉header-view width 属性, 设置元素的flex-shrink 为0，在子元素上-->
+			<view   @tap="switchTab(index)" v-for="(tab,index) in tabArr">
+				<view :class="tab.class">
+					<text>{{ tab.title }}</text>
+				</view>
 			</view>
 		</view>
-		
-		<view id="content-view"  :style="'min-height:'+scrollHeight+'px;bottom:'+bottom+'px;'">
+		<scroll-view id="content-view"  scroll-y="true"	:style="'height:'+scrollHeight+'px;'" @scrolltolower="lower">
 			<view v-for="item in list" class="content-root-view" @tap="getArticleView(item.id)" :key="item.id">
 				<view class="content-img-view">
 					<image :src="item.thumbUrl" class="thumb-class"></image>
@@ -26,7 +22,7 @@
 					</view>
 				</view>
 			</view>
-		</view>
+		</scroll-view>
 		<tabBar></tabBar>
 		<scorll-view>
 		     <view style="height:34px;" v-if="isIphoneX">
@@ -38,93 +34,57 @@
 
 <script>
 	import tabBar from '../../common/tabbar.vue';
-	let list = [{
-		id: 1,
-		thumbUrl: '/static/img/love_skills/thumb.png',
-		title: '套路女朋友的多种方法，全程高能',
-		readTime: '4.28 18:00',
-		readNum: '2.77万'
-	}, {
-		id: 2,
-		thumbUrl: '/static/img/love_skills/thumb.png',
-		title: '套路女朋友的多种方法，全程高能',
-		readTime: '4.28 18:00',
-		readNum: '2.77万'
-	}, {
-		id: 3,
-		thumbUrl: '/static/img/love_skills/thumb.png',
-		title: '套路女朋友的多种方法，全程高能',
-		readTime: '4.28 18:00',
-		readNum: '2.77万'
-	}, {
-		id: 4,
-		thumbUrl: '/static/img/love_skills/thumb.png',
-		title: '套路女朋友的多种方法，全程高能',
-		readTime: '4.28 18:00',
-		readNum: '2.77万'
-	}, {
-		id: 5,
-		thumbUrl: '/static/img/love_skills/thumb.png',
-		title: '套路女朋友的多种方法，全程高能',
-		readTime: '4.28 18:00',
-		readNum: '2.77万'
-	}, {
-		id: 6,
-		thumbUrl: '/static/img/love_skills/thumb.png',
-		title: '套路女朋友的多种方法，全程高能',
-		readTime: '4.28 18:00',
-		readNum: '2.77万'
-	}, {
-		id: 7,
-		thumbUrl: '/static/img/love_skills/thumb.png',
-		title: '套路女朋友的多种方法，全程高能',
-		readTime: '4.28 18:00',
-		readNum: '2.77万'
-	}, {
-		id: 8,
-		thumbUrl: '/static/img/love_skills/thumb.png',
-		title: '套路女朋友的多种方法，全程高能',
-		readTime: '4.28 18:00',
-		readNum: '2.77万'
-	}, {
-		id: 9,
-		thumbUrl: '/static/img/love_skills/thumb.png',
-		title: '套路女朋友的多种方法，全程高能',
-		readTime: '4.28 18:00',
-		readNum: '2.77万'
-	}, {
-		id: 10,
-		thumbUrl: '/static/img/love_skills/thumb.png',
-		title: '套路女朋友的多种方法，全程高能',
-		readTime: '4.28 18:00',
-		readNum: '2.77万'
-	}];
+	import http from '../../common/http.js';
+	let list = [];
+	let tabArr = [];
+	let totalPage = 1;
+	let page = 1;
+	let cid = 0;
+	let interval = null;
+	let isFixedHeight = false;
 	export default {
 		data() {
 			return {
-				tabName: 'last_update',
-				last_update_class: 'last_update border-active',
-				love_skills_class: 'love_skills',
-				girl_area_class: 'girl_area',
+				tabArr: tabArr,
 				list: list,
-				page: 1,
-				interval: null,
 				isIphoneX: false,
 				scrollHeight: 0,
-				bottom: 0,
-				winHeight: 0,
+				bottom: 0
 			}
 		},
+		computed: {
+			uid: function() {
+				if (this.$store.getters.userInfo.uid) {
+					return this.$store.getters.userInfo.uid;
+				}
+				return 0;
+			}
+		},
+		onPullDownRefresh() {
+			console.log('页面下拉刷新');
+			let _self = this;
+			isFixedHeight = false;
+			_self.getCaseList(cid, false, 1);
+			setTimeout(function() {				
+				uni.stopPullDownRefresh();
+			}, 200);
+		},
 		onLoad() {
-			let winHeight = uni.getSystemInfoSync().windowHeight;
+			let sysinfo = uni.getSystemInfoSync();
+			let screenHeight = sysinfo.screenHeight;
+			let winHeight    = sysinfo.windowHeight;
+			console.log('winHeight', winHeight);
 			let isIphoneX = getApp().globalData.isIphoneX;
 			this.isIphoneX = isIphoneX;
 			this.bottom = 82;
 			if (isIphoneX) {
-				this.winHeight    = winHeight - 34;
+				winHeight    = winHeight - 34;
 				this.bottom = this.bottom+34; 
 			} 
-			this.scrollHeight = this.winHeight - 82 - 50;
+			this.scrollHeight = winHeight - 82 - 51 -16;
+			console.log(this.scrollHeight);
+			this.getHuashuTabbar();
+			isFixedHeight = false;
 		},
 		mounted() {
 			
@@ -133,67 +93,151 @@
 			tabBar:tabBar
 		},
 		beforeDestroy() {
-			this.interval || clearTimeout(this.interval);
+			if(interval) {
+				clearTimeout(interval);
+			}
 		},
+		
 		onReachBottom() {
 			console.log('reach bottom!');
 			let _self = this;
-			if(this.page>3) {
-				clearTimeout(this.interval);
-				if (!_self.isFixHeight) {
+			if(page>=totalPage) {
+				if (!isFixedHeight &&this.uid>0) {
 					let view = uni.createSelectorQuery().select("#content-view");
 					view.boundingClientRect(data => {
 						console.log('data:', data);
 						_self.scrollHeight = data.height+20;
-						_self.isFixHeight  = true;
+						isFixedHeight = true;
 					}).exec();
 				}
+				clearTimeout(interval);
 				return;
 			}
-			this.interval = setTimeout(function() { 
-				_self.list.push({
-					id: 11,
-					thumbUrl: '/static/img/love_skills/thumb.png',
-					title: '套路女朋友的多种方法22222',
-					readTime: '4.28 18:00',
-					readNum: '2.77万'
-				});
-				_self.page++;
+			interval = setTimeout(function() { 
+				page++;
+				_self.getCaseList(cid, false, page);
 			}, 500);
 		},
 		methods: {
 			lower() {
-				this.list.push({
-					thumbUrl: '/static/img/love_skills/thumb.png',
-					title: '套路女朋友的多种方法22222',
-					readTime: '4.28 18:00',
-					readNum: '2.77万'
+				console.log('to lower!');
+				let _self = this;
+				if(page>=totalPage) {
+					clearTimeout(interval);
+					return;
+				}
+				interval = setTimeout(function() {
+					page++;
+					_self.getCaseList(cid, false, page);
+				}, 500);
+			},
+			getCaseList(cid, firstLoad, page) {
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				let _self = this;
+				const url = apiPrefix + "?mod=news&ac=list";
+				http.request(url, {
+					auth: auth,
+					cid: cid,
+					uid: this.uid,
+					nowpage: page,
+					filterData: true
+				}).then(resp => {
+					console.log('resp', resp);
+					let typeStr = Object.prototype.toString.call(resp.data);
+					let isArray = false;
+					if(typeStr.indexOf('Array')!== -1) {
+						resp.data = this.initHuashuListImage(resp.data);
+						isArray   = true;
+						totalPage = resp.totalpage;
+					} 
+					if(firstLoad) {
+						if(isArray) {
+							this.list = resp.data;
+						} else {
+							this.list = [];
+						}
+					} else {
+						if(!isArray) {
+							return;
+						}
+						let len = resp.data.length;
+						for(let i = 0;i<len;i++)
+						{
+							this.list.push(resp.data[i]);
+						}
+					}
+					uni.getSystemInfo({
+						success: (res) => {
+							// 动态更改列表高度,看是否需要
+							console.log('res:', res);
+						}
+					});
 				});
+			},
+			initHuashuListImage(list) {
+				let n = list.length;
+				const data = getApp().globalData;
+				const hostUrl = data.hostUrl;
+				for(let m = 0;m<n;m++)
+				{
+					list[m].thumbUrl = hostUrl+list[m].thumbUrl;
+				}
+				console.log('list',list);
+				return list;
+			},
+			// 获取话术tab页
+			getHuashuTabbar() {
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				let _self = this;
+				const url = apiPrefix + "?mod=news&ac=get_all_cid";
+				http.request(url, {
+					auth: auth
+				}).then(resp => {
+					console.log('resp', resp);
+					_self.tabArr = _self.initTabData(resp);
+					 cid    = _self.tabArr[0].navId;
+					_self.getCaseList(cid, true, 1);
+				});
+			},
+			initTabData(tabData) {
+				let n = tabData.length;
+				let tabArr = [];
+				for(let s = 0;s<n;s++)
+				{
+					let tab = tabData[s].firstNav;
+					if(s==0) {
+						tab.class = 'border-active';
+					} else {
+						tab.class = '';	
+					}
+					tabArr.push(tab);
+				}
+				return tabArr;
 			},
 			getArticleView(id) {
 				console.log('getArticleView....');
 				// 获取文章详情信息
 				uni.navigateTo({
-					url:'/pages/cases/detail'
+					url:'/pages/cases/detail?id='+id+'&cid='+this.cid
 				})
 			},
-			switchTab(tabName) {
+			switchTab(index) {
 				// 切换面板
-				if(tabName=='last_update') {
-					this.last_update_class = 'last_update border-active';
-					this.love_skills_class = 'love_skills';
-					this.girl_area_class   = 'girl_area';
-				} else if(tabName == 'love_skills') {
-					this.last_update_class = 'last_update';
-					this.love_skills_class = 'love_skills border-active';
-					this.girl_area_class   = 'girl_area';
-				} else if(tabName == 'girl_area') {
-					this.last_update_class = 'last_update';
-					this.love_skills_class = 'love_skills';
-					this.girl_area_class   = 'girl_area border-active';
+				this.tabArr[index].class = 'border-active';
+				// 这里ajax 请求,获取tab页对应的文章列表
+				let n = this.tabArr.length;
+				for(let s = 0;s<n;s++) {
+					if(s!=index) {
+						this.tabArr[s].class = '';
+					}
 				}
-				// 这里要发送请求更新内容
-				
+				let navId = this.tabArr[index].navId;
+				cid  = navId;
+				this.getCaseList(navId, true, 1);
 			}
 		}
 	}
@@ -206,7 +250,6 @@ view {
 }
 
 #root-view {
-	width: 750rpx;
 	justify-content: flex-start;
 	flex-direction: column;
 	background: linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
@@ -214,24 +257,34 @@ view {
 
 #header-view {
 	display: flex;
-	height: 50px;
-	width: 750rpx;
-	justify-content: space-around;
-	align-items: center;
+	height: 51px;
 	background: rgba(35,105,230,1);
+	overflow-x: auto;
 }
 
 .border-active {
 	border-bottom: 2px solid rgba(255,255,255,1);
 }
 
-#last_update, #love_skills, #girl_area {
-	height: 50px;
+#header-view>view {
+	height: 49px;
 	display: flex;
+	flex-basis: 187.5rpx;
+	flex-shrink: 0;
+	align-items: center;
+	white-space: nowrap;
+	justify-content: center;
+}
+
+
+#header-view>view>view {
+	height: 47px;
+	justify-content: center;
+	text-align: center;
 	align-items: center;
 }
 
-.last_update>text,.love_skills>text,.girl_area>text {
+#header-view>view>view>text{
 	font-size:14px;
 	font-family:PingFangSC-Semibold,PingFang SC;
 	font-weight:600;

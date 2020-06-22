@@ -1,18 +1,4 @@
 
-#view-title {
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
-}
-#view-title>text {
-	font-size: 32rpx;
-	font-family: PingFangSC-Semibold,PingFang SC;
-	font-weight: 600;
-	color: rgba(255,255,255,1);
-}
 #view-content {
 	display: -webkit-box;
 	display: -webkit-flex;

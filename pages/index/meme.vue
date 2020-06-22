@@ -1,56 +1,217 @@
 <template>
-	<view id="root-view">
+	<view id="root-view" :style="'min-height:'+scrollHeight+'px;'">
 		<view id="search-view">
-			<input id="search-text" type="text" placeholder="输入表情包关键词" placeholder-class="search-class"/>
-			<uni-icons type="search" :size="iconSize"></uni-icons>
+			<input id="search-text" type="text" placeholder="输入表情包关键词" placeholder-class="search-class" v-model="searchKeyword"/>
+			<uni-icons type="search" :size="iconSize" @tap="searchMeme"></uni-icons>
 		</view>
-		<scroll-view id="meme-list-view" :style="'height:'+scrollHeight+'px;'">
-			<view>
-				<view v-for="(item,index) in imageList" :class="item.class">
-					<image :src="item.src" class="meme-image"></image>
-				</view>
+		<view id="meme-list-view">
+			<view v-for="(item,index) in imageList" :class="item.class" @tap="previewImage(index)">
+				<image :src="item.src" class="meme-image"></image>
 			</view>
-		</scroll-view>
+		</view>
+		<!-- 这里 -->
+		<view id="user-upgrade-vip-view" v-if="level<=1" @tap="upgrade_vip">
+			<img src="https://kuxou.com/images/user_upgrade_vip.png" id="user_upgrade_vip" />
+		</view>
 	</view>
 </template>
 
 <script>
+	import http from '../../common/http.js';
+	let page = 1;
+	let totalPage = 1;
+	let interval =  null;
+	let interval2 = null;
+	let isFixedHeight = false;
+	let isFixedHeight2 = false;
+	let isSearch = false;
 	export default {
 		data() {
 			return {
 				iconSize: 40,
 				scrollHeight: 0,
+				searchKeyword: '',
 				imageList: [
-					{
-						src: "../../static/img/meme/biaoqing01.png",
-						class: "meme-image-view",
-					},
-					{
-						
-						src: "../../static/img/meme/biaoqing01.png",
-						class: "meme-image-view meme-second-image-view",
-					},
-					{
-						src: "../../static/img/meme/biaoqing01.png",
-						class: "meme-image-view",
-					}
 				]
 			}
+		},
+		beforeDestroy() {
+			if(interval) {
+				clearTimeout(interval);
+			}
+			if(interval2) {
+				clearTimeout(interval2);
+			}
+		},
+		computed: {
+			uid: function() {
+				if (this.$store.getters.userInfo.uid) {
+					return this.$store.getters.userInfo.uid;
+				}
+				return 0;
+			},
+			level: function() {
+				console.log('userInfo:', this.$store.getters.userInfo);
+				if(this.$store.getters.userInfo.level) {
+					return this.$store.getters.userInfo.level;
+				} else {
+					return 0;
+				}
+			},
 		},
 		mounted() {
 			
 		},
 		onLoad() {
 			let info = uni.getSystemInfoSync();
-			this.scrollHeight = info.windowHeight - 48;
+			this.scrollHeight = info.windowHeight;
+			this.getMemeList(1, false);
+		},
+		onPullDownRefresh() {
+			console.log('页面下拉刷新');
+			let _self = this;
+			setTimeout(function() {
+				_self.getMemeList(page);
+				uni.stopPullDownRefresh();
+			}, 1000);
 		},
 		methods: {
-			
-		}
+			upgrade_vip() {
+				// 这里跳转到登录界面
+				if(this.level<2) {
+					uni.navigateTo({
+						url: '/pages/user/index'
+					});
+					return;
+				}
+				uni.navigateTo({
+					url:'/pages/user/upgrade_user_vip'
+				});
+			},
+			previewImage(index) {
+				let src = this.imageList[index].src;
+				let list = this.imageList;
+				let len  = list.length;
+				let urls = [];
+				for (let s =0;s<len;s++) {
+					urls.push(list[s].src);
+				}
+				uni.previewImage({
+					current: src,
+					urls: urls,
+					success:() => {
+						console.log('success!');
+					}
+				})
+				console.log('src', src);
+			},
+			searchMeme() {
+				if(!this.searchKeyword) {
+					uni.showToast({
+						title: '请输入关键词，且至少2个字符长度!',
+						icon:"none",
+						duration: 2000
+					});
+					return;
+				}
+				// 搜索为true
+				isSearch = true;
+				page = 1;
+				this.getMemeList(page, false, true);
+			},
+			// 获取表情包列表
+			getMemeList(page, isAppend, isSearch) {
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				let _self = this;
+				let url = '';
+				// 不搜索
+				if(!isSearch) {
+					url = apiPrefix + "?mod=hualang&ac=list";
+				} else {
+					// 搜索的时候
+					url = apiPrefix + "?mod=hualang&ac=search";
+				}
+				let params = {
+					auth: auth,
+					uid: this.uid,
+					nowpage: page,
+					filterData:true,
+				};
+				if (isSearch && this.searchKeyword) {
+					params.keyword = this.searchKeyword;
+				}
+				http.request(url, params).then(resp => {
+					totalPage = resp.totalpage;
+					let memeData = resp.data;
+					if(!resp.data) {
+						if (isSearch) {
+							uni.showToast({
+								title: '未查询到结果',
+								icon:"none",
+								duration: 2000
+							});
+						}
+						return;
+					}
+					let n = memeData.length;
+					for(let m=0;m<n;m++) {
+						memeData[m].src = "https://kuxou.com/" + memeData[m].src;
+						if ((m-1)%3 == 0) {
+							memeData[m].class = "meme-image-view meme-second-image-view";
+						} else {
+							memeData[m].class = "meme-image-view";
+						}
+					}
+					if(isAppend) {
+						for(let x=0;x<n;x++) {
+							_self.imageList.push(memeData[x]);
+						}
+					} else {
+						_self.imageList = memeData;
+					}
+				});
+			}
+		},
+		onReachBottom() {
+			console.log('reach bottom!');
+			let _self = this;
+			if(isSearch && (!this.searchKeyword || this.searchKeyword.length<2)) {
+				// 显示空数据给用户
+				return;
+			}
+			if (page>=totalPage) {
+				clearTimeout(interval);
+				console.log('isFixedHeight', isFixedHeight);
+				console.log('isFixedHeight2', isFixedHeight2);
+				if (!isFixedHeight && !isSearch) {
+					let view = uni.createSelectorQuery().select("#meme-list-view");
+					view.boundingClientRect(data => {
+						console.log('data:', data);
+						_self.scrollHeight = data.height+20;
+						isFixedHeight  = true;
+					}).exec();
+				}
+				else if (!isFixedHeight2 && isSearch) {
+					let view = uni.createSelectorQuery().select("#meme-list-view");
+					view.boundingClientRect(data => {
+						console.log('data:', data);
+						_self.scrollHeight = data.height+20;
+						isFixedHeight2  = true;
+					}).exec();
+				}
+				return;
+			}
+			interval = setTimeout(function() {
+				page++;
+				_self.getMemeList(page, true, isSearch);
+			}, 500);
+		},
 	}
 </script>
 
-<style scoped>
+<style>
 view, scroll-view {
 	display: flex;
 	box-sizing: border-box;
@@ -91,13 +252,16 @@ view, scroll-view {
 #meme-list-view {
 	display: flex;
 	flex-direction: row;
-	flex-wrap: wrap;
 	margin-top:4px;
+	flex-wrap: wrap;
 	margin-left:32rpx;
 	margin-right:32rpx;
+	justify-content: space-around;
 }
+
 .meme-image-view {
-	max-width:206rpx;
+	height: 105px;
+	max-width:208rpx;
 	margin-top:16px;
 	margin-bottom: 16px;
 }
@@ -105,5 +269,15 @@ view, scroll-view {
 .meme-second-image-view {
 	margin-left:32rpx;
 	margin-right:32rpx;
+}
+#user_upgrade_vip {
+	width:686rpx;
+	height:100px;	
+}
+
+#user-upgrade-vip-view {
+	justify-content: center;
+	margin-bottom:57px;
+	margin-top:16px;
 }
 </style>

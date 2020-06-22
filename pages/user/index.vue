@@ -14,7 +14,7 @@
 								<text>点击登录/注册</text>
 							</button>
 						</view>
-						<vip-info :level="level"></vip-info>
+						<vip-info :level="level" :member_validate_dates="dates"></vip-info>
 					</view>
 				</template>
 				<template v-if="userInfo.nickName!=undefined">
@@ -34,7 +34,7 @@
 								<text>会员ID:   {{userInfo.uid}}</text>
 							</view>
 						</view>
-						<vip-info :level="level"></vip-info>
+						<vip-info :level="level" :member_validate_dates="dates"></vip-info>
 					</view>
 				</template>
 				<view id="bottom_list">
@@ -47,9 +47,7 @@
 			</view>
 			<tabBar></tabBar>
 			<scorll-view>
-			     <view style="height:34px;" v-if="isIphoneX">
-					
-				 </view>
+			    <view style="height:34px;" v-if="isIphoneX"></view>
 			</scorll-view>
 	</view>
 	
@@ -60,12 +58,10 @@
 	import tabbar from '../../common/tabbar.vue';
 	import vipInfo from '../../common/vipinfo/vipinfo.vue';
 	import http from '../../common/http.js';
+	let weichat =  'wangquietforyou';
 	export default {
 		data() {
 			return {
-				weichat: 'wangquietforyou',
-				sessionKey: '',
-				openId: '',
 				contentHeight: 0,
 				isIphoneX: false,
 				isCanUse:uni.getStorageSync('wx_user_info') || true
@@ -75,23 +71,24 @@
 			tabBar:tabbar,
 			vipInfo,
 		},
-		onLoad() {
+		onLoad(option) {
 			//this.login();
 			let winHeight      = uni.getSystemInfoSync().windowHeight;
 			if (this.isIphoneX) {
 				winHeight =  winHeight - 34;
 			}
+			this.isIphoneX = getApp().globalData.isIphoneX;
 			// 设计稿731 高度
 			this.contentHeight = winHeight-82;
 			console.log(winHeight, this.contentHeight);
 			console.log(uni.getStorageSync('wx_user_info'));
 			console.log('onLoad....');
+			if(option.relogin) {
+				this.loginRequest(true);
+			}
 		},
 		created() {
 			console.log('created....');
-		},
-		mounted() {
-			this.isIphoneX = getApp().globalData.isIphoneX;
 		},
 		computed: {
 			userInfo: function() {
@@ -102,6 +99,18 @@
 					return this.$store.getters.userInfo.level;
 				}
 				return 0;
+			},
+			dates: function() {
+				let userInfo = this.$store.getters.userInfo;
+				let dateStr = '';
+				if (userInfo.start_time) {
+					dateStr+=userInfo.start_time+"~";
+				}
+				if (userInfo.end_time) {
+					dateStr+=userInfo.end_time;
+				}
+				console.log('dateStr', dateStr);
+				return dateStr;
 			}
 		},
 		methods: {
@@ -124,7 +133,7 @@
 			},
 			copy_customer_wechat() {
 				uni.setClipboardData({
-					data: this.weichat,
+					data: weichat,
 					success: function(res) {
 						uni.getClipboardData({
 							success: function(res) {
@@ -136,53 +145,28 @@
 					}
 				});
 			},
-			updateUserInfo() {
-				console.log('更新用户信息!');
-			},
 			setUserInfo(userInfo) {
 				this.$store.commit('setUserInfo', userInfo);
 			},
-			addWechat() {
-				this.getUserInfoFromWeixin();
-				// 这里弹框,弹出微信
-				/*uni.showModal({
-				    title: '提示',
-				    content: '请添加导师微信',
-					showCancel: false,
-					mask: true,
-				    success: function (res) {
-				        if (res.confirm) {
-				            console.log('用户点击确定');
-				        } else if (res.cancel) {
-				            console.log('用户点击取消');
-				        }
-				    }
-				});*/
-			},
-			getUserInfoFromWeixin() {
-				let _this = this;
-				uni.getUserInfo({
-					provider: 'weixin',
-					success: function(infoRes) {
-　　　　　　　　　　　　　　　　　　　	//获取用户信息后向调用信息更新方法
-						console.log('infoRes', infoRes);
-						_this.setUserInfo(infoRes.userInfo);
-						_this.updateUserInfo();//调用更新信息方法
-					}
-				});
-			},
-			login() {
-				let _this = this;
-				uni.showLoading({
-					title: '登录中...'
-				});
+			login(hideLoading) {
+				if (!hideLoading) {
+					uni.showLoading({
+						title: '登录中...'
+					});
+				}
 			   // 1.wx获取登录用户code
+				this.loginRequest(hideLoading);
+			},
+			loginRequest(hideLoading) {
+				let _this = this;
 				uni.login({
 					provider: 'weixin',
 					success: function(loginRes) {
 						let code = loginRes.code;
 						console.log(loginRes);
-						uni.hideLoading();
+						if(!hideLoading) {
+							uni.hideLoading();
+						}
 						//非第一次授权获取用户信息
 						const data = getApp().globalData;
 						const apiPrefix = data.serverUri;
@@ -207,22 +191,22 @@
 										gender: userInfo.gender,
 										province: userInfo.province
 									}
-								).then(resp=> {
+								).then((resp) => { 
 									//openId、或SessionKdy存储//隐藏loading
 									console.log(resp);
 									let uid = resp.id;
 									userInfo.uid = uid;
 									userInfo.level = resp.cid;
-									if(resp.startTime) {
-										userInfo.startTime = resp.startTime;
+									if(resp.start_time) {
+										userInfo.start_time = resp.start_time;
 									}
-									if(resp.endTime) {
-										userInfo.endTime = resp.endTime;
+									if(resp.end_time) {
+										userInfo.end_time = resp.end_time;
 									}
+									//_this.dates = userInfo.start_time + "~" + userInfo.end_time;
 									console.log('userInfo:', userInfo);
 									_this.setUserInfo(userInfo);
 									_this.setUserInfoToStrorage(userInfo);
-									uni.hideLoading();
 								});
 							},
 							fail: () => {
@@ -252,27 +236,9 @@
 			},
 			// 手动授权方法,授权登录的时候,只调用一次
 			wxGetUserInfo(e) {
-				console.log('hehe');
+				console.log('get_user_info');
 				this.login();
 			},
-			userToDb(userInfo) {
-				const data = getApp().globalData;
-				const apiPrefix = data.serverUri;
-				const auth = data.auth;
-				const url = apiPrefix + "?mod=user&ac=wx_reg_add";
-				http.request(url, {
-					auth: auth,					
-					openid: "abcdef",
-					nickname: userInfo.nickName,
-					avatar: userInfo.avatarUrl,
-				}).then(resp=> {
-					console.log(resp);
-				});
-			},
-			// 手机登录时获取手机号码相关信息的函数
-			getPhoneNumber(e) {
-				console.log(e);
-			}		
 		}
 	}
 	

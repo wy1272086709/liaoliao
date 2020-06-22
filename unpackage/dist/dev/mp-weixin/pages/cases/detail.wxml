@@ -1,1 +1,1 @@
-<view id="view-content"><view id="view-title"><text>{{title}}</text></view><view id="view-article"><rich-text nodes="{{htmls}}"></rich-text></view></view>
+<view style="{{('min-height:'+height+'px')}}" id="view-content"><view id="view-article"><rich-text nodes="{{htmls}}"></rich-text></view></view>

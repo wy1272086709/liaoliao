@@ -20,7 +20,8 @@ export default {
 	},
 	globalData: {
 		serverUri: "https://kuxou.com/index.php",
-		isIphoneX: false,
+		hostUrl: 'https://kuxou.com',
+		key: 'puiuytrew12q325skmsk2568i2699f66',
 		auth: '376b66f9bedd4622522dce742adaaebc',
 	}
 };

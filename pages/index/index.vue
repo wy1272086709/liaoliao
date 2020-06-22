@@ -2,7 +2,7 @@
 	<view id="root-view">
 		<view id="container-view" :style="'height:'+winHeight+'px;'">
 			<view id="ads-view" :style="'height:'+adsHeight+'px;'">
-				<image class="ads-image" src="../../static/img/index/ads.png"></image>
+				<image class="ads-image" src="https://kuxou.com/images/ads.png"></image>
 			</view>
 			<view id="icon-view" :style="'height:'+iconHeight+'px;'">
 				<view id="help-center-view"  @tap="help_center()">
@@ -52,12 +52,12 @@
 			</view>
 			<scroll-view id="content-view" :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scrolltoupper="upper" @scrolltolower="lower"
                 @scroll="scroll" :style="'height:'+scrollHeight+'px;'">
-				<view v-for="item in navList" class="nav-view" :key="item.navId">
+				<view v-for="item in navList" class="nav-view" :key="item.firstNav.navId">
 					<view class="first-nav" :style="'margin-top:'+firstNavTop+'px;'">
 						<label class="first-nav-icon">
 						</label>
 						<label class="first-nav-label">
-							<text class="first-nav-text">{{item.firstNav}}</text>
+							<text class="first-nav-text">{{item.firstNav.title}}</text>
 						</label>
 					</view>
 					<view class="second-nav">
@@ -96,8 +96,10 @@
 				keyword: '',
 				isIphoneX: false,
 				navList: [{
-					firstNav: '开场助手',
-					navId: 1,
+					firstNav: {
+						title:'开场助手',
+						navId: 1,
+					},
 					secondNav: [ 
 						{ title: '重新开场', navClass:'second-nav-label second-nav-lable-margin',navId: 2, }, 
 						{ title: '土味情话', navClass:'second-nav-label second-nav-lable-margin', navId: 3 }, 
@@ -111,23 +113,50 @@
 		mounted() {
 			this.isIphoneX = getApp().globalData.isIphoneX;
 			this.getNavList();
-			let url = '/';
-			http.request(url, {}).then(resp=>{
-				console.log('resp:');
-			});
 		},
 		components:{
 			tabBar
 		},
 		methods: {
+			getNavList() {
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				let _self = this;
+				const url = apiPrefix + "?mod=loveword&ac=get_all_cid";
+				http.request(url, {
+					auth: auth
+				}).then( resp => {
+					const n = resp.length;
+					for(let j=0;j<n;j++) {
+						let secondNavList = resp[j].secondNav;
+						let secondNavLen  = secondNavList.length;
+						for(let m=0;m<secondNavLen;m++) {
+							// navClass
+							if((m+1)%3 == 0) {
+								resp[j].secondNav[m].navClass = 'second-nav-label'; 
+							} else {
+								resp[j].secondNav[m].navClass = 'second-nav-label second-nav-lable-margin'; 
+							}
+						}
+					}
+					_self.navList = resp;			
+					console.log('resp', resp);
+				});
+			},
 			// 跳转到关键词页面
 			searchKeyword() {
+				if(!this.keyword || this.keyword.length<2) {
+					uni.showToast({
+						title: '请输入关键词，且至少2个字符长度!',
+						icon:"none",
+						duration: 2000
+					});
+					return;
+				}
 				uni.navigateTo({
 					url: '/pages/index/huashu?keyword='+this.keyword
 				});
-			},
-			getNavList() {
-				
 			},
 			handleContact() {
 				console.log('handler...');

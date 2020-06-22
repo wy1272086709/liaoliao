@@ -171,5 +171,9 @@ view.data-v-5e343daf, scroll-view.data-v-5e343daf {
 	-webkit-justify-content: center;
 	        justify-content: center;
 	margin-bottom:57px;
+	margin-top:16px;
+}
+.searchText.data-v-5e343daf {
+	font-weight: bold;
 }
 

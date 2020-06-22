@@ -9,7 +9,11 @@ class http {
 					},
 					method,
 					success: (res) => {
-						resolve(res.data.data);
+						if (!params.filterData ) {
+							resolve(res.data.data);
+						} else {
+							resolve(res.data);
+						}
 					}
 				});
 			});

@@ -10,7 +10,7 @@
 				</view>
 				<view class="right-view" :style="'margin-top:'+rightViewTop+'px;margin-bottom:'+rightViewBottom+'px;'">
 					<view class="first-line">
-						<text>月度会员套餐</text>
+						<text>月度会员套餐(30天)</text>
 						<text class="price-text">¥28</text>
 					</view>
 					<view class="second-line">
@@ -24,7 +24,7 @@
 				</view>
 				<view class="right-view" :style="'margin-top:'+rightViewTop+'px;margin-bottom:'+rightViewBottom+'px;'">
 					<view class="first-line">
-						<text>季度会员套餐</text>
+						<text>季度会员套餐(90天)</text>
 						<text class="price-text">¥98</text>
 					</view>
 					<view class="second-line" :style="'margin-top:'+secondLineMarginTop+'px;'">
@@ -38,7 +38,7 @@
 				</view>
 				<view class="right-view" :style="'margin-top:'+rightViewTop+'px;margin-bottom:'+rightViewBottom+'px;'">
 					<view class="first-line">
-						<text class="combo-member-text">年度会员套餐</text>
+						<text class="combo-member-text">年度会员套餐(30天)</text>
 						<text class="price-text">¥198</text>
 					</view>
 					<view class="second-line">
@@ -57,6 +57,9 @@
 
 
 <script>
+	import http from '../../common/http.js';
+	var money = 0;
+	var level = 0;
 	export default {
 		data() {
 			return {
@@ -68,6 +71,11 @@
 				rightViewTop: 0,
 				rightViewBottom: 0,
 				secondLineMarginTop: 0,
+			}
+		},
+		computed: {
+			userInfo: function() {
+				return this.$store.getters.userInfo;
 			}
 		},
 		onLoad() {
@@ -82,40 +90,105 @@
 			this.secondLineMarginTop = 9*ratio;
 			console.log('comboHeight', this.comboHeight);
 		},
+		mounted() {
+			this.selectCombo();
+		},
 		methods: {
 			selectCombo() {
 				this.borderStyle = "2px solid rgba(249,177,127,1);";
 				this.borderSecondStyle = "";
 				this.borderThirdStyle  = "";
+				money = 0.01;
+				money = 0.01;
+				level = 2;
 			},
 			selectCombo2() {
 				this.borderStyle = "";
 				this.borderSecondStyle = "2px solid rgba(249,177,127,1);";
 				this.borderThirdStyle  = "";
+				money = 98;
+				money = 0.01;
+				level = 3;
 			},
 			selectCombo3() {
 				this.borderStyle = "";
 				this.borderSecondStyle = "";
 				this.borderThirdStyle  = "2px solid rgba(249,177,127,1);";
+				money = 198;
+				money = 0.01;
+				level = 4;
 			},
 			wxPay() {
 				this.comboPay();
 			},
+			generateSign(obj) {
+				const data = getApp().globalData;
+				const key = data.key;
+				let str = "appId="+obj.appId+"&nonceStr="+obj.nonceStr+"&package="+obj.package+
+				"&signType="+obj.signType+'&timeStamp='+obj.timeStamp+'&key='+key;
+				return md5(str).toUpperCase();
+			},
 			comboPay() {
-				uni.requestPayment({
-					provider: 'wxpay',
-					timeStamp: String(Date.now()),
-					nonceStr: "",
-					package: "zxxxx",
-					signType: 'MD5',
-					paySign: "",
-					success: function(res) {
-						console.log('success:' + JSON.stringify(res));
-					},
-					fail: function(err) {
-						console.log('fail:' + JSON.stringify(err));
-					}
+				let userInfo = this.userInfo;
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				const url = apiPrefix + "?mod=user&ac=unifiedorder";
+				http.request(url, {
+					auth: auth,
+					money: money,
+					uid: userInfo.uid,
+					level: level,
+					filterData: true
+				}).then(resp => {
+					console.log('resp', resp);
+					uni.requestPayment({
+						appId: resp.appid,
+						timeStamp: resp.timeStamp,
+						nonceStr: resp.nonce_str,
+						package: resp.prepay_id,
+						signType: 'MD5',
+						paySign: resp.paySign2,
+						success: function(res) {
+							console.log('success:' + JSON.stringify(res));
+						},
+						fail: function(err) {
+							console.log('fail:' + JSON.stringify(err));
+							uni.showModal({
+								title: '提示',
+								content: '充值失败!',
+								showCancel: false,
+								cancelText: '',
+								confirmText: '确定',
+								success: res2 => {
+									
+								}
+							});
+						},
+						complete: (res) => {
+							let msg = '';
+							if(res.errMsg == 'requestPayment:ok') {
+								msg = '充值成功!';
+								uni.showModal({
+									title: '提示',
+									content: msg,
+									showCancel: false,
+									cancelText: '',
+									confirmText: '确定',
+									success: res2 => {
+										if(res2.confirm) {
+											uni.navigateTo({
+												url: '/pages/user/index?relogin=1'
+											});
+										}
+									}
+								});
+							}
+						}
+					});
 				});
+				
+				
 			}
 		}
 	}

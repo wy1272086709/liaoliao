@@ -58,7 +58,9 @@
 				"path" : "pages/index/meme",
 				"style" : {
 					"navigationBarTitleText": "表情包",
-					"navigationBarBackgroundColor": "#2369E6"
+					"navigationBarBackgroundColor": "#2369E6",
+					"enablePullDownRefresh":true,
+					"onReachBottomDistance": 40
 				}
 			},
 			{
