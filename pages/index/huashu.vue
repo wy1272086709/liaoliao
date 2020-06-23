@@ -37,7 +37,7 @@
 				</view>
 				<view class="huashu-line" v-for="(line,key,index) in item.content">
 					<view class="huashu-sex">
-						<template v-if="key == 1">
+						<template v-if="line.split('@@')[0] == 1">
 							<image class="huashu-sex-image" src="../../static/img/index/man.png"></image>
 						</template>
 						<template v-else>
@@ -45,18 +45,19 @@
 						</template>
 					</view>
 					<view class="huashu-content">
-						<text class="huashu-content-text">{{line}}</text>
+						<text class="huashu-content-text">{{line.split('@@')[1]}}</text>
 					</view>
 					<view class="huashu-copy-btn" @tap="copyHuashu(line)">
 						<image class="huashu-copy-image" src="../../static/img/index/copy.png"></image>
 					</view>
 				</view>
 			</view>
+			<view id="user-upgrade-vip-view" v-if="level<=1" @tap="upgrade_vip">
+				<img src="https://kuxou.com/images/user_upgrade_vip.png" id="user_upgrade_vip" />
+			</view>
 		</view>
 		<!-- 这里 -->
-		<view id="user-upgrade-vip-view" v-if="level<=1" @tap="upgrade_vip">
-			<img src="https://kuxou.com/images/user_upgrade_vip.png" id="user_upgrade_vip" />
-		</view>
+		
 	</view>
 </template>
 
@@ -176,7 +177,8 @@
 				http.request(url, params).then(resp=>{
 					console.log('resp', resp);
 					if(resp.status == 1) {
-						this.articleList = resp.data;
+						let articleData  = resp.data;
+						this.articleList =  articleData;
 						totalPage   = resp.totalpage;
 					}
 				});
@@ -242,7 +244,8 @@
 					url:'/pages/user/upgrade_user_vip'
 				});
 			},
-			copyHuashu(content) {
+			copyHuashu(line) {
+				let content = line.split('@@')[1];
 				console.log('content', content);
 				uni.setClipboardData({
 					data: content,
@@ -307,7 +310,11 @@
 				http.request(url, params).then(resp=>{
 					console.log('resp', resp);
 					if(resp.status == 1) {
-						_self.articleList.push(resp.data);
+						let len = resp.data.length;
+						for(let j = 0;j<len;j++) {
+							_self.articleList.push(resp.data[j]);
+						}
+						console.log(_self.articleList);
 						totalPage   = resp.totalpage;
 					}
 				});

@@ -38,7 +38,7 @@
 				</view>
 				<view class="right-view" :style="'margin-top:'+rightViewTop+'px;margin-bottom:'+rightViewBottom+'px;'">
 					<view class="first-line">
-						<text class="combo-member-text">年度会员套餐(30天)</text>
+						<text class="combo-member-text">年度会员套餐(365天)</text>
 						<text class="price-text">¥198</text>
 					</view>
 					<view class="second-line">
@@ -98,8 +98,8 @@
 				this.borderStyle = "2px solid rgba(249,177,127,1);";
 				this.borderSecondStyle = "";
 				this.borderThirdStyle  = "";
-				money = 0.01;
-				money = 0.01;
+				//money = 0.01;
+				money = 28;
 				level = 2;
 			},
 			selectCombo2() {
@@ -107,7 +107,7 @@
 				this.borderSecondStyle = "2px solid rgba(249,177,127,1);";
 				this.borderThirdStyle  = "";
 				money = 98;
-				money = 0.01;
+				//money = 0.01;
 				level = 3;
 			},
 			selectCombo3() {
@@ -115,7 +115,7 @@
 				this.borderSecondStyle = "";
 				this.borderThirdStyle  = "2px solid rgba(249,177,127,1);";
 				money = 198;
-				money = 0.01;
+				//money = 0.01;
 				level = 4;
 			},
 			wxPay() {

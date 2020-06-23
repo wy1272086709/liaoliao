@@ -168,12 +168,6 @@
 							this.list.push(resp.data[i]);
 						}
 					}
-					uni.getSystemInfo({
-						success: (res) => {
-							// 动态更改列表高度,看是否需要
-							console.log('res:', res);
-						}
-					});
 				});
 			},
 			initHuashuListImage(list) {

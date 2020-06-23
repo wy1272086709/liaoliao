@@ -27,7 +27,7 @@
 							<image class="icon-class" src="../../static/img/huashu/contact_consumer.png"></image>
 						</button>
 					</view>
-					<view class="icon-view-text">
+					<view class="icon-view-text icon-view-contact">
 						<button open-type="contact" @contact="handleContact()" class="contact-btn">
 							<text class="icon-text">联系客服</text>
 						</button>
@@ -45,7 +45,9 @@
 			
 			<view id="search-view" :style="'height:'+searchViewHeight+'px;margin-top:'+searchViewTop+'px;'">
 				<input id="search-text" type="text" placeholder="点击这里输入对方想说的话" placeholder-class="search-class" v-model="keyword" />
-				<uni-icons type="search" :size="iconSize" @tap="searchKeyword()"></uni-icons>
+				<view id="search-btn-view" @tap="searchKeyword()">
+					<uni-icons type="search" :size="iconSize" ></uni-icons>
+				</view>
 				<!--
 				<uni-search-bar></uni-search-bar>
 				-->
@@ -134,9 +136,17 @@
 						for(let m=0;m<secondNavLen;m++) {
 							// navClass
 							if((m+1)%3 == 0) {
-								resp[j].secondNav[m].navClass = 'second-nav-label'; 
+								if(m>2) {
+									resp[j].secondNav[m].navClass = ' second-nav-label second-nav-lable-top'; 
+								} else {
+									resp[j].secondNav[m].navClass = ' second-nav-label '; 
+								}
 							} else {
-								resp[j].secondNav[m].navClass = 'second-nav-label second-nav-lable-margin'; 
+								if(m>2) {
+									resp[j].secondNav[m].navClass = ' second-nav-label second-nav-lable-margin second-nav-lable-top'; 
+								} else {
+									resp[j].secondNav[m].navClass = ' second-nav-label second-nav-lable-margin '; 
+								}
 							}
 						}
 					}
@@ -228,15 +238,15 @@
 			let winHeight = uni.getSystemInfoSync().windowHeight;
 			let ratio     = winHeight/731;
 			ratio = ratio.toFixed(2);
-			this.iconHeight = ratio *102; 
-			this.adsHeight= ratio*175;
+			this.iconHeight = 102; 
+			this.adsHeight= 175;
 			this.winHeight = winHeight;
-			this.searchViewHeight = 40* ratio;
-			this.searchViewTop    = 20*ratio;
+			this.searchViewHeight = 40;
+			this.searchViewTop    = 20;
 			this.searchViewBottom = 0;
-			this.firstNavTop = 20*ratio;
-			this.secondNavLabelHeight = 30*ratio;
-			this.scrollHeight = winHeight - 175*ratio - 102*ratio - 80*ratio;
+			this.firstNavTop = 20;
+			this.secondNavLabelHeight = 30;
+			this.scrollHeight = winHeight - 175 - 102 - 80;
 			this.iconSize = this.searchViewHeight - 10;
 		}
 	}
@@ -393,12 +403,16 @@
 		font-family:PingFangSC-Regular,PingFang SC;
 		font-weight:400;
 		color:rgba(170,170,170,1);
-		width:90%;
+		width:80%;
 		margin-left:5px;
 	}
 	
 	#content-view {
 		height:150px;
+	}
+	
+	.icon-view-contact {
+		margin-top:10px;
 	}
 	
 	.contact-btn {
@@ -411,5 +425,10 @@
 	}
 	button::after {
 		border: none;
+	}
+	
+	#search-btn-view {
+		width:20%;
+		justify-content: center;
 	}
 </style>

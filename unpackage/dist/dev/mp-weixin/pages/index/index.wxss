@@ -165,11 +165,14 @@ view.data-v-47b73f3f,scroll-view.data-v-47b73f3f {
 	font-family:PingFangSC-Regular,PingFang SC;
 	font-weight:400;
 	color:rgba(170,170,170,1);
-	width:90%;
+	width:80%;
 	margin-left:5px;
 }
 #content-view.data-v-47b73f3f {
 	height:150px;
+}
+.icon-view-contact.data-v-47b73f3f {
+	margin-top:10px;
 }
 .contact-btn.data-v-47b73f3f {
 	display: -webkit-box;
@@ -183,5 +186,11 @@ view.data-v-47b73f3f,scroll-view.data-v-47b73f3f {
 }
 button.data-v-47b73f3f::after {
 	border: none;
+}
+#search-btn-view.data-v-47b73f3f {
+	width:20%;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
 }
 

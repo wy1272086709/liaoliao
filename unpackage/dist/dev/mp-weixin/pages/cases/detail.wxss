@@ -1,4 +1,6 @@
 
+image {
+}
 #view-content {
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -17,6 +19,7 @@
 #view-article {
 	margin-left:32rpx;
 	margin-right:32rpx;
+	width:686rpx;
 	-webkit-box-pack: center;
 	-webkit-justify-content: center;
 	        justify-content: center;
