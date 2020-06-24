@@ -17,6 +17,16 @@
 	-webkit-align-items: center;
 	        align-items: center;
 }
+.login-btn-view.data-v-2e4fc77e {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	height: 100%;
+	background-color: transparent;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
 .vip-info-text.data-v-2e4fc77e {
 	font-size:16px;
 	font-family:PingFangSC-Semibold,PingFang SC;
@@ -30,8 +40,8 @@
 	color:rgba(119,79,37,1);
 }
 .left-vip-image.data-v-2e4fc77e {
-	max-width:68rpx;
-	max-height: 68rpx;
+	max-width:86rpx;
+	max-height: 86rpx;
 }
 .left-vip-image-view.data-v-2e4fc77e {
 	margin-left:38rpx;
@@ -42,20 +52,17 @@
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
 	        flex-direction: column;
-	width:286rpx;
+}
+.right-vip-action.data-v-2e4fc77e {
+	margin-right:16rpx;
 }
 .vip-text-view.data-v-2e4fc77e {
 	margin-bottom: 6px;
+	height: 22px;
 }
 .vipinfo_arrow.data-v-2e4fc77e {
 	max-width: 32rpx;
 	max-height: 32rpx;
-}
-.grant-view.data-v-2e4fc77e {
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
-	margin-top:33px;
 }
 .right-vip-image-view.data-v-2e4fc77e {
 	margin-right:24rpx;
@@ -68,4 +75,6 @@
 	font-weight:400;
 	color:rgba(255,255,255,1);
 }
+
+
 

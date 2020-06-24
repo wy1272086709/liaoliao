@@ -3,7 +3,7 @@
 		<view class="padding-style" :style="'min-height:'+height+'px'">
 			敬请期待...
 		</view>
-		<tabbar></tabbar>
+		<tabbar :current="2"></tabbar>
 		<scorll-view>
 		     <view style="height:34px;" v-if="isIphoneX">
 				

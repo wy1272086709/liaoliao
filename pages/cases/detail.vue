@@ -66,14 +66,16 @@
 		width: 750rpx;
 		justify-content: flex-start;
 		flex-direction: column;
-		background: linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
+		background: rgba(255,255,255,1);
 	}
 	
 	#view-article {
 		margin-left:32rpx;
 		margin-right:32rpx;
 		width:686rpx;
+		overflow-x: hidden;
 		justify-content: center;
 		align-items: center;
+		word-break: break-all;
 	}
 </style>

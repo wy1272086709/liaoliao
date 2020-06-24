@@ -11,7 +11,7 @@
 				<view class="right-view" :style="'margin-top:'+rightViewTop+'px;margin-bottom:'+rightViewBottom+'px;'">
 					<view class="first-line">
 						<text>月度会员套餐(30天)</text>
-						<text class="price-text">¥28</text>
+						<text class="price-text">¥{{yuedu_money}}</text>
 					</view>
 					<view class="second-line">
 						<text>10万恋爱话术、搜索功能、AI聊天、无广告、搜索、表情包、装逼图</text>
@@ -25,7 +25,7 @@
 				<view class="right-view" :style="'margin-top:'+rightViewTop+'px;margin-bottom:'+rightViewBottom+'px;'">
 					<view class="first-line">
 						<text>季度会员套餐(90天)</text>
-						<text class="price-text">¥98</text>
+						<text class="price-text">¥{{jidu_money}}</text>
 					</view>
 					<view class="second-line" :style="'margin-top:'+secondLineMarginTop+'px;'">
 						<text>10万恋爱话术、搜索功能、AI聊天、无广告、搜索、表情包、装逼图</text>
@@ -39,7 +39,7 @@
 				<view class="right-view" :style="'margin-top:'+rightViewTop+'px;margin-bottom:'+rightViewBottom+'px;'">
 					<view class="first-line">
 						<text class="combo-member-text">年度会员套餐(365天)</text>
-						<text class="price-text">¥198</text>
+						<text class="price-text">¥{{niandu_money}}</text>
 					</view>
 					<view class="second-line">
 						<text class="combo-desc">10万恋爱话术、搜索功能、AI聊天、无广告、搜索、表情包、装逼图</text>
@@ -58,8 +58,8 @@
 
 <script>
 	import http from '../../common/http.js';
-	var money = 0;
-	var level = 0;
+	let money = 0;
+	let level = 0;
 	export default {
 		data() {
 			return {
@@ -71,6 +71,9 @@
 				rightViewTop: 0,
 				rightViewBottom: 0,
 				secondLineMarginTop: 0,
+				yuedu_money: 0,
+				jidu_money: 0,
+				niandu_money: 0,
 			}
 		},
 		computed: {
@@ -88,25 +91,40 @@
 			this.rightViewTop = 25*ratio;
 			this.rightViewBottom = 28*ratio;
 			this.secondLineMarginTop = 9*ratio;
+			this.initVipMoney();
 			console.log('comboHeight', this.comboHeight);
 		},
 		mounted() {
 			this.selectCombo();
 		},
 		methods: {
+			initVipMoney() {
+				let userInfo = this.userInfo;
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				const url = apiPrefix + "?mod=user&ac=get_vip_jine";
+				http.request(url, {
+					auth: auth,
+				}).then(resp=>{
+					this.yuedu_money = resp.yue;
+					this.jidu_money  = resp.ji;
+					this.niandu_money = resp.nian;
+				});
+			},
 			selectCombo() {
 				this.borderStyle = "2px solid rgba(249,177,127,1);";
 				this.borderSecondStyle = "";
 				this.borderThirdStyle  = "";
 				//money = 0.01;
-				money = 28;
+				money = this.yuedu_money;
 				level = 2;
 			},
 			selectCombo2() {
 				this.borderStyle = "";
 				this.borderSecondStyle = "2px solid rgba(249,177,127,1);";
 				this.borderThirdStyle  = "";
-				money = 98;
+				money = this.jidu_money;
 				//money = 0.01;
 				level = 3;
 			},
@@ -114,7 +132,7 @@
 				this.borderStyle = "";
 				this.borderSecondStyle = "";
 				this.borderThirdStyle  = "2px solid rgba(249,177,127,1);";
-				money = 198;
+				money = this.niandu_money;
 				//money = 0.01;
 				level = 4;
 			},
@@ -235,7 +253,7 @@ view,scroll-view {
 
 .right-view {
 	flex-direction: column;
-	width:462rpx;
+	width:468rpx;
 	margin-left:40rpx;
 	margin-right:40rpx;
 }

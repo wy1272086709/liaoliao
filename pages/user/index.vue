@@ -1,12 +1,14 @@
 <template>
 	<view class="root-view">
-			<view id="content-view" :style="'height:'+contentHeight+'px'">
+			<view id="content-view" :style="'height:'+contentHeight+'px;margin-top:'+marginTop+'px;'">
 				<!-- 如果用微信登录，获取微信相关用户信息 -->
 				<template v-if="userInfo.nickName==undefined">
 					<view id="no-login-view">
 						<view id="header-member-info">
 							<view class="zx">
-								<image class="tx-img" src="../../static/img/user/default_avatar.png"></image>
+								<button  type='primary' open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="wxGetUserInfo" id="login-btn-avatar">
+									<image class="tx-img-nologin" src="../../static/img/user/default_avatar.png"></image>
+								</button>
 							</view>
 						</view>
 						<view id="grant-view">
@@ -14,7 +16,7 @@
 								<text>点击登录/注册</text>
 							</button>
 						</view>
-						<vip-info :level="level" :member_validate_dates="dates"></vip-info>
+						<vip-info :level="level" :member_validate_dates="dates" @memberLogin="login(false)"></vip-info>
 					</view>
 				</template>
 				<template v-if="userInfo.nickName!=undefined">
@@ -41,11 +43,11 @@
 					<uni-list>
 						<uni-list-item title="关于我们" thumb="/static/img/user/about_us.png"></uni-list-item>
 						<uni-list-item title="专属客服" thumb="/static/img/user/contact_customer.png"  @tap="copy_customer_wechat()"  rightText="点击复制客服微信" :showArrow="false"></uni-list-item>
-						<uni-list-item title="当前版本" thumb="/static/img/user/setting.png"  thumbrightText="1.9.3" :showArrow="false"></uni-list-item>
+						<uni-list-item title="当前版本" thumb="/static/img/user/setting.png" rightText="1.0.0" :showArrow="false"></uni-list-item>
 					</uni-list>
 				</view>
 			</view>
-			<tabBar></tabBar>
+			<tabBar :current="3"></tabBar>
 			<scorll-view>
 			    <view style="height:34px;" v-if="isIphoneX"></view>
 			</scorll-view>
@@ -64,6 +66,7 @@
 			return {
 				contentHeight: 0,
 				isIphoneX: false,
+				marginTop: '',
 				isCanUse:uni.getStorageSync('wx_user_info') || true
 			}
 		},
@@ -74,6 +77,7 @@
 		onLoad(option) {
 			//this.login();
 			let winHeight      = uni.getSystemInfoSync().windowHeight;
+			console.log('winHeight', winHeight);
 			if (this.isIphoneX) {
 				winHeight =  winHeight - 34;
 			}
@@ -253,6 +257,7 @@
 		background:rgba(255,255,255,1) !important;
 		box-shadow:0px 4rpx 8rpx 0px rgba(0,0,0,0.01) !important;
 		border-radius:20rpx !important;
+	
 	}
 	.uni-list-hover {
 		background:rgba(255,255,255,1) !important;
@@ -268,6 +273,7 @@
 	
 	.root-view {
 		display: flex;
+		height: 100%;
 		flex-direction: column;
 		background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 	}
@@ -276,8 +282,9 @@
 		display: flex;
 		flex-direction: column;
 		flex-wrap:wrap;
-		margin-top:40rpx;
-		justify-content: center;
+		margin-top:60px;
+		min-height:434px;
+		justify-content: flex-start;
 	}
 
 	#no-login-view {
@@ -344,8 +351,30 @@
 	}
 	
 	#grant-view {
-		justify-content: center;
-		margin-top:33px;
+		height:58px;
+	}
+	
+	#login-btn-avatar {
+		height:80px;
+		line-height: 1;
+		display: flex;
+		margin: 0;
+		position: static;
+		border: 0;
+		background-color:transparent;
+		padding:0;
+		overflow: auto;
+		margin-top:-40px;
+	}
+	
+	button::after {
+		border: none;
+		width:0;
+		height: 0;
+		-webkit-transform:scale(1);
+	    transform:scale(1);
+	    display: none;
+	    background: transparent;
 	}
 
 	#login-btn {
@@ -356,6 +385,10 @@
 		padding-left:0px;
 		padding-right:0px;
 		border-radius: 0px;
+		height:100%;
+		width:100%;
+		justify-content: center;
+		align-items: flex-end;
 	}
 	
 	#login-btn::after{
@@ -370,10 +403,16 @@
 	}
 	
 	.tx-img {
-		width:160rpx;
-		height:160rpx;
+		width:80px;
+		height:80px;
 		border-radius: 50%;
-		margin-top:-80rpx;
+		margin-top:-40px;
+	}
+	
+	.tx-img-nologin {
+		width:80px;
+		height:80px;
+		border-radius: 50%;
 	}
 
 	.name,.member-class {
@@ -386,8 +425,8 @@
 	.zx {
 		display: flex;
 		flex-direction: row;
-		justify-content: flex-end;
-		width:424rpx;
+		justify-content: center;
+		width:100%;
 	}
 	
 	.member-level-text {
@@ -444,7 +483,6 @@
 	.li-view {
 		display:flex;
 		flex-direction: column;
-		margin-top:-12px;
 		background:rgba(255,255,255,1);
 		box-shadow:0px 2px 4px 0px rgba(0,0,0,0.01);
 		border-radius:10px;
@@ -458,13 +496,12 @@
 	}
 	
 	#bottom_list {
-		margin-top: 20px;
+		margin-top: 16px;
 		display:flex;
 		flex-direction: column;
 		background:rgba(255,255,255,1);
 		box-shadow:0px 2px 4px 0px rgba(0,0,0,0.01);
 		border-radius:10px 10px 10px 10px;
-		margin-bottom: 10px;
 		width:686rpx;
 	}	
 </style>

@@ -1,30 +1,53 @@
 <template>
 	<view class='header-vip-view' :style="'background:'+backgroundColor+';'" @tap="payForVip()">
-		<view class="left-vip-image-view">
-			<image v-if="level == 0" src="../../static/img/user/visit_left_vip_logo.png" class="left-vip-image"></image>
-			<image v-if="level == 1" src="../../static/img/user/no_member_left_vip_logo.png" class="left-vip-image"></image>
-			<image v-if="level == 2" src="../../static/img/user/month_left_vip_logo.png" class="left-vip-image"></image>
-			<image v-if="level == 3" src="../../static/img/user/quarter_left_vip_logo.png" class="left-vip-image"></image>
-			<image v-if="level == 4" src="../../static/img/user/year_left_vip_logo.png" class="left-vip-image"></image>
-		</view>
-		<view class="right-vip-info">
-			<view class="vip-text-view">
-				<text class="vip-info-text" v-if="level == 0">游客您好</text>
-				<text class="vip-info-text" v-if="level == 1">非VIP会员</text>
-				<text class="vip-info-text" v-if="level == 2">VIP月卡会员</text>
-				<text class="vip-info-text" v-if="level == 3">VIP季卡会员</text>
-				<text class="vip-info-text" v-if="level == 4">VIP年卡会员</text>
+		<template v-if="level<=0">
+			<button type='primary' open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="wxGetUserInfo" class="login-btn-view">
+				<view class="left-vip-image-view">
+					<image v-if="level == 0" src="../../static/img/user/visit_left_vip_logo.png" class="left-vip-image"></image>
+				</view>
+				<view class="right-vip-info" :style="'width:'+vipInfoWidth+'px'">
+					<view class="vip-text-view">
+						<text class="vip-info-text" v-if="level == 0">游客您好</text>
+					</view>
+					<view class="discount-view">
+						<text class="limit-time-discount">{{memberDiscountText}}</text>
+					</view>
+				</view>
+				<view class="right-vip-action" :style="'width:'+actionWidth+'px;'">
+					<text class="action-class">{{memberAction}}</text>
+				</view>
+				<view class="right-vip-image-view">
+					<image src="../../static/img/user/arrow.png" class="vipinfo_arrow"></image>
+				</view>
+			</button>
+		</template>
+		<template v-else="level>0">
+			<view class="left-vip-image-view">
+				<image v-if="level == 0" src="../../static/img/user/visit_left_vip_logo.png" class="left-vip-image"></image>
+				<image v-if="level == 1" src="../../static/img/user/no_member_left_vip_logo.png" class="left-vip-image"></image>
+				<image v-if="level == 2" src="../../static/img/user/month_left_vip_logo.png" class="left-vip-image"></image>
+				<image v-if="level == 3" src="../../static/img/user/quarter_left_vip_logo.png" class="left-vip-image"></image>
+				<image v-if="level == 4" src="../../static/img/user/year_left_vip_logo.png" class="left-vip-image"></image>
 			</view>
-			<view class="discount-view">
-				<text class="limit-time-discount">{{memberDiscountText}}</text>
+			<view class="right-vip-info">
+				<view class="vip-text-view">
+					<text class="vip-info-text" v-if="level == 0">游客您好</text>
+					<text class="vip-info-text" v-if="level == 1">非VIP会员</text>
+					<text class="vip-info-text" v-if="level == 2">VIP月卡会员</text>
+					<text class="vip-info-text" v-if="level == 3">VIP季卡会员</text>
+					<text class="vip-info-text" v-if="level == 4">VIP年卡会员</text>
+				</view>
+				<view class="discount-view">
+					<text class="limit-time-discount">{{memberDiscountText}}</text>
+				</view>
 			</view>
-		</view>
-		<view class="right-vip-action" :style="'margin-left:'+actionMarginLeft+'rpx;margin-right:16rpx;'">
-			<text class="action-class">{{memberAction}}</text>
-		</view>
-		<view class="right-vip-image-view">
-			<image src="../../static/img/user/arrow.png" class="vipinfo_arrow"></image>
-		</view>
+			<view class="right-vip-action" :style="'width:'+actionWidth+'px'">
+				<text class="action-class">{{memberAction}}</text>
+			</view>
+			<view class="right-vip-image-view">
+				<image src="../../static/img/user/arrow.png" class="vipinfo_arrow"></image>
+			</view>
+		</template>
 	</view>
 </template>
 
@@ -36,6 +59,8 @@
 				memberValidateDates: this.member_validate_dates,
 				memberAction: '',
 				actionMarginLeft: '',
+				actionWidth: '',
+				vipInfoWidth: '',
 			}
 		},
 		props:['level', 'member_validate_dates'],
@@ -79,6 +104,10 @@
 			initBackground() {
 				
 			},
+			wxGetUserInfo() {
+				// 发送事件给父元素...
+				this.$emit('memberLogin', true);
+			},
 			initActions() {
 				if(this.level == 0) {
 					this.memberAction = '';
@@ -89,12 +118,13 @@
 				}
 			},
 			initActionMargin() {
-				if(this.level>1) {
-					this.actionMarginLeft = 46;
-				} else if(this.level == 1) {
-					this.actionMarginLeft = 62;
+				if(this.level == 1) {
+					this.actionWidth = 48;
 				} else if(this.level == 0) {
-					this.actionMarginLeft = 66;
+					this.actionWidth = 0;
+					this.vipInfoWidth = 394;
+				} else {
+					this.actionWidth = 32;
 				}
 			},
 			payForVip() {
@@ -102,7 +132,7 @@
 					uni.navigateTo({
 						url:'/pages/user/upgrade_user_vip'
 					});
-				}
+				} 
 			}
 		}
 	}
@@ -121,7 +151,12 @@
 		margin-bottom: 20px;
 		align-items: center;
 	}
-	
+	.login-btn-view {
+		display: flex;
+		height: 100%;
+		background-color: transparent;
+		align-items: center;
+	}
 	.vip-info-text {
 		font-size:16px;
 		font-family:PingFangSC-Semibold,PingFang SC;
@@ -137,8 +172,8 @@
 	}
 	
 	.left-vip-image {
-		max-width:68rpx;
-		max-height: 68rpx;
+		max-width:86rpx;
+		max-height: 86rpx;
 	}
 	
 	.left-vip-image-view {
@@ -148,11 +183,14 @@
 	
 	.right-vip-info {
 		flex-direction: column;
-		width:286rpx;
 	}
 	
+	.right-vip-action {
+		margin-right:16rpx;
+	}
 	.vip-text-view {
 		margin-bottom: 6px;
+		height: 22px;
 	}
 	
 	.vipinfo_arrow {
@@ -160,10 +198,6 @@
 		max-height: 32rpx;
 	}
 	
-	.grant-view {
-		justify-content: center;
-		margin-top:33px;
-	}
 	.right-vip-image-view {
 		margin-right:24rpx;
 		margin-top:32px;
@@ -176,4 +210,6 @@
 		font-weight:400;
 		color:rgba(255,255,255,1);
 	}
+	
+	
 </style>

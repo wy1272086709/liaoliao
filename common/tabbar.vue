@@ -2,7 +2,8 @@
 	<view class="tabbar-view" :style="'bottom:'+bottom+'px;'">
 		<view class="tabbar-navigator"  @tap="switchTab(index)" v-for="(item,index) in tabList" :key="index">
 			<view class="tabbar-icon">
-				<image :src="item.iconPath" :class="item.defaultClass"></image>
+				<image :src="item.iconPath" :class="item.defaultClass" v-if="index!=current"></image>
+				<image :src="item.hoverPath" :class="item.defaultClass" v-if="index==current"></image>
 			</view>
 			<view class="tabbar-text">
 				<text>{{item.text}}</text>
@@ -58,9 +59,17 @@
 				const pagePath = this.tabList[index].pagePath;
 				console.log('switchTab', index);
 				console.log(pagePath);
-				uni.navigateTo({
-					url:pagePath,
-				});
+				let pages = getCurrentPages();
+				console.log('pages', pages);
+				console.log('pages', pages[0].route);
+				if (("/"+pages[0].route)!=pagePath) {
+					uni.reLaunch({
+						url:pagePath,
+					});
+				} else {
+					// 可以用于更改颜色,以及字体图标
+					
+				}
 			}
 		},
 		props: {
@@ -92,6 +101,7 @@
 		background:linear-gradient(90deg,rgba(34,121,239,1) 0%,rgba(61,177,242,1) 100%);
 		bottom: 0rpx;
 		justify-content: space-around;
+		position: absolute;
 	}
 	.tabbar-icon-class {
 		width: 24px;

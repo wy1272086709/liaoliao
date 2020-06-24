@@ -62,7 +62,7 @@ view,scroll-view {
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
 	        flex-direction: column;
-	width:462rpx;
+	width:468rpx;
 	margin-left:40rpx;
 	margin-right:40rpx;
 }

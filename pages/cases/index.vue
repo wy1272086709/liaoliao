@@ -23,7 +23,7 @@
 				</view>
 			</view>
 		</scroll-view>
-		<tabBar></tabBar>
+		<tabBar :current="1"></tabBar>
 		<scorll-view>
 		     <view style="height:34px;" v-if="isIphoneX">
 				
@@ -69,7 +69,8 @@
 				uni.stopPullDownRefresh();
 			}, 200);
 		},
-		onLoad() {
+		onLoad(option) {
+			console.log('option', option);
 			let sysinfo = uni.getSystemInfoSync();
 			let screenHeight = sysinfo.screenHeight;
 			let winHeight    = sysinfo.windowHeight;

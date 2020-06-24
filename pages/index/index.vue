@@ -23,12 +23,12 @@
 				</view>
 				<view id="contact-customer-view" @tap="contact_consumer()">
 					<view>	
-						<button open-type="contact" @contact="handleContact()" class="contact-btn">
-							<image class="icon-class" src="../../static/img/huashu/contact_consumer.png"></image>
+						<button open-type="contact" @contact="handleContact()" class="contact-btn" id="contact-btn-view">
+							<image class="contact-icon-class" src="../../static/img/huashu/contact_consumer.png"></image>
 						</button>
 					</view>
 					<view class="icon-view-text icon-view-contact">
-						<button open-type="contact" @contact="handleContact()" class="contact-btn">
+						<button open-type="contact" @contact="handleContact()" class="contact-btn" id="contact-btn-view2">
 							<text class="icon-text">联系客服</text>
 						</button>
 					</view>
@@ -69,7 +69,7 @@
 					</view>
 				</view>
 			</scroll-view>
-			<tabBar></tabBar>
+			<tabBar :current="0"></tabBar>
 			<scorll-view>
 			     <view style="height:34px;" v-if="isIphoneX">
 					 
@@ -286,12 +286,17 @@
 		margin-left:60rpx;
 		margin-right:60rpx;
 	}
-	
+	#contact-btn-view {
+		height: 112rpx;
+	}
 	.icon-class {
 		max-width:112rpx;
 		max-height: 112rpx;
 	}
-	
+	.contact-icon-class {
+		width:112rpx;
+		height: 112rpx;
+	}
 	.icon-view-text {
 		margin-top:8px;
 		height: 33px;
@@ -412,19 +417,30 @@
 	}
 	
 	.icon-view-contact {
-		margin-top:10px;
+		
 	}
 	
 	.contact-btn {
 		display: flex;
-		line-height: 1;
+		margin: 0;
+		position: static;
+		border: 0;
 		background-color:transparent;
-		padding-top: 1px;
-		padding-left:0px;
-		padding-right: 0px;
+		padding:0;
+		overflow: auto;
+	}
+	#contact-btn-view2 {
+		height:33px;
+		line-height: 1;
 	}
 	button::after {
 		border: none;
+		width:0;
+		height: 0;
+		-webkit-transform:scale(1);
+	    transform:scale(1);
+	    display: none;
+	    background: transparent;
 	}
 	
 	#search-btn-view {

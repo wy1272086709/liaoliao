@@ -27,6 +27,7 @@ view {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
+	height: 100%;
 	-webkit-box-orient: vertical;
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
@@ -44,10 +45,11 @@ view {
 	        flex-direction: column;
 	-webkit-flex-wrap:wrap;
 	        flex-wrap:wrap;
-	margin-top:40rpx;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
+	margin-top:60px;
+	min-height:434px;
+	-webkit-box-pack: start;
+	-webkit-justify-content: flex-start;
+	        justify-content: flex-start;
 }
 #no-login-view {
 	display: -webkit-box;
@@ -124,10 +126,30 @@ view {
 	margin-bottom: 6px;
 }
 #grant-view {
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
-	margin-top:33px;
+	height:58px;
+}
+#login-btn-avatar {
+	height:80px;
+	line-height: 1;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	margin: 0;
+	position: static;
+	border: 0;
+	background-color:transparent;
+	padding:0;
+	overflow: auto;
+	margin-top:-40px;
+}
+button::after {
+	border: none;
+	width:0;
+	height: 0;
+	-webkit-transform:scale(1);
+    transform:scale(1);
+    display: none;
+    background: transparent;
 }
 #login-btn {
 	background-color: transparent;
@@ -139,6 +161,14 @@ view {
 	padding-left:0px;
 	padding-right:0px;
 	border-radius: 0px;
+	height:100%;
+	width:100%;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	-webkit-box-align: end;
+	-webkit-align-items: flex-end;
+	        align-items: flex-end;
 }
 #login-btn::after{
 	border: 0px solid #007AFF;
@@ -150,10 +180,15 @@ view {
 	color:rgba(51,51,51,1);
 }
 .tx-img {
-	width:160rpx;
-	height:160rpx;
+	width:80px;
+	height:80px;
 	border-radius: 50%;
-	margin-top:-80rpx;
+	margin-top:-40px;
+}
+.tx-img-nologin {
+	width:80px;
+	height:80px;
+	border-radius: 50%;
 }
 .name,.member-class {
 	display: -webkit-box;
@@ -176,10 +211,10 @@ view {
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: row;
 	        flex-direction: row;
-	-webkit-box-pack: end;
-	-webkit-justify-content: flex-end;
-	        justify-content: flex-end;
-	width:424rpx;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	width:100%;
 }
 .member-level-text {
 	width:240rpx;
@@ -247,7 +282,6 @@ view {
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
 	        flex-direction: column;
-	margin-top:-12px;
 	background:rgba(255,255,255,1);
 	-webkit-box-shadow:0px 2px 4px 0px rgba(0,0,0,0.01);
 	        box-shadow:0px 2px 4px 0px rgba(0,0,0,0.01);
@@ -259,7 +293,7 @@ view {
 	color:rgba(61,177,242,1) !important;
 }
 #bottom_list {
-	margin-top: 20px;
+	margin-top: 16px;
 	display:-webkit-box;
 	display:-webkit-flex;
 	display:flex;
@@ -271,7 +305,6 @@ view {
 	-webkit-box-shadow:0px 2px 4px 0px rgba(0,0,0,0.01);
 	        box-shadow:0px 2px 4px 0px rgba(0,0,0,0.01);
 	border-radius:10px 10px 10px 10px;
-	margin-bottom: 10px;
 	width:686rpx;
 }	
 

@@ -10,6 +10,7 @@
 	bottom: 0rpx;
 	-webkit-justify-content: space-around;
 	        justify-content: space-around;
+	position: absolute;
 }
 .tabbar-icon-class {
 	width: 24px;
