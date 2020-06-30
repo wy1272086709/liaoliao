@@ -4,8 +4,7 @@
 				"path": "pages/index/index",
 				"style": {
 					"navigationBarTitleText": "恋爱话术",
-					"navigationBarBackgroundColor": "#2369E6",
-					"enablePullDownRefresh":true
+					"navigationBarBackgroundColor": "#2369E6"
 				}
 			},
 			{
@@ -14,7 +13,8 @@
 			        "navigationBarTitleText": "恋爱技巧",
 					"navigationBarBackgroundColor": "#2369E6",
 					"enablePullDownRefresh":true,
-					"onReachBottomDistance": 40
+					"onReachBottomDistance": 40,
+					"backgroundColor": "#2369E6"
 			    }
 			},
 	        {
@@ -58,9 +58,7 @@
 				"path" : "pages/index/meme",
 				"style" : {
 					"navigationBarTitleText": "表情包",
-					"navigationBarBackgroundColor": "#2369E6",
-					"enablePullDownRefresh":true,
-					"onReachBottomDistance": 40
+					"navigationBarBackgroundColor": "#2369E6"
 				}
 			},
 			{
@@ -71,6 +69,36 @@
 				}
 			}
     ],
+	"tabBar": {
+		"custom": true,
+	    "color": "#7A7E83",
+	    "selectedColor": "#3cc51f",
+	    "borderStyle": "black",
+	    "backgroundColor": "#ffffff",
+	    "list": [
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "/static/img/tabbar/love_huashu.png",
+				"text": "恋爱话术",
+				"selectedPath": "/static/img/tabbar/love_huashu_active.png",
+				"defaultClass": "tabbar-icon-class"
+			},
+			{
+				"pagePath": "pages/cases/index",
+				"iconPath": "/static/img/tabbar/love_skills.png",
+				"text": "恋爱技巧",
+				"selectedPath": "/static/img/tabbar/love_skills_active.png",
+				"defaultClass": "tabbar-icon-class"
+			},
+			{
+				"pagePath": "pages/user/index",
+				"iconPath": "/static/img/tabbar/user.png",
+				"text": "个人中心",
+				"selectedPath": "/static/img/tabbar/user_active.png",
+				"defaultClass": "tabbar-icon-class"
+			}
+		]
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

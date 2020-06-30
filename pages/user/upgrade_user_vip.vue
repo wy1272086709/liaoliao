@@ -3,7 +3,7 @@
 		<view class="upgrade-header">
 			<text id="combo-text">请先选择VIP套餐</text>
 		</view>
-		<scroll-view class="upgrade-content" :style="'height:'+scrollHeight+'px'">
+		<view class="upgrade-content" :style="'height:'+scrollHeight+'px'" scroll-y="false" scroll-x="false">
 			<view class="combo" @tap="selectCombo()" :style="'border:'+borderStyle+'px;'+'height:'+comboHeight+'px;'">
 				<view class="left-image">
 					<image class="image-vip-info" src="../../static/img/yuedu.png"></image>
@@ -46,7 +46,7 @@
 					</view>
 				</view>
 			</view>
-		</scroll-view>
+		</view>
 		<view class="upgrade-bottom">
 			<button @click="wxPay()">购买</button>
 		</view>
@@ -83,19 +83,19 @@
 		},
 		onLoad() {
 			let scrollHeight  = uni.getSystemInfoSync().windowHeight;
+			let winWidth = uni.getSystemInfoSync().windowWidth;
 			console.log(scrollHeight);
-			let ratio = scrollHeight/724;
+			let ratio = 375/winWidth;
 			ratio = ratio.toFixed(2);
-			this.scrollHeight = scrollHeight - 25 - 74; 
+			this.scrollHeight = 145*3*ratio+20; 
 			this.comboHeight  = 120*ratio;
 			this.rightViewTop = 25*ratio;
 			this.rightViewBottom = 28*ratio;
 			this.secondLineMarginTop = 9*ratio;
-			this.initVipMoney();
 			console.log('comboHeight', this.comboHeight);
 		},
 		mounted() {
-			this.selectCombo();
+			this.initVipMoney();
 		},
 		methods: {
 			initVipMoney() {
@@ -110,6 +110,7 @@
 					this.yuedu_money = resp.yue;
 					this.jidu_money  = resp.ji;
 					this.niandu_money = resp.nian;
+					this.selectCombo();
 				});
 			},
 			selectCombo() {
@@ -228,15 +229,12 @@ view,scroll-view {
 	justify-content: flex-start;
 	align-items: center;
 	height: 40px;
-	width:100%;
-	margin-left:70rpx;
+	width:670rpx;
 }
 
 .upgrade-content {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	justify-items: center;
 	width:670rpx;
 }
 
@@ -277,6 +275,7 @@ view,scroll-view {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	overflow-y: auto;
 	height: 100%;
 }
 
@@ -320,12 +319,12 @@ view,scroll-view {
 }
 
 .upgrade-bottom {
+	margin-top:20px;
 	display: flex;
 	flex-direction: column;
-	align-items: stretch;
 	width: 670rpx;
-	position: fixed;
-	bottom: 25px;
+	height: 50px;
+	position: relative;
 }
 
 .upgrade-bottom>button {

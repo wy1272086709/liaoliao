@@ -24,8 +24,7 @@ view,scroll-view {
 	-webkit-align-items: center;
 	        align-items: center;
 	height: 40px;
-	width:100%;
-	margin-left:70rpx;
+	width:670rpx;
 }
 .upgrade-content {
 	display: -webkit-box;
@@ -35,10 +34,6 @@ view,scroll-view {
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
 	        flex-direction: column;
-	-webkit-box-pack: center;
-	-webkit-justify-content: center;
-	        justify-content: center;
-	justify-items: center;
 	width:670rpx;
 }
 .combo {
@@ -98,6 +93,7 @@ view,scroll-view {
 	-webkit-box-align: center;
 	-webkit-align-items: center;
 	        align-items: center;
+	overflow-y: auto;
 	height: 100%;
 }
 .image-vip-info {
@@ -137,6 +133,7 @@ view,scroll-view {
 	color:rgba(249,177,127,1);
 }
 .upgrade-bottom {
+	margin-top:20px;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -144,12 +141,9 @@ view,scroll-view {
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
 	        flex-direction: column;
-	-webkit-box-align: stretch;
-	-webkit-align-items: stretch;
-	        align-items: stretch;
 	width: 670rpx;
-	position: fixed;
-	bottom: 25px;
+	height: 50px;
+	position: relative;
 }
 .upgrade-bottom>button {
 	width:100%;

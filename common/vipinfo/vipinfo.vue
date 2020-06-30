@@ -41,7 +41,7 @@
 					<text class="limit-time-discount">{{memberDiscountText}}</text>
 				</view>
 			</view>
-			<view class="right-vip-action" :style="'width:'+actionWidth+'px'">
+			<view class="right-vip-action" :style="'width:'+actionWidth+'px;margin-left:'+marginLeft+'px;'">
 				<text class="action-class">{{memberAction}}</text>
 			</view>
 			<view class="right-vip-image-view">
@@ -61,6 +61,7 @@
 				actionMarginLeft: '',
 				actionWidth: '',
 				vipInfoWidth: '',
+				marginLeft: 0,
 			}
 		},
 		props:['level', 'member_validate_dates'],
@@ -119,7 +120,8 @@
 			},
 			initActionMargin() {
 				if(this.level == 1) {
-					this.actionWidth = 48;
+					this.actionWidth = 50;
+					this.marginLeft  = 0;
 				} else if(this.level == 0) {
 					this.actionWidth = 0;
 					this.vipInfoWidth = 394;
@@ -186,7 +188,7 @@
 	}
 	
 	.right-vip-action {
-		margin-right:16rpx;
+		margin-right:8rpx;
 	}
 	.vip-text-view {
 		margin-bottom: 6px;

@@ -54,7 +54,7 @@
 	        flex-direction: column;
 }
 .right-vip-action.data-v-2e4fc77e {
-	margin-right:16rpx;
+	margin-right:8rpx;
 }
 .vip-text-view.data-v-2e4fc77e {
 	margin-bottom: 6px;

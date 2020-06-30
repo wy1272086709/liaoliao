@@ -1,6 +1,6 @@
 <template>
 	<view id="root-view">
-		<view id="container-view" :style="'height:'+winHeight+'px;'">
+		<view id="container-view">
 			<view id="ads-view" :style="'height:'+adsHeight+'px;'">
 				<image class="ads-image" src="https://kuxou.com/images/ads.png"></image>
 			</view>
@@ -52,24 +52,26 @@
 				<uni-search-bar></uni-search-bar>
 				-->
 			</view>
-			<scroll-view id="content-view" :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scrolltoupper="upper" @scrolltolower="lower"
-                @scroll="scroll" :style="'height:'+scrollHeight+'px;'">
-				<view v-for="item in navList" class="nav-view" :key="item.firstNav.navId">
-					<view class="first-nav" :style="'margin-top:'+firstNavTop+'px;'">
-						<label class="first-nav-icon">
-						</label>
-						<label class="first-nav-label">
-							<text class="first-nav-text">{{item.firstNav.title}}</text>
-						</label>
-					</view>
-					<view class="second-nav">
-						<view :class="nav.navClass" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu(nav.title, nav.navId);" v-for="nav in item.secondNav" :key="nav.navId">
-							<text class="second-nav-text">{{nav.title}}</text>
+			<view  id="content-view-box" :style="'height:'+contentHeight+'px;'">
+				<scroll-view   scroll-y="true" class="scroll-Y" @scrolltoupper="upper" @scrolltolower="lower"
+                @scroll="scroll"  scroll-top="0" id="content-view">
+					<view v-for="item in navList" class="nav-view" :key="item.firstNav.navId">
+						<view class="first-nav" :style="'margin-top:'+firstNavTop+'px;'">
+							<label class="first-nav-icon">
+							</label>
+							<label class="first-nav-label">
+								<text class="first-nav-text">{{item.firstNav.title}}</text>
+							</label>
+						</view>
+						<view class="second-nav">
+							<view :class="nav.navClass" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu(nav.title, nav.navId);" v-for="nav in item.secondNav" :key="nav.navId">
+								<text class="second-nav-text">{{nav.title}}</text>
+							</view>
 						</view>
 					</view>
-				</view>
-			</scroll-view>
-			<tabBar :current="0"></tabBar>
+				</scroll-view>
+			</view>
+			<tabBar :current="0" :position="position"></tabBar>
 			<scorll-view>
 			     <view style="height:34px;" v-if="isIphoneX">
 					 
@@ -97,27 +99,20 @@
 				iconSize: 0,
 				keyword: '',
 				isIphoneX: false,
-				navList: [{
-					firstNav: {
-						title:'开场助手',
-						navId: 1,
-					},
-					secondNav: [ 
-						{ title: '重新开场', navClass:'second-nav-label second-nav-lable-margin',navId: 2, }, 
-						{ title: '土味情话', navClass:'second-nav-label second-nav-lable-margin', navId: 3 }, 
-						{ title: '表情话术', navClass:'second-nav-label', navId: 4 }, 
-						{ title: '表情话术', navClass:'second-nav-label second-nav-lable-margin second-nav-lable-top', navId: 5 }, 
-						{ title: '表情话术', navClass:'second-nav-label second-nav-lable-margin second-nav-lable-top', navId: 6 },
-					]
-				}]
+				navList: [],
+				contentHeight: 0,
+				position: 'fixed'
 			}
 		},
 		mounted() {
 			this.isIphoneX = getApp().globalData.isIphoneX;
-			this.getNavList();
+			//this.getNavList();
 		},
 		components:{
 			tabBar
+		},
+		computed:{
+			
 		},
 		methods: {
 			getNavList() {
@@ -129,6 +124,7 @@
 				http.request(url, {
 					auth: auth
 				}).then( resp => {
+					console.log('resp pages/index/index:', resp);
 					const n = resp.length;
 					for(let j=0;j<n;j++) {
 						let secondNavList = resp[j].secondNav;
@@ -151,7 +147,6 @@
 						}
 					}
 					_self.navList = resp;			
-					console.log('resp', resp);
 				});
 			},
 			// 跳转到关键词页面
@@ -223,7 +218,12 @@
 				
 			},
 			lower() {
-				
+				let _self = this;
+				let view = uni.createSelectorQuery().select("#content-view");
+				view.boundingClientRect(data => {
+					console.log('height:', data.height);
+					//_self.contentHeight = data.height+88;
+				}).exec();
 			},
 			upper() {
 				
@@ -236,6 +236,7 @@
 		},
 		onLoad() {
 			let winHeight = uni.getSystemInfoSync().windowHeight;
+			let winWidth = uni.getSystemInfoSync().windowWidth;
 			let ratio     = winHeight/731;
 			ratio = ratio.toFixed(2);
 			this.iconHeight = 102; 
@@ -246,13 +247,20 @@
 			this.searchViewBottom = 0;
 			this.firstNavTop = 20;
 			this.secondNavLabelHeight = 30;
-			this.scrollHeight = winHeight - 175 - 102 - 80;
 			this.iconSize = this.searchViewHeight - 10;
+			this.contentHeight = winHeight*750/winWidth - 175 - 102 - 80 ;
+			this.getNavList();
 		}
 	}
 </script>
 
 <style scoped>
+	page {
+	  width: 100%;
+	  height: 100%;
+	  display: flex;
+	  flex-direction: column;
+	}
 	* {
 		border-sizing:border-box;
 	}
@@ -413,11 +421,19 @@
 	}
 	
 	#content-view {
-		height:150px;
+		display: flex;
+		overflow-y:scroll ;
+		-webkit-overflow-scrolling:touch;
+		width: 100%;
+		height: 100%;
+		flex-direction: column;
 	}
 	
+	#content-view-box {
+		flex: 1;
+	}
 	.icon-view-contact {
-		
+		margin-top: 12px;
 	}
 	
 	.contact-btn {

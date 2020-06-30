@@ -1,8 +1,6 @@
 {
   "navigationBarTitleText": "表情包",
   "navigationBarBackgroundColor": "#2369E6",
-  "enablePullDownRefresh": true,
-  "onReachBottomDistance": 40,
   "usingComponents": {
     "uni-icons": "/components/uni-icons/uni-icons"
   }

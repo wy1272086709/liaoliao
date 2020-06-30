@@ -47,7 +47,7 @@
 					</uni-list>
 				</view>
 			</view>
-			<tabBar :current="3"></tabBar>
+			<tabBar :position="position" :current="2"></tabBar>
 			<scorll-view>
 			    <view style="height:34px;" v-if="isIphoneX"></view>
 			</scorll-view>
@@ -67,6 +67,7 @@
 				contentHeight: 0,
 				isIphoneX: false,
 				marginTop: '',
+				position: "absolute",
 				isCanUse:uni.getStorageSync('wx_user_info') || true
 			}
 		},
@@ -83,7 +84,7 @@
 			}
 			this.isIphoneX = getApp().globalData.isIphoneX;
 			// 设计稿731 高度
-			this.contentHeight = winHeight-82;
+			this.contentHeight = winHeight-82 -60;
 			console.log(winHeight, this.contentHeight);
 			console.log(uni.getStorageSync('wx_user_info'));
 			console.log('onLoad....');
@@ -183,9 +184,13 @@
 								console.log('res:', res);
 								let userInfo = res.userInfo;
 								console.log(userInfo);
-								http.request(
-									url,
-									{
+								uni.request({
+									url:url,
+									method: 'POST',
+									header: {
+										'Content-Type': 'application/x-www-form-urlencoded'
+									},
+									data:{
 										code: code,
 										auth: auth,
 										nickname: userInfo.nickName,
@@ -194,23 +199,25 @@
 										country: userInfo.country,
 										gender: userInfo.gender,
 										province: userInfo.province
-									}
-								).then((resp) => { 
-									//openId、或SessionKdy存储//隐藏loading
-									console.log(resp);
-									let uid = resp.id;
-									userInfo.uid = uid;
-									userInfo.level = resp.cid;
-									if(resp.start_time) {
-										userInfo.start_time = resp.start_time;
-									}
-									if(resp.end_time) {
-										userInfo.end_time = resp.end_time;
-									}
-									//_this.dates = userInfo.start_time + "~" + userInfo.end_time;
-									console.log('userInfo:', userInfo);
-									_this.setUserInfo(userInfo);
-									_this.setUserInfoToStrorage(userInfo);
+									},
+									success: (resp) => { 
+										//openId、或SessionKdy存储//隐藏loading
+										console.log(resp);
+										resp = resp.data.data;
+										let uid = resp.id;
+										userInfo.uid = uid;
+										userInfo.level = resp.cid;
+										if(resp.start_time) {
+											userInfo.start_time = resp.start_time;
+										}
+										if(resp.end_time) {
+											userInfo.end_time = resp.end_time;
+										}
+										//_this.dates = userInfo.start_time + "~" + userInfo.end_time;
+										console.log('userInfo:', userInfo);
+										_this.setUserInfo(userInfo);
+										_this.setUserInfoToStrorage(userInfo);
+									},
 								});
 							},
 							fail: () => {
