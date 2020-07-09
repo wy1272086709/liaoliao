@@ -43,7 +43,11 @@
 					<uni-list>
 						<uni-list-item title="关于我们" thumb="/static/img/user/about_us.png"></uni-list-item>
 						<uni-list-item title="专属客服" thumb="/static/img/user/contact_customer.png"  @tap="copy_customer_wechat()"  rightText="点击复制客服微信" :showArrow="false"></uni-list-item>
-						<uni-list-item title="当前版本" thumb="/static/img/user/setting.png" rightText="1.0.0" :showArrow="false"></uni-list-item>
+						<uni-list-item title="当前版本" thumb="/static/img/user/setting.png" :showArrow="false">
+							<template v-slot:right="">
+								<text>1.0.0</text>
+							</template>
+						</uni-list-item>
 					</uni-list>
 				</view>
 			</view>
@@ -67,13 +71,20 @@
 				contentHeight: 0,
 				isIphoneX: false,
 				marginTop: '',
-				position: "absolute",
+				position: "fixed",
 				isCanUse:uni.getStorageSync('wx_user_info') || true
 			}
 		},
 		components:{
 			tabBar:tabbar,
 			vipInfo,
+		},
+		onShow() {
+			let globalData = getApp().globalData;
+			if(globalData.isRecharge == 1) {
+				console.log('loginRequest....');
+				this.loginRequest(true);
+			}
 		},
 		onLoad(option) {
 			//this.login();
@@ -82,14 +93,16 @@
 			if (this.isIphoneX) {
 				winHeight =  winHeight - 34;
 			}
-			this.isIphoneX = getApp().globalData.isIphoneX;
+			let globalData = getApp().globalData;
+			this.isIphoneX = globalData.isIphoneX;
 			// 设计稿731 高度
-			this.contentHeight = winHeight-82 -60;
+			this.contentHeight = winHeight-60 -60;
 			console.log(winHeight, this.contentHeight);
-			console.log(uni.getStorageSync('wx_user_info'));
 			console.log('onLoad....');
-			if(option.relogin) {
-				this.loginRequest(true);
+			// 判断缓存里面，是否有用户信息,有就自动登录
+			let userInfo = this.getUserInfoFromStorage();
+			if(userInfo.openid) {
+				this.login(false);
 			}
 		},
 		created() {
@@ -173,7 +186,7 @@
 							uni.hideLoading();
 						}
 						//非第一次授权获取用户信息
-						const data = getApp().globalData;
+						let data = getApp().globalData;
 						const apiPrefix = data.serverUri;
 						const auth = data.auth;
 						const url = apiPrefix + "?mod=user&ac=wx_user";
@@ -213,10 +226,16 @@
 										if(resp.end_time) {
 											userInfo.end_time = resp.end_time;
 										}
+										if(resp.openid) {
+											userInfo.openid = resp.openid;
+										}
 										//_this.dates = userInfo.start_time + "~" + userInfo.end_time;
 										console.log('userInfo:', userInfo);
 										_this.setUserInfo(userInfo);
 										_this.setUserInfoToStrorage(userInfo);
+										if(hideLoading) {
+											data.isRecharge = 0;
+										}
 									},
 								});
 							},
@@ -242,8 +261,13 @@
 				});
 			},
 			getUserInfoFromStorage() {
-				const userStr = uni.getStorageSync('wx_user_info');
-				return JSON.parse(userStr);
+				const userStr = uni.getStorageSync('wx_userinfo');
+				console.log('userStr from storage:', userStr);
+				if(userStr) {
+					return JSON.parse(userStr);
+				} else {
+					return '';
+				}
 			},
 			// 手动授权方法,授权登录的时候,只调用一次
 			wxGetUserInfo(e) {

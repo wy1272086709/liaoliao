@@ -16,6 +16,9 @@ view {
 	background: -webkit-linear-gradient(300deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 	background: linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 }
+.border-active {
+	border-bottom: 2px solid rgba(255,255,255,1);
+}
 #header-view {
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -23,9 +26,6 @@ view {
 	height: 51px;
 	background: rgba(35,105,230,1);
 	overflow-x: auto;
-}
-.border-active {
-	border-bottom: 2px solid rgba(255,255,255,1);
 }
 #header-view>view {
 	height: 49px;

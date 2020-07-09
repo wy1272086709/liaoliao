@@ -46,8 +46,10 @@
 						title:title
 					});
 					// 解析html内容
-					resp.content = resp.content.replace(/img/gi,'img style="width:100%;height:auto"');
+					//console.log(resp.content);
+					resp.content = resp.content.replace(/<img/gi,'<img style="width:100%;height:auto"');
 					this.htmls = parseHtml(resp.content);
+					//console.log(this.htmls);
 				});
 			}
 		},

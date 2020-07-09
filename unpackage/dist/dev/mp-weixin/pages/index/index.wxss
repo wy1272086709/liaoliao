@@ -24,16 +24,15 @@ view.data-v-47b73f3f,scroll-view.data-v-47b73f3f {
 #container-view.data-v-47b73f3f {
 	background:-webkit-linear-gradient(300deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 	background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
-	width: 750rpx;
 	-webkit-box-orient: vertical;
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
 	        flex-direction: column;
 }
 #ads-view.data-v-47b73f3f {
-	width:750rpx;
 	margin-left:32rpx;
 	margin-right:32rpx;
+	margin-top:15px;
 }
 .ads-image.data-v-47b73f3f {
 	width: 686rpx;
@@ -184,7 +183,7 @@ view.data-v-47b73f3f,scroll-view.data-v-47b73f3f {
 	font-weight:400;
 	color:rgba(170,170,170,1);
 	width:80%;
-	margin-left:5px;
+	margin-left:15px;
 }
 #content-view.data-v-47b73f3f {
 	display: -webkit-box;

@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "表情包",
   "navigationBarBackgroundColor": "#2369E6",
+  "backgroundColor": "#2369E6",
   "usingComponents": {
     "uni-icons": "/components/uni-icons/uni-icons"
   }

@@ -44,7 +44,7 @@
 			</view>
 			
 			<view id="search-view" :style="'height:'+searchViewHeight+'px;margin-top:'+searchViewTop+'px;'">
-				<input id="search-text" type="text" placeholder="点击这里输入对方想说的话" placeholder-class="search-class" v-model="keyword" />
+				<input id="search-text" type="text" placeholder="点击这里输入对方想说的话" placeholder-class="search-class" v-model="keyword" @confirm="searchKeyword" />
 				<view id="search-btn-view" @tap="searchKeyword()">
 					<uni-icons type="search" :size="iconSize" ></uni-icons>
 				</view>
@@ -53,8 +53,7 @@
 				-->
 			</view>
 			<view  id="content-view-box" :style="'height:'+contentHeight+'px;'">
-				<scroll-view   scroll-y="true" class="scroll-Y" @scrolltoupper="upper" @scrolltolower="lower"
-                @scroll="scroll"  scroll-top="0" id="content-view">
+				<view id="content-view">
 					<view v-for="item in navList" class="nav-view" :key="item.firstNav.navId">
 						<view class="first-nav" :style="'margin-top:'+firstNavTop+'px;'">
 							<label class="first-nav-icon">
@@ -69,7 +68,7 @@
 							</view>
 						</view>
 					</view>
-				</scroll-view>
+				</view>
 			</view>
 			<tabBar :current="0" :position="position"></tabBar>
 			<scorll-view>
@@ -164,7 +163,7 @@
 				});
 			},
 			handleContact() {
-				console.log('handler...');
+				console.log('contact ... handler...');
 			},
 			search() {
 				
@@ -183,7 +182,7 @@
 						success: res => {
 							if(res.confirm) {
 								console.log('res...confirm');
-								uni.navigateTo({
+								uni.switchTab({
 									url: '/pages/user/index'
 								});
 							}
@@ -248,7 +247,7 @@
 			this.firstNavTop = 20;
 			this.secondNavLabelHeight = 30;
 			this.iconSize = this.searchViewHeight - 10;
-			this.contentHeight = winHeight*750/winWidth - 175 - 102 - 80 ;
+			this.contentHeight = winHeight*750/winWidth - 175 - 102 - 60 ;
 			this.getNavList();
 		}
 	}
@@ -274,14 +273,13 @@
 	
 	#container-view {
 		background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
-		width: 750rpx;
 		flex-direction: column;
 	}
 	
 	#ads-view {
-		width:750rpx;
 		margin-left:32rpx;
 		margin-right:32rpx;
+		margin-top:15px;
 	}
 	
 	.ads-image {
@@ -417,7 +415,7 @@
 		font-weight:400;
 		color:rgba(170,170,170,1);
 		width:80%;
-		margin-left:5px;
+		margin-left:15px;
 	}
 	
 	#content-view {

@@ -23,7 +23,7 @@
 		<view id="search-view-box">
 			<view id="search-view">
 				<div id="search-view-text">
-					<input id="search-text" type="text" placeholder="点击这里输入对方想说的话" placeholder-class="search-class" v-model="searchKeyword" />
+					<input id="search-text" type="text" placeholder="点击这里输入对方想说的话" placeholder-class="search-class" v-model="searchKeyword" @confirm="searchKeywordFunc" />
 				</div>
 				<div id="search-view-icon" @tap="searchKeywordFunc()">
 					<uni-icons type="search" :size="iconSize"></uni-icons>
@@ -223,6 +223,7 @@
 							icon:"none",
 							duration: 2000
 						});
+						this.articleList = [];
 						return;
 					}
 				});
@@ -235,7 +236,8 @@
 			upgrade_vip() {
 				// 这里跳转到登录界面
 				if(this.level<2) {
-					uni.navigateTo({
+					console.log('go here!');
+					uni.switchTab({
 						url: '/pages/user/index'
 					});
 					return;
@@ -370,7 +372,7 @@ view, scroll-view {
 
 #search-view-box {
 	width:750rpx;
-	background-color: #2369E6;
+	margin-top:16px;
 }
 
 .search-class {

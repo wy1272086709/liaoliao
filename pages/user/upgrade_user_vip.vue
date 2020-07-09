@@ -196,8 +196,9 @@
 									confirmText: '确定',
 									success: res2 => {
 										if(res2.confirm) {
-											uni.navigateTo({
-												url: '/pages/user/index?relogin=1'
+											getApp().globalData.isRecharge = 1;
+											uni.switchTab({
+												url: '/pages/user/index'
 											});
 										}
 									}

@@ -41,7 +41,7 @@
 					<text class="limit-time-discount">{{memberDiscountText}}</text>
 				</view>
 			</view>
-			<view class="right-vip-action" :style="'width:'+actionWidth+'px;margin-left:'+marginLeft+'px;'">
+			<view class="right-vip-action" :style="'width:'+actionWidth+'rpx;margin-left:'+marginLeft+'rpx;'">
 				<text class="action-class">{{memberAction}}</text>
 			</view>
 			<view class="right-vip-image-view">
@@ -120,13 +120,13 @@
 			},
 			initActionMargin() {
 				if(this.level == 1) {
-					this.actionWidth = 50;
-					this.marginLeft  = 0;
+					this.actionWidth = 96;
+					this.marginLeft  = 114;
 				} else if(this.level == 0) {
 					this.actionWidth = 0;
 					this.vipInfoWidth = 394;
 				} else {
-					this.actionWidth = 32;
+					this.actionWidth = 52;
 				}
 			},
 			payForVip() {

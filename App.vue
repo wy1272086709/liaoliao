@@ -1,16 +1,35 @@
 <script>
+
 export default {
 	onLaunch: function() {
 		let _self = this;
+		console.log('on Launch!');
 		uni.getSystemInfo({
 		      success: res => {
+				console.log('res', res);
 		        let modelmes = res.model;
 		        if (modelmes.search('iPhone X') != -1) {
 		          _self.globalData.isIphoneX = true;
 		        }
 		        uni.setStorageSync('modelmes', modelmes)
 		      }
-		})
+		});
+		if(this.globalData.count ==0) {
+			uni.setBackgroundFetchToken({
+				token: 'hssjhssj123'
+			});
+			this.globalData.count++;
+		} 
+		uni.getBackgroundFetchData({
+			fetchType: 'periodic',
+			success(res) {
+				console.log(res.fetchedData) // 缓存数据
+				console.log(res.timeStamp) // 客户端拿到缓存数据的时间戳
+				console.log(res.path) // 页面路径
+				console.log(res.query) // query 参数
+				console.log(res.scene) // 场景值
+			}
+		});
 	},
 	onShow: function() {
 		console.log('App Show');
@@ -21,8 +40,10 @@ export default {
 	globalData: {
 		serverUri: "https://kuxou.com/index.php",
 		hostUrl: 'https://kuxou.com',
+		isRecharge: 0, // 是否通过充值返回个人中心...
 		key: 'puiuytrew12q325skmsk2568i2699f66',
 		auth: '376b66f9bedd4622522dce742adaaebc',
+		count: 0,
 	}
 };
 </script>

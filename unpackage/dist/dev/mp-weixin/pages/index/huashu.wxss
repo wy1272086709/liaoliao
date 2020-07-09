@@ -47,7 +47,7 @@ view.data-v-5e343daf, scroll-view.data-v-5e343daf {
 }
 #search-view-box.data-v-5e343daf {
 	width:750rpx;
-	background-color: #2369E6;
+	margin-top:16px;
 }
 .search-class.data-v-5e343daf {
 	font-size:14px;

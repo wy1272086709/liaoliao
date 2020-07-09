@@ -1,7 +1,7 @@
 <template>
 	<view id="root-view" :style="'min-height:'+scrollHeight+'px;'">
 		<view id="search-view">
-			<input id="search-text" type="text" placeholder="输入表情包关键词" placeholder-class="search-class" v-model="searchKeyword"/>
+			<input id="search-text" type="text" placeholder="输入表情包关键词" placeholder-class="search-class" v-model="searchKeyword" @confirm="searchMeme"/>
 			<uni-icons type="search" :size="iconSize" @tap="searchMeme"></uni-icons>
 		</view>
 		<view id="meme-list-view">
@@ -79,7 +79,7 @@
 			upgrade_vip() {
 				// 这里跳转到登录界面
 				if(this.level<2) {
-					uni.navigateTo({
+					uni.switchTab({
 						url: '/pages/user/index'
 					});
 					return;
@@ -153,6 +153,7 @@
 								duration: 2000
 							});
 						}
+						_self.imageList = [];
 						return;
 					}
 					let n = memeData.length;

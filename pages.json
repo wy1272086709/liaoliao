@@ -4,7 +4,8 @@
 				"path": "pages/index/index",
 				"style": {
 					"navigationBarTitleText": "恋爱话术",
-					"navigationBarBackgroundColor": "#2369E6"
+					"navigationBarBackgroundColor": "#2369E6",
+					"backgroundColor": "#2369E6"
 				}
 			},
 			{
@@ -12,8 +13,7 @@
 			    "style": {
 			        "navigationBarTitleText": "恋爱技巧",
 					"navigationBarBackgroundColor": "#2369E6",
-					"enablePullDownRefresh":true,
-					"onReachBottomDistance": 40,
+					"enablePullDownRefresh": true,
 					"backgroundColor": "#2369E6"
 			    }
 			},
@@ -21,21 +21,25 @@
 	            "path": "pages/user/index",
 	            "style": {
 	                "navigationBarTitleText": "个人中心",
-					"navigationBarBackgroundColor": "#2369E6"
+					"navigationBarBackgroundColor": "#2369E6",
+					"backgroundColor": "#2369E6",
+					"disableScroll": true
 	            }
 	        },
 			{
 			    "path": "pages/user/complaint",
 			    "style": {
 			        "navigationBarTitleText": "投诉建议",
-			        "navigationBarBackgroundColor": "#2369E6"
+			        "navigationBarBackgroundColor": "#2369E6",
+					"backgroundColor": "#2369E6"
 			    }
 			},
 			{
 				"path" : "pages/user/upgrade_user_vip",
 				"style" : {
 					"navigationBarTitleText": "升级VIP",
-					"navigationBarBackgroundColor": "#2369E6"
+					"navigationBarBackgroundColor": "#2369E6",
+					"backgroundColor": "#2369E6"
 				}
 			},
 			{
@@ -51,21 +55,24 @@
 					"navigationBarTitleText": "",
 					"navigationBarBackgroundColor": "#2369E6",
 					"enablePullDownRefresh":true,
-					"onReachBottomDistance": 10
+					"onReachBottomDistance": 10,
+					"backgroundColor": "#2369E6"
 				}
 			},
 			{
 				"path" : "pages/index/meme",
 				"style" : {
 					"navigationBarTitleText": "表情包",
-					"navigationBarBackgroundColor": "#2369E6"
+					"navigationBarBackgroundColor": "#2369E6",
+					"backgroundColor": "#2369E6"
 				}
 			},
 			{
 				"path" : "pages/cases/detail",
 				"style" : {
 					"navigationBarTitleText": "恋爱技巧文章",
-					"navigationBarBackgroundColor": "#2369E6"
+					"navigationBarBackgroundColor": "#2369E6",
+					"backgroundColor": "#2369E6"
 				}
 			}
     ],

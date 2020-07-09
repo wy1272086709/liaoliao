@@ -2,7 +2,7 @@
 	<view id="root-view">
 		<scroll-view class="content" :style="'height:'+winHeight+';'">  
 			<view class="info-content">
-				<image src="../../static/img/info.jpg" style="max-width: 20px;max-height:20px;"></image>
+				<image src="../../static/img/info.png" style="max-width: 20px;max-height:20px;"></image>
 				<text>您的投诉建议我们会认真对待，感谢支持</text>
 			</view>
 			<form @submit="onSubmit" class="form-class">  
@@ -177,7 +177,7 @@ page {
 	font-size:14px;
 	font-family:PingFangSC-Regular,PingFang SC;
 	font-weight:400;
-	padding-left:5px;
+	padding-left:8px;
 	padding-right:5px;
 	color:rgba(170,170,170,1);
 }

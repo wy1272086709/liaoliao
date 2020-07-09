@@ -2,7 +2,7 @@
 	<view id="root-view">
 		<view id="header-view">
 			<!-- 初始尺寸设置为120rpx,   去掉header-view width 属性, 设置元素的flex-shrink 为0，在子元素上-->
-			<view   @tap="switchTab(index)" v-for="(tab,index) in tabArr">
+			<view   @tap="switchTab(index)" v-for="(tab,index) in tabArr" :key="tab.firstNav.navId">
 				<view :class="tab.class">
 					<text>{{ tab.title }}</text>
 				</view>
@@ -23,12 +23,10 @@
 				</view>
 			</view>
 		</scroll-view>
-		<tabBar :current="1"></tabBar>
-		<scorll-view>
-		     <view style="height:34px;" v-if="isIphoneX">
+		<tabBar :current="1" :position="position"></tabBar>
+		<view style="height:34px;width:100%;" v-if="isIphoneX">
 				
-			 </view>
-		</scorll-view>
+		</view>
 	</view>
 </template>
 
@@ -49,7 +47,7 @@
 				list: list,
 				isIphoneX: false,
 				scrollHeight: 0,
-				bottom: 0
+				position: 'fixed'
 			}
 		},
 		computed: {
@@ -64,7 +62,7 @@
 			console.log('页面下拉刷新');
 			let _self = this;
 			isFixedHeight = false;
-			_self.getCaseList(cid, false, 1);
+			_self.getCaseList(cid, true, 1);
 			setTimeout(function() {				
 				uni.stopPullDownRefresh();
 			}, 200);
@@ -77,12 +75,10 @@
 			console.log('winHeight', winHeight);
 			let isIphoneX = getApp().globalData.isIphoneX;
 			this.isIphoneX = isIphoneX;
-			this.bottom = 82;
 			if (isIphoneX) {
 				winHeight    = winHeight - 34;
-				this.bottom = this.bottom+34; 
 			} 
-			this.scrollHeight = winHeight - 82 - 51 -16;
+			this.scrollHeight = winHeight - 60 - 51 -16;
 			console.log(this.scrollHeight);
 			this.getHuashuTabbar();
 			isFixedHeight = false;
@@ -98,8 +94,7 @@
 				clearTimeout(interval);
 			}
 		},
-		
-		onReachBottom() {
+		/*onReachBottom() {
 			console.log('reach bottom!');
 			let _self = this;
 			if(page>=totalPage) {
@@ -118,7 +113,7 @@
 				page++;
 				_self.getCaseList(cid, false, page);
 			}, 500);
-		},
+		},*/
 		methods: {
 			lower() {
 				console.log('to lower!');
@@ -169,6 +164,13 @@
 							this.list.push(resp.data[i]);
 						}
 					}
+					/*let view = uni.createSelectorQuery().select("#content-view");
+					view.boundingClientRect(data => {
+						console.log('data:', data);
+						let n = _self.list.length;
+						_self.scrollHeight = n*96+20;
+						console.log('height:', _self.scrollHeight);
+					}).exec();*/
 				});
 			},
 			initHuashuListImage(list) {
@@ -177,7 +179,11 @@
 				const hostUrl = data.hostUrl;
 				for(let m = 0;m<n;m++)
 				{
-					list[m].thumbUrl = hostUrl+list[m].thumbUrl;
+					if(!list[m].thumbUrl) {
+						list[m].thumbUrl = '/static/img/love_skills/thumb.png';
+					} else {
+						list[m].thumbUrl = hostUrl+list[m].thumbUrl;
+					}
 				}
 				console.log('list',list);
 				return list;
@@ -250,15 +256,16 @@ view {
 	background: linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 }
 
+
+.border-active {
+	border-bottom: 2px solid rgba(255,255,255,1);
+}
+
 #header-view {
 	display: flex;
 	height: 51px;
 	background: rgba(35,105,230,1);
 	overflow-x: auto;
-}
-
-.border-active {
-	border-bottom: 2px solid rgba(255,255,255,1);
 }
 
 #header-view>view {

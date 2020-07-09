@@ -102,7 +102,7 @@
 <style>
 	.tabbar-view {
 		display: flex;
-		height: 82px;
+		height: 60px;
 		background:linear-gradient(90deg,rgba(34,121,239,1) 0%,rgba(61,177,242,1) 100%);
 		bottom: 0rpx;
 		justify-content: space-around;
