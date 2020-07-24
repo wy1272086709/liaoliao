@@ -5,7 +5,6 @@
     "pages/user/index",
     "pages/user/complaint",
     "pages/user/upgrade_user_vip",
-    "pages/user/new_user_page",
     "pages/index/huashu",
     "pages/index/meme",
     "pages/cases/detail"
@@ -46,6 +45,9 @@
         "defaultClass": "tabbar-icon-class"
       }
     ]
+  },
+  "uniStatistics": {
+    "enable": false
   },
   "usingComponents": {}
 }

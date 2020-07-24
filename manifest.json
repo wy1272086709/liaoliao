@@ -48,6 +48,14 @@
             "es6" : false,
             "minified" : true,
             "postcss" : false
+        },
+        "uniStatistics" : {
+            "enable" : false
+        }
+    },
+    "mp-toutiao" : {
+        "uniStatistics" : {
+            "enable" : true
         }
     }
 }

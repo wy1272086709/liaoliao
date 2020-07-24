@@ -22,31 +22,73 @@
 			</button>
 		</template>
 		<template v-else="level>0">
-			<view class="left-vip-image-view">
-				<image v-if="level == 0" src="../../static/img/user/visit_left_vip_logo.png" class="left-vip-image"></image>
-				<image v-if="level == 1" src="../../static/img/user/no_member_left_vip_logo.png" class="left-vip-image"></image>
-				<image v-if="level == 2" src="../../static/img/user/month_left_vip_logo.png" class="left-vip-image"></image>
-				<image v-if="level == 3" src="../../static/img/user/quarter_left_vip_logo.png" class="left-vip-image"></image>
-				<image v-if="level == 4" src="../../static/img/user/year_left_vip_logo.png" class="left-vip-image"></image>
-			</view>
-			<view class="right-vip-info">
-				<view class="vip-text-view">
-					<text class="vip-info-text" v-if="level == 0">游客您好</text>
-					<text class="vip-info-text" v-if="level == 1">非VIP会员</text>
-					<text class="vip-info-text" v-if="level == 2">VIP月卡会员</text>
-					<text class="vip-info-text" v-if="level == 3">VIP季卡会员</text>
-					<text class="vip-info-text" v-if="level == 4">VIP年卡会员</text>
+			<template v-if="platform==2">
+				<template v-if="level==1">
+					<view class="left-vip-image-view">
+						<image  src="../../static/img/user/visit_left_vip_logo.png" class="left-vip-image"></image>
+					</view>
+					<view class="right-vip-info">
+						<view class="vip-text-view" >
+							<text>该功能敬请期待!</text>
+						</view>
+					</view>
+				</template>
+				<template v-else>
+					<view class="left-vip-image-view">
+						<image v-if="level == 0" src="../../static/img/user/visit_left_vip_logo.png" class="left-vip-image"></image>
+						<image v-if="level == 2" src="../../static/img/user/month_left_vip_logo.png" class="left-vip-image"></image>
+						<image v-if="level == 3" src="../../static/img/user/quarter_left_vip_logo.png" class="left-vip-image"></image>
+						<image v-if="level == 4" src="../../static/img/user/year_left_vip_logo.png" class="left-vip-image"></image>
+					</view>
+					<view class="right-vip-info">
+						<view class="vip-text-view">
+							<text class="vip-info-text" v-if="level == 2">VIP月卡会员</text>
+							<text class="vip-info-text" v-if="level == 3">VIP季卡会员</text>
+							<text class="vip-info-text" v-if="level == 4">VIP年卡会员</text>
+						</view>
+						<view class="discount-view">
+							<text class="limit-time-discount">{{memberDiscountText}}</text>
+						</view>
+					</view>
+					<view class="vip-right-area" :style="'width:'+rightAreaWidth+'rpx;'">
+						<view class="right-vip-action">
+							<text class="action-class">{{memberAction}}</text>
+						</view>
+						<view class="right-vip-image-view">
+							<image src="../../static/img/user/arrow.png" class="vipinfo_arrow"></image>
+						</view>
+					</view>
+				</template>
+			</template>
+			<template v-else="platform<2">
+				<view class="left-vip-image-view">
+					<image v-if="level == 0" src="../../static/img/user/visit_left_vip_logo.png" class="left-vip-image"></image>
+					<image v-if="level == 1" src="../../static/img/user/no_member_left_vip_logo.png" class="left-vip-image"></image>
+					<image v-if="level == 2" src="../../static/img/user/month_left_vip_logo.png" class="left-vip-image"></image>
+					<image v-if="level == 3" src="../../static/img/user/quarter_left_vip_logo.png" class="left-vip-image"></image>
+					<image v-if="level == 4" src="../../static/img/user/year_left_vip_logo.png" class="left-vip-image"></image>
 				</view>
-				<view class="discount-view">
-					<text class="limit-time-discount">{{memberDiscountText}}</text>
+				<view class="right-vip-info">
+					<view class="vip-text-view">
+						<text class="vip-info-text" v-if="level == 0">游客您好</text>
+						<text class="vip-info-text" v-if="level == 1">非VIP会员</text>
+						<text class="vip-info-text" v-if="level == 2">VIP月卡会员</text>
+						<text class="vip-info-text" v-if="level == 3">VIP季卡会员</text>
+						<text class="vip-info-text" v-if="level == 4">VIP年卡会员</text>
+					</view>
+					<view class="discount-view">
+						<text class="limit-time-discount">{{memberDiscountText}}</text>
+					</view>
 				</view>
-			</view>
-			<view class="right-vip-action" :style="'width:'+actionWidth+'rpx;margin-left:'+marginLeft+'rpx;'">
-				<text class="action-class">{{memberAction}}</text>
-			</view>
-			<view class="right-vip-image-view">
-				<image src="../../static/img/user/arrow.png" class="vipinfo_arrow"></image>
-			</view>
+				<view class="vip-right-area" :style="'width:'+rightAreaWidth+'rpx;'">
+					<view class="right-vip-action">
+						<text class="action-class">{{memberAction}}</text>
+					</view>
+					<view class="right-vip-image-view">
+						<image src="../../static/img/user/arrow.png" class="vipinfo_arrow"></image>
+					</view>
+				</view>
+			</template>
 		</template>
 	</view>
 </template>
@@ -62,9 +104,33 @@
 				actionWidth: '',
 				vipInfoWidth: '',
 				marginLeft: 0,
+				rightAreaWidth: ''
 			}
 		},
-		props:['level', 'member_validate_dates'],
+		watch:{
+			level(val) {
+				this.memberLevel = val;
+				console.log('watch memberLevel', val);
+			},
+			member_validate_dates(val) {
+				console.log('watch memberValidateDates', val);
+				this.memberValidateDates = val;
+			}
+		},
+		props:{
+			level: {
+				default: 0,
+				type: Number
+			},
+			member_validate_dates: {
+				default: '',
+				type: String
+			}, 
+			platform: {
+				default: 1, 
+				type: Number
+			}
+		},
 		mounted() {
 			this.initDiscountText();
 			this.initBackground();
@@ -73,27 +139,40 @@
 		},
 		computed:{
 			memberDiscountText: function() {
-				if(this.level == 0) {
+				if(this.memberLevel == 0) {
 					return '登录/注册成为会员';
-				} else if(this.level == 1) {
+				} else if(this.memberLevel == 1) {
 					return '会员享更多功能';
 				} else {
 					console.log('member_validate_dates', this.member_validate_dates);
-					return this.member_validate_dates;
+					return this.memberValidateDates;
 				}
 			},
 			backgroundColor: function() {
 				let backgroundColor = '';
-				if(this.level == 0) {
-					backgroundColor = 'linear-gradient(90deg,rgba(133,133,133,1) 0%,rgba(184,184,184,1) 100%);';
-				} else if(this.level == 1) {
-					backgroundColor = 'linear-gradient(90deg,rgba(247,178,80,1) 0%,rgba(255,210,117,1) 100%);';
-				} else if(this.level == 2) {
-					backgroundColor = 'linear-gradient(90deg,rgba(35,109,230,1) 0%,rgba(22,184,218,1) 100%);';
-				} else if(this.level == 3) {
-					backgroundColor = 'linear-gradient(90deg,rgba(17,182,75,1) 0%,rgba(97,240,139,1) 100%);';
-				} else if(this.level == 4) {
-					backgroundColor = 'linear-gradient(90deg,rgba(255,136,79,1) 0%,rgba(255,184,134,1) 100%);';
+				console.log('platform', this.platform, 'memberLevel:', this.memberLevel);
+				if(this.platform == 1) {
+					if(this.memberLevel == 0 ) {
+						backgroundColor = 'linear-gradient(90deg,rgba(133,133,133,1) 0%,rgba(184,184,184,1) 100%);';
+					} else if(this.memberLevel == 1) {
+						backgroundColor = 'linear-gradient(90deg,rgba(247,178,80,1) 0%,rgba(255,210,117,1) 100%);';
+					} else if(this.memberLevel == 2) {
+						backgroundColor = 'linear-gradient(90deg,rgba(35,109,230,1) 0%,rgba(22,184,218,1) 100%);';
+					} else if(this.memberLevel == 3) {
+						backgroundColor = 'linear-gradient(90deg,rgba(17,182,75,1) 0%,rgba(97,240,139,1) 100%);';
+					} else if(this.memberLevel == 4) {
+						backgroundColor = 'linear-gradient(90deg,rgba(255,136,79,1) 0%,rgba(255,184,134,1) 100%);';
+					}
+				} else if(this.platform == 2){
+					if(this.memberLevel <= 1 ) {
+						backgroundColor = 'linear-gradient(90deg,rgba(133,133,133,1) 0%,rgba(184,184,184,1) 100%);';
+					} else if(this.memberLevel == 2) {
+						backgroundColor = 'linear-gradient(90deg,rgba(35,109,230,1) 0%,rgba(22,184,218,1) 100%);';
+					} else if(this.memberLevel == 3) {
+						backgroundColor = 'linear-gradient(90deg,rgba(17,182,75,1) 0%,rgba(97,240,139,1) 100%);';
+					} else if(this.memberLevel == 4) {
+						backgroundColor = 'linear-gradient(90deg,rgba(255,136,79,1) 0%,rgba(255,184,134,1) 100%);';
+					}
 				}
 				return backgroundColor;
 			}
@@ -110,27 +189,33 @@
 				this.$emit('memberLogin', true);
 			},
 			initActions() {
-				if(this.level == 0) {
+				if(this.platform == 2) {
+					return '';
+				}
+				if(this.memberLevel == 0) {
 					this.memberAction = '';
-				} else if(this.level == 1) {
+				} else if(this.memberLevel == 1 ) {
 					this.memberAction = '立即充值';
 				} else {
 					this.memberAction = '续费';
 				}
 			},
 			initActionMargin() {
-				if(this.level == 1) {
-					this.actionWidth = 96;
-					this.marginLeft  = 114;
-				} else if(this.level == 0) {
-					this.actionWidth = 0;
+				if(this.memberLevel == 1) {
+					//this.actionWidth = 96;
+					this.marginLeft  = 100;
+					this.rightAreaWidth = 240;
+				} else if(this.memberLevel == 0) {
+					//this.actionWidth = 0;
 					this.vipInfoWidth = 394;
 				} else {
-					this.actionWidth = 52;
+					//this.actionWidth = 52;
+					this.rightAreaWidth = 126;
 				}
 			},
 			payForVip() {
-				if(this.level>=1) {
+				// 安卓端可以跳转...
+				if(this.memberLevel>=1 && this.platform != 2) {
 					uni.navigateTo({
 						url:'/pages/user/upgrade_user_vip'
 					});
@@ -142,7 +227,7 @@
 
 <style scoped>
 	.header-vip-view {
-		width:606rpx;
+		/*width:606rpx;*/
 		display: flex;
 		height:80px;
 		background:linear-gradient(90deg,rgba(234,186,118,1) 0%,rgba(255,224,160,1) 100%);
@@ -150,6 +235,8 @@
 		margin-left:40rpx;
 		margin-right: 40rpx;
 		margin-top:32px;
+		padding-left: 38rpx;
+		padding-right: 38rpx;
 		margin-bottom: 20px;
 		align-items: center;
 	}
@@ -178,8 +265,16 @@
 		max-height: 86rpx;
 	}
 	
+	.vip-right-area {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
+		align-items: center;
+	}
+	
+	
 	.left-vip-image-view {
-		margin-left:38rpx;
+		/*margin-left:38rpx;*/
 		margin-right:32rpx;
 	}
 	
@@ -201,10 +296,11 @@
 	}
 	
 	.right-vip-image-view {
-		margin-right:24rpx;
+		/*margin-right:24rpx;*/
 		margin-top:32px;
 		margin-bottom: 32px;
 	}
+	
 	
 	.action-class {
 		font-size:12px;

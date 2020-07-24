@@ -58,8 +58,8 @@ view,scroll-view {
 	-webkit-flex-direction: column;
 	        flex-direction: column;
 	width:468rpx;
-	margin-left:40rpx;
-	margin-right:40rpx;
+	margin-left:20rpx;
+	margin-right:10rpx;
 }
 .second-line {
 	margin-top: 9px;

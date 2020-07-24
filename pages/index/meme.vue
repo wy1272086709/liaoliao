@@ -62,13 +62,29 @@
 		mounted() {
 			
 		},
+		onShareAppMessage() {
+			let pages = getCurrentPages() //获取加载的页面
+			let currentPage = pages[pages.length-1] //获取当前页面的对象
+			let url = currentPage.route //当前页面url
+			return {
+				title: '表情包',
+				path: url,
+				success: function() {
+				},
+				fail: function() {
+				}
+			};
+		},
 		onLoad() {
+			uni.showShareMenu({
+			    withShareTicket: true
+			});
 			let info = uni.getSystemInfoSync();
 			this.scrollHeight = info.windowHeight;
 			this.getMemeList(1, false);
 		},
 		onPullDownRefresh() {
-			console.log('页面下拉刷新');
+			//console.log('页面下拉刷新');
 			let _self = this;
 			setTimeout(function() {
 				_self.getMemeList(page);
@@ -103,7 +119,7 @@
 						console.log('success!');
 					}
 				})
-				console.log('src', src);
+				//console.log('src', src);
 			},
 			searchMeme() {
 				if(!this.searchKeyword) {
@@ -184,8 +200,8 @@
 			}
 			if (page>=totalPage) {
 				clearTimeout(interval);
-				console.log('isFixedHeight', isFixedHeight);
-				console.log('isFixedHeight2', isFixedHeight2);
+				//console.log('isFixedHeight', isFixedHeight);
+				//console.log('isFixedHeight2', isFixedHeight2);
 				if (!isFixedHeight && !isSearch) {
 					let view = uni.createSelectorQuery().select("#meme-list-view");
 					view.boundingClientRect(data => {
@@ -197,7 +213,7 @@
 				else if (!isFixedHeight2 && isSearch) {
 					let view = uni.createSelectorQuery().select("#meme-list-view");
 					view.boundingClientRect(data => {
-						console.log('data:', data);
+						//console.log('data:', data);
 						_self.scrollHeight = data.height+20;
 						isFixedHeight2  = true;
 					}).exec();

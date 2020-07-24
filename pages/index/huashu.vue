@@ -1,41 +1,49 @@
 <template>
 	<view id="root-view">
-		<!--
-		<view class="navigation" :style="'height:' +  navigation.height + 'px;' + 'left:'+navigation.left+'px'+';padding-top:' + navigation.top + 'px;padding-bottom:10rpx'">
-			<view class="left" :style="'top:' + navigation.top + 'px'">
-				<uni-icons type="back" @tap="back()"></uni-icons>
-				<text id="huashu-title">{{navigation.title}}</text>
-			</view>
-		</view>
-		-->
-		<!-- 这里是状态栏 -->
-		<!--
-		<view class="status_bar">
-			  
-		</view>
-		<view class="left">
-			<uni-icons type="back" @tap="back()" :size="iconSize"></uni-icons>
-			<text id="huashu-title">{{navigation.title}}</text>
-		</view>
-		->
-		<!--  -->
-		
 		<view id="search-view-box">
 			<view id="search-view">
 				<div id="search-view-text">
-					<input id="search-text" type="text" placeholder="点击这里输入对方想说的话" placeholder-class="search-class" v-model="searchKeyword" @confirm="searchKeywordFunc" />
+					<input id="search-text" type="text" placeholder="点击这里输入对方说的话" placeholder-class="search-class" v-model="searchKeyword" @confirm="searchKeywordFunc" />
 				</div>
 				<div id="search-view-icon" @tap="searchKeywordFunc()">
 					<uni-icons type="search" :size="iconSize"></uni-icons>
 				</div>
 			</view>
+			<view id="search-result" v-if="totalRows>0">
+				<text>共检索出 <text style="color:rgba(255,255,255,1);font-weight: bold;">{{totalRows}} </text>条记录</text>
+			</view>
 		</view>
+		
+		<view id="search-result-view" v-if="isShowNoResult">
+			<view id="search-result-header">
+				<text class="search-result-suggest">没有找到搜索结果,您可以尝试以下方案</text>
+			</view>
+			<view class="search-result-title">
+				<text>精简关键词</text>
+			</view>
+			<view>
+				<text class="search-result-suggest">建议使用简单的关键词,比如说女生说【你吃晚饭了吗?】,搜索时输入【晚饭】即可。 \n  也可以尝试相近的关键词,比如【你想干嘛?】可以搜索【干嘛】、【干什么】等相近的搜索词。</text>
+			</view>
+			<view class="search-result-title">
+				<text>去恋爱互助讨论区提问</text>
+			</view>
+			<view>
+				<text class="search-result-suggest">去把您的诉求发布到互助讨论区,让大家帮您想办法回复。</text>
+			</view>
+			<view id="ask-btn-view" @tap="suggest">
+				<button id="ask-btn">
+					<text class="iconfont icon-tiwen icon-right"></text>
+					<text class="tiwen-text">去提问</text>
+				</button>
+			</view>
+		</view>
+		
 		<view id="content-view" :style="'min-height:'+scrollHeight+'px;'">
 			<view class="huashu-article huashu-article-first" v-for="item in articleList" :key="item.id">
 				<view class="huashu-article-title">
 					<text :class="searchText">{{item.title}}</text>
 				</view>
-				<view class="huashu-line" v-for="(line,key,index) in item.content">
+				<view class="huashu-line" v-for="(line,key,index) in item.content" :key="line">
 					<view class="huashu-sex">
 						<template v-if="line.split('@@')[0] == 1">
 							<image class="huashu-sex-image" src="../../static/img/index/man.png"></image>
@@ -52,9 +60,22 @@
 					</view>
 				</view>
 			</view>
-			<view id="user-upgrade-vip-view" v-if="level<=1" @tap="upgrade_vip">
-				<img src="https://kuxou.com/images/user_upgrade_vip.png" id="user_upgrade_vip" />
-			</view>
+			<template v-if="level<=1 && platForm<2">
+				<view class="huashu-article huashu-article-first" v-for="j in leaveOverCnt">
+					<view  class="user-upgrade-vip-view"  @tap="upgrade_vip">
+						<img src="https://kuxou.com/images/user_upgrade_vip.png" class="user_upgrade_vip" />
+					</view>
+				</view>
+			</template>
+			<template v-if="level<=1 && platForm>=2">
+				<view class="huashu-article huashu-article-first" v-for="i in leaveOverCnt">
+					<view  class="user-upgrade-vip-view" >
+						<button v-if="platForm==2" open-type="contact"  class="contact-btn" id="contact-btn-view">
+							<img src="../../static/img/user/ios_visit_vip.png" class="user_upgrade_vip"  />
+						</button>
+					</view>
+				</view>
+			</template>
 		</view>
 		<!-- 这里 -->
 		
@@ -64,6 +85,7 @@
 <script>
 	import tabBar from '../../common/tabbar.vue';
 	import http from '../../common/http.js';
+	import util  from '../../common/util.js';
 	let navId = 0;
 	let nowpage = 1;
 	let totalPage = 0;
@@ -76,7 +98,9 @@
 	export default {
 		data() {
 			return {
-				scrollHeight: 0,
+				totalRows: '0',
+				isShowNoResult: false,
+				platForm: 0,
 				searchKeyword: "",
 				navigation: {
 					height: 88,
@@ -84,6 +108,7 @@
 					left:17,
 					title: ""
 				},
+				leaveOverCnt: 0,
 				iconSize: 20,
 				searchText: '',
 				articleList: [ 
@@ -96,7 +121,7 @@
 		},
 		computed: {
 			level: function() {
-				console.log('userInfo:', this.$store.getters.userInfo);
+				//console.log('userInfo:', this.$store.getters.userInfo);
 				if(this.$store.getters.userInfo.level) {
 					return this.$store.getters.userInfo.level;
 				} else {
@@ -108,22 +133,58 @@
 					return this.$store.getters.userInfo.uid;
 				}
 				return 0;
+			},
+			scrollHeight: function() {
+				let scrollHeight = 0;
+				let sysinfo = uni.getSystemInfoSync();
+				let windowHeight = sysinfo.windowHeight;
+				if(getApp().globalData.isIphoneX) {
+					windowHeight = windowHeight - 34;
+				}
+				// 长度为0,则高度变化为:
+				if(this.articleList.length == 0 && this.isShowNoResult) {
+					scrollHeight = windowHeight - 350;
+				} else {
+					//this.navigation.height = statusBarHeight;
+					scrollHeight = windowHeight - 50;
+				}
+				return scrollHeight;
 			}
+		},
+		onShareAppMessage() {
+			//console.log('share....');
+			let pages = getCurrentPages() //获取加载的页面
+			let currentPage = pages[pages.length-1] //获取当前页面的对象
+			let url = currentPage.route //当前页面url
+			let options = currentPage.options;
+			//console.log('options', options);
+			let query = util.buidQuery(options);
+			let title = options.title ? decodeURI(options.title): '"搜索结果"';
+			return {
+				title: title,
+				path: url+"?"+query,
+				success: function() {
+					console.log('share success!');
+				},
+				fail: function() {
+					console.log('share..sucess!');
+				}
+			};
 		},
 		watch:{
 			
 		},
 		onPullDownRefresh() {
-			console.log('页面下拉刷新');
+			//console.log('页面下拉刷新');
 			let _self = this;
 			isFixedHeight = false;
 			_self.getHuashuArticleList();
 			setTimeout(function() {				
 				uni.stopPullDownRefresh();
-			}, 200);
+			}, 100);
 		},
 		onLoad(option) {
-			console.log('option', option);
+			//console.log('option', option);
 			let title = option.title;
 			// 获取keyword,
 			let key  = option.keyword;
@@ -132,6 +193,9 @@
 				this.searchKeyword = key;
 				// 判断从搜索框进入的。
 				isSearch = true;
+				uni.setNavigationBarTitle({
+					title:'"搜索结果"'
+				});
 			}
 			if(title) {
 				title = decodeURIComponent(title);
@@ -139,20 +203,18 @@
 					title:title
 				});
 			}
-			let sysinfo = uni.getSystemInfoSync();
-			let windowHeight = sysinfo.windowHeight;
-			if(getApp().globalData.isIphoneX) {
-				windowHeight = windowHeight - 34;
-			}
-			//this.navigation.height = statusBarHeight;
-			let scrollHeight = windowHeight - 50;
-			this.scrollHeight = scrollHeight;
+			this.platForm = getApp().globalData.platform;
 			uni.startPullDownRefresh();
 		},
 		methods: {
+			suggest() {
+				uni.navigateTo({
+					url:'/pages/user/complaint'
+				});
+			},
 			getHuashuArticleList() {
 				let keyword = this.searchKeyword;
-				console.log('navId', navId);
+				//console.log('navId', navId);
 				let classid = navId;
 				let params = {};
 				if (keyword) {
@@ -175,11 +237,29 @@
 				params.filterData = true;
 				// 通过栏目获取话术列表接口
 				http.request(url, params).then(resp=>{
-					console.log('resp', resp);
+					//console.log('resp', resp);
 					if(resp.status == 1) {
 						let articleData  = resp.data;
 						this.articleList =  articleData;
 						totalPage   = resp.totalpage;
+						this.totalRows = resp.total;
+						let t = parseInt(resp.total);
+						// 第一页显示完整
+						// 第一页的多加几个...
+						if(t<=10 && t>3) {
+							this.leaveOverCnt = t - 3;
+						} else {
+							this.leaveOverCnt = 7;
+						}
+						this.isShowNoResult = false;
+					} else {
+						this.articleList =  [];
+						totalPage   = 0;
+						this.totalRows = 0;
+						this.leaveOverCnt = 0;
+						if (keyword) {
+							this.isShowNoResult = true;
+						}
 					}
 				});
 			},
@@ -213,17 +293,28 @@
 				params.auth = auth;
 				const url = apiPrefix + "?mod=loveword&ac=search";
 				http.request(url, params).then(resp=>{
-					console.log('resp', resp);
+					//console.log('resp', resp);
 					if(resp.status == 1) {
 						this.articleList = resp.data;
 						this.totalPage   = resp.totalpage;
+						this.totalRows = resp.total;
+						let t = parseInt(resp.total);
+						// 第一页显示完整
+						if(t<=10 && t>3) {
+							this.leaveOverCnt = t - 3;
+						} else {
+							this.leaveOverCnt = 7;
+						}
+						this.isShowNoResult = false;
 					} else {
-						uni.showToast({
+						/*uni.showToast({
 							title: '未查询到结果',
 							icon:"none",
 							duration: 2000
-						});
+						});*/
 						this.articleList = [];
+						this.totalRows = this.leaveOverCnt = 0;
+						this.isShowNoResult = true;
 						return;
 					}
 				});
@@ -248,7 +339,7 @@
 			},
 			copyHuashu(line) {
 				let content = line.split('@@')[1];
-				console.log('content', content);
+				//console.log('content', content);
 				uni.setClipboardData({
 					data: content,
 					success: function(res) {
@@ -264,35 +355,46 @@
 			}
 		},
 		onReachBottom() {
-			console.log("上滑动");
-			console.log('reach');
+			//console.log("上滑动");
+			//console.log('reach');
 			let _self = this;
 			if(isSearch && (!this.searchKeyword || this.searchKeyword.length<2)) {
 				// 显示空数据给用户
 				return;
 			}
-			if (nowpage>=totalPage) {
+			//console.log('here!', this.level);
+			if (nowpage>=totalPage && this.level>1) {
+				console.log('here!');
 				if (interval) {
 					clearTimeout(interval);
 				}
-				let view = uni.createSelectorQuery().select("#content-view");
-				if(!isFixedHeight && !isSearch  && this.uid>0) {
-					view.boundingClientRect(data => {
-						console.log('data:', data);
-						_self.scrollHeight = data.height+20;
-						isFixedHeight = true;
-					}).exec();
-				} else if(!isFixedHeight2 && isSearch && this.uid>0) {
-					view.boundingClientRect(data => {
-						_self.scrollHeight = data.height+20;
-						isFixedHeight2 = true;
-					}).exec();
-				}
 				return;
+			}
+			
+			if (this.level<=1) {
+				let m = parseInt(this.totalRows);
+				if(m<=10) {
+					return;
+				}
+				// 最后一页应该加的元素个数
+				let c = m%10;
+				//console.log("leave start...", this.leaveOverCnt, c,m);
+				if(this.leaveOverCnt+10>m) {
+					this.leaveOverCnt+=c;
+					if (interval) {
+						clearTimeout(interval);
+					}
+					return;
+				}
 			}
 			uni.showNavigationBarLoading();
 			interval = setTimeout(function() {
 				nowpage++;
+				if(_self.level<=1) {
+					_self.leaveOverCnt+=10;
+					uni.hideNavigationBarLoading();
+					return;
+				}
 				let params = {};
 				params.nowpage = nowpage;
 				params.cid = navId;
@@ -310,50 +412,39 @@
 				}
 				params.filterData = true;
 				http.request(url, params).then(resp=>{
-					console.log('resp', resp);
+					//console.log('resp', resp);
 					if(resp.status == 1) {
 						let len = resp.data.length;
 						for(let j = 0;j<len;j++) {
 							_self.articleList.push(resp.data[j]);
 						}
-						console.log(_self.articleList);
+						//console.log(_self.articleList);
+						this.leaveOverCnt+=10;
 						totalPage   = resp.totalpage;
+						this.totalRows = resp.total;
+					} else {
+						this.leaveOverCnt=0;
+						totalPage   = 0;
+						this.totalRows = 0;
 					}
 				});
 				uni.hideNavigationBarLoading();
 			}, 200);
-			// more = contentdown: "上拉显示更多",
-			// loading =contentrefresh: "正在加载...",
-			// nomore = contentnomore: "没有更多数据了"
-		    // 在此进行上拉刷新的业务逻辑
 		}
 	}
 </script>
 
 <style scoped>
-.navigation {
-	height: 88px;
-	background:rgba(35,105,230,1);
-}
+@import url('../../static/css/huashu/iconfont.css');
+::-webkit-scrollbar {
+	display: none;
+} 
+
 #root-view {
 	flex-direction: column;
 	background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 }
-.status_bar {
-    height: var(--status-bar-height);
-    width: 100%;
-	background:rgba(35,105,230,1);
-}
-.left {
-	background-color: rgba(35,105,230,1);
-	height:40px;
-	align-items: center;
-}
-  
-#huashu-title {
-	margin-left:256rpx;
-	
-}
+
 view, scroll-view {
 	display: flex;
 	box-sizing:border-box;
@@ -371,6 +462,7 @@ view, scroll-view {
 }
 
 #search-view-box {
+	flex-direction: column;
 	width:750rpx;
 	margin-top:16px;
 }
@@ -406,10 +498,23 @@ view, scroll-view {
 	align-items: center;
 }
 
+#search-result {
+	margin-left: 32rpx;
+	margin-right: 32rpx;
+	height:20px;
+}
 	
+#search-result>text {
+	font-size: 14px;
+	font-family: PingFangSC-Regular,PingFang SC;
+	font-weight: 400;
+	color: rgba(51,51,51,1);
+}
+
 #content-view {
 	display: flex;
 	overflow-y: scroll;
+	flex: 1;
 	-webkit-overflow-scrolling:touch;
 	flex-direction: column;
 	width:750rpx;
@@ -481,18 +586,87 @@ view, scroll-view {
 	line-height:20px;
 }
 
-#user_upgrade_vip {
-	width:686rpx;
+.user_upgrade_vip {
+	width:646rpx;
 	height:100px;
-	
 }
 
-#user-upgrade-vip-view {
+.user-upgrade-vip-view {
 	justify-content: center;
-	margin-bottom:57px;
+	margin-bottom:16px;
 	margin-top:16px;
 }
+
 .searchText {
 	font-weight: bold;
 }
+
+#search-result-view {
+	margin-left: 32rpx;
+	margin-right: 32rpx;
+	display:flex;
+	height: 300px;
+	flex-direction:column;
+	justify-content:center;
+}
+
+#search-result-header {
+	justify-content: center;
+	height:60px;
+	align-items: center;
+	margin-bottom: 10px;
+	border-bottom: 1px solid rgba(179,179,179,1);
+}
+
+.search-result-title {
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+.search-result-title>text {
+	font-size: 16px;
+	font-family:PingFangSC-Regular,PingFang SC;
+	color: rgba(255,255,255,1);
+	font-weight: 600;
+}
+
+#ask-btn {
+	display: flex;
+	width: 100px;
+	height: 30px;
+	background-color: ;
+	margin-left:0px;
+	background-color: #EE597A;
+	border-radius:20px;
+	justify-content: center;
+	align-items: center;
+}
+
+#ask-btn-view {
+	margin-top:10px;
+	justify-content: flex-start;
+}
+
+.icon-right{
+	margin-right: 10px;
+}
+
+.tiwen-text {
+	color: rgba(255,255,255,1);
+	font-size: 24rpx;
+}
+
+.search-result-suggest {
+	font-size: 13px;
+	font-family:PingFangSC-Regular,PingFang SC;
+	font-weight: 400;
+	color: rgba(255,255,255,1);
+}
+
+#contact-btn-view {
+	background: transparent;
+	line-height: 1;
+	display: flex;
+}
+
 </style>

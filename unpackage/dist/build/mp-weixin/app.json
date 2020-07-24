@@ -5,7 +5,6 @@
     "pages/user/index",
     "pages/user/complaint",
     "pages/user/upgrade_user_vip",
-    "pages/user/new_user_page",
     "pages/index/huashu",
     "pages/index/meme",
     "pages/cases/detail"
@@ -17,5 +16,39 @@
     "navigationBarBackgroundColor": "#FFFFFF",
     "backgroundColor": "#F8F8F8"
   },
-  "usingComponents": {}
+  "tabBar": {
+    "custom": true,
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "/static/img/tabbar/love_huashu.png",
+        "text": "恋爱话术",
+        "selectedPath": "/static/img/tabbar/love_huashu_active.png",
+        "defaultClass": "tabbar-icon-class"
+      },
+      {
+        "pagePath": "pages/cases/index",
+        "iconPath": "/static/img/tabbar/love_skills.png",
+        "text": "恋爱技巧",
+        "selectedPath": "/static/img/tabbar/love_skills_active.png",
+        "defaultClass": "tabbar-icon-class"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "iconPath": "/static/img/tabbar/user.png",
+        "text": "个人中心",
+        "selectedPath": "/static/img/tabbar/user_active.png",
+        "defaultClass": "tabbar-icon-class"
+      }
+    ]
+  },
+  "uniStatistics": {
+    "enable": false
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
 }

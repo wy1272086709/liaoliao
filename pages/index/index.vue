@@ -1,10 +1,10 @@
 <template>
 	<view id="root-view">
 		<view id="container-view">
-			<view id="ads-view" :style="'height:'+adsHeight+'px;'">
-				<image class="ads-image" src="https://kuxou.com/images/ads.png"></image>
+			<view id="ads-view">
+				<image class="ads-image" src="https://kuxou.com/images/ads.png?t=1597645866666"></image>
 			</view>
-			<view id="icon-view" :style="'height:'+iconHeight+'px;'">
+			<view id="icon-view">
 				<view id="help-center-view"  @tap="help_center()">
 					<view>
 						<image class="icon-class" src="../../static/img/huashu/help_center.png"></image>
@@ -18,7 +18,12 @@
 						<image class="icon-class" src="../../static/img/huashu/upgrade_vip.png"></image>
 					</view>
 					<view class="icon-view-text">
-						<text class="icon-text">VIP升级</text>
+						<text class="icon-text" v-if="platForm== 1">
+							VIP升级
+						</text>
+						<text class="icon-text" v-if="platForm== 2">
+							敬请期待
+						</text>
 					</view>
 				</view>
 				<view id="contact-customer-view" @tap="contact_consumer()">
@@ -43,19 +48,16 @@
 				</view>
 			</view>
 			
-			<view id="search-view" :style="'height:'+searchViewHeight+'px;margin-top:'+searchViewTop+'px;'">
-				<input id="search-text" type="text" placeholder="点击这里输入对方想说的话" placeholder-class="search-class" v-model="keyword" @confirm="searchKeyword" />
+			<view id="search-view">
+				<input id="search-text" type="text" placeholder="点击这里输入对方说的话" placeholder-class="search-class" v-model="keyword" @confirm="searchKeyword" />
 				<view id="search-btn-view" @tap="searchKeyword()">
 					<uni-icons type="search" :size="iconSize" ></uni-icons>
 				</view>
-				<!--
-				<uni-search-bar></uni-search-bar>
-				-->
 			</view>
 			<view  id="content-view-box" :style="'height:'+contentHeight+'px;'">
 				<view id="content-view">
 					<view v-for="item in navList" class="nav-view" :key="item.firstNav.navId">
-						<view class="first-nav" :style="'margin-top:'+firstNavTop+'px;'">
+						<view class="first-nav">
 							<label class="first-nav-icon">
 							</label>
 							<label class="first-nav-label">
@@ -63,7 +65,7 @@
 							</label>
 						</view>
 						<view class="second-nav">
-							<view :class="nav.navClass" :style="'height:'+secondNavLabelHeight+'px;'" @tap="enter_huashu(nav.title, nav.navId);" v-for="nav in item.secondNav" :key="nav.navId">
+							<view :class="nav.navClass"  @tap="enter_huashu(nav.title, nav.navId);" v-for="nav in item.secondNav" :key="nav.navId">
 								<text class="second-nav-text">{{nav.title}}</text>
 							</view>
 						</view>
@@ -86,32 +88,23 @@
 	export default {
 		data() {
 			return {
+				platForm: 0,
 				winHeight:0,
-				scrollHeight: 0,
-				adsHeight: 0,
-				iconHeight: 0,
-				searchViewHeight: 0,
-				searchViewTop: 0,
-				searchViewBottom: 0,
-				firstNavTop: 0,
-				secondNavLabelHeight: 0,
 				iconSize: 0,
 				keyword: '',
 				isIphoneX: false,
 				navList: [],
-				contentHeight: 0,
+				contentHeight: 228,
 				position: 'fixed'
 			}
 		},
 		mounted() {
 			this.isIphoneX = getApp().globalData.isIphoneX;
-			//this.getNavList();
+			this.platForm = getApp().globalData.platform;
+			this.getNavList();
 		},
 		components:{
 			tabBar
-		},
-		computed:{
-			
 		},
 		methods: {
 			getNavList() {
@@ -123,7 +116,7 @@
 				http.request(url, {
 					auth: auth
 				}).then( resp => {
-					console.log('resp pages/index/index:', resp);
+					//console.log('resp pages/index/index:', resp);
 					const n = resp.length;
 					for(let j=0;j<n;j++) {
 						let secondNavList = resp[j].secondNav;
@@ -145,8 +138,31 @@
 							}
 						}
 					}
-					_self.navList = resp;			
+					_self.navList = resp;		
+					_self.contentHeight = _self.calculateNavHeight(resp);
 				});
+			},
+			calculateNavHeight(navList) {
+				// 判断nav 高度
+				let n = navList.length;
+				let sumHeight = 0;
+				for (let j = 0;j<n;j++)
+				{
+					let oneNavHeight = 25+20+13;
+					let secondNav = navList[j].secondNav;
+					let secondLen = secondNav.length;
+					if (secondLen>3) {
+						let lineNum = Math.ceil(secondLen/3);
+						oneNavHeight+=30*lineNum + (lineNum-1)*12;
+					} else {
+						oneNavHeight+=30;
+					}
+					//底部bottom
+					oneNavHeight+=20;
+					sumHeight+=oneNavHeight;
+				}
+				sumHeight+=60;
+				return sumHeight;
 			},
 			// 跳转到关键词页面
 			searchKeyword() {
@@ -169,9 +185,12 @@
 				
 			},
 			upgrade_vip() {
+				if(this.platForm == 2) {
+					return;
+				}
 				// 升级
 				let userInfo = this.$store.getters.userInfo;
-				console.log('userInfo', userInfo);
+				//console.log('userInfo', userInfo);
 				if (userInfo.nickName === undefined) {
 					uni.showModal({
 						title: '提示',
@@ -210,44 +229,35 @@
 					url: '/pages/index/meme'
 				});
 			},
-			contact_consumer() {
-			
-			},
-			scroll() {
-				
-			},
-			lower() {
-				let _self = this;
-				let view = uni.createSelectorQuery().select("#content-view");
-				view.boundingClientRect(data => {
-					console.log('height:', data.height);
-					//_self.contentHeight = data.height+88;
-				}).exec();
-			},
-			upper() {
-				
-			},
+			contact_consumer() {},
 			enter_huashu(title, navId) {
 				uni.navigateTo({
 					url:'/pages/index/huashu?title='+encodeURIComponent(title)+'&navId='+navId
 				});
 			}
 		},
+		onShareAppMessage() {
+			let pages = getCurrentPages() //获取加载的页面
+			let currentPage = pages[pages.length-1] //获取当前页面的对象
+			let url = currentPage.route //当前页面url
+			return {
+				title: '恋爱话术',
+				path: url,
+				success: function() {
+				},
+				fail: function() {
+				}
+			};
+		},
 		onLoad() {
+			uni.showShareMenu({
+			    withShareTicket: true
+			});
 			let winHeight = uni.getSystemInfoSync().windowHeight;
-			let winWidth = uni.getSystemInfoSync().windowWidth;
-			let ratio     = winHeight/731;
-			ratio = ratio.toFixed(2);
-			this.iconHeight = 102; 
-			this.adsHeight= 175;
 			this.winHeight = winHeight;
-			this.searchViewHeight = 40;
-			this.searchViewTop    = 20;
 			this.searchViewBottom = 0;
 			this.firstNavTop = 20;
-			this.secondNavLabelHeight = 30;
 			this.iconSize = this.searchViewHeight - 10;
-			this.contentHeight = winHeight*750/winWidth - 175 - 102 - 60 ;
 			this.getNavList();
 		}
 	}
@@ -260,6 +270,8 @@
 	  display: flex;
 	  flex-direction: column;
 	}
+	
+	
 	* {
 		border-sizing:border-box;
 	}
@@ -280,6 +292,7 @@
 		margin-left:32rpx;
 		margin-right:32rpx;
 		margin-top:15px;
+		height:160px;
 	}
 	
 	.ads-image {
@@ -288,6 +301,7 @@
 	}
 	
 	#icon-view {
+		height: 102px;
 		margin-top:20px;
 		margin-left:60rpx;
 		margin-right:60rpx;
@@ -324,6 +338,10 @@
 	.second-nav,.first-nav {
 		margin-left:34rpx;
 		margin-right:34rpx;
+	}
+	
+	.first-nav {
+		margin-top: 20px;
 	}
 	
 	.second-nav {
@@ -369,7 +387,7 @@
 	}
 	
 	.second-nav-lable-top {
-		margin-top:24rpx;
+		margin-top:12px;
 	}
 	
 	.second-nav-text {
@@ -399,6 +417,7 @@
 		align-items: center;
 		margin-left: 32rpx;
 		margin-right: 32rpx;
+		margin-top:20px;
 	}
 	
 	.search-class {

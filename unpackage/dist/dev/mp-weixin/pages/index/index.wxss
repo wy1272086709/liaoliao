@@ -33,12 +33,14 @@ view.data-v-47b73f3f,scroll-view.data-v-47b73f3f {
 	margin-left:32rpx;
 	margin-right:32rpx;
 	margin-top:15px;
+	height:160px;
 }
 .ads-image.data-v-47b73f3f {
 	width: 686rpx;
 	height: 100%;
 }
 #icon-view.data-v-47b73f3f {
+	height: 102px;
 	margin-top:20px;
 	margin-left:60rpx;
 	margin-right:60rpx;
@@ -77,6 +79,9 @@ view.data-v-47b73f3f,scroll-view.data-v-47b73f3f {
 .second-nav.data-v-47b73f3f,.first-nav.data-v-47b73f3f {
 	margin-left:34rpx;
 	margin-right:34rpx;
+}
+.first-nav.data-v-47b73f3f {
+	margin-top: 20px;
 }
 .second-nav.data-v-47b73f3f {
 	margin-top:13px;
@@ -122,12 +127,14 @@ view.data-v-47b73f3f,scroll-view.data-v-47b73f3f {
 	-webkit-align-items: center;
 	        align-items: center;
 }
+
+
 /* 除了第一个元素外的元素,需要添加这个  */
 .second-nav-lable-margin.data-v-47b73f3f {
 	margin-right:32rpx;
 }
 .second-nav-lable-top.data-v-47b73f3f {
-	margin-top:24rpx;
+	margin-top:12px;
 }
 .second-nav-text.data-v-47b73f3f {
 	font-size:12px;
@@ -169,6 +176,7 @@ view.data-v-47b73f3f,scroll-view.data-v-47b73f3f {
 	        align-items: center;
 	margin-left: 32rpx;
 	margin-right: 32rpx;
+	margin-top:20px;
 }
 .search-class.data-v-47b73f3f {
 	font-size:14px;

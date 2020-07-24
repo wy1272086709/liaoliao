@@ -38,25 +38,29 @@
 				const url = apiPrefix + "?mod=lyb&ac=lyb_add";
 				http.request(url, {
 					phone: this.tel,
-					content: this.content
+					content: this.content,
+					auth:auth,
+					filterData:true,
 				}).then(resp=>{
-					console.log('resp', resp);
-					uni.showModal({
-						title: '提示',
-						content: '感谢你提交的投诉和建议',
-						showCancel: false,
-						cancelText: '',
-						confirmText: '确定',
-						success: res => {
-							uni.navigateBack({
-								url: '/pages/user/index'
-							});
-						},
-						fail: () => {},
-						complete: () => {
-							
-						}
-					});
+					if(resp.status == 1) {
+						//console.log('resp', resp);
+						uni.showModal({
+							title: '提示',
+							content: '感谢你提交的投诉和建议',
+							showCancel: false,
+							cancelText: '',
+							confirmText: '确定',
+							success: res => {
+								uni.navigateBack({
+									url: '/pages/user/index'
+								});
+							},
+							fail: () => {},
+							complete: () => {
+								
+							}
+						});
+					}
 				});
 			},
 			onSubmit() {
@@ -117,9 +121,26 @@
 					return true;
 				}
 			}
-		},onLoad() {
+		},
+		onLoad() {
+			uni.showShareMenu({
+			    withShareTicket: true
+			});
 			let winHeight = uni.getSystemInfoSync().windowHeight;
 			this.winHeight = winHeight+'px';
+		},
+		onShareAppMessage() {
+			let pages = getCurrentPages(); //获取加载的页面
+			let currentPage = pages[pages.length-1]; //获取当前页面的对象
+			let url = currentPage.route; //当前页面url
+			return {
+				title: '投诉建议',
+				path: url,
+				success: function() {
+				},
+				fail: function() {
+				}
+			};
 		}
 	}
 </script>

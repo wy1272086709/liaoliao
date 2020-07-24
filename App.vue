@@ -8,16 +8,24 @@ export default {
 		      success: res => {
 				console.log('res', res);
 		        let modelmes = res.model;
+				let platform = res.platform.toLowerCase();
+				//android: 安卓, ios: IOS, devtools:PC
+				if (platform == 'android' || platform == 'devtools') {
+					_self.globalData.platform = 1;	
+				} else if(platform == 'ios' ){
+					_self.globalData.platform = 2;
+				}
 		        if (modelmes.search('iPhone X') != -1) {
 		          _self.globalData.isIphoneX = true;
 		        }
 		        uni.setStorageSync('modelmes', modelmes)
 		      }
 		});
-		if(this.globalData.count ==0) {
+		/*if(this.globalData.count ==0) {
 			uni.setBackgroundFetchToken({
 				token: 'hssjhssj123'
 			});
+			console.log('ssss');
 			this.globalData.count++;
 		} 
 		uni.getBackgroundFetchData({
@@ -29,7 +37,7 @@ export default {
 				console.log(res.query) // query 参数
 				console.log(res.scene) // 场景值
 			}
-		});
+		});*/
 	},
 	onShow: function() {
 		console.log('App Show');
@@ -44,6 +52,7 @@ export default {
 		key: 'puiuytrew12q325skmsk2568i2699f66',
 		auth: '376b66f9bedd4622522dce742adaaebc',
 		count: 0,
+		platform: 0,
 	}
 };
 </script>

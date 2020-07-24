@@ -1,6 +1,6 @@
 
 .header-vip-view.data-v-2e4fc77e {
-	width:606rpx;
+	/*width:606rpx;*/
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -12,6 +12,8 @@
 	margin-left:40rpx;
 	margin-right: 40rpx;
 	margin-top:32px;
+	padding-left: 38rpx;
+	padding-right: 38rpx;
 	margin-bottom: 20px;
 	-webkit-box-align: center;
 	-webkit-align-items: center;
@@ -43,8 +45,23 @@
 	max-width:86rpx;
 	max-height: 86rpx;
 }
+.vip-right-area.data-v-2e4fc77e {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	-webkit-box-pack: end;
+	-webkit-justify-content: flex-end;
+	        justify-content: flex-end;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
 .left-vip-image-view.data-v-2e4fc77e {
-	margin-left:38rpx;
+	/*margin-left:38rpx;*/
 	margin-right:32rpx;
 }
 .right-vip-info.data-v-2e4fc77e {
@@ -65,7 +82,7 @@
 	max-height: 32rpx;
 }
 .right-vip-image-view.data-v-2e4fc77e {
-	margin-right:24rpx;
+	/*margin-right:24rpx;*/
 	margin-top:32px;
 	margin-bottom: 32px;
 }

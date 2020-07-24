@@ -16,6 +16,13 @@ view {
 	background: -webkit-linear-gradient(300deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 	background: linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 }
+
+/* 隐藏滚动条 */
+::-webkit-scrollbar {
+	width: 0;
+	height: 0;
+	color: transparent;
+}
 .border-active {
 	border-bottom: 2px solid rgba(255,255,255,1);
 }
@@ -24,6 +31,7 @@ view {
 	display: -webkit-flex;
 	display: flex;
 	height: 51px;
+	-webkit-overflow-scrolling: touch;
 	background: rgba(35,105,230,1);
 	overflow-x: auto;
 }
@@ -68,6 +76,7 @@ view {
 	-webkit-overflow-scrolling:touch;
 	width: 100%;
 	margin-top:16px;
+	margin-bottom:16px;
 	-webkit-box-orient: vertical;
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
@@ -78,14 +87,14 @@ view {
 }
 .thumb-class {
 	max-width: 200rpx;
-	max-height: 80px;
+	max-height: 160rpx;
 	border-radius:20rpx;
 	margin-left:24rpx;
 	margin-right:32rpx;
 }
 .content-titleinfo-view {
 	width:464rpx;
-	height: 80px;
+	height: 160rpx;
 	-webkit-flex-wrap: wrap;
 	        flex-wrap: wrap;
 	-webkit-box-orient: vertical;
@@ -95,14 +104,14 @@ view {
 }
 .content-title-view {
 	width:462rpx;
-	height: 50px;
+	height: 100rpx;
 }
 .content-stats-view{
 	width:462rpx;
-	height:30px;
+	height:60rpx;
 	-webkit-box-align: end;
 	-webkit-align-items: flex-end;
-	        align-items: flex-end
+	        align-items: flex-end;
 }
 .content-title-view>text {
 	font-size:32rpx;

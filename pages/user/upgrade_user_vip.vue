@@ -3,12 +3,12 @@
 		<view class="upgrade-header">
 			<text id="combo-text">请先选择VIP套餐</text>
 		</view>
-		<view class="upgrade-content" :style="'height:'+scrollHeight+'px'" scroll-y="false" scroll-x="false">
-			<view class="combo" @tap="selectCombo()" :style="'border:'+borderStyle+'px;'+'height:'+comboHeight+'px;'">
+		<view class="upgrade-content"  scroll-y="false" scroll-x="false">
+			<view class="combo" @tap="selectCombo()" :style="'border:'+borderStyle+'rpx;'+'height:'+comboHeight+'rrpx;'">
 				<view class="left-image">
 					<image class="image-vip-info" src="../../static/img/yuedu.png"></image>
 				</view>
-				<view class="right-view" :style="'margin-top:'+rightViewTop+'px;margin-bottom:'+rightViewBottom+'px;'">
+				<view class="right-view" :style="'margin-top:'+rightViewTop+'rpx;margin-bottom:'+rightViewBottom+'rpx;'">
 					<view class="first-line">
 						<text>月度会员套餐(30天)</text>
 						<text class="price-text">¥{{yuedu_money}}</text>
@@ -18,25 +18,25 @@
 					</view>
 				</view>
 			</view>
-			<view class="combo" @tap="selectCombo2()" :style="'border:'+borderSecondStyle+'px;'+'height:'+comboHeight+'px;'">
+			<view class="combo" @tap="selectCombo2()" :style="'border:'+borderSecondStyle+'px;'+'height:'+comboHeight+'rpx;'">
 				<view class="left-image">
 					<image class="image-vip-info" src="../../static/img/jidu.png"></image>
 				</view>
-				<view class="right-view" :style="'margin-top:'+rightViewTop+'px;margin-bottom:'+rightViewBottom+'px;'">
+				<view class="right-view" :style="'margin-top:'+rightViewTop+'rpx;margin-bottom:'+rightViewBottom+'rpx;'">
 					<view class="first-line">
 						<text>季度会员套餐(90天)</text>
 						<text class="price-text">¥{{jidu_money}}</text>
 					</view>
-					<view class="second-line" :style="'margin-top:'+secondLineMarginTop+'px;'">
+					<view class="second-line" :style="'margin-top:'+secondLineMarginTop+'rpx;'">
 						<text>10万恋爱话术、搜索功能、AI聊天、无广告、搜索、表情包、装逼图</text>
 					</view>
 				</view>
 			</view>
-			<view class="combo" @tap="selectCombo3()" :style="'border:'+borderThirdStyle+'px;'+'height:'+comboHeight+'px;'">
+			<view class="combo" @tap="selectCombo3()" :style="'border:'+borderThirdStyle+'px;'+'height:'+comboHeight+'rpx;'">
 				<view class="left-image">
 					<image class="image-vip-info" src="../../static/img/niandu.png"></image>
 				</view>
-				<view class="right-view" :style="'margin-top:'+rightViewTop+'px;margin-bottom:'+rightViewBottom+'px;'">
+				<view class="right-view" :style="'margin-top:'+rightViewTop+'rpx;margin-bottom:'+rightViewBottom+'rpx;'">
 					<view class="first-line">
 						<text class="combo-member-text">年度会员套餐(365天)</text>
 						<text class="price-text">¥{{niandu_money}}</text>
@@ -47,9 +47,11 @@
 				</view>
 			</view>
 		</view>
+		<!--
 		<view class="upgrade-bottom">
 			<button @click="wxPay()">购买</button>
 		</view>
+		-->
 	</view>
 </template>
 
@@ -81,18 +83,34 @@
 				return this.$store.getters.userInfo;
 			}
 		},
+		onShareAppMessage() {
+			let pages = getCurrentPages() //获取加载的页面
+			let currentPage = pages[pages.length-1] //获取当前页面的对象
+			let url = currentPage.route //当前页面url
+			return {
+				title: '升级VIP',
+				path: url,
+				success: function() {
+				},
+				fail: function() {
+				}
+			};
+		},
 		onLoad() {
+			uni.showShareMenu({
+			    withShareTicket: true
+			});
 			let scrollHeight  = uni.getSystemInfoSync().windowHeight;
 			let winWidth = uni.getSystemInfoSync().windowWidth;
-			console.log(scrollHeight);
-			let ratio = 375/winWidth;
+			//console.log(scrollHeight);
+			let ratio = 750/winWidth;
 			ratio = ratio.toFixed(2);
-			this.scrollHeight = 145*3*ratio+20; 
+			//this.scrollHeight = 145*3*ratio+20; 
 			this.comboHeight  = 120*ratio;
 			this.rightViewTop = 25*ratio;
 			this.rightViewBottom = 28*ratio;
 			this.secondLineMarginTop = 9*ratio;
-			console.log('comboHeight', this.comboHeight);
+			//console.log('comboHeight', this.comboHeight);
 		},
 		mounted() {
 			this.initVipMoney();
@@ -110,7 +128,7 @@
 					this.yuedu_money = resp.yue;
 					this.jidu_money  = resp.ji;
 					this.niandu_money = resp.nian;
-					this.selectCombo();
+					//this.selectCombo();
 				});
 			},
 			selectCombo() {
@@ -120,6 +138,7 @@
 				//money = 0.01;
 				money = this.yuedu_money;
 				level = 2;
+				this.comboPay();
 			},
 			selectCombo2() {
 				this.borderStyle = "";
@@ -128,6 +147,7 @@
 				money = this.jidu_money;
 				//money = 0.01;
 				level = 3;
+				this.comboPay();
 			},
 			selectCombo3() {
 				this.borderStyle = "";
@@ -136,6 +156,7 @@
 				money = this.niandu_money;
 				//money = 0.01;
 				level = 4;
+				this.comboPay();
 			},
 			wxPay() {
 				this.comboPay();
@@ -160,7 +181,7 @@
 					level: level,
 					filterData: true
 				}).then(resp => {
-					console.log('resp', resp);
+					//console.log('resp', resp);
 					uni.requestPayment({
 						appId: resp.appid,
 						timeStamp: resp.timeStamp,
@@ -169,10 +190,10 @@
 						signType: 'MD5',
 						paySign: resp.paySign2,
 						success: function(res) {
-							console.log('success:' + JSON.stringify(res));
+							//console.log('success:' + JSON.stringify(res));
 						},
 						fail: function(err) {
-							console.log('fail:' + JSON.stringify(err));
+							//console.log('fail:' + JSON.stringify(err));
 							uni.showModal({
 								title: '提示',
 								content: '充值失败!',
@@ -253,8 +274,8 @@ view,scroll-view {
 .right-view {
 	flex-direction: column;
 	width:468rpx;
-	margin-left:40rpx;
-	margin-right:40rpx;
+	margin-left:20rpx;
+	margin-right:10rpx;
 }
 
 .second-line {

@@ -1,5 +1,5 @@
 <template>
-	<view class="tabbar-view" :style="'bottom:'+bottom+'px;'+'position:'+position+';'">
+	<view class="tabbar-view" :style="'padding-bottom:'+bottom+'px;'+'position:'+position+';'">
 		<view class="tabbar-navigator"  @tap="switchTab(index)" v-for="(item,index) in tabList" :key="index">
 			<view class="tabbar-icon">
 				<image :src="item.iconPath" :class="item.defaultClass" v-if="index!=current"></image>

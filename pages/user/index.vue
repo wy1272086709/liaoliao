@@ -16,7 +16,7 @@
 								<text>点击登录/注册</text>
 							</button>
 						</view>
-						<vip-info :level="level" :member_validate_dates="dates" @memberLogin="login(false)"></vip-info>
+						<vip-info :level="level" :member_validate_dates="dates" @memberLogin="login(false)" :platform="platform"></vip-info>
 					</view>
 				</template>
 				<template v-if="userInfo.nickName!=undefined">
@@ -36,7 +36,7 @@
 								<text>会员ID:   {{userInfo.uid}}</text>
 							</view>
 						</view>
-						<vip-info :level="level" :member_validate_dates="dates"></vip-info>
+						<vip-info :level="level" :member_validate_dates="dates" @memberLogin="login(false)" :platform="platform"></vip-info>
 					</view>
 				</template>
 				<view id="bottom_list">
@@ -45,7 +45,7 @@
 						<uni-list-item title="专属客服" thumb="/static/img/user/contact_customer.png"  @tap="copy_customer_wechat()"  rightText="点击复制客服微信" :showArrow="false"></uni-list-item>
 						<uni-list-item title="当前版本" thumb="/static/img/user/setting.png" :showArrow="false">
 							<template v-slot:right="">
-								<text>1.0.0</text>
+								<text class="bottom-version-text">1.0.0</text>
 							</template>
 						</uni-list-item>
 					</uni-list>
@@ -69,6 +69,7 @@
 		data() {
 			return {
 				contentHeight: 0,
+				platform: 0,
 				isIphoneX: false,
 				marginTop: '',
 				position: "fixed",
@@ -80,11 +81,26 @@
 			vipInfo,
 		},
 		onShow() {
-			let globalData = getApp().globalData;
-			if(globalData.isRecharge == 1) {
-				console.log('loginRequest....');
-				this.loginRequest(true);
+			if(this.platform == 2) {
+				let globalData = getApp().globalData;
+				if(globalData.isRecharge == 1) {
+					console.log('loginRequest....');
+					this.loginRequest(true);
+				}
 			}
+		},
+		onShareAppMessage() {
+			let pages = getCurrentPages(); //获取加载的页面
+			let currentPage = pages[pages.length-1]; //获取当前页面的对象
+			let url = currentPage.route; //当前页面url
+			return {
+				title: '个人中心',
+				path: url,
+				success: function() {
+				},
+				fail: function() {
+				}
+			};
 		},
 		onLoad(option) {
 			//this.login();
@@ -95,6 +111,8 @@
 			}
 			let globalData = getApp().globalData;
 			this.isIphoneX = globalData.isIphoneX;
+			this.platform = globalData.platform;
+			console.log('platform', this.platform);
 			// 设计稿731 高度
 			this.contentHeight = winHeight-60 -60;
 			console.log(winHeight, this.contentHeight);
@@ -106,6 +124,9 @@
 			}
 		},
 		created() {
+			uni.showShareMenu({
+			    withShareTicket: true
+			});
 			console.log('created....');
 		},
 		computed: {
@@ -181,7 +202,7 @@
 					provider: 'weixin',
 					success: function(loginRes) {
 						let code = loginRes.code;
-						console.log(loginRes);
+						//console.log(loginRes);
 						if(!hideLoading) {
 							uni.hideLoading();
 						}
@@ -194,9 +215,9 @@
 						uni.getUserInfo({
 							provider:'weixin',
 							success: (res) => {
-								console.log('res:', res);
+								//console.log('res:', res);
 								let userInfo = res.userInfo;
-								console.log(userInfo);
+								//console.log(userInfo);
 								uni.request({
 									url:url,
 									method: 'POST',
@@ -215,7 +236,7 @@
 									},
 									success: (resp) => { 
 										//openId、或SessionKdy存储//隐藏loading
-										console.log(resp);
+										//console.log(resp);
 										resp = resp.data.data;
 										let uid = resp.id;
 										userInfo.uid = uid;
@@ -230,7 +251,7 @@
 											userInfo.openid = resp.openid;
 										}
 										//_this.dates = userInfo.start_time + "~" + userInfo.end_time;
-										console.log('userInfo:', userInfo);
+										//console.log('userInfo:', userInfo);
 										_this.setUserInfo(userInfo);
 										_this.setUserInfoToStrorage(userInfo);
 										if(hideLoading) {
@@ -248,7 +269,7 @@
 			},
 			setUserInfoToStrorage(userInfo) {
 				const userStr = JSON.stringify(userInfo);
-				console.log('userStr', userStr);
+				//console.log('userStr', userStr);
 				uni.setStorage({
 					key: 'wx_userinfo',
 					data: userStr,
@@ -262,7 +283,7 @@
 			},
 			getUserInfoFromStorage() {
 				const userStr = uni.getStorageSync('wx_userinfo');
-				console.log('userStr from storage:', userStr);
+				//console.log('userStr from storage:', userStr);
 				if(userStr) {
 					return JSON.parse(userStr);
 				} else {
@@ -271,7 +292,7 @@
 			},
 			// 手动授权方法,授权登录的时候,只调用一次
 			wxGetUserInfo(e) {
-				console.log('get_user_info');
+				//console.log('get_user_info');
 				this.login();
 			},
 		}
@@ -535,4 +556,8 @@
 		border-radius:10px 10px 10px 10px;
 		width:686rpx;
 	}	
+	
+	.bottom-version-text {
+		color:  #bbb;
+	}
 </style>
