@@ -1,5 +1,6 @@
 <template>
-	<view id="root-view">
+	<view>
+	<view id="root-view" v-if="!isShowNoResult">
 		<view id="search-view-box">
 			<view id="search-view">
 				<div id="search-view-text">
@@ -10,31 +11,7 @@
 				</div>
 			</view>
 			<view id="search-result" v-if="totalRows>0">
-				<text>共检索出 <text style="color:rgba(255,255,255,1);font-weight: bold;">{{totalRows}} </text>条记录</text>
-			</view>
-		</view>
-		
-		<view id="search-result-view" v-if="isShowNoResult">
-			<view id="search-result-header">
-				<text class="search-result-suggest">没有找到搜索结果,您可以尝试以下方案</text>
-			</view>
-			<view class="search-result-title">
-				<text>精简关键词</text>
-			</view>
-			<view>
-				<text class="search-result-suggest">建议使用简单的关键词,比如说女生说【你吃晚饭了吗?】,搜索时输入【晚饭】即可。 \n  也可以尝试相近的关键词,比如【你想干嘛?】可以搜索【干嘛】、【干什么】等相近的搜索词。</text>
-			</view>
-			<view class="search-result-title">
-				<text>去恋爱互助讨论区提问</text>
-			</view>
-			<view>
-				<text class="search-result-suggest">去把您的诉求发布到互助讨论区,让大家帮您想办法回复。</text>
-			</view>
-			<view id="ask-btn-view" @tap="suggest">
-				<button id="ask-btn">
-					<text class="iconfont icon-tiwen icon-right"></text>
-					<text class="tiwen-text">去提问</text>
-				</button>
+				<text>共搜索出 <text class="search-total-rows">{{totalRows}} </text>条记录</text>
 			</view>
 		</view>
 		
@@ -60,25 +37,65 @@
 					</view>
 				</view>
 			</view>
+			<view style="height:23px;" v-if="level>1">
+				
+			</view>
 			<template v-if="level<=1 && platForm<2">
-				<view class="huashu-article huashu-article-first" v-for="j in leaveOverCnt">
-					<view  class="user-upgrade-vip-view"  @tap="upgrade_vip">
+				<view  class="user-upgrade-vip-view"  @tap="upgrade_vip">
+					<button v-if="platForm==1" open-type="contact"  class="contact-btn" id="contact-btn-view">
 						<img src="https://kuxou.com/images/user_upgrade_vip.png" class="user_upgrade_vip" />
-					</view>
+					</button>
 				</view>
 			</template>
 			<template v-if="level<=1 && platForm>=2">
-				<view class="huashu-article huashu-article-first" v-for="i in leaveOverCnt">
-					<view  class="user-upgrade-vip-view" >
-						<button v-if="platForm==2" open-type="contact"  class="contact-btn" id="contact-btn-view">
-							<img src="../../static/img/user/ios_visit_vip.png" class="user_upgrade_vip"  />
-						</button>
-					</view>
+				<view  class="user-upgrade-vip-view">
+					<button v-if="platForm==2" open-type="contact"  class="contact-btn" id="contact-btn-view">
+						<img src="../../static/img/user/ios_visit_vip.png" class="user_upgrade_vip"  />
+					</button>
 				</view>
 			</template>
 		</view>
 		<!-- 这里 -->
-		
+	</view>
+	
+	<scroll-view id="root-view" v-if="isShowNoResult" :style="'height:'+contentHeight+'px;'">
+		<view id="search-view-box">
+			<view id="search-view">
+				<div id="search-view-text">
+					<input id="search-text" type="text" placeholder="点击这里输入对方说的话" placeholder-class="search-class" v-model="searchKeyword" @confirm="searchKeywordFunc" />
+				</div>
+				<div id="search-view-icon" @tap="searchKeywordFunc()">
+					<uni-icons type="search" :size="iconSize"></uni-icons>
+				</div>
+			</view>
+			<view id="search-result" v-if="totalRows>0">
+				<text>共搜索出 <text class="search-total-rows">{{totalRows}} </text>条记录</text>
+			</view>
+		</view>
+		<view id="search-result-view">
+			<view id="search-result-header">
+				<text class="search-result-suggest">没有找到搜索结果,您可以尝试以下方案</text>
+			</view>
+			<view class="search-result-title">
+				<text>精简关键词</text>
+			</view>
+			<view>
+				<text class="search-result-suggest">建议使用简单的关键词,比如说女生说【你吃晚饭了吗?】,搜索时输入【晚饭】即可。 \n  也可以尝试相近的关键词,比如【你想干嘛?】可以搜索【干嘛】、【干什么】等相近的搜索词。</text>
+			</view>
+			<view class="search-result-title">
+				<text>去恋爱互助讨论区提问</text>
+			</view>
+			<view>
+				<text class="search-result-suggest">去把您的诉求发布到互助讨论区,让大家帮您想办法回复。</text>
+			</view>
+			<view id="ask-btn-view" @tap="suggest">
+				<button id="ask-btn">
+					<text class="iconfont icon-tiwen icon-right"></text>
+					<text class="tiwen-text">去提问</text>
+				</button>
+			</view>
+		</view>
+	</scroll-view>
 	</view>
 </template>
 
@@ -100,6 +117,7 @@
 			return {
 				totalRows: '0',
 				isShowNoResult: false,
+				contentHeight: 0,
 				platForm: 0,
 				searchKeyword: "",
 				navigation: {
@@ -108,7 +126,6 @@
 					left:17,
 					title: ""
 				},
-				leaveOverCnt: 0,
 				iconSize: 20,
 				searchText: '',
 				articleList: [ 
@@ -122,6 +139,10 @@
 		computed: {
 			level: function() {
 				//console.log('userInfo:', this.$store.getters.userInfo);
+				let userInfo = util.getUserInfoFromStorage();
+				if (userInfo.level) {
+					return userInfo.level;
+				}
 				if(this.$store.getters.userInfo.level) {
 					return this.$store.getters.userInfo.level;
 				} else {
@@ -129,6 +150,10 @@
 				}
 			},
 			uid: function() {
+				let userInfo = util.getUserInfoFromStorage();
+				if (userInfo.uid) {
+					return userInfo.uid;
+				}
 				if(this.$store.getters.userInfo.uid) {
 					return this.$store.getters.userInfo.uid;
 				}
@@ -176,6 +201,7 @@
 		},
 		onPullDownRefresh() {
 			//console.log('页面下拉刷新');
+			
 			let _self = this;
 			isFixedHeight = false;
 			_self.getHuashuArticleList();
@@ -185,6 +211,9 @@
 		},
 		onLoad(option) {
 			//console.log('option', option);
+			this.setIosBackground();
+			let sysinfo = uni.getSystemInfoSync();
+			this.contentHeight = sysinfo.windowHeight;
 			let title = option.title;
 			// 获取keyword,
 			let key  = option.keyword;
@@ -211,6 +240,15 @@
 				uni.navigateTo({
 					url:'/pages/user/complaint'
 				});
+			},
+			setIosBackground() {
+				if (getApp().globalData.platform == 2) {
+					console.log('setIosBackgroundColor:');
+					uni.setBackgroundColor({
+						backgroundColorTop: "#2369E6", // 顶部窗口的背景色为蓝色
+						backgroundColorBottom: "#15B9DA", // 底部窗口的背景色为绿
+					});
+				};
 			},
 			getHuashuArticleList() {
 				let keyword = this.searchKeyword;
@@ -242,23 +280,23 @@
 						let articleData  = resp.data;
 						this.articleList =  articleData;
 						totalPage   = resp.totalpage;
-						this.totalRows = resp.total;
 						let t = parseInt(resp.total);
+						this.totalRows = t;
 						// 第一页显示完整
 						// 第一页的多加几个...
-						if(t<=10 && t>3) {
-							this.leaveOverCnt = t - 3;
-						} else {
-							this.leaveOverCnt = 7;
-						}
 						this.isShowNoResult = false;
 					} else {
 						this.articleList =  [];
 						totalPage   = 0;
 						this.totalRows = 0;
-						this.leaveOverCnt = 0;
 						if (keyword) {
 							this.isShowNoResult = true;
+							if (getApp().globalData.platform == 2) {
+								console.log('setIosBackgroundColor:');
+								uni.setBackgroundColor({
+									backgroundColorBottom: "#17ACDC", // 底部窗口的背景色为绿
+								});
+							}
 						}
 					}
 				});
@@ -274,6 +312,9 @@
 					});
 					return;
 				}
+				uni.setNavigationBarTitle({
+					title:'"搜索结果"'
+				});
 				isFixedHeight = false;
 				let params = {
 					filterData:true
@@ -296,25 +337,21 @@
 					//console.log('resp', resp);
 					if(resp.status == 1) {
 						this.articleList = resp.data;
-						this.totalPage   = resp.totalpage;
-						this.totalRows = resp.total;
+						totalPage   = resp.totalpage;
 						let t = parseInt(resp.total);
+						this.totalRows = t;
 						// 第一页显示完整
-						if(t<=10 && t>3) {
-							this.leaveOverCnt = t - 3;
-						} else {
-							this.leaveOverCnt = 7;
-						}
 						this.isShowNoResult = false;
 					} else {
-						/*uni.showToast({
-							title: '未查询到结果',
-							icon:"none",
-							duration: 2000
-						});*/
 						this.articleList = [];
-						this.totalRows = this.leaveOverCnt = 0;
+						this.totalRows = 0;
 						this.isShowNoResult = true;
+						if (getApp().globalData.platform == 2) {
+							console.log('setIosBackgroundColor:');
+							uni.setBackgroundColor({
+								backgroundColorBottom: "#17ACDC", // 底部窗口的背景色为绿
+							});
+						}
 						return;
 					}
 				});
@@ -355,8 +392,6 @@
 			}
 		},
 		onReachBottom() {
-			//console.log("上滑动");
-			//console.log('reach');
 			let _self = this;
 			if(isSearch && (!this.searchKeyword || this.searchKeyword.length<2)) {
 				// 显示空数据给用户
@@ -368,6 +403,9 @@
 				if (interval) {
 					clearTimeout(interval);
 				}
+				if(nowpage == totalPage) {
+					// 更改这里的
+				}
 				return;
 			}
 			
@@ -377,22 +415,18 @@
 					return;
 				}
 				// 最后一页应该加的元素个数
-				let c = m%10;
-				//console.log("leave start...", this.leaveOverCnt, c,m);
-				if(this.leaveOverCnt+10>m) {
-					this.leaveOverCnt+=c;
-					if (interval) {
-						clearTimeout(interval);
-					}
-					return;
+				if (interval) {
+					clearTimeout(interval);
 				}
+				return;
 			}
-			uni.showNavigationBarLoading();
+			uni.showLoading({
+				title:"玩命加载中..."
+			});
 			interval = setTimeout(function() {
 				nowpage++;
 				if(_self.level<=1) {
-					_self.leaveOverCnt+=10;
-					uni.hideNavigationBarLoading();
+					uni.hideLoading();
 					return;
 				}
 				let params = {};
@@ -414,22 +448,21 @@
 				http.request(url, params).then(resp=>{
 					//console.log('resp', resp);
 					if(resp.status == 1) {
+						uni.hideLoading();
 						let len = resp.data.length;
 						for(let j = 0;j<len;j++) {
 							_self.articleList.push(resp.data[j]);
 						}
 						//console.log(_self.articleList);
-						this.leaveOverCnt+=10;
 						totalPage   = resp.totalpage;
 						this.totalRows = resp.total;
 					} else {
-						this.leaveOverCnt=0;
 						totalPage   = 0;
 						this.totalRows = 0;
 					}
 				});
 				uni.hideNavigationBarLoading();
-			}, 200);
+			}, 400);
 		}
 	}
 </script>
@@ -587,7 +620,7 @@ view, scroll-view {
 }
 
 .user_upgrade_vip {
-	width:646rpx;
+	width:686rpx;
 	height:100px;
 }
 
@@ -656,6 +689,13 @@ view, scroll-view {
 	font-size: 24rpx;
 }
 
+.search-total-rows {
+	color:rgba(255,255,255,1);
+	font-weight: bold;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
 .search-result-suggest {
 	font-size: 13px;
 	font-family:PingFangSC-Regular,PingFang SC;
@@ -666,6 +706,8 @@ view, scroll-view {
 #contact-btn-view {
 	background: transparent;
 	line-height: 1;
+	padding-left: 0px;
+	padding-right: 0px;
 	display: flex;
 }
 

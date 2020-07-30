@@ -182,7 +182,7 @@ view.data-v-5e343daf, scroll-view.data-v-5e343daf {
 	line-height:20px;
 }
 .user_upgrade_vip.data-v-5e343daf {
-	width:646rpx;
+	width:686rpx;
 	height:100px;
 }
 .user-upgrade-vip-view.data-v-5e343daf {
@@ -261,6 +261,12 @@ view.data-v-5e343daf, scroll-view.data-v-5e343daf {
 	color: rgba(255,255,255,1);
 	font-size: 24rpx;
 }
+.search-total-rows.data-v-5e343daf {
+	color:rgba(255,255,255,1);
+	font-weight: bold;
+	margin-left: 5px;
+	margin-right: 5px;
+}
 .search-result-suggest.data-v-5e343daf {
 	font-size: 13px;
 	font-family:PingFangSC-Regular,PingFang SC;
@@ -270,6 +276,8 @@ view.data-v-5e343daf, scroll-view.data-v-5e343daf {
 #contact-btn-view.data-v-5e343daf {
 	background: transparent;
 	line-height: 1;
+	padding-left: 0px;
+	padding-right: 0px;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;

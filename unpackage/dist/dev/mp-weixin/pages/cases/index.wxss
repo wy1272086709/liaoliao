@@ -31,6 +31,8 @@ view {
 	display: -webkit-flex;
 	display: flex;
 	height: 51px;
+	width:750rpx;
+	position: fixed;
 	-webkit-overflow-scrolling: touch;
 	background: rgba(35,105,230,1);
 	overflow-x: auto;
@@ -75,7 +77,6 @@ view {
 	overflow-y: scroll;
 	-webkit-overflow-scrolling:touch;
 	width: 100%;
-	margin-top:16px;
 	margin-bottom:16px;
 	-webkit-box-orient: vertical;
 	-webkit-box-direction: normal;
@@ -83,7 +84,7 @@ view {
 	        flex-direction: column;
 }
 .content-root-view {
-	margin-bottom: 16px;
+	margin-top: 16px;
 }
 .thumb-class {
 	max-width: 200rpx;

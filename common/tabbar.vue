@@ -120,9 +120,11 @@
 		justify-content: center;
 		align-items: center;
 	}
+	
 	.tabbar-icon {
-		
+		height:24px;
 	}
+	
 	.tabbar-text {
 		height: 20px;
 		font-size:12px;

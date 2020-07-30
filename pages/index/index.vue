@@ -1,6 +1,6 @@
 <template>
-	<view id="root-view">
-		<view id="container-view">
+	<view id="root-view" :style="'min-height:'+(contentHeight+60)+'px;'">
+		<scroll-view id="container-view" :style="'height:'+contentHeight+'px;'" scroll-y="true">
 			<view id="ads-view">
 				<image class="ads-image" src="https://kuxou.com/images/ads.png?t=1597645866666"></image>
 			</view>
@@ -54,7 +54,8 @@
 					<uni-icons type="search" :size="iconSize" ></uni-icons>
 				</view>
 			</view>
-			<view  id="content-view-box" :style="'height:'+contentHeight+'px;'">
+			<!-- :style="'height:'+contentHeight+'px;' -->
+			<view  id="content-view-box">
 				<view id="content-view">
 					<view v-for="item in navList" class="nav-view" :key="item.firstNav.navId">
 						<view class="first-nav">
@@ -72,13 +73,8 @@
 					</view>
 				</view>
 			</view>
-			<tabBar :current="0" :position="position"></tabBar>
-			<scorll-view>
-			     <view style="height:34px;" v-if="isIphoneX">
-					 
-				 </view>
-			</scorll-view>
-		</view>
+		</scroll-view>
+		<tabBar :current="0" :position="'fixed'"></tabBar>
 	</view>
 </template>
 
@@ -89,19 +85,15 @@
 		data() {
 			return {
 				platForm: 0,
-				winHeight:0,
 				iconSize: 0,
 				keyword: '',
 				isIphoneX: false,
 				navList: [],
-				contentHeight: 228,
-				position: 'fixed'
+				contentHeight: 543,
 			}
 		},
 		mounted() {
-			this.isIphoneX = getApp().globalData.isIphoneX;
-			this.platForm = getApp().globalData.platform;
-			this.getNavList();
+			
 		},
 		components:{
 			tabBar
@@ -139,7 +131,7 @@
 						}
 					}
 					_self.navList = resp;		
-					_self.contentHeight = _self.calculateNavHeight(resp);
+					//_self.contentHeight = _self.calculateNavHeight(resp);
 				});
 			},
 			calculateNavHeight(navList) {
@@ -249,15 +241,29 @@
 				}
 			};
 		},
+		created() {
+			console.log('on created...');
+		},
+		mounted() {
+			console.log('on mounted...');
+		},
+		onReady() {
+			console.log('on Ready...');
+		},
 		onLoad() {
+			console.log('onLoad...');
 			uni.showShareMenu({
 			    withShareTicket: true
 			});
-			let winHeight = uni.getSystemInfoSync().windowHeight;
-			this.winHeight = winHeight;
+			let sysinfo = uni.getSystemInfoSync();
+			let winHeight    = sysinfo.windowHeight;
+			this.contentHeight   = winHeight - 60; 
+			let searchViewHeight = 40;
+			this.isIphoneX = getApp().globalData.isIphoneX;
+			this.platForm = getApp().globalData.platform;
 			this.searchViewBottom = 0;
 			this.firstNavTop = 20;
-			this.iconSize = this.searchViewHeight - 10;
+			this.iconSize = searchViewHeight - 10;
 			this.getNavList();
 		}
 	}
@@ -286,6 +292,7 @@
 	#container-view {
 		background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
 		flex-direction: column;
+		-webkit-overflow-scrolling: touch;
 	}
 	
 	#ads-view {
@@ -456,7 +463,6 @@
 	.contact-btn {
 		display: flex;
 		margin: 0;
-		position: static;
 		border: 0;
 		background-color:transparent;
 		padding:0;

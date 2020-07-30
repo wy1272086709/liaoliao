@@ -37,6 +37,7 @@
 			uni.showShareMenu({
 			    withShareTicket: true
 			});
+			this.setIosBackground();
 			//console.log('onload options', option);
 			let cid = option.cid;
 			let aid = option.id;
@@ -79,6 +80,15 @@
 				//console.log('query', query);
 				let path = "/"+url+"?"+query;
 				return path;
+			},
+			setIosBackground() {
+				if (getApp().globalData.platform == 2) {
+					console.log('setIosBackgroundColor:');
+					uni.setBackgroundColor({
+						backgroundColorTop: "#FFFFFF", // 顶部窗口的背景色为蓝色
+						backgroundColorBottom: "#FFFFFF", // 底部窗口的背景色为绿
+					});
+				}
 			},
 			getHuashuArticleView(cid, aid)
 			{

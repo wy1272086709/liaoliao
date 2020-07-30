@@ -41,7 +41,7 @@
 				</template>
 				<view id="bottom_list">
 					<uni-list>
-						<uni-list-item title="关于我们" thumb="/static/img/user/about_us.png"></uni-list-item>
+						<uni-list-item title="关于我们" thumb="/static/img/user/about_us.png"  @tap="about_us_article()"></uni-list-item>
 						<uni-list-item title="专属客服" thumb="/static/img/user/contact_customer.png"  @tap="copy_customer_wechat()"  rightText="点击复制客服微信" :showArrow="false"></uni-list-item>
 						<uni-list-item title="当前版本" thumb="/static/img/user/setting.png" :showArrow="false">
 							<template v-slot:right="">
@@ -51,7 +51,7 @@
 					</uni-list>
 				</view>
 			</view>
-			<tabBar :position="position" :current="2"></tabBar>
+			<tabBar :position="'fixed'" :current="2"></tabBar>
 			<scorll-view>
 			    <view style="height:34px;" v-if="isIphoneX"></view>
 			</scorll-view>
@@ -72,8 +72,6 @@
 				platform: 0,
 				isIphoneX: false,
 				marginTop: '',
-				position: "fixed",
-				isCanUse:uni.getStorageSync('wx_user_info') || true
 			}
 		},
 		components:{
@@ -153,6 +151,12 @@
 			}
 		},
 		methods: {
+			// 关于我们
+			about_us_article() {
+				uni.navigateTo({
+					url:'/pages/user/about_us'
+				});
+			},
 			// 填写个人信息
 			personal_info() {
 				uni.navigateTo({
@@ -479,31 +483,6 @@
 		flex-direction: row;
 		justify-content: center;
 		width:100%;
-	}
-	
-	.member-level-text {
-		width:240rpx;
-		display:flex;
-		justify-content: flex-end;
-		align-items: flex-end;
-	}
-	
-	.member-level {
-		font-size:11px;
-		font-family:PingFangSC-Regular,PingFang SC;
-		font-weight:400;
-		color:rgba(57,201,155,1);
-	}
-	
-	#member-level-btn {
-		width:104rpx;
-		height: 20px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		box-shadow:0px 2px 4px 0px rgba(0,0,0,0.01);
-		border-radius:4px;
-		border:1px solid rgba(57,201,155,1);
 	}
 	
 	.member-class {

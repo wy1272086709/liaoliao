@@ -10,9 +10,9 @@ export default {
 		        let modelmes = res.model;
 				let platform = res.platform.toLowerCase();
 				//android: 安卓, ios: IOS, devtools:PC
-				if (platform == 'android' || platform == 'devtools') {
+				if (platform == 'android' ) {
 					_self.globalData.platform = 1;	
-				} else if(platform == 'ios' ){
+				} else if(platform == 'ios' || platform == 'devtools'){
 					_self.globalData.platform = 2;
 				}
 		        if (modelmes.search('iPhone X') != -1) {

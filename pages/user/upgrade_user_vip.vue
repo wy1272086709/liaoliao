@@ -3,7 +3,7 @@
 		<view class="upgrade-header">
 			<text id="combo-text">请先选择VIP套餐</text>
 		</view>
-		<view class="upgrade-content"  scroll-y="false" scroll-x="false">
+		<view class="upgrade-content">
 			<view class="combo" @tap="selectCombo()" :style="'border:'+borderStyle+'rpx;'+'height:'+comboHeight+'rrpx;'">
 				<view class="left-image">
 					<image class="image-vip-info" src="../../static/img/yuedu.png"></image>
@@ -297,8 +297,7 @@ view,scroll-view {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	overflow-y: auto;
-	height: 100%;
+	-webkit-overflow-scrolling: touch;
 }
 
 .image-vip-info {

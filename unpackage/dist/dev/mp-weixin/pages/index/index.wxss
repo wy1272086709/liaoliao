@@ -28,6 +28,7 @@ view.data-v-47b73f3f,scroll-view.data-v-47b73f3f {
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
 	        flex-direction: column;
+	-webkit-overflow-scrolling: touch;
 }
 #ads-view.data-v-47b73f3f {
 	margin-left:32rpx;
@@ -219,7 +220,6 @@ view.data-v-47b73f3f,scroll-view.data-v-47b73f3f {
 	display: -webkit-flex;
 	display: flex;
 	margin: 0;
-	position: static;
 	border: 0;
 	background-color:transparent;
 	padding:0;

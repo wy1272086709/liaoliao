@@ -7,7 +7,8 @@
     "pages/user/upgrade_user_vip",
     "pages/index/huashu",
     "pages/index/meme",
-    "pages/cases/detail"
+    "pages/cases/detail",
+    "pages/user/about_us"
   ],
   "subPackages": [],
   "window": {

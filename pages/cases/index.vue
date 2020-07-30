@@ -8,10 +8,11 @@
 				</view>
 			</view>
 		</view>
-		<swiper :current="caseTabIndex" @change="switchCasesTab" :style="'min-height:'+scrollHeight+'px;'">
+		<swiper :current="caseTabIndex" 	@change="switchCasesTab" :style="'min-height:'+scrollHeight+'px;margin-top:51px;'">
 			<swiper-item v-for="(tab,index) in tabArr" :key="tab.firstNav.navId">
-				<scroll-view id="content-view" enable-back-to-top="true" scroll-y="true"	:style="'height:'+parseInt(scrollHeight-16)+'px;'" @scrolltolower="lower">
-					<view v-for="item in list" class="content-root-view" @tap="getArticleView(item.id)" :key="item.id">
+				<scroll-view id="content-view" enable-back-to-top="true" scroll-y="true"	:style="'height:'+scrollHeight+'px;'" @scrolltolower="lower">
+					<view style="height:16px;"></view>
+					<view v-for="(item,m) in list" :class="'content-root-view'" :style="m==0 ? 'margin-top:0px;':''" @tap="getArticleView(item.id)" :key="item.id">
 						<view class="content-img-view">
 							<image :src="item.thumbUrl" class="thumb-class"></image>
 						</view>
@@ -24,25 +25,24 @@
 							</view>
 						</view>
 					</view>
+					<view style="height:16px;"></view>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
-		<tabBar :current="1" :position="position"></tabBar>
-		<view style="height:34px;width:100%;" v-if="isIphoneX">
-				
-		</view>
+		<tabBar :current="1" :position="'fixed'"></tabBar>
 	</view>
 </template>
 
 <script>
 	import tabBar from '../../common/tabbar.vue';
 	import http from '../../common/http.js';
+	import util from '../../common/util.js';
 	let eMap = {};
 	let totalPage = 1;
-	let page = 1;
+	let nowpage = 1;
 	let cid = 0;
 	let interval = null;
-	let isFixedHeight = false;
+	let tabTitle = '';
 	export default {
 		data() {
 			return {
@@ -50,13 +50,15 @@
 				list: [],
 				caseTabIndex: 0,
 				isIphoneX: false,
-				scrollHeight: 0,
-				position: 'fixed',
-				tabTitle: '',
+				scrollHeight: 0
 			}
 		},
 		computed: {
 			uid: function() {
+				let userInfo = util.getUserInfoFromStorage();
+				if (userInfo.uid) {
+					return userInfo.uid;
+				}
 				if (this.$store.getters.userInfo.uid) {
 					return this.$store.getters.userInfo.uid;
 				}
@@ -85,7 +87,6 @@
 		onPullDownRefresh() {
 			console.log('页面下拉刷新');
 			let _self = this;
-			isFixedHeight = false;
 			_self.getCaseList(cid, true, 1);
 			setTimeout(function() {				
 				uni.stopPullDownRefresh();
@@ -109,7 +110,6 @@
 			this.scrollHeight = winHeight - 60 - 51;
 			//console.log(this.scrollHeight);
 			this.getHuashuTabbar();
-			isFixedHeight = false;
 		},
 		mounted() {
 			
@@ -128,7 +128,7 @@
 				let index = this.caseTabIndex;
 				let len = tabArr.length;
 				let navData = tabArr;
-				console.log('index', index);
+				//console.log('index', index);
 				if( index>=4) {
 					// 只保留最后三个
 					for (let m = 0; m<=index-4;m++) {
@@ -139,7 +139,7 @@
 					}
 				} else {
 					for (let m = 0;m<4;m++) {
-						console.log('m',m);
+						//console.log('m',m);
 						navData[m].display = 'flex';
 					} 
 				} 
@@ -148,13 +148,15 @@
 			lower() {
 				console.log('to lower!');
 				let _self = this;
-				if(page>=totalPage) {
+				console.log('page',nowpage);
+				if(nowpage>=totalPage) {
 					clearTimeout(interval);
 					return;
 				}
 				interval = setTimeout(function() {
-					page++;
-					_self.getCaseList(cid, false, page);
+					nowpage++;
+					console.log('page....',nowpage);
+					_self.getCaseList(cid, false,nowpage);
 				}, 500);
 			},
 			getCaseList(cid, firstLoad, page) {
@@ -225,7 +227,7 @@
 					this.tabArr = _self.initTabData(resp);
 					//console.log('tabArr', this.tabArr);
 					cid    = _self.tabArr[0].firstNav.navId;
-					this.tabTitle = _self.tabArr[0].firstNav.title;
+					tabTitle = _self.tabArr[0].firstNav.title;
 					this.getCaseList(cid, true, 1);
 				});
 			},
@@ -240,16 +242,17 @@
 				//console.log('getArticleView....');
 				// 获取文章详情信息
 				uni.navigateTo({
-					url:'/pages/cases/detail?id='+id+'&cid='+cid+"&title="+this.tabTitle
+					url:'/pages/cases/detail?id='+id+'&cid='+cid+"&title="+tabTitle
 				})
 			},
 			switchCasesTab(e) {
+				nowpage = 1;
 				let thisCurr = e.detail.current || e.currentTarget.dataset.index || 0;
 				//console.log('thisCurr', thisCurr);
 				this.caseTabIndex = thisCurr;
 				let navId = this.tabArr[thisCurr].firstNav.navId;
 				cid  = navId;
-				this.tabTitle = this.tabArr[thisCurr].firstNav.title;
+				tabTitle = this.tabArr[thisCurr].firstNav.title;
 				this.changeTabDisplay(thisCurr);
 				const t = parseInt(new Date().getTime()/1000);
 				if (typeof eMap[t]!='undefined') {
@@ -259,11 +262,12 @@
 				eMap[t] = 1;
 			},
 			switchTab(index) {
+				nowpage = 1;
 				// 切换面板
 				this.caseTabIndex = index;
 				let navId = this.tabArr[index].firstNav.navId;
 				cid  = navId;
-				this.tabTitle = this.tabArr[index].firstNav.title;
+				tabTitle = this.tabArr[index].firstNav.title;
 				this.changeTabDisplay(index);
 				const t = parseInt(new Date().getTime()/1000);
 				// 不准同一秒内发送两次请求
@@ -275,17 +279,21 @@
 				//console.log('eMap', eMap);
 			},
 			changeTabDisplay(index) {
+				let n = this.tabArr.length;
 				if( index>=4) {
 					// 只保留最后三个
 					for (let m = 0; m<=index-4;m++) {
+						//console.log('m,', m);
 						this.tabArr[m].display = 'none';
 					}
-					for (let x = index-3;x<=index;x++) {
+					for (let x = index-3;x<=n-1;x++) {
+						//console.log('x,', x);
 						this.tabArr[x].display = 'flex';
 					}
 				} else {
+					console.log('index', index);
 					for (let m = 0;m<4;m++) {
-						console.log('m',m);
+						//console.log('m<4',m);
 						this.tabArr[m].display = 'flex';
 					} 
 				} 
@@ -320,6 +328,8 @@ view {
 #header-view {
 	display: flex;
 	height: 51px;
+	width:750rpx;
+	position: fixed;
 	-webkit-overflow-scrolling: touch;
 	background: rgba(35,105,230,1);
 	overflow-x: auto;
@@ -355,12 +365,11 @@ view {
 	overflow-y: scroll;
 	-webkit-overflow-scrolling:touch;
 	width: 100%;
-	margin-top:16px;
 	margin-bottom:16px;
 	flex-direction: column;
 }
 .content-root-view {
-	margin-bottom: 16px;
+	margin-top: 16px;
 }
 .thumb-class {
 	max-width: 200rpx;

@@ -97,8 +97,6 @@
 	export default {
 		data() {
 			return {
-				memberLevel: this.level,
-				memberValidateDates: this.member_validate_dates,
 				memberAction: '',
 				actionMarginLeft: '',
 				actionWidth: '',
@@ -109,12 +107,10 @@
 		},
 		watch:{
 			level(val) {
-				this.memberLevel = val;
-				console.log('watch memberLevel', val);
+				
 			},
 			member_validate_dates(val) {
-				console.log('watch memberValidateDates', val);
-				this.memberValidateDates = val;
+				
 			}
 		},
 		props:{
@@ -132,45 +128,45 @@
 			}
 		},
 		mounted() {
-			this.initDiscountText();
-			this.initBackground();
+			//this.initDiscountText();
+			//this.initBackground();
 			this.initActions();
 			this.initActionMargin();
 		},
 		computed:{
 			memberDiscountText: function() {
-				if(this.memberLevel == 0) {
+				if(this.level == 0) {
 					return '登录/注册成为会员';
-				} else if(this.memberLevel == 1) {
+				} else if(this.level == 1) {
 					return '会员享更多功能';
 				} else {
 					console.log('member_validate_dates', this.member_validate_dates);
-					return this.memberValidateDates;
+					return this.member_validate_dates;
 				}
 			},
 			backgroundColor: function() {
 				let backgroundColor = '';
 				console.log('platform', this.platform, 'memberLevel:', this.memberLevel);
 				if(this.platform == 1) {
-					if(this.memberLevel == 0 ) {
+					if(this.level == 0 ) {
 						backgroundColor = 'linear-gradient(90deg,rgba(133,133,133,1) 0%,rgba(184,184,184,1) 100%);';
-					} else if(this.memberLevel == 1) {
+					} else if(this.level == 1) {
 						backgroundColor = 'linear-gradient(90deg,rgba(247,178,80,1) 0%,rgba(255,210,117,1) 100%);';
-					} else if(this.memberLevel == 2) {
+					} else if(this.level == 2) {
 						backgroundColor = 'linear-gradient(90deg,rgba(35,109,230,1) 0%,rgba(22,184,218,1) 100%);';
-					} else if(this.memberLevel == 3) {
+					} else if(this.level == 3) {
 						backgroundColor = 'linear-gradient(90deg,rgba(17,182,75,1) 0%,rgba(97,240,139,1) 100%);';
-					} else if(this.memberLevel == 4) {
+					} else if(this.level == 4) {
 						backgroundColor = 'linear-gradient(90deg,rgba(255,136,79,1) 0%,rgba(255,184,134,1) 100%);';
 					}
 				} else if(this.platform == 2){
-					if(this.memberLevel <= 1 ) {
+					if(this.level <= 1 ) {
 						backgroundColor = 'linear-gradient(90deg,rgba(133,133,133,1) 0%,rgba(184,184,184,1) 100%);';
-					} else if(this.memberLevel == 2) {
+					} else if(this.level == 2) {
 						backgroundColor = 'linear-gradient(90deg,rgba(35,109,230,1) 0%,rgba(22,184,218,1) 100%);';
-					} else if(this.memberLevel == 3) {
+					} else if(this.level == 3) {
 						backgroundColor = 'linear-gradient(90deg,rgba(17,182,75,1) 0%,rgba(97,240,139,1) 100%);';
-					} else if(this.memberLevel == 4) {
+					} else if(this.level == 4) {
 						backgroundColor = 'linear-gradient(90deg,rgba(255,136,79,1) 0%,rgba(255,184,134,1) 100%);';
 					}
 				}
@@ -178,12 +174,6 @@
 			}
 		},
 		methods: {
-			initDiscountText() {
-				
-			},
-			initBackground() {
-				
-			},
 			wxGetUserInfo() {
 				// 发送事件给父元素...
 				this.$emit('memberLogin', true);
@@ -192,7 +182,7 @@
 				if(this.platform == 2) {
 					return '';
 				}
-				if(this.memberLevel == 0) {
+				if(this.level == 0) {
 					this.memberAction = '';
 				} else if(this.memberLevel == 1 ) {
 					this.memberAction = '立即充值';
@@ -201,11 +191,11 @@
 				}
 			},
 			initActionMargin() {
-				if(this.memberLevel == 1) {
+				if(this.level == 1) {
 					//this.actionWidth = 96;
 					this.marginLeft  = 100;
 					this.rightAreaWidth = 240;
-				} else if(this.memberLevel == 0) {
+				} else if(this.level == 0) {
 					//this.actionWidth = 0;
 					this.vipInfoWidth = 394;
 				} else {
@@ -215,7 +205,7 @@
 			},
 			payForVip() {
 				// 安卓端可以跳转...
-				if(this.memberLevel>=1 && this.platform != 2) {
+				if(this.level>=1 && this.platform != 2) {
 					uni.navigateTo({
 						url:'/pages/user/upgrade_user_vip'
 					});

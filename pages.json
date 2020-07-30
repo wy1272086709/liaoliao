@@ -5,6 +5,7 @@
 				"style": {
 					"navigationBarTitleText": "恋爱话术",
 					"navigationBarBackgroundColor": "#2369E6",
+					"disableScroll": true,
 					"backgroundColor": "#2369E6"
 				}
 			},
@@ -66,9 +67,17 @@
 				"style" : {
 					"navigationBarTitleText": "恋爱技巧文章",
 					"navigationBarBackgroundColor": "#2369E6",
-					"backgroundColor": "#2369E6"
+					"backgroundColor": "#FFFFFF"
 				}
 			}
+        ,{
+            "path" : "pages/user/about_us",
+            "style" : {
+				"navigationBarTitleText": "关于我们",
+				"navigationBarBackgroundColor": "#2369E6",
+				"backgroundColor": "#FFFFFF"
+			}
+        }
     ],
 	"tabBar": {
 		"custom": true,

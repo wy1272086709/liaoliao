@@ -93,8 +93,7 @@ view,scroll-view {
 	-webkit-box-align: center;
 	-webkit-align-items: center;
 	        align-items: center;
-	overflow-y: auto;
-	height: 100%;
+	-webkit-overflow-scrolling: touch;
 }
 .image-vip-info {
 	display: -webkit-box;
