@@ -18,6 +18,11 @@
 			}
 		},
 		onLoad() {
+			//#ifdef MP-WEIXIN || MP-QQ
+			uni.showShareMenu({
+			    withShareTicket: true
+			});
+			//#endif
 			this.getAboutUs();
 		},
 		methods: {

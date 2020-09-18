@@ -14,43 +14,93 @@
 				<text>共搜索出 <text class="search-total-rows">{{totalRows}} </text>条记录</text>
 			</view>
 		</view>
-		
+		<view>
+			<rich-text :nodes="strings"></rich-text>
+		</view>
 		<view id="content-view" :style="'min-height:'+scrollHeight+'px;'">
-			<view class="huashu-article huashu-article-first" v-for="item in articleList" :key="item.id">
-				<view class="huashu-article-title">
-					<text :class="searchText">{{item.title}}</text>
-				</view>
-				<view class="huashu-line" v-for="(line,key,index) in item.content" :key="line">
-					<view class="huashu-sex">
-						<template v-if="line.split('@@')[0] == 1">
-							<image class="huashu-sex-image" src="../../static/img/index/man.png"></image>
-						</template>
-						<template v-else>
-							<image class="huashu-sex-image" src="../../static/img/index/female.png"></image>
-						</template>
-					</view>
-					<view class="huashu-content">
-						<text class="huashu-content-text">{{line.split('@@')[1]}}</text>
-					</view>
-					<view class="huashu-copy-btn" @tap="copyHuashu(line)">
-						<image class="huashu-copy-image" src="../../static/img/index/copy.png"></image>
+			<block v-for="(item,index) in articleList" :key="item.id">
+				<view class="huashu-link-view" v-if="index>0" >
+					<view class="huashu-link" style="margin-bottom:-20rpx">
+						<view class="huashu-link-left">
+							<image src="../../static/img/index/link_down.png" class="huashu-link-icon"></image>
+						</view>
+						<view class="huashu-link-middle">
+							
+						</view>
+						<view class="huashu-link-right">
+							<image src="../../static/img/index/link_down.png" class="huashu-link-icon"></image>
+						</view>
 					</view>
 				</view>
-			</view>
+				<view class="huashu-article huashu-article-first">
+					<view class="huashu-article-title">
+						<image src="../../static/img/index/love_icon.png" class="love-icon-class"></image>
+						<text :class="searchText">{{item.title}}</text>
+					</view>
+					<view class="huashu-line" v-for="(line,key,index) in item.content" :key="line">
+						<view class="huashu-sex">
+							<template v-if="line.split('@@')[0] == 1">
+								<image class="huashu-sex-image" src="../../static/img/index/man.png"></image>
+							</template>
+							<template v-else>
+								<image class="huashu-sex-image" src="../../static/img/index/famale.png"></image>
+							</template>
+						</view>
+						<view class="huashu-content">
+							<view class="huashu-content-text">
+								<rich-text :nodes="parseHtmlNodes(line.split('@@')[1])"></rich-text>
+							</view>
+							<!--
+							<rich-text class="huashu-content-text" :nodes="parseHtmlNodes(line.split('@@')[1])"></rich-text>
+							-->
+						</view>
+						<view class="huashu-copy-btn" @tap="copyHuashu(line)">
+							<image class="huashu-copy-image" src="../../static/img/index/copy.png"></image>
+						</view>
+					</view>
+				</view>
+				<view class="huashu-link-view" v-if="index!=(articleList.length-1)">
+					<view class="huashu-link" style="margin-top:-20rpx;">
+						<view class="huashu-link-left">
+							<image src="../../static/img/index/link_up.png" class="huashu-link-icon"></image>
+						</view>
+						<view class="huashu-link-middle">
+							
+						</view>
+						<view class="huashu-link-right">
+							<image src="../../static/img/index/link_up.png" class="huashu-link-icon"></image>
+						</view>
+					</view>
+				</view>
+			</block>
 			<view style="height:23px;" v-if="level>1">
 				
 			</view>
-			<template v-if="level<=1 && platForm<2">
-				<view  class="user-upgrade-vip-view"  @tap="upgrade_vip">
-					<button v-if="platForm==1" open-type="contact"  class="contact-btn" id="contact-btn-view">
-						<img src="https://kuxou.com/images/user_upgrade_vip.png" class="user_upgrade_vip" />
+			<template v-if="level<=1 && platForm ==2">
+				<view  class="user-upgrade-vip-view">
+					<!-- #ifdef MP-WEIXIN -->
+					<button v-if="platForm==2" open-type="contact"  class="contact-btn" id="contact-btn-view">
+						<img src="https://imgmyqx.ofbei.com/images/contact_consumer_ios.png" class="user_upgrade_vip" />
 					</button>
+					<!-- #endif -->
+					
+					<!-- #ifdef MP-QQ -->
+					<button v-if="platForm==2" @tap="copy_customer_qq"  class="contact-btn" id="contact-btn-view">
+						<img src="https://imgmyqx.ofbei.com/images/contact_consumer_ios.png" class="user_upgrade_vip" />
+					</button>
+					<!-- #endif -->
+					
+					<!-- #ifdef APP-PLUS || H5 -->
+					<button v-if="platForm==2" class="contact-btn" id="contact-btn-view" @tap="upgrade_vip">
+						<img src="https://imgmyqx.ofbei.com/images/contact_consumer_android.png" class="user_upgrade_vip"  />
+					</button>
+					<!-- #endif -->
 				</view>
 			</template>
-			<template v-if="level<=1 && platForm>=2">
-				<view  class="user-upgrade-vip-view">
-					<button v-if="platForm==2" open-type="contact"  class="contact-btn" id="contact-btn-view">
-						<img src="../../static/img/user/ios_visit_vip.png" class="user_upgrade_vip"  />
+			<template v-if="level<=1 && platForm == 1">
+				<view  class="user-upgrade-vip-view" @tap="upgrade_vip">
+					<button v-if="platForm==1" class="contact-btn" id="contact-btn-view">
+						<img src="https://imgmyqx.ofbei.com/images/contact_consumer_android.png" class="user_upgrade_vip"  />
 					</button>
 				</view>
 			</template>
@@ -74,7 +124,7 @@
 		</view>
 		<view id="search-result-view">
 			<view id="search-result-header">
-				<text class="search-result-suggest">没有找到搜索结果,您可以尝试以下方案</text>
+				<text class="search-result-suggest">{{ suggestMsgText }},您可以尝试以下方案</text>
 			</view>
 			<view class="search-result-title">
 				<text>精简关键词</text>
@@ -89,7 +139,7 @@
 				<text class="search-result-suggest">去把您的诉求发布到互助讨论区,让大家帮您想办法回复。</text>
 			</view>
 			<view id="ask-btn-view" @tap="suggest">
-				<button id="ask-btn">
+				<button class="ask-btn">
 					<text class="iconfont icon-tiwen icon-right"></text>
 					<text class="tiwen-text">去提问</text>
 				</button>
@@ -103,15 +153,13 @@
 	import tabBar from '../../common/tabbar.vue';
 	import http from '../../common/http.js';
 	import util  from '../../common/util.js';
+	import parseHtml from '../../common/html_parse.js';
 	let navId = 0;
 	let nowpage = 1;
 	let totalPage = 0;
 	let isSearch = false;
-	let interval = null;
-	// 进入界面的
-	let isFixedHeight = false;
-	// 搜索的时候的
-	let isFixedHeight2 = false;
+	let searchKeywordVal = '';
+	// 限定用户第一次进入
 	export default {
 		data() {
 			return {
@@ -119,7 +167,9 @@
 				isShowNoResult: false,
 				contentHeight: 0,
 				platForm: 0,
+				suggestMsgText: "",
 				searchKeyword: "",
+				strings: '',
 				navigation: {
 					height: 88,
 					top: 30,
@@ -137,28 +187,6 @@
 			tabBar:tabBar,
 		},
 		computed: {
-			level: function() {
-				//console.log('userInfo:', this.$store.getters.userInfo);
-				let userInfo = util.getUserInfoFromStorage();
-				if (userInfo.level) {
-					return userInfo.level;
-				}
-				if(this.$store.getters.userInfo.level) {
-					return this.$store.getters.userInfo.level;
-				} else {
-					return 0;
-				}
-			},
-			uid: function() {
-				let userInfo = util.getUserInfoFromStorage();
-				if (userInfo.uid) {
-					return userInfo.uid;
-				}
-				if(this.$store.getters.userInfo.uid) {
-					return this.$store.getters.userInfo.uid;
-				}
-				return 0;
-			},
 			scrollHeight: function() {
 				let scrollHeight = 0;
 				let sysinfo = uni.getSystemInfoSync();
@@ -174,7 +202,41 @@
 					scrollHeight = windowHeight - 50;
 				}
 				return scrollHeight;
+			},
+			level: function() {
+				let userInfo = {};
+				//#ifdef APP-PLUS || H5
+				let type = util.cache('appLoginType', null);
+				let userInfoStr = util.cache('app_user_info_'+type, null);
+				userInfo    = userInfoStr ? JSON.parse(userInfoStr): {};
+				//#endif
+				
+				//#ifdef MP-WEIXIN || MP-QQ
+				userInfo = util.getUserInfoFromStorage();
+				//#endif
+				
+				if (userInfo.level) {
+					return userInfo.level;
+				}
+				if(this.$store.getters.userInfo.level) {
+					return this.$store.getters.userInfo.level;
+				} else {
+					return 0;
+				}
+			},
+			uid: function() {
+				let uid = util.cache('wx_userid', null);
+				if (uid) {
+					return uid;
+				}
+				if(this.$store.getters.userInfo.uid) {
+					return this.$store.getters.userInfo.uid;
+				}
+				return 0;
 			}
+		},
+		onHide() {
+			
 		},
 		onShareAppMessage() {
 			//console.log('share....');
@@ -196,35 +258,48 @@
 				}
 			};
 		},
+		created() {
+			console.log('created....');
+		},
 		watch:{
 			
 		},
 		onPullDownRefresh() {
 			//console.log('页面下拉刷新');
-			
 			let _self = this;
-			isFixedHeight = false;
 			_self.getHuashuArticleList();
 			setTimeout(function() {				
 				uni.stopPullDownRefresh();
 			}, 100);
 		},
+		onUnload() {
+			//navId = 0;
+			// 卸载当前变量...,按照道理,清空了.
+			//console.log('navId:',navId,'nowpage:', nowpage);
+		},
 		onLoad(option) {
-			//console.log('option', option);
+			console.log('ONload!....');
+			console.log('option', option);
+			//#ifdef MP-WEIXIN  || MP-QQ
 			this.setIosBackground();
+			//#endif
 			let sysinfo = uni.getSystemInfoSync();
 			this.contentHeight = sysinfo.windowHeight;
 			let title = option.title;
 			// 获取keyword,
 			let key  = option.keyword;
 			navId = option.navId;
+			console.log('key', key);
 			if (key) {
-				this.searchKeyword = key;
+				this.searchKeyword = searchKeywordVal = key;
 				// 判断从搜索框进入的。
 				isSearch = true;
 				uni.setNavigationBarTitle({
 					title:'"搜索结果"'
 				});
+			} else {
+				isSearch = false;
+				searchKeywordVal = '';
 			}
 			if(title) {
 				title = decodeURIComponent(title);
@@ -236,18 +311,69 @@
 			uni.startPullDownRefresh();
 		},
 		methods: {
+			//#ifdef MP-QQ
+			copy_customer_qq() {
+				let qq = '3342315151';
+				uni.setClipboardData({
+					data: qq,
+					success: function(res) {
+						uni.getClipboardData({
+							success: function(res) {
+								uni.showModal({
+									title: '提示',
+									content: '复制QQ号成功,请前往添加好友',
+									showCancel: false,
+									cancelText: '',
+									confirmText: '确定',
+									success() {
+										
+									}
+								});
+							}
+						});
+					}
+				});
+			},
+			//#endif
+			parseHtmlNodes(content) {
+				if(!isSearch) {
+					return content;
+				}
+				let t = parseHtml(content);
+				return t;				
+			},
+			suggestMsg() {
+				let Arr = [
+					'未搜索到结果', '好的文案还在酝酿中,敬请期待', '编辑还在赶来的路上'
+				];
+				console.log('Math.random()', Math.random());
+				let s = parseInt(Math.random()*3);
+				return Arr[s];
+			},
 			suggest() {
+				let url = '/pages/user/complaint';
+				//#ifdef MP-WEIXIN || MP-QQ
+				url = '/pages/user/complaint';
+				//#endif
+				
+				// 后面改成脑洞广场地址...
+				//#ifdef APP-PLUS || H5
+				url = '/pages/user/complaint';
+				//#endif
+				
 				uni.navigateTo({
-					url:'/pages/user/complaint'
+					url:url
 				});
 			},
 			setIosBackground() {
 				if (getApp().globalData.platform == 2) {
 					console.log('setIosBackgroundColor:');
-					uni.setBackgroundColor({
-						backgroundColorTop: "#2369E6", // 顶部窗口的背景色为蓝色
-						backgroundColorBottom: "#15B9DA", // 底部窗口的背景色为绿
-					});
+					if(typeof wx.setBackgroundColor == 'function') {
+						wx.setBackgroundColor({
+							backgroundColor: "#2369E6", // 顶部窗口的背景色为蓝色
+							backgroundColorBottom: "#2369E6", // 底部窗口的背景色为绿
+						});
+					}
 				};
 			},
 			getHuashuArticleList() {
@@ -264,6 +390,7 @@
 				params.nowpage = 1;
 				// 搜索框搜索时候,将nowpage 置位1
 				nowpage = 1;
+				console.log('huashu params:', params);
 				const data = getApp().globalData;
 				const apiPrefix = data.serverUri;
 				const auth = data.auth;
@@ -286,15 +413,15 @@
 						// 第一页的多加几个...
 						this.isShowNoResult = false;
 					} else {
+						this.suggestMsgText = this.suggestMsg();
 						this.articleList =  [];
 						totalPage   = 0;
 						this.totalRows = 0;
 						if (keyword) {
 							this.isShowNoResult = true;
 							if (getApp().globalData.platform == 2) {
-								console.log('setIosBackgroundColor:');
 								uni.setBackgroundColor({
-									backgroundColorBottom: "#17ACDC", // 底部窗口的背景色为绿
+									backgroundColor: "#2369E6", // 底部窗口的背景色为绿
 								});
 							}
 						}
@@ -304,9 +431,10 @@
 			searchKeywordFunc() {
 				// 调用搜索关键词接口...
 				let keyword = this.searchKeyword;
-				if(!keyword || keyword.length<2) {
+				searchKeywordVal = keyword;
+				if(!keyword || keyword.length<1) {
 					uni.showToast({
-						title: '请输入关键词，且至少2个字符长度!',
+						title: '请输入关键词，且至少1个字符长度!',
 						icon:"none",
 						duration: 2000
 					});
@@ -315,7 +443,6 @@
 				uni.setNavigationBarTitle({
 					title:'"搜索结果"'
 				});
-				isFixedHeight = false;
 				let params = {
 					filterData:true
 				};
@@ -343,11 +470,12 @@
 						// 第一页显示完整
 						this.isShowNoResult = false;
 					} else {
+						this.suggestMsgText = this.suggestMsg();
 						this.articleList = [];
 						this.totalRows = 0;
 						this.isShowNoResult = true;
 						if (getApp().globalData.platform == 2) {
-							console.log('setIosBackgroundColor:');
+							//console.log('setIosBackgroundColor:');
 							uni.setBackgroundColor({
 								backgroundColorBottom: "#17ACDC", // 底部窗口的背景色为绿
 							});
@@ -363,8 +491,8 @@
 			},
 			upgrade_vip() {
 				// 这里跳转到登录界面
-				if(this.level<2) {
-					console.log('go here!');
+				if(this.level == 0) {
+					//console.log('go here!');
 					uni.switchTab({
 						url: '/pages/user/index'
 					});
@@ -393,42 +521,22 @@
 		},
 		onReachBottom() {
 			let _self = this;
-			if(isSearch && (!this.searchKeyword || this.searchKeyword.length<2)) {
-				// 显示空数据给用户
+			if(getApp().globalData.level<=1) {
 				return;
 			}
-			//console.log('here!', this.level);
-			if (nowpage>=totalPage && this.level>1) {
-				console.log('here!');
-				if (interval) {
-					clearTimeout(interval);
-				}
+			//console.log('nowpage', nowpage);
+			//console.log('here!', getApp().globalData.level);
+			if (nowpage>=totalPage) {
 				if(nowpage == totalPage) {
 					// 更改这里的
-				}
-				return;
-			}
-			
-			if (this.level<=1) {
-				let m = parseInt(this.totalRows);
-				if(m<=10) {
-					return;
-				}
-				// 最后一页应该加的元素个数
-				if (interval) {
-					clearTimeout(interval);
 				}
 				return;
 			}
 			uni.showLoading({
 				title:"玩命加载中..."
 			});
-			interval = setTimeout(function() {
+			setTimeout(function() {
 				nowpage++;
-				if(_self.level<=1) {
-					uni.hideLoading();
-					return;
-				}
 				let params = {};
 				params.nowpage = nowpage;
 				params.cid = navId;
@@ -440,7 +548,7 @@
 				let url = '';
 				if(isSearch) {
 					url = apiPrefix + "?mod=loveword&ac=search";
-					params.keyword = _self.searchKeyword;
+					params.keyword = searchKeywordVal;
 				} else {
 					url = apiPrefix + "?mod=loveword&ac=list";
 				}
@@ -457,11 +565,11 @@
 						totalPage   = resp.totalpage;
 						this.totalRows = resp.total;
 					} else {
+						uni.hideLoading();
 						totalPage   = 0;
 						this.totalRows = 0;
 					}
 				});
-				uni.hideNavigationBarLoading();
 			}, 400);
 		}
 	}
@@ -475,7 +583,7 @@
 
 #root-view {
 	flex-direction: column;
-	background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
+	background-color: #2468E7;
 }
 
 view, scroll-view {
@@ -497,7 +605,7 @@ view, scroll-view {
 #search-view-box {
 	flex-direction: column;
 	width:750rpx;
-	margin-top:16px;
+	padding-top:16px;
 }
 
 .search-class {
@@ -518,6 +626,7 @@ view, scroll-view {
 }
 
 #search-view-text {
+	display: flex;
 	width: 586rpx;
 	height: 100%;
 	justify-content: center;
@@ -525,6 +634,7 @@ view, scroll-view {
 }
 
 #search-view-icon {
+	display: flex;
 	width: 100rpx;
 	height: 100%;
 	justify-content: center;
@@ -538,10 +648,10 @@ view, scroll-view {
 }
 	
 #search-result>text {
-	font-size: 14px;
-	font-family: PingFangSC-Regular,PingFang SC;
-	font-weight: 400;
-	color: rgba(51,51,51,1);
+	font-size:25rpx;
+	font-family:FZLTHJW;
+	font-weight:normal;
+	color:rgba(42,42,42,1);
 }
 
 #content-view {
@@ -563,25 +673,51 @@ view, scroll-view {
 	background:rgba(255,255,255,1);
 	margin-left:32rpx;
 	margin-right:32rpx;
-	border-radius:10px;
+	border-radius:19rpx;
+}
+.jiacu {
+	font-weight: bold;
+	color: rgba(233,206,147,1);
 }
 
 .huashu-article-title{
-	margin-top:10px;
-	margin-left:32rpx;
-	border-bottom: 1px dashed #2369E6;
-	margin-right:32rpx;
+	background:linear-gradient(124.1678deg,rgba(247,237,215,1) 0%,rgba(233,206,147,1) 100%);
+	border-top-left-radius:19rpx;
+	border-top-right-radius:19rpx;
+	height: 85.5rpx;
+	font-size:26rpx;
+	font-family:Microsoft YaHei;
+	font-weight:400;
+	justify-content: center;
+	align-items: center;
+	color:rgba(136,94,36,1);
 }
 
-.huashu-article-title>text {
-	font-size: 16px;
-	font-family: PingFangSC-Regular,PingFang SC;
-	font-weight: 500;
-	color: #2369E6;
+.huashu-link-middle {
+	width:580rpx;
+}
+
+.huashu-link-view {
+	height: 15rpx;
 }
 
 .huashu-article-first {
-	margin-top:23px;
+	
+}
+
+.huashu-link {
+	z-index:1000001;
+}
+
+.huashu-link-icon {
+	max-width: 20rpx;
+	max-height: 36rpx;
+}
+
+.love-icon-class {
+	max-width: 24.5rpx;
+	max-height: 24.5rpx;
+	margin-right:6rpx;
 }
 
 .huashu-line {
@@ -612,22 +748,23 @@ view, scroll-view {
 }
 
 .huashu-content-text {
-	font-size:14px;
-	font-family:PingFangSC-Regular,PingFang SC;
+	font-size:23.5rpx;
+	font-family:SourceHanSansSC;
 	font-weight:400;
-	color:rgba(51,51,51,1);
-	line-height:20px;
+	color:rgba(136,94,36,1);
 }
 
 .user_upgrade_vip {
 	width:686rpx;
-	height:100px;
+	height: 212.86rpx;
 }
 
 .user-upgrade-vip-view {
 	justify-content: center;
 	margin-bottom:16px;
 	margin-top:16px;
+	margin-left: 32rpx;
+	margin-right: 32rpx;
 }
 
 .searchText {
@@ -663,11 +800,10 @@ view, scroll-view {
 	font-weight: 600;
 }
 
-#ask-btn {
+.ask-btn {
 	display: flex;
 	width: 100px;
 	height: 30px;
-	background-color: ;
 	margin-left:0px;
 	background-color: #EE597A;
 	border-radius:20px;
@@ -703,7 +839,7 @@ view, scroll-view {
 	color: rgba(255,255,255,1);
 }
 
-#contact-btn-view {
+#contact-btn-view,.contact-btn  {
 	background: transparent;
 	line-height: 1;
 	padding-left: 0px;

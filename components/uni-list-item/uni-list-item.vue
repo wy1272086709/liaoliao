@@ -2,17 +2,41 @@
 	<!-- #ifdef APP-NVUE -->
 	<cell>
 		<!-- #endif -->
-		<view :class="disabled ? 'uni-list-item--disabled' : ''" :hover-class="disabled || showSwitch ? '' : 'uni-list-item--hover'" class="uni-list-item" @click="onClick">
+		<view   :class="disabled ? 'uni-list-item--disabled' : ''" :hover-class="disabled || showSwitch ? '' : 'uni-list-item--hover'" class="uni-list-item" @click="onClick">
 			<view class="uni-list-item__container" :class="{'uni-list-item--first':isFirstChild}">
 				<view v-if="thumb" class="uni-list-item__icon">
 					<image :src="thumb" class="uni-list-item__icon-img" />
 				</view>
+				<view v-if="thumbSrc" class="uni-list-item__icon">
+					<button open-type="contact" class="contact-button">
+						<image :src="thumbSrc" class="uni-list-item__icon-img" />
+					</button>
+				</view>
+				
+				<view v-if="phoneThumbSrc" class="uni-list-item__icon"  @tap="getPhoneNumber"> 
+					<button class="phone-button">
+						<image :src="phoneThumbSrc" class="uni-list-item__icon-img" />
+					</button>
+				</view>
+				
 				<view v-else-if="showExtraIcon" class="uni-list-item__icon">
 					<uni-icons :color="extraIcon.color" :size="extraIcon.size" :type="extraIcon.type" class="uni-icon-wrapper" />
 				</view>
 				<view class="uni-list-item__content">
-					<slot />
-					<text class="uni-list-item__content-title">{{ title }}</text>
+					<slot></slot>
+					<template v-if="isShowButtonTitle">
+						<button open-type="contact" class="contact-button contact-button-title">
+							<text class="uni-list-item__content-title">{{ title }}</text>
+						</button>
+					</template>
+					<template v-if="isShowPhoneButtonTitle">
+						<button   class="contact-button contact-button-title" @tap="getPhoneNumber">
+							<text class="uni-list-item__content-title">{{ title }}</text>
+						</button>
+					</template>
+					<template v-if="!isShowButtonTitle && !isShowPhoneButtonTitle">
+						<text v-if="title" class="uni-list-item__content-title">{{ title }}</text>
+					</template>
 					<text v-if="note" class="uni-list-item__content-note">{{ note }}</text>
 				</view>
 				<view class="uni-list-item__extra">
@@ -20,7 +44,19 @@
 					<uni-badge v-if="showBadge" :type="badgeType" :text="badgeText" />
 					<switch v-if="showSwitch" :disabled="disabled" :checked="switchChecked" @change="onSwitchChange" />
 					<slot name="right"></slot>
-					<uni-icons v-if="showArrow" :size="20" class="uni-icon-wrapper" color="#bbb" type="arrowright" />
+					<template v-if="isShowButtonTitle">
+						<button open-type="contact" class="contact-button">
+							<uni-icons v-if="showArrow" :size="20" class="uni-icon-wrapper" color="#bbb" type="arrowright" />
+						</button>
+					</template>
+					<template v-else>
+						<template v-if="isShowPhoneButtonTitle">
+							<uni-icons v-if="showArrow" :size="20" class="uni-icon-wrapper" color="#bbb" type="arrowright" @tap="getPhoneNumber" />
+						</template>
+						<template v-else>
+							<uni-icons v-if="showArrow" :size="20" class="uni-icon-wrapper" color="#bbb" type="arrowright" />
+						</template>
+					</template>
 				</view>
 			</view>
 		</view>
@@ -89,6 +125,11 @@
 				type: [Boolean, String],
 				default: false
 			},
+			isShowButtonTitle: {
+				// 是否显示Switch
+				type: [Boolean, String],
+				default: false
+			},
 			switchChecked: {
 				// Switch是否被选中
 				type: [Boolean, String],
@@ -113,6 +154,18 @@
 				// 缩略图
 				type: String,
 				default: ''
+			},
+			thumbSrc: {
+				type: String,
+				default: ''
+			},
+			phoneThumbSrc: {
+				type: String,
+				default: ''
+			},
+			isShowPhoneButtonTitle: {
+				type: Boolean,
+				default: false
 			},
 			showExtraIcon: {
 				// 是否显示扩展图标
@@ -148,6 +201,9 @@
 			},
 			onSwitchChange(e) {
 				this.$emit('switchChange', e.detail)
+			},
+			getPhoneNumber() {
+				this.$emit('showPhoneNumberModal');
 			}
 		}
 	}
@@ -176,7 +232,7 @@
 		display: flex;
 		/* #endif */
 		flex-direction: row;
-		padding: 24rpx 30rpx;
+		/*padding: 24rpx 30rpx;*/
 		padding-left: 0;
 		flex: 1;
 		position: relative;
@@ -267,4 +323,22 @@
 		color: #999;
 		font-size: 24rpx;
 	}
+	
+	.contact-button-title {
+		background: transparent;
+		width: 510rpx;
+	}
+	
+	.contact-button,.phone-button  {
+		display: flex;
+		margin-left:0px;
+		flex-direction: column;
+		align-items: flex-start;
+		text-align: left;
+		line-height: 1;
+		background-color: transparent;
+		padding-left:0px;
+		padding-right: 0px;
+	}
+
 </style>

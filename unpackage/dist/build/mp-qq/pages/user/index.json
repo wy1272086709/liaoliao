@@ -1,0 +1,15 @@
+{
+  "navigationBarTitleText": "个人中心",
+  "navigationBarBackgroundColor": "#2369E6",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#2369E6",
+  "disableScroll": true,
+  "usingComponents": {
+    "uni-list": "/components/uni-list/uni-list",
+    "uni-list-item": "/components/uni-list-item/uni-list-item",
+    "vip-info": "/common/vipinfo/vipinfo",
+    "uni-popup-dialog": "/components/uni-popup/uni-popup-dialog",
+    "uni-popup-message": "/components/uni-popup/uni-popup-message",
+    "uni-popup-share": "/components/uni-popup/uni-popup-share"
+  }
+}

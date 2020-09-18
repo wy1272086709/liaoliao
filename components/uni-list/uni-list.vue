@@ -32,6 +32,10 @@
 			scrollY: {
 				type: [Boolean, String],
 				default: false
+			},
+			uniListheight: {
+				type: [ Number, String ],
+				default: ''
 			}
 		},
 		provide() {

@@ -1,5 +1,6 @@
 {
   "navigationBarTitleText": "投诉建议",
+  "navigationBarTextStyle": "white",
   "navigationBarBackgroundColor": "#2369E6",
   "backgroundColor": "#2369E6",
   "usingComponents": {}

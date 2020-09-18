@@ -1,137 +1,272 @@
 {
 	"pages": [
-			{
-				"path": "pages/index/index",
-				"style": {
-					"navigationBarTitleText": "恋爱话术",
-					"navigationBarBackgroundColor": "#2369E6",
-					"disableScroll": true,
-					"backgroundColor": "#2369E6"
-				}
-			},
-			{
-			    "path": "pages/cases/index",
-			    "style": {
-			        "navigationBarTitleText": "恋爱技巧",
-					"navigationBarBackgroundColor": "#2369E6",
-					//"enablePullDownRefresh": true,
-					"disableScroll": true,
-					"backgroundColor": "#2369E6"
-			    }
-			},
-	        {
-	            "path": "pages/user/index",
-	            "style": {
-	                "navigationBarTitleText": "个人中心",
-					"navigationBarBackgroundColor": "#2369E6",
-					"backgroundColor": "#2369E6",
-					"disableScroll": true
-	            }
-	        },
-			{
-			    "path": "pages/user/complaint",
-			    "style": {
-			        "navigationBarTitleText": "投诉建议",
-			        "navigationBarBackgroundColor": "#2369E6",
-					"backgroundColor": "#2369E6"
-			    }
-			},
-			{
-				"path" : "pages/user/upgrade_user_vip",
-				"style" : {
-					"navigationBarTitleText": "升级VIP",
-					"navigationBarBackgroundColor": "#2369E6",
-					"backgroundColor": "#2369E6"
-				}
-			},
-			{
-				"path" : "pages/index/huashu",
-				"style" : {
-					"navigationBarTitleText": "",
-					"navigationBarBackgroundColor": "#2369E6",
-					"enablePullDownRefresh":true,
-					"onReachBottomDistance": 10,
-					"backgroundColor": "#2369E6"
-				}
-			},
-			{
-				"path" : "pages/index/meme",
-				"style" : {
-					"navigationBarTitleText": "表情包",
-					"navigationBarBackgroundColor": "#2369E6",
-					"backgroundColor": "#2369E6"
-				}
-			},
-			{
-				"path" : "pages/cases/detail",
-				"style" : {
-					"navigationBarTitleText": "恋爱技巧文章",
-					"navigationBarBackgroundColor": "#2369E6",
-					"backgroundColor": "#FFFFFF"
+		//#ifdef MP-WEIXIN || MP-QQ
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "恋爱话术",
+				"navigationBarBackgroundColor": "#2369E6",
+				"backgroundColor": "#2369E6",
+				"navigationBarTextStyle": "white",
+				"backgroundTextStyle": "dark"
+			}
+		},
+		{
+			"path": "pages/sticky/index",
+			"style": {
+				"navigationBarTitleText": "导航吸附",
+				"navigationBarBackgroundColor": "#2369E6",
+				"backgroundColor": "#2369E6",
+				"navigationBarTextStyle": "white",
+				"backgroundTextStyle": "dark"
+			}
+		},
+		//#endif
+		//#ifdef APP-PLUS || H5
+		{
+			"path": "pages/index/init",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom",
+				"navigationBarBackgroundColor": "#2369E6",
+				"backgroundColor": "#FFFFFF",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "恋爱话术",
+				"navigationBarBackgroundColor": "#2369E6",
+				"backgroundColor": "#2369E6",
+				"navigationBarTextStyle": "white",
+				"backgroundTextStyle": "dark"
+			}
+		},
+		{
+			"path": "pages/index/guide_page",
+			"style": {
+				"navigationBarTitleText": "引导页",
+				"navigationBarBackgroundColor": "#2369E6",
+				"backgroundColor": "#2369E6",
+				"navigationBarTextStyle": "white",
+				"backgroundTextStyle": "dark"
+			}
+		},
+		{
+			"path": "pages/index/app_index",
+			"style": {
+				"navigationBarTitleText": "",
+				"app-plus": {
+					"titleNView": {
+						"titleIcon": "",
+						"searchInput":{
+							"align":"left",
+							"backgroundColor":"#FFFFFF",
+							"borderRadius":"20px",
+							"placeholder":"大家都在搜",
+							"placeholderColor":""
+						}
+					}
 				}
 			}
-        ,{
-            "path" : "pages/user/about_us",
-            "style" : {
+		},
+		{
+			"path": "pages/user/login",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": "登录",
+				"navigationBarBackgroundColor": "#2369E6",
+				"backgroundColor": "#FFFFFF",
+				"disableScroll": true,
+				"navigationBarTextStyle": "white"
+			}
+		}, 
+		{
+			"path": "pages/user/profile",
+			"style": {
+				"navigationBarTitleText": "修改资料",
+				"navigationBarBackgroundColor": "#2369E6",
+				"backgroundColor": "#FFFFFF",
+				"navigationBarTextStyle": "white"
+			}
+		}, 
+		{
+			"path": "pages/user/edit_nickname",
+			"style": {
+				"navigationBarTitleText": "修改昵称",
+				"navigationBarBackgroundColor": "#2369E6",
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"text": "保存",
+							"background": "#07C160",
+							"color": "white",
+							"fontSize": "16px"
+						}]
+					}
+				}
+			}
+		}, 
+		{
+			"path": "pages/index/keyword_page",
+			"style": {
+				"navigationBarTitleText": "搜索页"
+			}
+		}, 
+		{
+			"path": "pages/user/bind_phone",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#2369E6",
+				"navigationBarTextStyle": "white"
+			}
+		}, 
+		{
+			"path": "pages/user/software_license",
+			"style": {
+				"navigationBarTitleText": "隐私政策"
+			}
+		}, 
+		{
+			"path": "pages/user/user_agreement",
+			"style": {
+				"navigationBarTitleText": "用户协议"
+			}
+		},
+		//#endif
+		{
+			"path": "pages/cases/index",
+			"style": {
+				"navigationBarTitleText": "恋爱技巧",
+				"navigationBarBackgroundColor": "#2369E6",
+				"backgroundColor": "#FFFFFF",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/user/index",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				"navigationBarBackgroundColor": "#2369E6",
+				"navigationBarTextStyle": "white",
+				"backgroundColor": "#2369E6",
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/user/complaint",
+			"style": {
+				"navigationBarTitleText": "投诉建议",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#2369E6",
+				"backgroundColor": "#2369E6"
+			}
+		},
+		{
+			"path": "pages/user/upgrade_user_vip",
+			"style": {
+				"navigationBarTitleText": "升级VIP",
+				"navigationBarBackgroundColor": "#FEFEFE",
+				"navigationStyle": "custom",
+				"backgroundColor": "#2369E6"
+			}
+		},
+		{
+			"path": "pages/index/huashu",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#2468E7",
+				"navigationBarTextStyle": "white",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 10,
+				"backgroundColor": "#2468E7"
+			}
+		},
+		{
+			"path": "pages/cases/detail",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#2369E6",
+				"backgroundColor": "#FFFFFF",
+				"navigationBarTextStyle": "white"
+			}
+		}, 
+		{
+			"path": "pages/user/about_us",
+			"style": {
 				"navigationBarTitleText": "关于我们",
 				"navigationBarBackgroundColor": "#2369E6",
-				"backgroundColor": "#FFFFFF"
+				"backgroundColor": "#FFFFFF",
+				"navigationBarTextStyle": "white"
 			}
+		}
+	    ,{
+            "path" : "pages/index/sticky",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/index/testing",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/index/testing_result",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/index/testing_questions",
+            "style" : {}
         }
     ],
 	"tabBar": {
-		"custom": true,
-	    "color": "#7A7E83",
-	    "selectedColor": "#3cc51f",
-	    "borderStyle": "black",
-	    "backgroundColor": "#ffffff",
-	    "list": [
-			{
+		"color": "#7A7E83",
+		"selectedColor": "#2985F1",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"height": "50px",
+		"list": [{
 				"pagePath": "pages/index/index",
 				"iconPath": "/static/img/tabbar/love_huashu.png",
-				"text": "恋爱话术",
-				"selectedPath": "/static/img/tabbar/love_huashu_active.png",
-				"defaultClass": "tabbar-icon-class"
+				"selectedIconPath": "/static/img/tabbar/love_huashu_active.png",
+				"defaultClass": "tabbar-icon-class",
+				"text": "恋爱话术"
 			},
 			{
 				"pagePath": "pages/cases/index",
 				"iconPath": "/static/img/tabbar/love_skills.png",
-				"text": "恋爱技巧",
-				"selectedPath": "/static/img/tabbar/love_skills_active.png",
-				"defaultClass": "tabbar-icon-class"
+				"selectedIconPath": "/static/img/tabbar/love_skills_active.png",
+				"defaultClass": "tabbar-icon-class",
+				"text": "恋爱技巧"
 			},
 			{
 				"pagePath": "pages/user/index",
 				"iconPath": "/static/img/tabbar/user.png",
-				"text": "个人中心",
-				"selectedPath": "/static/img/tabbar/user_active.png",
-				"defaultClass": "tabbar-icon-class"
+				"selectedIconPath": "/static/img/tabbar/user_active.png",
+				"defaultClass": "tabbar-icon-class",
+				"text": "个人中心"
 			}
 		]
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "",
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#F8F8F8"
 	},
-	 "condition": { //模式配置，仅开发期间生效
-		"current": 0, //当前激活的模式（list 的索引项）
-		"list": [
-			{
-				"name": "恋爱话术", //模式名称
-				"path": "pages/index/index", //启动页面，必选
-				"query": "" //启动参数，在页面的onLoad函数里面得到。
+	"condition": {
+		"current": 0,
+		"list": [{
+				"name": "swiper",
+				"path": "pages/index/init"
 			},
 			{
-				"name": "恋爱技巧", //模式名称
-				"path": "pages/cases/index", //启动页面，必选
-				"query": "" //启动参数，在页面的onLoad函数里面得到。uid=100&t=1535987051
+				"name": "test",
+				"path": "pages/cases/index"
 			},
 			{
-				"name": "个人中心", //模式名称
-				"path": "pages/user/index", //启动页面，必选
-				"query": "" //启动参数，在页面的onLoad函数里面得到。
+				"name": "test",
+				"path": "pages/user/index"
 			}
 		]
 	}

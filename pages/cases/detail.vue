@@ -30,16 +30,29 @@
 				title: '文章标题',
 				height: 0,
 				readTime: '',
+				cid: '',
 				author: '',
 			};
+		},
+		mounted() {
+			
 		},
 		onLoad(option) {
 			uni.showShareMenu({
 			    withShareTicket: true
 			});
+			//#ifdef MP-QQ
+			if(option.is_share == 1) {
+				uni.switchTab({
+					url:'/pages/index/index'
+				});
+				return;
+			}
+			//#endif
 			this.setIosBackground();
-			//console.log('onload options', option);
+			console.log('onload options', option);
 			let cid = option.cid;
+			this.cid = cid;
 			let aid = option.id;
 			let articleTitle = option.title;
 			this.author = articleTitle;
@@ -51,6 +64,13 @@
 		onShareAppMessage() {
 			console.log('share....');
 			let path = this.getPagePath();
+			
+			//#ifdef MP-QQ
+			if(this.cid == 78) {
+				path+="&is_share=1";
+			}
+			//#endif
+			
 			let title= this.getTitle();
 			return {
 				title: title,

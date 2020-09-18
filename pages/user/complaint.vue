@@ -1,6 +1,6 @@
 <template>
-	<view id="root-view">
-		<scroll-view class="content" :style="'height:'+winHeight+';'">  
+	<view id="root-view" :style="'height:'+winHeight+';'">
+		<scroll-view class="content">  
 			<view class="info-content">
 				<image src="../../static/img/info.png" style="max-width: 20px;max-height:20px;"></image>
 				<text>您的投诉建议我们会认真对待，感谢支持</text>
@@ -123,9 +123,11 @@
 			}
 		},
 		onLoad() {
+			//#ifdef MP-WEIXIN || MP-QQ
 			uni.showShareMenu({
 			    withShareTicket: true
 			});
+			//#endif
 			let winHeight = uni.getSystemInfoSync().windowHeight;
 			this.winHeight = winHeight+'px';
 		},
@@ -153,7 +155,8 @@ page {
 #root-view {
 	display: flex;
 	justify-content: center;
-	background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
+	/*background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);*/
+	background: #2369E6;
 }
 
 .content {

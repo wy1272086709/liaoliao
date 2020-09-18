@@ -11,7 +11,7 @@
 		</view>
 		<!-- 这里 -->
 		<view id="user-upgrade-vip-view" v-if="level<=1" @tap="upgrade_vip">
-			<img src="https://kuxou.com/images/user_upgrade_vip.png" id="user_upgrade_vip" />
+			<img src="https://imgmyqx.ofbei.com/images/user_upgrade_vip.png" id="user_upgrade_vip" />
 		</view>
 	</view>
 </template>

@@ -1,5 +1,5 @@
 <template>
-	<view class="tabbar-view" :style="'padding-bottom:'+bottom+'px;'+'position:'+position+';'">
+	<view class="tabbar-view" :style="'padding-bottom:'+bottom+'rpx;'+'position:'+position+';'">
 		<view class="tabbar-navigator"  @tap="switchTab(index)" v-for="(item,index) in tabList" :key="index">
 			<view class="tabbar-icon">
 				<image :src="item.iconPath" :class="item.defaultClass" v-if="index!=current"></image>
@@ -21,21 +21,21 @@
 					{
 						pagePath: '/pages/index/index',
 						iconPath: '/static/img/tabbar/love_huashu.png',
-						text: '恋爱话术',
+						text: '',
 						hoverPath: '/static/img/tabbar/love_huashu_active.png',
 						defaultClass: 'tabbar-icon-class',
 					},
 					{
 						pagePath: '/pages/cases/index',
 						iconPath: '/static/img/tabbar/love_skills.png',
-						text: '恋爱技巧',
+						text: '',
 						hoverPath: '/static/img/tabbar/love_skills_active.png',
 						defaultClass: 'tabbar-icon-class',
 					},
 					{
 						pagePath: '/pages/user/index',
 						iconPath: '/static/img/tabbar/user.png',
-						text: '个人中心',
+						text: '',
 						hoverPath: '/static/img/tabbar/user_active.png',
 						defaultClass: 'tabbar-icon-class',
 					}
@@ -43,14 +43,11 @@
 			}
 		},
 		computed:{
-			curPosition() {
-				console.log('position', this.position);
-				return this.position;
-			}
+			
 		},
 		mounted() {
 			if(getApp().globalData.isIphoneX) {
-				this.bottom = 34;
+				this.bottom = 30;
 			}
 		},
 		methods:{
@@ -59,18 +56,6 @@
 				uni.switchTab({
 					url: pagePath
 				});
-				/*
-				console.log('switchTab', index);
-				console.log(pagePath);
-				let pages = getCurrentPages();
-				console.log('pages', pages);
-				console.log('pages', pages[0].route);
-				if (("/"+pages[0].route)!=pagePath) {
-					
-				} else {
-					// 可以用于更改颜色,以及字体图标
-					
-				}*/
 			}
 		},
 		props: {
@@ -103,13 +88,15 @@
 	.tabbar-view {
 		display: flex;
 		height: 60px;
-		background:linear-gradient(90deg,rgba(34,121,239,1) 0%,rgba(61,177,242,1) 100%);
+		/*background:linear-gradient(90deg,rgba(34,121,239,1) 0%,rgba(61,177,242,1) 100%);*/
+		background: rgba(255,255,255,1);
+		border-top:1px solid #DCDCDC;
 		bottom: 0rpx;
 		justify-content: space-around;
 	}
 	.tabbar-icon-class {
-		width: 24px;
-		height: 24px;
+		width: 38px;
+		height: 38px;
 	}
 	
 	
