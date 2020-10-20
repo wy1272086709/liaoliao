@@ -2,10 +2,8 @@
   "navigationBarTitleText": "恋爱话术",
   "navigationBarBackgroundColor": "#2369E6",
   "backgroundColor": "#2369E6",
-  "navigationBarTextStyle": "white",
-  "backgroundTextStyle": "dark",
   "usingComponents": {
     "uni-icons": "/components/uni-icons/uni-icons",
-    "ls-swiper": "/components/ls-swiper/index"
+    "tab-bar": "/common/tabbar"
   }
 }

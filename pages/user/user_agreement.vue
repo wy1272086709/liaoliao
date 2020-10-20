@@ -868,5 +868,8 @@
 </script>
 
 <style>
-
+#resp {
+	margin-left: 30rpx;
+	margin-right: 30rpx;
+}
 </style>

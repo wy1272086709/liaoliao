@@ -1,0 +1,8 @@
+
+.padding-style {
+}
+#root-view {
+	background:-webkit-linear-gradient(300deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
+	background:linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);
+}
+

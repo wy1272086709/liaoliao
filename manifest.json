@@ -70,14 +70,7 @@
                     }
                 },
                 "payment" : {
-                    "alipay" : {
-                        "__platform__" : [ "ios", "android" ]
-                    },
-                    "weixin" : {
-                        "__platform__" : [ "android" ],
-                        "appid" : "wxf894e2cd69b80b4f",
-                        "UniversalLinks" : ""
-                    }
+                    "appleiap" : {}
                 },
                 "push" : {}
             }

@@ -14,11 +14,9 @@
 				<text>共搜索出 <text class="search-total-rows">{{totalRows}} </text>条记录</text>
 			</view>
 		</view>
-		<view>
-			<rich-text :nodes="strings"></rich-text>
-		</view>
 		<view id="content-view" :style="'min-height:'+scrollHeight+'px;'">
-			<block v-for="(item,index) in articleList" :key="item.id">
+			<block v-for="(item,index2) in articleList" :key="item.id">
+				<!--
 				<view class="huashu-link-view" v-if="index>0" >
 					<view class="huashu-link" style="margin-bottom:-20rpx">
 						<view class="huashu-link-left">
@@ -32,12 +30,15 @@
 						</view>
 					</view>
 				</view>
+				-->
 				<view class="huashu-article huashu-article-first">
+					<!--
 					<view class="huashu-article-title">
 						<image src="../../static/img/index/love_icon.png" class="love-icon-class"></image>
 						<text :class="searchText">{{item.title}}</text>
 					</view>
-					<view class="huashu-line" v-for="(line,key,index) in item.content" :key="line">
+					-->
+					<view class="huashu-line" v-for="(line,key,index) in item.content" :key="index+'_'+index2" @tap.stop="lineFunc(line, index2, index)">
 						<view class="huashu-sex">
 							<template v-if="line.split('@@')[0] == 1">
 								<image class="huashu-sex-image" src="../../static/img/index/man.png"></image>
@@ -54,11 +55,12 @@
 							<rich-text class="huashu-content-text" :nodes="parseHtmlNodes(line.split('@@')[1])"></rich-text>
 							-->
 						</view>
-						<view class="huashu-copy-btn" @tap="copyHuashu(line)">
+						<view class="huashu-copy-btn" @tap="copyHuashu(line, index2, index)">
 							<image class="huashu-copy-image" src="../../static/img/index/copy.png"></image>
 						</view>
 					</view>
 				</view>
+				<!---
 				<view class="huashu-link-view" v-if="index!=(articleList.length-1)">
 					<view class="huashu-link" style="margin-top:-20rpx;">
 						<view class="huashu-link-left">
@@ -72,77 +74,61 @@
 						</view>
 					</view>
 				</view>
+				-->
 			</block>
 			<view style="height:23px;" v-if="level>1">
 				
 			</view>
-			<template v-if="level<=1 && platForm ==2">
-				<view  class="user-upgrade-vip-view">
-					<!-- #ifdef MP-WEIXIN -->
-					<button v-if="platForm==2" open-type="contact"  class="contact-btn" id="contact-btn-view">
-						<img src="https://imgmyqx.ofbei.com/images/contact_consumer_ios.png" class="user_upgrade_vip" />
-					</button>
-					<!-- #endif -->
-					
-					<!-- #ifdef MP-QQ -->
-					<button v-if="platForm==2" @tap="copy_customer_qq"  class="contact-btn" id="contact-btn-view">
-						<img src="https://imgmyqx.ofbei.com/images/contact_consumer_ios.png" class="user_upgrade_vip" />
-					</button>
-					<!-- #endif -->
-					
-					<!-- #ifdef APP-PLUS || H5 -->
-					<button v-if="platForm==2" class="contact-btn" id="contact-btn-view" @tap="upgrade_vip">
-						<img src="https://imgmyqx.ofbei.com/images/contact_consumer_android.png" class="user_upgrade_vip"  />
-					</button>
-					<!-- #endif -->
-				</view>
-			</template>
-			<template v-if="level<=1 && platForm == 1">
-				<view  class="user-upgrade-vip-view" @tap="upgrade_vip">
-					<button v-if="platForm==1" class="contact-btn" id="contact-btn-view">
-						<img src="https://imgmyqx.ofbei.com/images/contact_consumer_android.png" class="user_upgrade_vip"  />
-					</button>
-				</view>
-			</template>
 		</view>
 		<!-- 这里 -->
 	</view>
 	
 	<scroll-view id="root-view" v-if="isShowNoResult" :style="'height:'+contentHeight+'px;'">
-		<view id="search-view-box">
-			<view id="search-view">
-				<div id="search-view-text">
-					<input id="search-text" type="text" placeholder="点击这里输入对方说的话" placeholder-class="search-class" v-model="searchKeyword" @confirm="searchKeywordFunc" />
-				</div>
-				<div id="search-view-icon" @tap="searchKeywordFunc()">
-					<uni-icons type="search" :size="iconSize"></uni-icons>
-				</div>
+		<view id="search-scroll-box">
+			<view id="search-view-box">
+				<view id="search-view">
+					<div id="search-view-text">
+						<input id="search-text" type="text" placeholder="点击这里输入对方说的话" placeholder-class="search-class" v-model="searchKeyword" @confirm="searchKeywordFunc" />
+					</div>
+					<div id="search-view-icon" @tap="searchKeywordFunc()">
+						<uni-icons type="search" :size="iconSize"></uni-icons>
+					</div>
+				</view>
+				<view id="search-result" v-if="totalRows>0">
+					<text>共搜索出 <text class="search-total-rows">{{totalRows}} </text>条记录</text>
+				</view>
 			</view>
-			<view id="search-result" v-if="totalRows>0">
-				<text>共搜索出 <text class="search-total-rows">{{totalRows}} </text>条记录</text>
-			</view>
-		</view>
-		<view id="search-result-view">
-			<view id="search-result-header">
-				<text class="search-result-suggest">{{ suggestMsgText }},您可以尝试以下方案</text>
-			</view>
-			<view class="search-result-title">
-				<text>精简关键词</text>
-			</view>
-			<view>
-				<text class="search-result-suggest">建议使用简单的关键词,比如说女生说【你吃晚饭了吗?】,搜索时输入【晚饭】即可。 \n  也可以尝试相近的关键词,比如【你想干嘛?】可以搜索【干嘛】、【干什么】等相近的搜索词。</text>
-			</view>
-			<view class="search-result-title">
-				<text>去恋爱互助讨论区提问</text>
-			</view>
-			<view>
-				<text class="search-result-suggest">去把您的诉求发布到互助讨论区,让大家帮您想办法回复。</text>
-			</view>
-			<view id="ask-btn-view" @tap="suggest">
-				<button class="ask-btn">
-					<text class="iconfont icon-tiwen icon-right"></text>
-					<text class="tiwen-text">去提问</text>
-				</button>
+			<view id="search-result-view">
+				<view id="search-result-header">
+					<view style="margin-bottom: 38rpx;">
+						<text class="search-result-suggest">{{ suggestMsgText }}</text>
+					</view>
+					<view id="no-result-box">
+						<text class="search-result-suggest">
+							共搜索到 <text class="search-result-num">0</text> 条结果,您可以尝试以下方案
+						</text>
+					</view>
+				</view>
+				<view class="search-result-title">
+					<text>精简关键词</text>
+				</view>
+				<view>
+					<text class="search-result-suggest">建议使用简单的关键词,比如说女生说【你吃晚饭了吗?】,搜索时输入【晚饭】即可。 \n  也可以尝试相近的关键词,比如【你想干嘛?】可以搜索【干嘛】、【干什么】等相近的搜索词。</text>
+				</view>
+				<view class="search-result-title">
+					<text>去恋爱互助讨论区提问</text>
+				</view>
+				<view>
+					<text class="search-result-suggest">去把您的诉求发布到互助讨论区,让大家帮您想办法回复。</text>
+				</view>
+				<view id="ask-btn-view" @tap="suggest">
+					<button class="ask-btn">
+						<!--
+						<text class="iconfont icon-tiwen icon-right"></text>
+						-->
+						<text class="tiwen-text">去提问</text>
+					</button>
+				</view>
 			</view>
 		</view>
 	</scroll-view>
@@ -169,7 +155,6 @@
 				platForm: 0,
 				suggestMsgText: "",
 				searchKeyword: "",
-				strings: '',
 				navigation: {
 					height: 88,
 					top: 30,
@@ -225,7 +210,7 @@
 				}
 			},
 			uid: function() {
-				let uid = util.cache('wx_userid', null);
+				let uid = util.cache('app_userid', null);
 				if (uid) {
 					return uid;
 				}
@@ -336,6 +321,9 @@
 			},
 			//#endif
 			parseHtmlNodes(content) {
+				const str = '<div style="float:left;">'+'*'.repeat(8)+'</div>'+'<div style="float:left;"> 解锁更多 </div>'+'<div style="float:left;">'+'*'.repeat(8)+'</div>';
+				const regexp = /hidden/gi;
+				content = content.replace(regexp, str, content);
 				if(!isSearch) {
 					return content;
 				}
@@ -358,7 +346,7 @@
 				
 				// 后面改成脑洞广场地址...
 				//#ifdef APP-PLUS || H5
-				url = '/pages/user/complaint';
+				url = '/pages/mind_square/publish';
 				//#endif
 				
 				uni.navigateTo({
@@ -370,8 +358,8 @@
 					console.log('setIosBackgroundColor:');
 					if(typeof wx.setBackgroundColor == 'function') {
 						wx.setBackgroundColor({
-							backgroundColor: "#2369E6", // 顶部窗口的背景色为蓝色
-							backgroundColorBottom: "#2369E6", // 底部窗口的背景色为绿
+							backgroundColor: "#FFFFFF", // 顶部窗口的背景色为蓝色
+							backgroundColorBottom: "#FFFFFF", // 底部窗口的背景色为绿
 						});
 					}
 				};
@@ -380,7 +368,9 @@
 				let keyword = this.searchKeyword;
 				//console.log('navId', navId);
 				let classid = navId;
-				let params = {};
+				let params = {
+					version:'v2'
+				};
 				if (keyword) {
 					params = { keyword: keyword };
 				} else if (classid) {
@@ -494,15 +484,56 @@
 				if(this.level == 0) {
 					//console.log('go here!');
 					uni.switchTab({
-						url: '/pages/user/index'
+						url: '/pages/user/user_index'
 					});
 					return;
 				}
-				uni.navigateTo({
-					url:'/pages/user/upgrade_user_vip'
-				});
+				
+				
+				if(this.platForm == 1) {
+					uni.navigateTo({
+						url:'/pages/user/upgrade_user_vip_new'
+					});
+					return;
+				}
+				
+				//#ifdef APP-PLUS || H5
+				if(this.platForm == 2) {
+					uni.showModal({
+						title: '提示',
+						content: '请联系客服!',
+						showCancel: false,
+						cancelText: '',
+						confirmText: '确定',
+					});
+				}
+				//#endif
 			},
-			copyHuashu(line) {
+			copyHuashu(line, index2, index) {
+				// 第三段,同时,不是第一句,则弹框，提示用户去升级
+				if(index2>=3 && index>=1 && this.level<=1) {
+					let title = '';
+					let url   = '';
+					if(this.uid>0) {
+						title = '请充值/续费VIP';
+						url   = '/pages/user/upgrade_user_vip_new';
+					} else {
+						title = '请先登录';
+						url   = '/pages/user/login_v2';
+					}
+					
+					uni.showToast({
+						icon:'none',
+						title: title,
+						duration:500,
+						complete() {
+							uni.navigateTo({
+								url:url
+							});
+						}
+					})
+					return;
+				}
 				let content = line.split('@@')[1];
 				//console.log('content', content);
 				uni.setClipboardData({
@@ -517,6 +548,9 @@
 						});
 					}
 				});
+			},
+			lineFunc(line, index2, index) {
+				this.copyHuashu(line, index2, index);
 			}
 		},
 		onReachBottom() {
@@ -537,7 +571,9 @@
 			});
 			setTimeout(function() {
 				nowpage++;
-				let params = {};
+				let params = {
+					version: 'v2'
+				};
 				params.nowpage = nowpage;
 				params.cid = navId;
 				params.uid = _self.uid;
@@ -583,7 +619,13 @@
 
 #root-view {
 	flex-direction: column;
-	background-color: #2468E7;
+	background-color: #FFFFFF;
+	
+	
+	font-size: 28rpx;
+	font-family: PingFang SC;
+	font-weight: 400;
+	color: #616161;
 }
 
 view, scroll-view {
@@ -592,20 +634,25 @@ view, scroll-view {
 }
 
 #search-view{
-	width:686rpx;
-	height:40px;
+	width:690rpx;
+	height:60rpx;
+	background: #F3F3F3;
+	border-radius: 30rpx;
 	align-items: center;
-	background-color: rgba(255,255,255, 1);
-	margin-left: 32rpx;
-	margin-right: 32rpx;
-	margin-bottom: 10px;
-	border-radius:4px 4px 4px 4px;
+	margin-left: 30rpx;
+	margin-right: 30rpx;
+	margin-top:40rpx;
+	margin-bottom: 37rpx;
 }
 
 #search-view-box {
 	flex-direction: column;
 	width:750rpx;
-	padding-top:16px;
+	/*padding-top:16px;*/
+}
+
+#search-scroll-box {
+	flex-direction: column;
 }
 
 .search-class {
@@ -670,10 +717,11 @@ view, scroll-view {
 	display: flex;
 	flex-direction: column;
 	width: 686rpx;
-	background:rgba(255,255,255,1);
+	background-color: #F2F2F2;
 	margin-left:32rpx;
 	margin-right:32rpx;
 	border-radius:19rpx;
+	margin-bottom: 60rpx;
 }
 .jiacu {
 	font-weight: bold;
@@ -745,6 +793,8 @@ view, scroll-view {
 }
 .huashu-content {
 	width:486rpx;
+	height: 40rpx;
+	line-height: 40rpx;
 }
 
 .huashu-content-text {
@@ -775,17 +825,20 @@ view, scroll-view {
 	margin-left: 32rpx;
 	margin-right: 32rpx;
 	display:flex;
-	height: 300px;
+	/*height: 300px;*/
 	flex-direction:column;
 	justify-content:center;
 }
 
 #search-result-header {
+	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	height:60px;
 	align-items: center;
-	margin-bottom: 10px;
-	border-bottom: 1px solid rgba(179,179,179,1);
+	/*margin-bottom: 10px;*/
+	padding-bottom: 21rpx;
+	border-bottom: 2px solid #F1F0F0;
 }
 
 .search-result-title {
@@ -794,19 +847,20 @@ view, scroll-view {
 }
 
 .search-result-title>text {
-	font-size: 16px;
-	font-family:PingFangSC-Regular,PingFang SC;
-	color: rgba(255,255,255,1);
-	font-weight: 600;
+	font-size: 32rpx;
+	font-family: PingFang SC;
+	font-weight: 800;
+	color: #333333;
 }
 
 .ask-btn {
 	display: flex;
-	width: 100px;
-	height: 30px;
-	margin-left:0px;
-	background-color: #EE597A;
-	border-radius:20px;
+	width: 120rpx;
+	height: 60rpx;
+	background: #C3AEFF;
+	border-radius: 30rpx;
+	padding-left: 0px;
+	padding-right: 0px;
 	justify-content: center;
 	align-items: center;
 }
@@ -822,21 +876,31 @@ view, scroll-view {
 
 .tiwen-text {
 	color: rgba(255,255,255,1);
+	
 	font-size: 24rpx;
+	font-family: PingFang SC;
+	font-weight: 500;
+	color: #FFFFFF;
 }
 
 .search-total-rows {
-	color:rgba(255,255,255,1);
+	color: rgb(27, 26, 26);
 	font-weight: bold;
 	margin-left: 5px;
 	margin-right: 5px;
 }
 
 .search-result-suggest {
-	font-size: 13px;
-	font-family:PingFangSC-Regular,PingFang SC;
+	font-size: 28rpx;
+	font-family: PingFang SC;
 	font-weight: 400;
-	color: rgba(255,255,255,1);
+	color: #616161;
+}
+
+.search-result-num {
+	color: #A88FEF;
+	margin-left:10rpx;
+	margin-left:10rpx;
 }
 
 #contact-btn-view,.contact-btn  {

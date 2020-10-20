@@ -1,1 +1,0 @@
-<view class="uni-list data-v-d3655d6c"><slot></slot></view>

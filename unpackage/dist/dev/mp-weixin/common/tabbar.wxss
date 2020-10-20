@@ -4,16 +4,16 @@
 	display: -webkit-flex;
 	display: flex;
 	height: 60px;
-	/*background:linear-gradient(90deg,rgba(34,121,239,1) 0%,rgba(61,177,242,1) 100%);*/
-	background: rgba(255,255,255,1);
-	border-top:1px solid #DCDCDC;
+	background:-webkit-gradient(linear,left top, right top,from(rgba(34,121,239,1)),to(rgba(61,177,242,1)));
+	background:-webkit-linear-gradient(left,rgba(34,121,239,1) 0%,rgba(61,177,242,1) 100%);
+	background:linear-gradient(90deg,rgba(34,121,239,1) 0%,rgba(61,177,242,1) 100%);
 	bottom: 0rpx;
 	-webkit-justify-content: space-around;
 	        justify-content: space-around;
 }
 .tabbar-icon-class {
-	width: 38px;
-	height: 38px;
+	width: 24px;
+	height: 24px;
 }
 .tabbar-navigator {
 	display: -webkit-box;
@@ -32,7 +32,6 @@
 	        align-items: center;
 }
 .tabbar-icon {
-	height:24px;
 }
 .tabbar-text {
 	height: 20px;

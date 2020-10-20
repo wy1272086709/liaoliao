@@ -1,82 +1,51 @@
 
-.header-vip-view.data-v-f21e681e {
+.header-vip-view.data-v-2e4fc77e {
 	/*width:606rpx;*/
-	background-size: contain;
-	background-repeat: no-repeat;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
-	/*background-position: center center;*/
-	width:654rpx;
-	height: 175.1rpx;
-	margin-left:16rpx;
-	margin-right:16rpx;
-	/*margin-bottom: 79rpx;*/
-	margin-top:20rpx;
-	padding-bottom:69rpx;
-	-webkit-box-align: end;
-	-webkit-align-items: flex-end;
-	        align-items: flex-end;
-	-webkit-box-pack: start;
-	-webkit-justify-content: flex-start;
-	        justify-content: flex-start;
+	height:80px;
+	background:-webkit-gradient(linear,left top, right top,from(rgba(234,186,118,1)),to(rgba(255,224,160,1)));
+	background:-webkit-linear-gradient(left,rgba(234,186,118,1) 0%,rgba(255,224,160,1) 100%);
+	background:linear-gradient(90deg,rgba(234,186,118,1) 0%,rgba(255,224,160,1) 100%);
+	border-radius:10px;
+	margin-left:40rpx;
+	margin-right: 40rpx;
+	margin-top:32px;
+	padding-left: 38rpx;
+	padding-right: 38rpx;
+	margin-bottom: 20px;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
 }
-.login-btn-view.data-v-f21e681e {
+.login-btn-view.data-v-2e4fc77e {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
 	height: 100%;
-	width:100%;
 	background-color: transparent;
-	-webkit-box-align: end;
-	-webkit-align-items: flex-end;
-	        align-items: flex-end;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
 }
-.vip-info-text.data-v-f21e681e {
+.vip-info-text.data-v-2e4fc77e {
 	font-size:16px;
 	font-family:PingFangSC-Semibold,PingFang SC;
 	font-weight:600;
 	color:rgba(119,79,37,1);
 }
-.discount-view.data-v-f21e681e {
-	/*margin-left: 104rpx;*/
-	/*margin-bottom:23rpx;*/
-	margin-bottom:16rpx;
-	-webkit-box-align: end;
-	-webkit-align-items: flex-end;
-	        align-items: flex-end;
-	margin-left:60rpx;
-	margin-right:10rpx;
-}
-.discount-view-ios.data-v-f21e681e {
-	margin-bottom:16rpx;
-	margin-left:90rpx;
-	margin-right:10rpx;
-}
-.discount-nologin-view.data-v-f21e681e {
-	/*margin-left: 104rpx;*/
-	margin-top:100rpx;
-	margin-left:60rpx;
-	margin-right:10rpx;
-}
-.limit-time-discount-ios.data-v-f21e681e {
-	margin-bottom: 23rpx;
-	margin-left: 90rpx;
-	margin-right: 10rpx;
-}
-.limit-time-discount.data-v-f21e681e {
-	font-size:25rpx;
-	font-family:QingYuan;
+.limit-time-discount.data-v-2e4fc77e {
+	font-size:12px;
+	font-family:PingFangSC-Regular,PingFang SC;
 	font-weight:400;
-	font-style:italic;
-	color:rgba(255,255,255,1);
+	color:rgba(119,79,37,1);
 }
-
-/*.left-vip-image {
+.left-vip-image.data-v-2e4fc77e {
 	max-width:86rpx;
 	max-height: 86rpx;
-}*/
-.vip-right-area.data-v-f21e681e {
+}
+.vip-right-area.data-v-2e4fc77e {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -91,43 +60,33 @@
 	-webkit-align-items: center;
 	        align-items: center;
 }
-
-/*
-.left-vip-image-view {
-	margin-left:38rpx;
-	
+.left-vip-image-view.data-v-2e4fc77e {
+	/*margin-left:38rpx;*/
 	margin-right:32rpx;
 }
-
-.right-vip-info {
-	flex-direction: row;
-}*/
-.right-vip-action.data-v-f21e681e {
-	margin-bottom:16rpx;
-	-webkit-box-align: end;
-	-webkit-align-items: flex-end;
-	        align-items: flex-end;
+.right-vip-info.data-v-2e4fc77e {
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+}
+.right-vip-action.data-v-2e4fc77e {
 	margin-right:8rpx;
 }
-.vip-text-view.data-v-f21e681e {
+.vip-text-view.data-v-2e4fc77e {
 	margin-bottom: 6px;
 	height: 22px;
 }
-.vipinfo_arrow.data-v-f21e681e {
+.vipinfo_arrow.data-v-2e4fc77e {
 	max-width: 32rpx;
 	max-height: 32rpx;
 }
-.right-vip-image-view.data-v-f21e681e {
-	margin-bottom:16rpx;
-	-webkit-box-align: end;
-	-webkit-align-items: flex-end;
-	        align-items: flex-end;
+.right-vip-image-view.data-v-2e4fc77e {
+	/*margin-right:24rpx;*/
+	margin-top:32px;
+	margin-bottom: 32px;
 }
-.right-vip-image-nologin-view.data-v-f21e681e {
-	/*margin-top:100rpx;*/
-	margin-bottom: 15rpx;
-}
-.action-class.data-v-f21e681e {
+.action-class.data-v-2e4fc77e {
 	font-size:12px;
 	font-family:PingFangSC-Regular,PingFang SC;
 	font-weight:400;

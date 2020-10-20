@@ -1,1 +1,0 @@
-<view><view id="about-us-content"><rich-text nodes="{{content}}"></rich-text></view></view>

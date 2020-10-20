@@ -78,6 +78,41 @@ class util {
 			console.log("key不能空")
 		}
 	}
+	
+	static getRect(selector){
+		return new Promise((resolve) => {
+			let view = uni.createSelectorQuery().select(selector);
+			view.fields({
+				size: true,
+				rect: true,
+				scrollOffset:true
+			}, (res) => {
+				resolve(res);
+			}).exec();
+		})
+	}
+	
+	static getVersionValue() {
+		const v = 100;
+		let k = 'app_version_'+v;
+		let value = uni.getStorageSync(k);
+		return value;
+	}
+	
+	static removeVersionValue() {
+		const v = 100;
+		let k = 'app_version_'+v;
+		let value = uni.removeStorageSync(k);
+		return value;
+	}
+	
+	static setVersionValue() {
+		const v = 100;
+		let k = 'app_version_'+v;
+		let value = uni.setStorageSync(k, 1);
+		return value;
+	}
+
 }
 
 export default {
@@ -86,5 +121,9 @@ export default {
 	getUserInfoFromStorage:util.getUserInfoFromStorage,
 	getObjectFromStorage:util.getObjectFromStorage,
 	cache:util.cache,
-	dateDifference:util.dateDifference
+	dateDifference:util.dateDifference,
+	getRect: util.getRect,
+	getVersionValue: util.getVersionValue,
+	setVersionValue: util.setVersionValue,
+	removeVersionValue: util.removeVersionValue
 };

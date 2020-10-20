@@ -18,7 +18,7 @@
 							{{memberDiscountText}}
 						</view>
 					</view>
-					<view class="right-vip-image-view" v-if="programNumber==3">
+					<view class="right-vip-image-view" v-if="programNumber==3 &&platform!=2">
 						<image src="../../static/img/user/arrow.png" class="vipinfo_arrow"></image>
 					</view>
 				</template>
@@ -205,10 +205,21 @@
 						});
 					} 
 				} else {
+					// APP 也是只有安卓端支付用..
 					if(this.level>=1) {
-						uni.navigateTo({
-							url:'/pages/user/upgrade_user_vip'
-						});
+						if (this.platform !=2) {
+							uni.navigateTo({
+								url:'/pages/user/upgrade_user_vip'
+							});
+						} else {
+							uni.showModal({
+								title: '提示',
+								content: '请联系客服!',
+								showCancel: false,
+								cancelText: '',
+								confirmText: '确定',
+							});
+						}
 					} 
 				}
 			}

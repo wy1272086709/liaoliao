@@ -1,9 +1,9 @@
 <template>
 	<view class="upgrade-page">
 		<view class="status-line" :style="{height: lineHeight}"></view>
-		<view id="user_header" :style="'height:'+headerHeight+'rpx;'">
+		<view id="user_header" :style="'height:'+headerHeight+'rpx;'" @tap="back">
 			<view id="header"  :style="'height:'+headerHeight+'rpx;'">
-				<uni-icons type="back" size="32" color="rgba(255,255,255,1)" class="back-icon" @tap="back"></uni-icons>
+				<uni-icons type="back" size="32" color="rgba(255,255,255,1)" class="back-icon" ></uni-icons>
 				<view id="upgrade_vip_title">
 					<text>升级VIP</text>
 				</view>

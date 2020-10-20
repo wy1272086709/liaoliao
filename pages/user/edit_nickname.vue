@@ -156,14 +156,20 @@
 }
 
 #content-box {
-	margin-left:32rpx;
-	margin-right:32rpx;
+	margin-top: 68rpx;
+	margin-left:45rpx;
+	margin-right:45rpx;
 	flex-direction: column;
 }
 
 #nickname-box {
 	border-bottom:1px solid #B2E3CF;
-	height: 40px;
+	background: #F3F3F3;
+	box-sizing: border-box;
+	padding-left: 25rpx;
+	height: 60rpx;
+	background: #F3F3F3;
+	border-radius: 10rpx;
 }
 
 #info-nickname {
@@ -172,7 +178,12 @@
 
 #nickName {
 	height: 100%;
+	font-size: 28rpx;
+	font-family: PingFang SC;
+	font-weight: 400;
+	color: #B2B2B2;
 }
+
 .rightBtn {
 	background-color: #07C160;
 	color: white;

@@ -1,16 +1,17 @@
 <template>
-<view id="root-view">
+<view id="root-view" :style="'background:rgba(0,0,0,'+opacity+');'">
 		<!-- :style="'height:'+contentHeight+'px;'" -->
 	<scroll-view :show-scrollbar="false">
 		<scroll-view :show-scrollbar="false">
 			<!-- 判断用户这个版本是否第一次进入,小程序中,这个值始终为true,APP中需要通过接口来判断 -->
-			
 			<scroll-view id="container-view">
+				<!-- #ifdef MP-WEIXIN || MP-QQ -->
 				<view id="bg-view">
 					<image src="../../static/img/index/bg.png" class="bg-view-image"></image>
 				</view>
+				<!--
 				<view id="ads-view" >
-					<!--
+					
 					<swiper class="swiper"  :indicator-dots="true" :autoplay="true" :interval="6000" :duration="500">
 						<block v-for="(ad,index2) in adsArr" :key="ad.ad_id">
 							<swiper-item   class="swiper-item-class" 
@@ -19,108 +20,89 @@
 							</swiper-item>
 						</block>
 					</swiper>
-					!-->
+					
 					<ls-swiper :list="base_lsit" imgKey="ad_img" :crown="true" :loop="true" :shadow='true' :height="160" :previousMargin="60"
 					 :nextMargin="60" :imgRadius="5" :autoplay="true" :interval="6000" @clickItem="clickItem"/>
-					 <!--
+					
 					  <customSwiper :swiper-list="swiperList" />
-					 -->
+					
 				</view>
-				<view id="search-view">
+				-->
+				<!-- #endif -->
+				<view id="search-view"  @tap="gotoSearchWordPage">
 					<!-- #ifdef APP-PLUS || H5 -->
-					<text id="search-text" @tap="gotoSearchWordPage"  style="align-items:center;color:rgba(255,255,255, 1);" class="search-class">
-						点击这里输入对方说的话
-					</text>
 					<view id="search-btn-view">
-						<uni-icons type="search" :size="iconSize" :color="'rgba(255,255,255,1)'"></uni-icons>
+						<uni-icons type="search" :size="iconSize" :color="'#B2B2B2'"></uni-icons>
 					</view>
+					<text id="search-text" style="align-items:center;" class="app-search-class" :style="{zIndex: inputIndex}">
+						大家都在搜
+					</text>
 					<!-- #endif -->
+					
 					<!-- #ifdef MP-WEIXIN  || MP-QQ -->
 						<input id="search-text" type="text"  placeholder="点击这里输入对方说的话"  placeholder-style="align-items:center;color:rgba(255,255,255, 1);" placeholder-class="search-class" v-model="keyword" @confirm="searchKeyword" />
 						<view id="search-btn-view" @tap="searchKeyword()">
 							<uni-icons type="search" :size="iconSize" :color="'rgba(255,255,255,1)'"></uni-icons>
 						</view>
 					<!-- #endif -->
-					
 				</view>
+				
+				<!-- #ifdef APP-PLUS || H5 -->
+				<view id="search-result">
+					<view>
+						<text>当前总量</text> <text class="search-res-num"> {{ total}}</text><text style="margin-right: 8rpx;">条,</text>
+						<text id="today-last-update">今日更新</text> <text class="search-res-num">{{ update_num }}</text><text>条</text>
+					</view>
+				</view>
+				<!-- #endif -->
+				
 				<!-- :style="'height:'+contentHeight+'px;' -->
 				<view  id="content-view-box">
 					<view id="content-view">
-						<view v-for="(item,index) in navList" class="nav-view" :key="item.firstNav.navId">
-							<view class="first-nav" style="flex-direction: column;">
-								<label :class="index%2==0?'first-nav-label first-nav-even-label':'first-nav-label first-nav-odd-label'">
+						<view class="nav-view" >
+							<view class="first-nav">
+								<image src="../../static/img/index/title.png" style="width:8rpx;height: 100%;line-height:48rpx;margin-right: 22rpx;"></image>
+								<label :class="['first-nav-label', 'first-nav-even-label']" id="first-nav-label0" style="height: 100%;line-height:48rpx;">
+									<text>{{navList0.firstNav ? navList0.firstNav.title: ''}}</text>
+								</label>
+								<label class="first-nav-content first-nav-same-class" style="height: 100%;line-height:48rpx;">
+									<text>{{navList0.firstNav ? navList0.firstNav.content: ''}}</text>
+								</label>
+							</view>
+							<view class="second-nav">
+								<second-nav :index ="0" :secondNav="navList0.secondNav"></second-nav>
+							</view>
+						</view>
+						
+						<view class="nav-view" >
+							<view class="first-nav">
+								<image src="../../static/img/index/title.png" style="width:8rpx;height: 100%;line-height:48rpx;margin-right: 22rpx;"></image>
+								<label :class="['first-nav-label', 'first-nav-odd-label']"  id="first-nav-label1" style="height: 100%;line-height:48rpx;">
+									<text>{{navList1.firstNav ? navList1.firstNav.title:''}}</text>
+								</label>
+								<label class="first-nav-content first-nav-same-class" style="height: 100%;line-height:48rpx;">
+									<text>{{navList1.firstNav ? navList1.firstNav.content: ''}}</text>
+								</label>
+							</view>
+							<view class="second-nav">
+								<second-nav :index ="1" :secondNav="navList1.secondNav"></second-nav>
+							</view>
+						</view>
+						
+						
+						<view v-for="(item,index) in appNavList" class="nav-view" :key="item.firstNav.navId">
+							<view class="first-nav">
+								<image src="../../static/img/index/title.png" style="width:8rpx;height: 100%;line-height:48rpx;margin-right: 22rpx;"></image>
+								<label :class="['first-nav-label', index%2==0?'first-nav-even-label':
+								'first-nav-odd-label']" style="height: 100%;line-height:48rpx;">
 									<text>{{item.firstNav.title}}</text>
 								</label>
-								<label class="first-nav-content first-nav-same-class">
+								<label class="first-nav-content first-nav-same-class" style="height: 100%;line-height:48rpx;">
 									<text>{{item.firstNav.content}}</text>
 								</label>
 							</view>
 							<view class="second-nav">
-								<template v-if="index==0 || index == 5">
-									<view class="second-nav-three-row" :style="'background-image:url('+nav.litpic+');'+(index2==0 ? 'margin-right:24rpx': (index2==1?'margin-right:26rpx':''))"  @tap="enter_huashu(nav.title, nav.navId);" v-for="(nav,index2) in item.secondNav" :key="nav.navId">
-										<text class="second-nav-text">{{nav.title}}</text>
-									</view>
-								</template>
-								<template v-else-if="index == 1">
-									<view style="flex-direction: row;">
-										<view class="second-nav-three-left" :key="item.secondNav[0].navId" :style="'background-image:url('+item.secondNav[0].litpic+');'" @tap="enter_huashu(item.secondNav[0].title, item.secondNav[0].navId);"> 
-											<text class="second-nav-text-left">{{item.secondNav[0].title}}</text>
-										</view>
-										<view class="second-nav-three-right"> 
-											<view class="second-nav-right-one" :key="item.secondNav[1].navId" :style="'background-image:url('+item.secondNav[1].litpic+');'" @tap="enter_huashu(item.secondNav[1].title, item.secondNav[1].navId);">
-												<text class="second-nav-right-one-text">{{item.secondNav[1].title}}</text>
-												<text  class="second-nav-right-one-content">{{item.secondNav[1].content}} </text>
-											</view>
-											<view class="second-nav-right-two" :key="item.secondNav[2].navId" :style="'background-image:url('+item.secondNav[2].litpic+');'" @tap="enter_huashu(item.secondNav[2].title, item.secondNav[2].navId);">
-												<text class="second-nav-right-two-text">{{item.secondNav[2].title}}</text>
-												<text  class="second-nav-right-two-content">{{item.secondNav[2].content}} </text>
-											</view>
-										</view>
-									</view>
-								</template>
-								<template v-else-if="index == 2">
-									<view class="six-nav-csss" :style="'background-image:url('+nav.litpic+');'+(index2%2==0?'margin-right:20rpx;':'')+(index2<=3?'margin-bottom:19rpx;':'')"  @tap="enter_huashu(nav.title, nav.navId);" v-for="(nav,index2) in item.secondNav" :key="nav.navId">
-										<view class="six-nav-title">
-											<text>{{nav.title}}</text>
-										</view>
-										<view class="six-nav-content">
-											<text>{{nav.content}}</text>
-										</view>
-									</view>
-								</template>
-								<template v-else-if="index == 3">
-									<view id="five-party-layout-view">
-										<view class="five-party-view"  @tap="enter_huashu(nav.title, nav.navId);" :key="nav.navId"  v-for="(nav,index2) in item.secondNav" :style="'background-image:url('+nav.litpic+');'+(index2==0?'width:682rpx;height:157rpx;':'')+(index2<=2?'margin-bottom:18rpx;':'')+((index2==1||index2==3) ? 'margin-right:20rpx;':'')">
-											<view class="five-party-view-title">{{nav.title}}</view>
-											<view class="five-party-view-content">{{nav.content}}</view>
-										</view>
-									</view>
-								</template>
-								<template v-else-if="index == 4">
-									<view id="four-part-layout-view">
-										<view id="four-part-left">
-											<view class="four-part-one" :key="item.secondNav[0].navId"  @tap="enter_huashu(item.secondNav[0].title, item.secondNav[0].navId);" >
-												<text class="four-part-font-title title-one-position">{{item.secondNav[0].title}}</text>
-												<view class="four-part-font-content content-one-position">{{item.secondNav[0].content}}</view>
-											</view>
-											<view class="four-part-three" :key="item.secondNav[2].navId" @tap="enter_huashu(item.secondNav[2].title, item.secondNav[2].navId);">
-												<text class="four-part-font-title title-three-position">{{item.secondNav[2].title}}</text>
-												<text class="four-part-font-content content-three-position">{{item.secondNav[2].content}}</text>
-											</view>
-										</view>
-										
-										<view id="four-part-right">
-											<view class="four-part-two" :key="item.secondNav[1].navId"  @tap="enter_huashu(item.secondNav[1].title, item.secondNav[1].navId);">
-												<text class="four-part-font-title title-two-position">{{item.secondNav[1].title}}</text>
-												<text class="four-part-font-content content-two-position">{{item.secondNav[1].content}}</text>
-											</view>
-											<view class="four-part-four" :key="item.secondNav[3].navId"  @tap="enter_huashu(item.secondNav[3].title, item.secondNav[3].navId);">
-												<text class="four-part-font-title title-four-position">{{item.secondNav[3].title}}</text>
-												<text class="four-part-font-content content-four-position">{{item.secondNav[3].content}}</text>
-											</view>
-										</view>
-									</view>
-								</template>
+								<second-nav :index ="index+2" :secondNav="item.secondNav"></second-nav>
 							</view>
 						</view>
 					</view>
@@ -131,6 +113,54 @@
 	<!--
 	<tabBar :current="0" :position="'relative'"></tabBar>
 	-->
+	<!--
+	<view id="absolute-view" :class="maskClass" @touchmove.stop.prevent="moveHandle">
+		<uni-transition :show="isShowMask" :modeClass="['slide-top']">
+			<view class="mask-view" :style="'position:absolute;top:'+searchInputTop+'rpx;left:'+searchInputLeft+'rpx;'">
+				<image src="../../static/img/mask/index/search_border_h.png" style="width: 686rpx;height:60rpx ;"></image>
+			</view>
+			<view :style="'position:absolute;top:'+arrowTop+'rpx;left:'+arrowLeft+'rpx;'">
+				<image src="../../static/img/mask/index/arrow2.png" style="width:51rpx;height:40rpx;"></image>
+			</view>
+			<view :style="'position:absolute;top:'+(arrowTop+57)+'rpx;left:'+(arrowLeft-109)+'rpx;width:291rpx;'">
+				<text>输入妹子说的话，点击搜索，即可获取你想要的回复</text>
+			</view>
+			<view :style="'position:absolute;top:'+(arrow1Top)+'px;left:215rpx;'">
+				<image src="../../static/img/mask/index/arrow1.png" style="width:50rpx;height:37rpx;"></image>
+			</view>
+			
+			<view  :style="'position:absolute;top:'+firstMeetTop+'px;left:32rpx;'">
+				<text>{{navList0.firstNav ? navList0.firstNav.title:''}}</text>
+			</view>
+			
+			<view  :style="'position:absolute;top:'+infoUpdateTop+'px;left:'+(todayUpdateLeft-100)+'px;'">
+				<text>话术每天更新,永远不会老套 </text>
+			</view>
+			
+			<view  :style="'position:absolute;top:'+impressionTop+'px;left:32rpx;'">
+				<text>{{navList1.firstNav ? navList1.firstNav.title: ''}}</text>
+			</view>
+		
+			<view :style="'position:absolute;top:'+firstMeetTop+'px;left:136rpx;'">
+				<image src="../../static/img/mask/index/large_arrow1.png" style="width:114rpx;height:115rpx;"></image>
+			</view>
+			
+			<view :style="'position:absolute;top:'+MiddleArrowTop+'px;left:271rpx;width:277rpx;'">
+				<text>恋爱路上每一步,一步一个脚印 </text>
+			</view>
+			
+			<view :style="'position:absolute;top:'+(MiddleArrowTop+36)+'px;left:160rpx;'">
+				<image src="../../static/img/mask/index/large_arrow2.png" style="width:145rpx;height:116rpx;"></image>
+			</view>
+			
+			<view :style="'position:absolute;top:'+nextTop+'px;left:0rpx;width:100%;z-index:100000000000'" id="nextBtn" @tap="gotoNext">
+				<view>
+					<text>下一步</text>
+				</view>
+			</view>
+		</uni-transition>
+	</view>
+	-->
 </view>
 </template>
 
@@ -140,13 +170,14 @@
 	import util from '../../common/util.js';
 	import lsSwiper from '../../components/ls-swiper/index.vue';
 	import customSwiper from '@/components/blackmonth-swiper/index';
-
+	import secondNav from '@/common/get_second_nav.vue';
 	
 	export default {
 		data() {
 			return {
 				platForm: 0,
-				iconSize: 0,
+				opacity: 0,
+				iconSize: '',
 				keyword: '',
 				isIphoneX: false,
 				navList: [],
@@ -155,9 +186,31 @@
 				contentHeight: 543,
 				secondNavMarginTop: 0,
 				adsArr: [],
+				inputIndex: 0,
 				base_lsit: [],
 				marginBottom: 0,
-				isFirstGo: 0,
+				total: '121552',
+				update_num: '369',
+				/*isShowMask: false,
+				maskClass: '',
+				arrowLeft: '',
+				arrowTop: '',
+				searchInputTop: '',
+				searchInputLeft: '',
+				firstMeetTop:'',
+				firstMeetLeft: '',
+				impressionTop: '',
+				arrow1Top: '',
+				arrow1Left: '',
+				impressionArrowTop: '',
+				impressionArrowLeft: '',
+				firstMeetArrowTop: '',
+				firstMeetArrowLeft: '',
+				infoUpdateTop: '',
+				todayUpdateLeft: '',
+				todayUpdateTop: '',
+				nextTop: '',
+				nextLeft: '',*/
 				swiperList: [{
 					type: 'image',
 					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
@@ -185,9 +238,47 @@
 		components:{
 			//tabBar
 			lsSwiper,
-			customSwiper 
+			customSwiper,
+			secondNav
+		},
+		computed:{
+			firstTitle:function() {
+				const l = this.navList;
+				if(l.length>0) {
+					return l[0].firstNav.title;
+				}
+				return '';
+			},
+			secondTitle:function() {
+				const l = this.navList;
+				console.log('seoncdTitle', l);
+				if(l.length>0) {
+					return l[1].firstNav.title;
+				}
+				return '';
+			},
+			navList0: function() {
+				const list = this.navList.length>0 ? this.navList[0]: {};
+				console.log('list', list);
+				return list;
+			},
+			navList1: function() {
+				return this.navList.length>0 ? this.navList[1]: {};
+			},
+			appNavList: function() {
+				return this.navList.length>0 ? this.navList.slice(2): [];
+			},
+			/*
+			MiddleArrowTop: function() {
+				return (this.firstMeetTop + this.impressionTop) /2;
+			}*/
 		},
 		methods: {
+			gotoNext() {
+				uni.navigateTo({
+					url: '/pages/cases/index'
+				});
+			},
 			// 判断APP 用户当前版本，是否是第一次进入,需要通过接口，将版本号传递过去...
 			getIndexMargin(index) {
 				let arr = [
@@ -200,42 +291,63 @@
 				]
 				return arr[index];
 			},
+			moveHandle(e) {
+				return false;
+			},
+			async getElementData(selector) {
+				const q = uni.createSelectorQuery().select(selector);
+				let info = null;
+				await q.boundingClientRect(data=> { // data - 各种参数
+					console.log('data', data);
+					info = data;
+					if(selector == '#today-last-update' && data) {
+						this.todayUpdateLeft = data ? data.left: '';
+						this.todayUpdateTop = data ? data.top: '';
+					}
+					console.log('this.todayUpdateTop', this.todayUpdateTop);
+					if (selector == '#first-nav-label0' && data) {
+						this.firstMeetTop   = data.top;
+					} 
+					if(selector == '#first-nav-label1' && data) {
+						this.impressionTop  = data.top;	
+					}
+					this.infoUpdateTop = this.todayUpdateTop+uni.upx2px(47)+14;
+					this.arrow1Top     = this.infoUpdateTop - uni.upx2px(47);
+					console.log('this.firstMeetTop', this.firstMeetTop, 'this.impressionTop', this.impressionTop);
+					//初次约会
+					return info;
+				}).exec();
+				//return info;
+			},
 			clickItem(e) {
 				console.log('item', e);
 				uni.navigateTo({
 					url: e.ad_content
 				});
 			},
+			/*showMaskView() {
+				let  _self = this;
+				//_self.maskClass = 'maskClass';
+				//_self.isShowMask= true;
+				this.searchInputTop = 40;
+				this.searchInputLeft = 32;
+				this.arrowLeft = 540;
+				this.arrowTop  = 110;
+				//this.firstMeetLeft = 32;
+				//this.firstMeetTop = 323;		
+				this.getElementData('#today-last-update');
+				this.getElementData('#first-nav-label0');
+				this.getElementData('#first-nav-label1');
+			},*/
+			hideMaskView(selector) {
+				
+			},
 			getIndexBottom(index) {
 				
 				let arr = [ 62,51,60,64,20,20 ];
 				return arr[index];
 			},
-			getAdsInfo() {
-				const data = getApp().globalData;
-				const apiPrefix = data.serverUri;
-				const auth = data.auth;
-				let _self = this;
-				const url = apiPrefix + "?mod=ad&ac=get_ad";
-				http.request(url, {
-					auth: auth,
-					filterData: true,
-					cid: 6
-				}).then(resp => {
-					if(resp.status == 1) {
-						this.adsArr = resp.data;
-						this.base_lsit = resp.data;
-					}
-					console.log('adsArr:', this.adsArr);
-				})
-			},
-			gotoAdsUrl(index) {
-				let href = this.adsArr[index].ad_content;
-				if(!href) return;
-				uni.navigateTo({
-					url: href
-				});
-			},
+			
 			gotoSearchWordPage() {
 				uni.navigateTo({
 					url:'/pages/index/keyword_page',
@@ -267,9 +379,10 @@
 				http.request(url, {
 					auth: auth
 				}).then( resp => {
-					//console.log('resp pages/index/index:', resp);
+					console.log('resp pages/index/index:', resp);
 					const n = resp.length;
-					_self.navList = resp;		
+					_self.navList = resp;	
+					//_self.showMaskView();
 					//_self.contentHeight = _self.calculateNavHeight(resp);
 				});
 			},
@@ -361,11 +474,6 @@
 				});
 			},
 			contact_consumer() {},
-			enter_huashu(title, navId) {
-				uni.navigateTo({
-					url:'/pages/index/huashu?title='+encodeURIComponent(title)+'&navId='+navId
-				});
-			},
 			setIosBackground() {
 				if (getApp().globalData.platform == 2) {
 					console.log('setIosBackgroundColor:');
@@ -407,15 +515,28 @@
 			let pxToRpxScale = 750 / systemInfo.windowWidth;
 			this.lineHeight =  systemInfo.statusBarHeight * pxToRpxScale + 'rpx';
 			this.headerHeight = 44 * pxToRpxScale;
+			//this.showMaskView();
 			//#ifdef MP-WEIXIN || MP-QQ 
 			this.setIosBackground();
 			//#endif
 		},
+		onShow() {
+			/*const v = util.getVersionValue();
+			if(v) {
+				this.maskClass = '';
+				this.isShowMask= false;
+			} else {
+				this.maskClass = 'maskClass';
+				this.isShowMask= true;
+			}*/
+		},
 		onReady() {
 			console.log('on Ready...');
+			
 		},
 		onLoad() {
-			this.getAdsInfo();
+			this.getNavList();
+			//this.getAdsInfo();
 			console.log('onLoad...');
 			//#ifdef MP-WEIXIN
 			uni.showShareMenu({
@@ -436,26 +557,35 @@
 				// 换算为px
 				bottom+= 30/radix;
 			}
-			//#ifdef APP-PLUS || H5
-			this.contentHeight   = winHeight; 
 			
-			//#endif
-			//#ifdef MP-WEIXIN || MP-QQ
+			// #ifdef APP-PLUS || H5
+			this.contentHeight   = winHeight; 
+			// #endif
+			
+			// #ifdef MP-WEIXIN || MP-QQ
 			this.contentHeight   = winHeight - bottom; 
 			//this.marginBottom = 60;
-			//#endif
+			// #endif
 			this.platForm = getApp().globalData.platform;
 			this.searchViewBottom = 0;
-			this.firstNavTop = 20;
+			//this.firstNavTop = 20;
+			
+			// #ifdef MP-WEIXIN || MP-QQ
 			this.iconSize = searchViewHeight - 10;
-			this.getNavList();
+			// #endif
+			
+			// #ifdef APP-PLUS || H5
+			this.iconSize = 19;
+			this.nextTop  = winHeight - 60;
+			// #endif
+			
 			//#ifdef APP-PLUS
-			plus.runtime.getProperty(plus.runtime.appid,(wgtinfo)=>{
+			/*plus.runtime.getProperty(plus.runtime.appid,(wgtinfo)=>{
 				console.log(wgtinfo);
 				let v = wgtinfo.version;   //版本号
 				let k = 'app_version_'+v;
 				uni.setStorageSync(k, 1);
-			});
+			});*/
 			//#endif
 			this.writeLog();
 			//this.getUserLevel();
@@ -560,364 +690,31 @@
 	}
 	
 	.first-nav-same-class {
-		font-size:18rpx;
-		font-family:DFYuanLightGB;
-		font-weight:400;
-		color:rgba(49,49,49,1);
-		margin-top:15rpx;
+		
+		font-size: 28rpx;
+		font-family: PingFang SC;
+		font-weight: 400;
+		color: #A6A6A6;
+		/*margin-top:15rpx;*/
 	}
 
 	
-	.second-nav {
-		flex-direction: row;
-		flex-wrap: wrap;
-		margin-top:10px;
-	}
 	
 	.first-nav-label {
-		font-size:32rpx;
-		font-family:DFYuanLightGB;
-		font-weight:600;
-		-webkit-text-stroke:1px undefined;
-		text-stroke:1px undefined;
+		
+		font-size: 36rpx;
+		font-family: PingFang SC;
+		font-weight: 800;
+		color: #272727;
 	}
 	
 	.first-nav-even-label {
-		color:rgba(109, 142, 217, 1);
+		/*color:rgba(109, 142, 217, 1);*/
 	}
 	
 	.first-nav-odd-label {
-		color:rgba(242,61,166,1);
+		/*color:rgba(242,61,166,1);*/
 	}
-	
-	.second-nav-label {
-		width:206rpx;
-		height:30px;
-		background:rgba(255,255,255,1);
-		border-radius:30rpx;
-		opacity:0.4;
-		justify-content: center;
-		align-items: center;
-	}
-	
-	.second-nav-three-row {
-		width:212rpx;
-		height:212rpx;
-		background-size:contain;	
-	}
-	
-	.second-nav-three-left {
-		width:333rpx;
-		height:322rpx;
-		/*opacity:0.39;*/
-		background-size: contain;
-		margin-right:15rpx;
-		border-radius:20rpx 20rpx 20rpx 20rpx;
-	}
-	
-	.second-nav-three-right {
-		flex-direction: column;
-	}
-	
-	.second-nav-right-one {
-		width:336rpx;
-		height:153rpx;
-		background-size: contain;
-		margin-bottom:15rpx;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: flex-start;
-	}
-	
-	.second-nav-right-two {
-		background-size: contain;
-		width:336rpx;
-		height:153rpx;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: flex-start;
-	}
-	
-	.second-nav-right-one-text {
-		display: flex;
-		margin-left:156rpx;
-		margin-top:38rpx;
-		font-size:34rpx;
-		font-family:SourceHanSansSC;
-		font-weight:500;
-		color:rgba(255,255,255,1);
-	}
-	
-	.second-nav-right-two-text {
-		display: flex;
-		margin-left:150rpx;
-		margin-top:40rpx;
-		font-size:34rpx;
-		font-family:SourceHanSansSC;
-		font-weight:400;
-		color:rgba(255,255,255,1);
-	}
-	
-	.second-nav-right-one-content {
-		display: flex;
-		margin-top:17rpx;
-		margin-left:144rpx;
-		padding-left:9rpx;
-		padding-right:9rpx;
-		height:30rpx;
-		background:rgba(234,104,162,1);
-		border-radius:15rpx;
-		font-size:17rpx;
-		padding-top:6rpx;
-		padding-bottom:7rpx;
-		font-family:DFYuanLightGB;
-		font-weight:400;
-		color:rgba(255,255,255,1);
-		max-width:170rpx;
-	}
-	
-	.second-nav-right-two-content {
-		display: flex;
-		margin-top:13rpx;
-		margin-left:130rpx;
-		padding-top:6rpx;
-		padding-bottom:7rpx;
-		height:30rpx;
-		background:rgba(234,104,162,1);
-		border-radius:15rpx;
-		font-size:18rpx;
-		font-family:DFYuanLightGB;
-		font-weight:400;
-		padding-left:20rpx;
-		padding-right:10rpx;
-		color:rgba(255,255,255,1);
-		max-width:170rpx;
-	}
-	
-	.six-nav-csss {
-		background-size: contain;
-		flex-direction: column;
-		width:333rpx;
-		height:158rpx;
-	}
-	
-	.six-nav-title {
-		margin-left:30rpx;
-		margin-top:38rpx;
-		font-size:26rpx;
-		font-family:SourceHanSansSC;
-		font-weight:500;
-		color:rgba(23,8,13,1);
-	}
-	
-	.six-nav-content {
-		margin-left:29rpx;
-		margin-top:19rpx;
-		font-size:19rpx;
-		font-family:PingFang;
-		font-weight:400;
-		color:rgba(23,8,13,1);
-	}
-	
-	#five-party-layout-view {
-		flex-direction: row;
-		flex-wrap:wrap;
-	}
-	
-	.five-party-view {
-		flex-direction: column;
-		background-size: contain;
-		width:332rpx;
-		height: 157rpx;;
-	}
-	
-	.five-party-view-title {
-		margin-top:38rpx;
-		margin-left:31rpx;
-		font-size:26rpx;
-		font-family:SourceHanSansSC;
-		font-weight:500;
-		color:rgba(23,8,13,1);
-	}
-	
-	.five-party-view-content {
-		margin-top:19rpx;
-		margin-left:29rpx;
-		font-size:19rpx;
-		font-family:PingFang;
-		font-weight:400;
-		color:rgba(23,8,13,1);
-	}
-	#four-part-layout-view {
-		flex-direction: row;
-	}
-	
-	#four-part-left {
-		flex-direction: column;
-	}
-	
-	#four-part-right {
-		flex-direction: column;
-	}
-	
-	.four-part-one,.four-part-two,.four-part-three,.four-part-four {
-		flex-direction: column;
-	}
-	
-	.four-part-one {
-		width:325rpx;
-		height:189rpx;
-		background:linear-gradient(17deg,rgba(131,91,213,1),rgba(234,148,199,1));
-		border-radius:10rpx;
-		margin-right: 32rpx;
-		margin-bottom: 23rpx;
-		align-items: flex-start;
-		justify-content: flex-start;
-
-	}
-	
-	.four-part-two {
-		width:329rpx;
-		height:165rpx;
-		background:linear-gradient(17deg,rgba(53,174,166,1),rgba(158,224,133,1));
-		border-radius:10rpx;
-		margin-bottom: 22rpx;
-		align-items: flex-start;
-		justify-content: flex-start;
-
-	}
-	
-	.four-part-three {
-		width:325rpx;
-		height:189rpx;
-		background:linear-gradient(17deg,rgba(255,115,137,1),rgba(255,180,140,1));
-		border-radius:10rpx;
-		margin-right: 32rpx;
-		align-items: flex-start;
-		justify-content: flex-start;
-
-	}
-	
-	.four-part-four {
-		width:330rpx;
-		height:214rpx;
-		background:linear-gradient(17deg,rgba(81,89,228,1),rgba(139,202,248,1));
-		border-radius:10rpx;
-		align-items: flex-start;
-		justify-content: flex-start;
-
-	}
-	
-	.four-part-font-title {
-		font-size:31rpx;
-		font-family:58;
-		font-weight:bold;
-		color:rgba(255,255,255,1);
-	}
-	
-	.four-part-font-content {
-		font-size:22rpx;
-		font-family:58;
-		font-weight:bold;
-		color:rgba(255,255,255,1);
-	}
-	
-	.title-one-position {
-		margin-left:27rpx;
-		margin-top:36rpx;
-	}
-	
-	.title-two-position {
-		margin-left:48rpx;
-		margin-top:37rpx;
-	} 
-	
-	.title-three-position {
-		margin-left:28rpx;
-		margin-top:38rpx;
-	} 
-	
-	.title-four-position {
-		margin-left:49rpx;
-		margin-top:35rpx;
-	} 
-	
-	.content-one-position {
-		margin-top:30rpx;
-		margin-left:27rpx;
-		padding-left:10rpx;
-		max-width:234rpx;
-		word-wrap:break-word;
-		padding-right:10rpx;
-		background:rgba(131,79,232,1);
-		border-radius:11rpx;
-	}
-	
-	.content-two-position {
-		margin-top:18rpx;
-		margin-left:27rpx;
-		padding-left:10rpx;
-		padding-right:10rpx;
-		max-width:234rpx;
-		background: #3ABCA2;
-		border-radius:11px;
-	}
-	
-	.content-three-position {
-		margin-top:32rpx;
-		margin-left:25rpx;
-		padding-left:10rpx;
-		padding-right:10rpx;
-		max-width:234rpx;
-		background:rgba(253,97,122,1);
-		border-radius:11px;
-	}
-	
-	.content-four-position {
-		margin-top:37rpx;
-		margin-left:32rpx;
-		padding-left:10rpx;
-		padding-right:10rpx;
-		max-width:234rpx;
-		background:rgba(81,89,228,1);
-		border-radius:11px;
-	}
-	
-	/* 除了第一个元素外的元素,需要添加这个  */
-	.second-nav-lable-margin {
-		margin-right:32rpx;
-	}
-	
-	.second-nav-lable-top {
-		margin-top:12px;
-	}
-	
-	.second-nav-text {
-		display: flex;
-		height:29rpx;
-		margin-top:33rpx;
-		padding-left:10rpx;
-		padding-right:10rpx;
-		border-top-right-radius:14rpx;
-		border-bottom-right-radius:14rpx;
-		font-size:20rpx;
-		font-family:HeitiCSEG;
-		font-weight:normal;
-		background: #F23DA6;
-		color:rgba(255,255,255,1);
-		font-weight:400;
-	}
-	
-	.second-nav-text-left {
-		margin-left:106rpx;
-		margin-top:243rpx;
-		font-size:32rpx;
-		font-family:SourceHanSansSC;
-		font-weight:500;
-		color:rgba(255,255,255,1);
-	}
-	
-	
 	
 	#icon-view {
 		flex-direction: row;
@@ -936,31 +733,82 @@
 		font-size:27rpx;
 		font-family:SourceHanSansSC;
 		font-weight:400;
-		color:rgba(255,255,255,1);
-		color: green;
+	}
+	
+	.app-search-class {
+		font-size: 28rpx;
+		font-family: PingFang SC;
+		font-weight: 400;
+		color: #B2B2B2;
 	}
 	
 	#search-view {
 		width:686rpx;
-		height:80rpx;
+		
 		/*background:rgba(255,255,255,1);*/
+		/* #ifdef MP-WEIXIN|| MP-QQ */
 		background: rgba(36, 104, 231, 1);
+		margin-top:144rpx;
 		border-radius:20px;
+		height:80rpx;
+		/* #endif */
+		
+		/* #ifdef APP-PLUS || H5 */
+		background: #F3F3F3;
+		margin-top:40rpx;
+		margin-bottom: 53rpx;
+		height: 60rpx;
+		background: #F3F3F3;
+		border-radius: 30rpx;
+		padding-top:17rpx;
+		padding-bottom: 17rpx;
+		padding-left:21rpx;
+		/* #endif */
+		
 		align-items: center;
 		margin-left: 32rpx;
 		margin-right: 32rpx;
-		margin-top:144rpx;
+	}
+	
+	#search-result {
+		margin-left: 32rpx;
+		margin-right: 32rpx;
+		margin-top:53rpx;
+		margin-bottom: 80rpx;
+		font-size: 24rpx;
+		font-family: PingFang SC;
+		font-weight: 400;
+		color: #626262;
+		
+		color:#898989;
+		
+	}
+	.search-res-num {
+		color:#A88FEF;	
+		margin-left:10rpx;
+		margin-right: 10rpx;
 	}
 	
 	#search-text {
 		display: flex;
-		height:80rpx;
 		font-size:27rpx;
 		font-family:SourceHanSansSC;
 		font-weight:400;
-		color:rgba(255,255,255,1);
-		width:80%;
+		/* #ifdef MP-WEIXIN || MP-QQ */
+		color:rgba(255,255,255);
+		height:80rpx;
 		margin-left:15px;
+		width:80%;
+		/* #endif */
+		
+		/* #ifdef APP-PLUS */
+		color:#B2B2B2;
+		height:100%;
+		width:100%;
+		/* #endif */
+		
+		
+		
 	}
 	
 	#content-view {
@@ -1004,7 +852,19 @@
 	}
 	
 	#search-btn-view {
+		/* #ifdef MP-WEIXIN || MP-QQ */
 		width:20%;
+		/* #endif */
+		
+		display: flex;
 		justify-content: center;
+	}
+	
+	.first-nav {
+		height: 48rpx;
+	}
+	
+	.second-nav {
+		margin-top: 51rpx;
 	}
 </style>

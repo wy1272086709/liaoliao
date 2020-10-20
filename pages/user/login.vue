@@ -202,6 +202,7 @@
 			},
 			thirdLoginByApple() {
 				console.log('thirdLoginByApple');
+				let _self = this;
 				uni.login({
 				    provider: 'apple',
 				    success: function (loginRes) {
@@ -211,16 +212,17 @@
 				            success(res) {
 				                // 获取用户信息成功
 								console.log('res', res);
-								// 
 								let  u = res.userInfo;
 								const params = {
-									nickName: u.nickName,
-									avatarUrl: u.avatarUrl,
-									openId: u.openid
+									nickName: '',
+									avatarUrl: '',
+									openId: u.openId,
+									logintype: 'app_apple',
+									filterData: true
 								};
-								
+								_self.insertAppleLoginUserInfo(params);
 				            }
-				        })
+				        });
 				    },
 				    fail: function (err) {
 				        // 登录失败
@@ -248,9 +250,27 @@
 				const apiPrefix = data.serverUri;
 				const auth = data.auth;
 				let _self = this;
-				const url = apiPrefix + "?mod=user&ac=phonelogin";
+				const url = apiPrefix + "?mod=user&ac=apple_user";
 				const resp = await http.request(url, params);
-				
+				console.log('login apple resp', resp);
+				if (resp.status == 1) {
+					// 3 表示apple 登录
+					let userInfoStr = util.cache('app_user_info_3', null);
+					let userInfoObj = {};
+					if(userInfoStr) {
+						userInfoObj = JSON.parse(userInfoStr);
+					} else {
+						userInfoObj   =  {};
+						userInfoObj.avatarUrl = params.avatarUrl;
+						userInfoObj.phone = "";
+						userInfoObj.nickName = params.nickName;
+						userInfoObj.uid   = resp.data.uid;
+						// 首次登录之后level 为1,如果用户没有充值,后期再改...
+						userInfoObj.level = 1;
+					}
+					console.log('insertAppleLoginUserInfo', userInfoObj);
+					this.loginFunc(userInfoObj, 3);
+				}
 			},
 			async login() {
 				let isSuccess = this.validateLogin();
@@ -270,7 +290,7 @@
 						userInfoObj.uid   = 258;
 						// 首次登录之后level 为1,如果用户没有充值,后期再改...
 						userInfoObj.level = 1;
-						this.loginFunc(userInfoObj);
+						this.loginFunc(userInfoObj, 1);
 					}
 					return;
 				}
@@ -305,20 +325,20 @@
 						userInfoObj.level = 1;
 					}
 					//getApp().globalData.appLoginType = 1;
-					this.loginFunc(userInfoObj, resp.data.token);
+					this.loginFunc(userInfoObj, 1, resp.data.token);
 				} else {
 					this.codeErrorMsg = resp.message;
 				}
 			},
-			loginFunc(userInfoObj, token) {
-				util.cache('appLoginType', 1);
+			loginFunc(userInfoObj, type, token) {
+				util.cache('appLoginType', type);
 				console.log('data', userInfoObj);
 				if(token) {
 					util.cache('app_token', token, 15*24*3600);
 				}
 				console.log('data', userInfoObj);
 				util.cache('app_userid', userInfoObj.uid, 15*24*3600);
-				util.cache('app_user_info_1', JSON.stringify(userInfoObj), 15*24*3600);
+				util.cache('app_user_info_'+type, JSON.stringify(userInfoObj), 15*24*3600);
 				console.log('data', userInfoObj);
 				this.$store.commit('setUserInfo', userInfoObj);
 				console.log('cache go here!');

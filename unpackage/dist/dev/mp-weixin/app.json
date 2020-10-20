@@ -1,52 +1,48 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/sticky/index",
     "pages/cases/index",
     "pages/user/index",
     "pages/user/complaint",
     "pages/user/upgrade_user_vip",
     "pages/index/huashu",
-    "pages/cases/detail",
-    "pages/user/about_us",
-    "pages/index/sticky",
-    "pages/index/testing",
-    "pages/index/testing_result"
+    "pages/index/meme",
+    "pages/cases/detail"
   ],
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "",
+    "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#FFFFFF",
     "backgroundColor": "#F8F8F8"
   },
   "tabBar": {
+    "custom": true,
     "color": "#7A7E83",
-    "selectedColor": "#2985F1",
+    "selectedColor": "#3cc51f",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
-    "height": "50px",
     "list": [
       {
         "pagePath": "pages/index/index",
         "iconPath": "/static/img/tabbar/love_huashu.png",
-        "selectedIconPath": "/static/img/tabbar/love_huashu_active.png",
-        "defaultClass": "tabbar-icon-class",
-        "text": "恋爱话术"
+        "text": "恋爱话术",
+        "selectedPath": "/static/img/tabbar/love_huashu_active.png",
+        "defaultClass": "tabbar-icon-class"
       },
       {
         "pagePath": "pages/cases/index",
         "iconPath": "/static/img/tabbar/love_skills.png",
-        "selectedIconPath": "/static/img/tabbar/love_skills_active.png",
-        "defaultClass": "tabbar-icon-class",
-        "text": "恋爱技巧"
+        "text": "恋爱技巧",
+        "selectedPath": "/static/img/tabbar/love_skills_active.png",
+        "defaultClass": "tabbar-icon-class"
       },
       {
         "pagePath": "pages/user/index",
         "iconPath": "/static/img/tabbar/user.png",
-        "selectedIconPath": "/static/img/tabbar/user_active.png",
-        "defaultClass": "tabbar-icon-class",
-        "text": "个人中心"
+        "text": "个人中心",
+        "selectedPath": "/static/img/tabbar/user_active.png",
+        "defaultClass": "tabbar-icon-class"
       }
     ]
   },

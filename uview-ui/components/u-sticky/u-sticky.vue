@@ -132,6 +132,7 @@
 				this.contentObserver = contentObserver;
 			},
 			setFixed(top) {
+				console.log('top', top, 'stickyTop', this.stickyTop);
 				const fixed = top < this.stickyTop;
 				if (fixed) this.$emit('fixed', this.index);
 				else if(this.fixed) this.$emit('unfixed', this.index);

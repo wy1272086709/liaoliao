@@ -1,0 +1,1 @@
+<view id="root-view"><view class="padding-style" style="{{('min-height:'+height+'px')}}">敬请期待...</view><tabbar vue-id="490c8ee6-1" current="{{2}}" bind:__l="__l"></tabbar><scorll-view vue-id="490c8ee6-2" bind:__l="__l" vue-slots="{{['default']}}"><block wx:if="{{isIphoneX}}"><view style="height:34px;"></view></block></scorll-view></view>

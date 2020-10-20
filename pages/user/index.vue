@@ -250,14 +250,14 @@
 		},
 		onLoad(option) {
 			//this.login();
-			//#ifdef MP-WEIXIN
+			// #ifdef MP-WEIXIN
 			this.getUserIsAuth();
-			//#endif
+			// #endif
 			
-			//#ifdef APP-PLUS || H5
-			//this.getProviderList();
+			// #ifdef APP-PLUS || H5
+			
 			bottomImageMenu = new BottomImageMenu();
-			//#endif
+			// #endif
 			
 			let info           = uni.getSystemInfoSync();
 			let winHeight      = info.windowHeight;
@@ -326,10 +326,12 @@
 				
 				//#ifdef APP-PLUS || H5
 				let u = this.$store.getters.userInfo;
+				console.log('u', u);
 				if (u.uid) {
 					return u;
 				}
 				let type = util.cache('appLoginType', null);
+				console.log('type', type);
 				let uInfoStr = util.cache('app_user_info_'+type, null);
 				console.log('uInfoStr', uInfoStr);
 				if (uInfoStr) return JSON.parse(uInfoStr);
@@ -690,9 +692,11 @@
 				});
 			},
 			upgrade_vip() {
-				uni.navigateTo({
-					url:'/pages/user/upgrade_user_vip'
-				});
+				if(this.platform!=2) {
+					uni.navigateTo({
+						url:'/pages/user/upgrade_user_vip'
+					});
+				}
 			},
 			copy_customer_wechat() {
 				//let weichat = '';

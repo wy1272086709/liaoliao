@@ -49,7 +49,8 @@
 			},
 			avatarUrl: function() {
 				let u = this.userInfo;
-				return u.avatarUrl ? u.avatarUrl: '../../static/img/user/default_avatar.png';
+				console.log('u.avatarUrl', u.avatarUrl);
+				return u.avatarUrl ? u.avatarUrl: '../../static/img/user/people.png';
 			},
 			nickName: function() {
 				let u = this.userInfo;
@@ -139,6 +140,9 @@
 						}
 						if(data.phone) {
 							userInfo.phone     = data.phone;
+						}
+						if(data.uid) {
+							userInfo.uid = data.uid;
 						}
 						console.log('userINfo uid', userInfo);
 						if(userInfo.uid) {
@@ -233,7 +237,7 @@
 			},
 			bindPhone() {
 				uni.navigateTo({
-					url:'/pages/user/bind_phone'
+					url:'/pages/user/bind_phone_v2'
 				});
 			},
 			editNickname() {
@@ -246,20 +250,42 @@
 </script>
 
 <style lang="less" scoped>
+	page {
+		background: #F3F3F3;
+	}
+	#list {
+		margin-top:58rpx;
+		margin-left:30rpx;
+		margin-right:30rpx;
+		width: 690rpx;
+		
+		background: #FFFFFF;
+		border-radius: 20rpx;
+	}
 /deep/ .uni-list-item__content-title {
-	font-size:20px !important;
-	font-family:Microsoft YaHei !important;
-	font-weight:bolder !important;
-	line-height: 65px;
-	height:65px !important;
+	font-size: 28rpx !important;
+	font-family: PingFang SC !important;
+	font-weight: 500 !important;
+	color: #333333 !important;
+	line-height: 120rpx;
+	height:120rpx !important;
 }
+
+/deep/ .uni-list-item__extra {
+	margin-right: 37rpx;
+}
+
 #image-size {
-	width:80px;
-	height: 80px;
+	width:64rpx;
+	height: 64rpx;
 	border-radius: 50%;
+	margin-right:34rpx;
 }
 .bottom-version-text {
-	margin-right:10px;
-	font-weight: 400;
+	margin-right:34rpx;
+	font-size: 28rpx;
+	font-family: PingFang SC;
+	font-weight: 500;
+	color: rgba(153, 153, 153, 1);
 }
 </style>

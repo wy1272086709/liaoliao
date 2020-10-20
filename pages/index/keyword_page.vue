@@ -1,10 +1,10 @@
 <template>
 	<view id="root-view">
 		<view id="search-view-box">
-			<view id="search-view">
-				<input id="search-text" type="text" focus placeholder="点击这里输入对方说的话"  placeholder-style="align-items:center;color:rgba(255,255,255, 1);" placeholder-class="search-class" v-model="keyword" @confirm="searchKeyword" />
+			<view id="search-view">								
+				<input id="search-text" type="text" focus placeholder="点击这里输入对方说的话"  placeholder-style="align-items:center;" placeholder-class="search-class" v-model="keyword" @confirm="searchKeyword" />
 				<view id="search-btn-view" @tap="searchKeyword()">
-					<uni-icons type="search" size="30" :color="'rgba(255,255,255,1)'"></uni-icons>
+					<uni-icons type="search" size="20" :color="'#B2B2B2'"></uni-icons>
 				</view>
 			</view>
 		</view>
@@ -89,8 +89,10 @@
 }
 
 #seach-title {
-	font-weight: 500;
-	font-family:Microsoft YaHei !important;
+	font-size: 30rpx;
+	font-family: PingFang SC;
+	font-weight: 800;
+	color: #131313;
 	margin-top:10px;
 	margin-bottom: 25px;
 }
@@ -102,10 +104,12 @@
 
 #search-view {
 	width:686rpx;
-	height:80rpx;
+	height:60rpx;
+	padding-left: 10rpx;
+	padding-right: 10rpx;
 	/*background:rgba(255,255,255,1);*/
-	background: rgba(36, 104, 231, 1);
-	border-radius:20px;
+	background: #F3F3F3;
+	border-radius: 30rpx;
 	align-items: center;
 	margin-left: 32rpx;
 	margin-right: 32rpx;
@@ -139,21 +143,20 @@
 	font-size:27rpx;
 	font-family:SourceHanSansSC;
 	font-weight:400;
-	color:rgba(255,255,255,1);
-	width:80%;
-	margin-left:15px;
+	color:rgba(0,0,0,1);
+	width:90%;
+	margin-left:5px;
 }
 
 .search-class {
-	font-size:27rpx;
-	font-family:SourceHanSansSC;
-	font-weight:400;
-	color:rgba(255,255,255,1);
-	color: green;
+	font-size: 28rpx;
+	font-family: PingFang SC;
+	font-weight: 400;
+	color: #B2B2B2;
 }
 
 #search-btn-view {
-	width:20%;
+	/*width:15%;*/
 	justify-content: center;
 }
 </style>

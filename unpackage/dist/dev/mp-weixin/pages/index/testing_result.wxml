@@ -1,1 +1,0 @@
-<view id="root-view"><view id="result"><view>{{result}}</view></view><view id="detail"><rich-text nodes="{{detail}}"></rich-text></view><view id="bottom"><view></view><view></view></view></view>

@@ -5,11 +5,13 @@ let debug = true;
 
 export default {
 	onLaunch: function() {
+		// #ifdef APP-PLUS
+		plus.screen.lockOrientation = 'portrait-primary';
+		// #endif
 		let _self = this;
 		console.log('on Launch!');
 		uni.getSystemInfo({
 		      success: res => {
-				  
 				console.log('res', res);
 		        let modelmes = res.model;
 				let platform = res.platform.toLowerCase();
@@ -22,6 +24,7 @@ export default {
 		        if (modelmes.search('iPhone X') != -1) {
 		          _self.globalData.isIphoneX = true;
 		        }
+				
 		        uni.setStorageSync('modelmes', modelmes)
 		      }
 		});
@@ -152,6 +155,7 @@ export default {
 		console.log('App Hide');
 	},
 	globalData: {
+		//serverUri: "https://www.kuwoi.com/index.php",
 		serverUri: "https://kuxou.com/index.php",
 		hostUrl: 'https://kuxou.com',
 		isRecharge: 0, // 是否通过充值返回个人中心...

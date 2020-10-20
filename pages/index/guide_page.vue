@@ -3,7 +3,7 @@
 		<swiper class="swiper"
 		:autoplay="autoplay" 
 		:duration="duration" :indicator-dots="true" @change="change" @transition="transition">
-			<swiper-item v-for="(item,index) in guideImages">
+			<swiper-item v-for="(item,index) in guideImages"  :style="{height:imgHeight+'px'}">
 				<view class="swiper-item">
 					<view class="swiper-item-img">
 						<image :src="item" mode="aspectFit" :style="{height:imgHeight+'px'}"></image>
@@ -11,14 +11,15 @@
 				</view>	
 			</swiper-item>
 		</swiper>
-		<view id="next-btn">
-			<view class="jump-over" @tap="login()">{{text}}</view>
+		<view id="next-btn" v-if="showMenu">
+			<view class="jump-over login-entry-btn" @tap="login()">{{text}}</view>
 			<view class="jump-over" @tap="launchFlag()">{{jumpover}}</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import util from '../../common/util.js';
 	export default {
 		data() {
 			return {
@@ -29,11 +30,16 @@
 				text: '注册/登录',
 				imgHeight: '',
 				guideImages: [
-					'https://imgmyqx.ofbei.com/upload1/20200909/20200909142613_312.png',
-					'https://imgmyqx.ofbei.com/upload1/20200909/20200909142710_307.png',
-					'https://imgmyqx.ofbei.com/upload1/20200909/20200909142756_104.png',
-					'https://imgmyqx.ofbei.com/upload1/20200909/20200909142756_104.png'
+					'../../static/img/index/guide_page/page_01.png',
+					'../../static/img/index/guide_page/page_02.png',
+					'../../static/img/index/guide_page/page_03.png',
+					'../../static/img/index/guide_page/page_04.png',
 				]
+			}
+		},
+		computed:{
+			showMenu: function() {
+				return this.curIndex == (this.guideImages.length-1);
 			}
 		},
 		onLoad(option) {
@@ -46,7 +52,7 @@
 		methods: {
 			login() {
 				uni.navigateTo({
-					url: '/pages/user/login',
+					url: '/pages/user/login_v2',
 					fail(res) {
 						console.log('to login fail:', res);
 					}
@@ -57,13 +63,25 @@
 				this.curIndex++;
 			},
 			launchFlag() {
-				
+				const v = util.getVersionValue();
+				if(!v) {
+					uni.redirectTo({
+						url:'/pages/index/mask'
+					});
+					return;
+				}
+				uni.switchTab({
+					url:'/pages/index/app_index'
+				});
 			},
 			change(e) {
 				console.log('e change', e);
+				this.curIndex = e.detail.current;
 				// 3为对应的图片长度-1,当滑动到最后一张图片的时候,显示进入按钮
 				if (e.detail.current == this.guideImages.length -1) {
 					this.jumpover = '进入首页';
+				} else {
+					
 				}
 			},
 			transition(e) {
@@ -87,7 +105,7 @@ page,.content{
 }
 .swiper{
 	width: 100%;
-	height: 80%;
+	height: 100%;
 	background: #FFFFFF;
 }
 .swiper-item {
@@ -112,7 +130,19 @@ page,.content{
 
 #next-btn {
 	position: absolute;
-	top:50px;
-	left: 50px;
+	z-index:100000000001;
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	bottom:50px;
+	left: 0px;
+	font-size: 40rpx;
+	font-family: PingFang SC;
+	font-weight: 800;
+	color: #333333;
+}
+
+.login-entry-btn {
+	margin-right:60rpx;
 }
 </style>
