@@ -89,9 +89,11 @@ export default {
 		show: {
 			immediate: true,
 			handler(nVal, oVal) {
+				console.log('watch run...');
 				if (nVal) {
 					this.open();
 				} else {
+					console.log('close ...');
 					this.close();
 				}
 			}
@@ -143,6 +145,7 @@ export default {
 		close() {
 			this.moveX = 0;
 			this.status = false;
+			console.log('close ... event...');
 		},
 		// 打开按钮的状态
 		open() {

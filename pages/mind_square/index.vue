@@ -4,13 +4,17 @@
 		<!--
 		<view id="header-ask-box">
 		-->
-			<u-navbar :isBack="false" title="" :borderBottom="true" :isFixed="isFixed"  :zIndex="10000000000000001">
+			<u-navbar :isBack="false" title="" :borderBottom="true" :isFixed="true"  :zIndex="10000000000000001" :height="platform == 1? 58: 54">
 				<template v-slot:default="">
 					<view class="slot-wrap">
-						<view id="slot-title" @tap="gotoMindList">脑洞广场</view>
+						<view id="slot-title" @tap="gotoTop">妙语广场</view>
 						<view id="slot-input">
-							<input placeholder="大家都在搜" placeholder-class="search-holder" id="mind-search-input" v-model.trim="keyword" @confirm="searchList" />
+							<!-- v-model="keyword"  -->
+							<!--
+							<input placeholder="大家都在搜" @blur="blurFunc" :value="keyword" @input="mindInput" placeholder-class="search-holder" id="mind-search-input" @confirm="searchList" />
 							<uni-icons  type="search" id="search-icon" @tap="searchList"></uni-icons>
+							-->
+							<u-search placeholder="大家都在搜" @change="mindInput" v-model="keyword" :show-action="false"></u-search>
 						</view>
 						<view id="slot-img" @tap="askQues">
 							<!--
@@ -26,27 +30,39 @@
 		<!--
 		</view>
 		-->
-		<scroll-view :style="'height:'+scrollHeight+'px;'"  scroll-y="true"	 @scrolltolower="lower">
+		
+		<scroll-view :style="'height:'+scrollHeight+'px;'"  scroll-y="true"	 @scrolltolower="lower" @scroll="scroll" :scroll-top="scrollTop">
 		<view id="mind-ask-box" class="content" v-if="mindList.length>0">
 			<view class="mind-ask-view" v-for="(item,index) in mindList" :key="item.nid" @tap="gotoDetail(item.nid,index)">
 				<view class="mind-title">
+					<!--
 					<text class="mz_shuo">妹子说: </text> 
 					<text class="girl_title">{{item.title}} </text>
+					-->
+					<view class="mind-title-left">
+						<view>
+							<image :src="item.tx?item.tx:'../../static/img/user/people.png'" class="avatar-class"></image>
+						</view>
+						<view class="mind-nickName">{{item.fbr}}</view>
+					</view>
+					<view  class="mind-title-right">
+						<view class="mind-pubdate">{{item.pubdate}}</view>
+					</view>
 				</view>
 				<view class="mind-content">
 					<text>{{item.description}}</text>
 				</view>
 				<view class="mind-interact">
 					<view class="mind-interact-left">
-						<view class="mind-nickName">{{item.fbr}}</view>
-						<view class="mind-pubdate">{{item.pubdate}}</view>
+						
 					</view>
 					<view class="mind-interact-right">
 						<view class="praise-view" @tap.stop="clickPraise(index)">
 							<!--
 							<image :src="loveSrc" style="width: 28rpx;height:24rpx;margin-right:15.01rpx;"></image>
 							-->
-							<u-icon name="heart" size="32" :color="item.sfsc ? '#FF3300':'#A6A6A6'" style="margin-right:15.01rpx;"></u-icon>
+							
+							<u-icon name="heart" size="32" :color="mindList[index].sfsc==1 ? '#FF3300':'#A6A6A6'" style="margin-right:15.01rpx;"></u-icon>
 							<text>{{item.fbsccs}}</text>
 						</view>
 						<view class="reply-view">
@@ -56,8 +72,9 @@
 					</view>
 				</view>
 			</view>
+			<u-loadmore :status="status" />
 		</view>
-		<view id="search-result-view" v-if="mindList.length<=0">
+		<view id="search-result-view" v-if="mindList.length<=0 && isSearch">
 			<view id="search-result-header">
 				<view id="no-result-box">
 					<text class="search-result-suggest">
@@ -65,94 +82,49 @@
 					</text>
 				</view>
 			</view>
-			<view class="search-result-title">
-				<text>精简关键词</text>
-			</view>
-			<view>
-				<text class="search-result-suggest">建议使用简单的关键词,比如说女生说【你吃晚饭了吗?】,搜索时输入【晚饭】即可。 \n  也可以尝试相近的关键词,比如【你想干嘛?】可以搜索【干嘛】、【干什么】等相近的搜索词。</text>
-			</view>
 		</view>
 		</scroll-view>
-		
-		<!--
-		<view id="absolute-view" :class="maskClass" @touchmove.stop.prevent="moveHandle">
-			<uni-transition :show="isShowMask" :modeClass="['slide-top']">
-				<view class="mask-view" :style="'position:absolute;top:'+searchInputTop+'px;left:'+searchInputLeft+'px;'">
-					<image src="../../static/img/mask/index/search_border_h.png" style="width: 400rpx;height:60rpx;"></image>
-				</view>
-				<view :style="'position:absolute;top:'+arrowTop+'px;left:'+arrowLeft+'px;'">
-					<image src="../../static/img/mask/index/arrow1.png" style="width: 50rpx;height:37rpx;"></image>
-				</view>
-				<view :style="'position:absolute;top:'+arrow2Top+'px;left:'+arrow2Left+'px;width:287rpx;'">
-					<image src="../../static/img/mask/index/arrow2.png" style="width: 51rpx;height:40rpx;"></image>
-				</view>
-				
-				<view :style="'position:absolute;top:'+infoTop+'px;left:42rpx;width:287rpx;'">
-					<text>话术库搜不到,没关系,这里有更多的助力,集思广益,总会有的 </text>
-				</view>
-				
-				<view :style="'position:absolute;top:'+askInfoTop+'px;left:'+askInfoLeft+'rpx;width:278rpx;'">
-					<text>点击提问,可获取更精准的回复哦</text>
-				</view>
-				
-				<view :style="'position:absolute;top:'+nextTop+'px;left:0rpx;width:100%;z-index:100000000000'" id="nextBtn" @tap="gotoNext">
-					<view>
-						<text>下一步</text>
-					</view>
-				</view>
-			</uni-transition>
-		</view>
-		-->
+		<u-no-network></u-no-network>
 	</view>
 </template>
 
 <script>
-	import uNavbar  from '../../uview-ui/components/u-navbar/u-navbar.vue';
-	import uIcon from '../../uview-ui/components/u-icon/u-icon.vue';
 	import http from '../../common/http.js';
 	import util from '../../common/util.js';
 	let eMap = {};
 	let isDbCollect = 0;
 	let nowpage = 1;
 	let totalpage = 1;
-	let isSearch = 0;
+	
 	let interval;
+
 	export default {
 		data() {
 			return {
 				keyword: '',
+				platform: '',
 				mindList: [
-					{
-						title: '最近心情不是很好',
-						description: '女神突然说最近心情不好,我要怎么安慰他?',
-						cid: 1,
-						nid: 1,
-						fbr: '小康',
-						pubDate: '刚刚',
-						fbsccs: 10,
-						hfsccs: 20,
-						// 当前问题是否被收藏
-						sfsc: 0,
-					}
+					
 				],
-				/*searchInputTop: '',
-				searchInputLeft: '',
-				arrowTop: '',
-				arrowLeft: '',
-				arrow2Top: '',
-				arrow2Left: '',
-				infoTop: '',
-				askInfoLeft: '',
-				askInfoTop: '',*/
+				isSearch: '',
 				color: '#A6A6A6',
 				loveSrc: '../../static/img/mind_square/love.png',
 				isFixed: true,
-				//isShowMask: false,
 				scrollHeight: '',
-				/*nextTop: '',
-				nextLeft: '',
-				maskClass: '',*/
+				scrollTop: 0,
+				old: {
+					scrollTop: 0
+				},
+				status: 'loadmore'
 			}
+		},
+		beforeDestroy() {
+			console.log('beforeDestroy');
+			this.isSearch = '';
+		},
+		onTabItemTap(obj) {
+			console.log('onTabItemTap', obj);
+			
 		},
 		computed:{
 			uid: function() {
@@ -166,7 +138,8 @@
 		},
 		onLoad() {
 			const info = uni.getSystemInfoSync();
-			this.scrollHeight = info.windowHeight - info.statusBarHeight - 44;
+			this.platform = getApp().globalData.platform;
+			this.scrollHeight = info.windowHeight - info.statusBarHeight - (this.platform == 1? 58: 54);
 		},
 		onShow() {
 			/*const v = util.getVersionValue();
@@ -178,11 +151,16 @@
 				this.maskClass = 'maskClass';
 				this.isShowMask= true;
 			}*/
+			//this.keyword = '';
+			this.$nextTick(()=>{
+				console.log('keyword...', this.keyword);
+				this.keyword = '';
+			});
+			nowpage = 1;
 			this.getMindList(1, false);
 		},
 		components:{
-			uNavbar,
-			uIcon
+			
 		},
 		onHide() {
 			eMap = {};
@@ -192,43 +170,53 @@
 			this.getMindList(1, false, stopRefresh);
 		},
 		onReady() {
-			/*
-			console.log('onReady...');
-			const m = uni.createSelectorQuery().select('#slot-input');
-			m.boundingClientRect((data)=>{
-				console.log('data', data)
-				this.searchInputTop = data.top;
-				this.searchInputLeft= data.left;
-				this.arrowTop       = data.top+uni.upx2px(80);
-				this.arrowLeft      = data.left - uni.upx2px(25);
-				this.infoTop        = data.top+uni.upx2px(107);
-				this.askInfoTop     = data.top+uni.upx2px(115);
-				this.askInfoLeft    = 442;
-				this.arrow2Top      = this.arrowTop;
-				this.arrow2Left     = data.left+uni.upx2px(406);
-				//this.maskClass = 'maskClass';
-				//this.isShowMask= true;
-				this.nextTop   = uni.getSystemInfoSync().windowHeight - 60;
-				
-			}).exec();*/
+			
 		},
 		methods: {
 			async searchList() {
 				this.searchMindList(1);
+			},
+			blurFunc() {
+				console.log('blur');
+				
 			},
 			gotoNext() {
 				uni.switchTab({
 					url: '/pages/user/user_index'
 				});
 			},
+			scroll(e) {
+				this.old.scrollTop = e.detail.scrollTop
+			},
+			// 脑洞广场搜索框输入的...
+			mindInput(e) {
+				console.log('input e', e);
+				/*const v = e.detail.value;
+				// 发送请求去搜索
+				this.keyword = v;*/
+				const v = e;
+				if(v!= "") {
+					nowpage = 1;
+					this.searchMindList(1);
+				} else {
+					this.getMindList();
+				}
+			},
 			moveHandle(e) {
 				
+			},
+			gotoTop() {
+				this.scrollTop = this.old.scrollTop
+				//在数据变化后要执行的某个操作，而这个操作需要使用随数据改变而改变的DOM结构的时候，这个操作都应该放进Vue.nextTick()的回调函数中。
+				this.$nextTick(function() {
+					this.scrollTop = 0
+				});
 			},
 			gotoMindList() {
 				this.getMindList(1, false, true);
 			},
 			async searchMindList(pageNo, isAppend) {
-				isSearch = 1;
+				this.isSearch = 1;
 				const data = getApp().globalData;
 				const apiPrefix = data.serverUri;
 				const auth = data.auth;
@@ -239,20 +227,21 @@
 					filterData: true
 				};
 				params.auth = auth;
-				params.nowpage = nowpage = 1;
+				params.nowpage = pageNo;
 				const url = apiPrefix +'?mod=ndgc&ac=search';
 				const res = await http.request(url, params);
 				if(res.status == 1) {
 					if(!isAppend) {
 						this.mindList = res.data;
-						totalpage = res.totalpage;
 					} else {
 						this.mindList = this.mindList.concat(res.data);
 					}
+					console.log('this.mindList', this.mindList);
+					totalpage = res.totalpage;
 				}
 			},
 			async getMindList(pageNo, isAppend, stopRefresh) {
-				isSearch = 0;
+				this.isSearch = 0;
 				const data = getApp().globalData;
 				const apiPrefix = data.serverUri;
 				const auth = data.auth;
@@ -264,14 +253,14 @@
 				params.nowpage = pageNo;
 				let url = apiPrefix + "?mod=ndgc&ac=list";
 				const res = await http.request(url, params);
-				console.log('res', res);
+				//console.log('res', res);
 				if(res.status == 1) {
 					if(!isAppend) {
 						this.mindList = res.data;
-						totalpage = res.totalpage;
 					} else {
 						this.mindList = this.mindList.concat(res.data);
 					}
+					totalpage = res.totalpage;
 					console.log('stopRefresh', stopRefresh);
 					if(stopRefresh) {
 						console.log('gor here! stop!');
@@ -283,15 +272,21 @@
 			lower() {
 				console.log('to lower!');
 				let _self = this;
-				console.log('page',nowpage);
+				console.log('page',nowpage, 'totalpage', totalpage);
 				if(nowpage>=totalpage) {
 					clearTimeout(interval);
 					return;
 				}
-				interval = setTimeout(function() {
+				this.status = 'loading';
+				interval = setTimeout(() => {
 					nowpage++;
+					if(nowpage==totalpage) {
+						this.status = 'nomore';
+					} else if(nowpage>totalpage) {
+						return;
+					}
 					console.log('page....',nowpage);
-					if(isSearch) {
+					if(_self.isSearch) {
 						_self.searchMindList(nowpage, true);
 					} else {
 						_self.getMindList(nowpage, true);
@@ -334,6 +329,7 @@
 			},
 			// 这里其实是收藏
 			async clickPraise(index) {
+				
 				// 只保留最后两个元素
 				this.delMap();
 				const t1 = parseInt(new Date().getTime()/1000);
@@ -351,6 +347,15 @@
 								url:'/pages/user/login_v2'
 							});
 						}
+					});
+					return;
+				}
+				const uid = this.mindList[index].uid;
+				if (uid== this.uid) {
+					uni.showToast({
+						icon:'none',
+						title:'不能收藏自己发布的!',
+						duration:2000,
 					});
 					return;
 				}
@@ -372,15 +377,16 @@
 				const route = '?mod=ndgc&ac=fb_sc';
 				const url  = apiPrefix + route;
 				const resp = await http.request(url, params);
+				let list = this.mindList[index];
 				if(resp.status == 1) {
-					if(type == 1) {
-						this.mindList[index].isCollect = true;
-					} else if(type == 0){
-						this.mindList[index].isCollect = false;
-					}
-					this.mindList[index].sfsc = 1 - this.mindList[index].sfsc;
+					//list.sfsc  = type;
+					//list.fbsccs = resp.fbsccs;
+					//this.$set(this.mindList, index, list);
+					//console.log('this.mindList[index].sfsc', this.mindList[index].sfsc);
+					this.mindList[index].sfsc = type;
 					this.mindList[index].fbsccs = resp.fbsccs;
 				}
+				console.log('this.mindList', this.mindList);
 				const t = parseInt(new Date().getTime()/1000);
 				eMap[t] = 1;
 				// 当后台相应成功后,点赞数+1.
@@ -406,18 +412,20 @@
 	font-weight: 400;
 	color: #CCCCCC; 
 }
-
+.u-navbar-inner {
+	border-bottom: 1px solid #F2F2F2;
+}
 #content {
 	/*#header-ask-box {*/
 		.slot-wrap {
 			display: flex;
 			align-items: center;
-			margin-top:55rpx;
+			margin-top:35rpx;
 			padding-left:32rpx;
 			padding-right:34rpx;
-			padding-bottom: 20rpx;
+			/*padding-bottom: 20rpx;*/
 			margin-bottom:31rpx;
-			border-bottom: 1px solid #F2F2F2;
+			
 			justify-content: space-between;
 			#slot-title {
 				display: flex;
@@ -432,8 +440,9 @@
 			
 			#slot-input {
 				display: flex;
+				flex-direction: row-reverse;
 				box-sizing: border-box;
-				width:400rpx;
+				width:360rpx;
 				height: 60rpx;
 				margin-left:20rpx;
 				padding-left: 20rpx;
@@ -455,14 +464,17 @@
 				margin-left:20rpx;
 				align-items: center;
 				line-height: 60rpx;
-				font-size: 40rpx;
+				font-size: 14px;
 				font-family: PingFang SC;
 				font-weight: 400;
-				color: #343434;
+				background-color: #F2F2F2;
+				padding:0rpx 28rpx;
+				border-radius: 18rpx;
 				view {
 					height: 60rpx;
 					display: block;
 					line-height: 60rpx;
+					color: #A890F0;
 				}
 			}
 		}
@@ -478,9 +490,11 @@
 			padding-left:46rpx;
 			padding-right: 46rpx;
 			.mind-title {
-				display: block;
+				display: flex;
+				/*padding-bottom: 10rpx;
+				border-bottom: 1px solid #F2F2F2;*/
 				// 超出省略号...
-				.mz_shuo {
+				/*.mz_shuo {
 					font-size:32rpx;
 					font-family: PingFang SC;
 					font-weight: 500;
@@ -498,7 +512,7 @@
 				}
 				.girl_title {
 					/*width: 500rpx;*/
-					width:474rpx;
+					/*width:474rpx;
 					display: block;
 					overflow: hidden;
 					height: 60rpx;
@@ -512,16 +526,46 @@
 					font-family: PingFang SC;
 					font-weight: 500;
 					color: #333232;
+				}*/
+				justify-content: space-between;
+				.mind-title-left {
+					display: flex;
+					/*width: 40%;*/
+					.avatar-class {
+						width: 38px;
+					    height: 38px;
+					    border-radius: 50%; 
+					}
+					align-items: center;
+					.mind-nickName {
+						/*margin-right:47rpx;*/
+						font-weight: 600;
+						margin-left:35rpx;
+					}
+				}
+				.mind-title-right {
+					display: flex;	
+					/*width: 60%;*/
+					align-items: center;
+					justify-content: flex-end;
+					.mind-pubdate {
+						font-size: 28rpx;
+						font-family: PingFang SC;
+						font-weight: 400;
+						color:#A3A3A3;
+					}
 				}
 			}
 			
+		
 			.mind-content {
+				display: block;
 				margin-top:43rpx;
 				margin-bottom: 27rpx;
 				font-size: 28rpx;
 				font-family: PingFang SC;
 				font-weight: 400;
-				color: #666666;
+				/*color: #666666;*/
 				margin-left: 9rpx;
 				margin-right: 9rpx;
 				overflow:hidden;
@@ -531,7 +575,7 @@
 				text-overflow:ellipsis;
 				display: -webkit-box;
 				word-break: break-all;
-				-webkit-line-clamp: 1;
+				-webkit-line-clamp: 6;
 				-webkit-box-orient: vertical;
 				color: #A3A3A3;
 			}
@@ -542,18 +586,13 @@
 				font-family: PingFang SC;
 				font-weight: 400;
 				color: #9A9A9A;
+				/*
+				padding-top:10px;
+				border-top: 1px solid #F3F3F3;*/
 				.mind-interact-left {
 					width:70%;
 					display: flex;
-					.mind-nickName {
-						/*margin-right:47rpx;*/
-						display: flex;
-						width:40%;
-					}
-					.mind-pubdate {
-						display: flex;
-						width:60%;
-					}
+					
 				}
 				.mind-interact-right {
 					width:30%;

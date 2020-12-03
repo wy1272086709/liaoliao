@@ -156,6 +156,10 @@
 			customBack: {
 				type: Function,
 				default: null
+			},
+			weightTitle: {
+				type: Boolean,
+				default: true
 			}
 		},
 		data() {

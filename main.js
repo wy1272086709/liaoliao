@@ -7,6 +7,9 @@ import storeObj from './store/store.js'
 import uView from 'uview-ui'
 Vue.use(uView);
 
+
+// i18n部分的配置
+
 Vue.use(Vuex)
 const store = new Vuex.Store(storeObj)
 Vue.config.productionTip = false

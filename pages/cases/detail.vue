@@ -4,7 +4,7 @@
 			<view class="title">
 				<text style="font-weight: bold;">{{title}}</text>
 			</view>
-			<view style="flex-direction: row;">
+			<view style="display:flex;flex-direction: row;">
 				<view class="author">
 					<text>{{author}}</text>
 				</view>
@@ -13,7 +13,7 @@
 				</view>
 			</view>
 		</view>
-		<view id="view-article">
+		<view id="view-article" class="u-content">
 			<!--
 			<rich-text :nodes="htmls"></rich-text>
 			-->
@@ -41,11 +41,8 @@
 </template>
 
 <script>
-	/*import parseHtml from '../../common/html_parse';*/
-	import uParse from '../../uview-ui/components/u-parse/u-parse.vue'
 	import http from '../../common/http.js';
 	import util  from '../../common/util.js';
-	import uIcon from '../../uview-ui/components/u-icon/u-icon.vue';
 	let nid;
 	export default {
 		data() {
@@ -78,13 +75,15 @@
 			}
 		},
 		components:{
-			uIcon,
-			uParse
+			
 		},
 		onLoad(option) {
+			//#ifdef MP-QQ || MP-WEIXIN
 			uni.showShareMenu({
 			    withShareTicket: true
 			});
+			//#endif
+			
 			//#ifdef MP-QQ
 			if(option.is_share == 1) {
 				uni.switchTab({
@@ -93,7 +92,10 @@
 				return;
 			}
 			//#endif
+			
+			//#ifdef MP-QQ || MP-WEIXIN
 			this.setIosBackground();
+			//#endif
 			console.log('onload options', option);
 			let cid = option.cid;
 			this.cid = cid;
@@ -101,7 +103,9 @@
 			nid = aid;
 			let articleTitle = option.title;
 			this.author = articleTitle;
+			
 			this.getHuashuArticleView(cid, aid);
+			
 			// 设置view height
 			let winHeight = uni.getSystemInfoSync().windowHeight;
 			this.height = winHeight;
@@ -145,7 +149,27 @@
 					url: this.prevHref
 				});
 			},
+			authLogin() {
+				const uid = this.uid;
+				if (!uid) {
+					return false;
+				}
+				return true;
+			},
 			async thumbup() {
+				const isLogin = this.authLogin();
+				if(!isLogin) {
+					uni.showToast({
+						icon:'none',
+						title:'请先登录',
+						complete() {
+							uni.navigateTo({
+								url: '/pages/user/login_v2'
+							});
+						}
+					});
+					return;
+				}
 				const data = getApp().globalData;
 				const apiPrefix = data.serverUri;
 				const auth = data.auth;
@@ -221,7 +245,7 @@
 					this.nextHref  = this.getLink(resp.back);
 					// 解析html内容
 					// console.log(resp.content);
-					resp.content = resp.content.replace(/<img/gi,'<img style="width:100%;height:auto"');
+					//resp.content = resp.content.replace(/<img/gi,'<img style="width:100%;height:auto"');
 					this.htmls = resp.content;
 					//console.log('this.htmls :', this.htmls);
 				});
@@ -241,15 +265,13 @@
 	}
 </script>
 
-<style>
-	view {
-		display: flex;
-	}
+<style lang="scss">
 	
 	image {
 		
 	}
 	#title {
+		display: flex;
 		flex-direction: column;
 		margin-left:32rpx;
 		margin-right:32rpx;
@@ -264,6 +286,7 @@
 	}
 	
 	.author {
+		display: flex;
 		margin-top:10px;
 		height: 48rpx;
 		margin-right: 20px;
@@ -271,6 +294,7 @@
 	}
 	
 	.readtime {
+		display: flex;
 		margin-top: 10px;
 		height: 48rpx;
 	}

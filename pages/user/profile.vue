@@ -2,22 +2,30 @@
 	<view>
 		<view id="list">
 			<uni-list>
-				<uni-list-item title="头像" @tap="switchImage">
+				<uni-list-item title="头像" @tap="switchImage" isBottomEvery="1">
 					<template v-slot:right="">
 						<image id="image-size" :src="avatarUrl"></image>
 					</template>
 				</uni-list-item>
-				<uni-list-item title="昵称" @tap="editNickname">
+				<uni-list-item title="昵称" @tap="editNickname" isBottomEvery="1">
 					<template v-slot:right="">
 						<text class="bottom-version-text">{{nickName}}</text>
 					</template>
 				</uni-list-item>
-				<uni-list-item title="绑定手机" @tap="bindPhone">
+				<uni-list-item title="绑定手机" @tap="bindPhone" isBottomEvery="1">
 					<template v-slot:right="">
 						<text class="bottom-version-text">{{phone}}</text>
 					</template>
 				</uni-list-item>
 			</uni-list>
+		</view>
+		
+		<view id="bottom-view" :style="{top: bottom+'px'}">
+			<view class="login-info-text">
+				<navigator url="/pages/user/user_agreement" tap="gotoUserAllowPage" class="underline-text">《用户许可》</navigator>
+				<text>和</text>
+				<navigator url="/pages/user/software_license" tap="gotoUserLicensePage" class="underline-text">《隐私协议》</navigator>
+			</view>
 		</view>
 	</view>
 </template>
@@ -62,6 +70,7 @@
 				/*phone: '',
 				avatarUrl: '',
 				nickName: ''*/
+				bottom: '',
 			}
 		},
 		onLoad() {
@@ -70,6 +79,8 @@
 			let userInfo    = userInfoStr ? JSON.parse(userInfoStr): {};
 			uid        = userInfo.uid;
 			console.log('uid', uid, 'userInfo', userInfo);
+			const info = uni.getSystemInfoSync();
+			this.bottom = info.windowHeight - 60;
 			this.getUserInfo();
 		},
 		methods: {
@@ -249,9 +260,9 @@
 	}
 </script>
 
-<style lang="less" scoped>
+<style lang="scss">
 	page {
-		background: #F3F3F3;
+		background-color: #F2F2F2;
 	}
 	#list {
 		margin-top:58rpx;
@@ -261,6 +272,9 @@
 		
 		background: #FFFFFF;
 		border-radius: 20rpx;
+	}
+	.uni-list-item:last-child {
+		margin-bottom: 5px;
 	}
 /deep/ .uni-list-item__content-title {
 	font-size: 28rpx !important;
@@ -287,5 +301,27 @@
 	font-family: PingFang SC;
 	font-weight: 500;
 	color: rgba(153, 153, 153, 1);
+}
+#bottom-view {
+	margin-left:30rpx;
+	margin-right:30rpx;
+	display: flex;
+	width:690rpx;
+	box-sizing: border-box;
+	padding:20rpx;
+	justify-content: center;
+	position: absolute;
+	font-size: 24rpx;
+	font-family: PingFang SC;
+	font-weight: 400;
+	color: #9A9A9A;
+	.login-info-text {
+		display: flex;
+		white-space: nowrap;
+	}
+}
+.underline-text {
+	color: #000000;
+	text-decoration: underline;
 }
 </style>

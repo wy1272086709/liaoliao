@@ -2,11 +2,11 @@
 	<view class="wrap">
 		<swiper class="swiper" :style="{height: height *2 + 'rpx'}" :autoplay="autoplay" :interval="interval" :duration="duration"
 		 :circular='loop' @change='change' :previous-margin='previousMargin + "rpx"' :next-margin='nextMargin + "rpx"'>
-			<swiper-item v-for="(item,index) in list" :key='index' @click="$emit('clickItem',item)">
+			<swiper-item v-for="(item,index) in list" :key='index' @tap="$emit('clickItem',item)">
 				<view v-if="list && list.length>0" class="item" :class="[!crown ? '' : current==index ? 'crown-active':'crown']">
-					<image v-if="!slots" class="item-img" :class="[imgShadow?'imgShadow':'']" :src="item[imgKey]" :style="{ borderRadius: imgRadius + 'px',width:imgWidth}"
-					 mode=""></image>
-					<slot v-else :data='item'></slot>
+					<image :lazy-load="true" v-if="!hasSlots && item[imgKey]" class="item-img" :class="[imgShadow?'imgShadow':'']"  :src="item[imgKey]" :style="{ borderRadius: imgRadius + 'px',width:imgWidth}"
+					 @load="loadAdsImg(item[imgKey])"></image>
+					<slot v-else></slot>
 				</view>
 			</swiper-item>
 		</swiper>
@@ -98,25 +98,31 @@
 		data() {
 			return {
 				current: 0,
-				slots: false
+				hasSlots: false
 			};
 		},
 		watch: {
 			// 判断异步数据源，是否使用插槽自定义样式
+			//#ifdef APP-PLUS
 			list: {
 				handler(val) {
 					if (val.length > 0 && this.$slots.default) {
-						this.slots = true
+						this.hasSlots = true
 					}
 				},
 				immediate: true,
-			}
+			},
+			//#endif
 		},
 		methods: {
 			change(event) {
 				let current = event.detail.current
 				this.current = current
 				this.$emit('change', this.list[current])
+			},
+			loadAdsImg(src) {
+				let d = new Date;
+				console.log('ads img:img src:'+src+' time:'+d.getTime());
 			}
 		}
 	}

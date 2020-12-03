@@ -1,6 +1,7 @@
 {
-  "navigationBarTitleText": "恋爱技巧文章",
-  "navigationBarBackgroundColor": "#2369E6",
-  "backgroundColor": "#2369E6",
-  "usingComponents": {}
+  "navigationBarTitleText": "",
+  "usingComponents": {
+    "u-parse": "/uview-ui/components/u-parse/u-parse",
+    "u-icon": "/uview-ui/components/u-icon/u-icon"
+  }
 }

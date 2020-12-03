@@ -8,8 +8,8 @@
 		"es6": false,
 		"enhance": false,
 		"postcss": false,
-		"preloadBackgroundData": true,
-		"minified": true,
+		"preloadBackgroundData": false,
+		"minified": false,
 		"newFeature": false,
 		"coverView": true,
 		"nodeModules": false,
@@ -31,7 +31,7 @@
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.9.2",
+	"libVersion": "",
 	"appid": "wx4e139ad1e1db3d80",
 	"projectname": "myapp",
 	"simulatorType": "wechat",
@@ -50,25 +50,28 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 3,
 			"list": [
 				{
-					"name": "恋爱话术",
-					"query": "",
+					"name": "swiper",
 					"id": 0,
-					"pathName": "pages/index/index"
+					"pathName": "pages/index/init"
 				},
 				{
-					"name": "恋爱技巧",
-					"query": "",
+					"name": "test",
 					"id": 1,
-					"pathName": "pages/cases/index"
+					"pathName": "pages/mind_square/index"
 				},
 				{
-					"name": "个人中心",
-					"query": "",
+					"name": "test",
 					"id": 2,
-					"pathName": "pages/user/index"
+					"pathName": "pages/user/user_index"
+				},
+				{
+					"id": 3,
+					"name": "pages/index/app_index",
+					"pathName": "pages/index/app_index",
+					"query": ""
 				}
 			]
 		}

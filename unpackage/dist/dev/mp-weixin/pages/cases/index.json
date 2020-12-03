@@ -1,9 +1,6 @@
 {
   "navigationBarTitleText": "恋爱技巧",
-  "navigationBarBackgroundColor": "#2369E6",
-  "disableScroll": true,
-  "backgroundColor": "#2369E6",
   "usingComponents": {
-    "tab-bar": "/common/tabbar"
+    "u-tabs": "/uview-ui/components/u-tabs/u-tabs"
   }
 }

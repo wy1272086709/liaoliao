@@ -1,0 +1,6 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "uni-transition": "/components/uni-transition/uni-transition"
+  }
+}

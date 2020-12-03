@@ -4,57 +4,25 @@
 	<scroll-view :show-scrollbar="false">
 		<scroll-view :show-scrollbar="false">
 			<!-- 判断用户这个版本是否第一次进入,小程序中,这个值始终为true,APP中需要通过接口来判断 -->
-			<scroll-view id="container-view">
-				<!-- #ifdef MP-WEIXIN || MP-QQ -->
-				<view id="bg-view">
-					<image src="../../static/img/index/bg.png" class="bg-view-image"></image>
-				</view>
-				<!--
-				<view id="ads-view" >
-					
-					<swiper class="swiper"  :indicator-dots="true" :autoplay="true" :interval="6000" :duration="500">
-						<block v-for="(ad,index2) in adsArr" :key="ad.ad_id">
-							<swiper-item   class="swiper-item-class" 
-							@tap="gotoAdsUrl(index2)" style="width:750rpx;">
-								<image :src="ad.ad_img"  class="ads-image"></image>
-							</swiper-item>
-						</block>
-					</swiper>
-					
-					<ls-swiper :list="base_lsit" imgKey="ad_img" :crown="true" :loop="true" :shadow='true' :height="160" :previousMargin="60"
-					 :nextMargin="60" :imgRadius="5" :autoplay="true" :interval="6000" @clickItem="clickItem"/>
-					
-					  <customSwiper :swiper-list="swiperList" />
-					
-				</view>
-				-->
-				<!-- #endif -->
+			<scroll-view id="container-view">	
 				<view id="search-view"  @tap="gotoSearchWordPage">
-					<!-- #ifdef APP-PLUS || H5 -->
+					
 					<view id="search-btn-view">
 						<uni-icons type="search" :size="iconSize" :color="'#B2B2B2'"></uni-icons>
 					</view>
 					<text id="search-text" style="align-items:center;" class="app-search-class" :style="{zIndex: inputIndex}">
 						大家都在搜
 					</text>
-					<!-- #endif -->
-					
-					<!-- #ifdef MP-WEIXIN  || MP-QQ -->
-						<input id="search-text" type="text"  placeholder="点击这里输入对方说的话"  placeholder-style="align-items:center;color:rgba(255,255,255, 1);" placeholder-class="search-class" v-model="keyword" @confirm="searchKeyword" />
-						<view id="search-btn-view" @tap="searchKeyword()">
-							<uni-icons type="search" :size="iconSize" :color="'rgba(255,255,255,1)'"></uni-icons>
-						</view>
-					<!-- #endif -->
 				</view>
 				
-				<!-- #ifdef APP-PLUS || H5 -->
+				
 				<view id="search-result">
 					<view>
 						<text>当前总量</text> <text class="search-res-num"> {{ total}}</text><text style="margin-right: 8rpx;">条,</text>
 						<text id="today-last-update">今日更新</text> <text class="search-res-num">{{ update_num }}</text><text>条</text>
 					</view>
 				</view>
-				<!-- #endif -->
+				
 				
 				<!-- :style="'height:'+contentHeight+'px;' -->
 				<view  id="content-view-box">
@@ -110,57 +78,6 @@
 			</scroll-view>
 		</scroll-view>
 	</scroll-view>
-	<!--
-	<tabBar :current="0" :position="'relative'"></tabBar>
-	-->
-	<!--
-	<view id="absolute-view" :class="maskClass" @touchmove.stop.prevent="moveHandle">
-		<uni-transition :show="isShowMask" :modeClass="['slide-top']">
-			<view class="mask-view" :style="'position:absolute;top:'+searchInputTop+'rpx;left:'+searchInputLeft+'rpx;'">
-				<image src="../../static/img/mask/index/search_border_h.png" style="width: 686rpx;height:60rpx ;"></image>
-			</view>
-			<view :style="'position:absolute;top:'+arrowTop+'rpx;left:'+arrowLeft+'rpx;'">
-				<image src="../../static/img/mask/index/arrow2.png" style="width:51rpx;height:40rpx;"></image>
-			</view>
-			<view :style="'position:absolute;top:'+(arrowTop+57)+'rpx;left:'+(arrowLeft-109)+'rpx;width:291rpx;'">
-				<text>输入妹子说的话，点击搜索，即可获取你想要的回复</text>
-			</view>
-			<view :style="'position:absolute;top:'+(arrow1Top)+'px;left:215rpx;'">
-				<image src="../../static/img/mask/index/arrow1.png" style="width:50rpx;height:37rpx;"></image>
-			</view>
-			
-			<view  :style="'position:absolute;top:'+firstMeetTop+'px;left:32rpx;'">
-				<text>{{navList0.firstNav ? navList0.firstNav.title:''}}</text>
-			</view>
-			
-			<view  :style="'position:absolute;top:'+infoUpdateTop+'px;left:'+(todayUpdateLeft-100)+'px;'">
-				<text>话术每天更新,永远不会老套 </text>
-			</view>
-			
-			<view  :style="'position:absolute;top:'+impressionTop+'px;left:32rpx;'">
-				<text>{{navList1.firstNav ? navList1.firstNav.title: ''}}</text>
-			</view>
-		
-			<view :style="'position:absolute;top:'+firstMeetTop+'px;left:136rpx;'">
-				<image src="../../static/img/mask/index/large_arrow1.png" style="width:114rpx;height:115rpx;"></image>
-			</view>
-			
-			<view :style="'position:absolute;top:'+MiddleArrowTop+'px;left:271rpx;width:277rpx;'">
-				<text>恋爱路上每一步,一步一个脚印 </text>
-			</view>
-			
-			<view :style="'position:absolute;top:'+(MiddleArrowTop+36)+'px;left:160rpx;'">
-				<image src="../../static/img/mask/index/large_arrow2.png" style="width:145rpx;height:116rpx;"></image>
-			</view>
-			
-			<view :style="'position:absolute;top:'+nextTop+'px;left:0rpx;width:100%;z-index:100000000000'" id="nextBtn" @tap="gotoNext">
-				<view>
-					<text>下一步</text>
-				</view>
-			</view>
-		</uni-transition>
-	</view>
-	-->
 </view>
 </template>
 

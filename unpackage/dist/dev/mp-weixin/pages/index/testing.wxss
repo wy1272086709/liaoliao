@@ -1,0 +1,227 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+page {
+  background-color: #F2F2F2;
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background-color: transparent;
+  display: none;
+}
+#tab-scroll {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  height: 50rpx;
+  margin-left: 32rpx;
+  margin-right: 32rpx;
+  overflow-x: auto;
+  width: 686rpx;
+  margin-top: 56rpx;
+  -webkit-overflow-scrolling: touch;
+}
+#tab-scroll .header-view-box {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  font-size: 32rpx;
+  font-family: PingFang SC;
+  font-weight: 800;
+  color: #141414;
+}
+#tab-scroll .header-view-box view {
+  height: 46rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-shrink: 0;
+          flex-shrink: 0;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  white-space: nowrap;
+  -webkit-flex-basis: 170rpx;
+          flex-basis: 170rpx;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+  /*margin-right:20px;*/
+}
+#tab-scroll .header-view-box view view {
+  height: 46rpx;
+  /*padding-bottom: 5rpx;*/
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  text-align: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+#testing-content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  margin-left: 32rpx;
+  margin-right: 32rpx;
+}
+#testing-content .swiper-item-css .scroll-view-content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+#testing-content .testing-box {
+  background: #FFFFFF;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  width: 320rpx;
+  height: 340rpx;
+  margin-bottom: 33rpx;
+}
+#testing-content .testing-box .testing-title-view {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  width: 320rpx;
+  height: 260rpx;
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  border: 1px solid black;
+  background-repeat: 'no-repeat';
+  background-size: 320rpx 260rpx;
+}
+#testing-content .testing-box .testing-title-view .has-pass {
+  width: 100%;
+  height: 42rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+          justify-content: flex-end;
+}
+#testing-content .testing-box .testing-title-view .has-pass view {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  width: 115rpx;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  font-size: 26rpx;
+  background-color: #E93EE3;
+  color: #FFFFFF;
+  border-bottom-left-radius: 36rpx;
+  border-top-right-radius: 20rpx;
+}
+#testing-content .testing-box .testing-title-view .testing-title {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  height: 40rpx;
+  background: #000000;
+  opacity: 0.5;
+  font-size: 24rpx;
+  font-family: PingFang SC;
+  font-weight: 500;
+  color: #FFFFFF;
+  /*border-radius: 20rpx 20rpx 0rpx 0rpx;*/
+}
+#testing-content .testing-box .testing-stat-view {
+  margin-left: 32rpx;
+  margin-right: 32rpx;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+#testing-content .testing-box .testing-stat-view .testing-stat-button {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  width: 120rpx;
+  height: 40rpx;
+  border: 1px solid #A88FEF;
+  border-radius: 20rpx;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  font-size: 20rpx;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: #A88FEF;
+  border-radius: 20rpx;
+}
+#testing-content .testing-box .testing-stat-view .testing-num {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+#testing-content .testing-box .testing-stat-view .testing-num text {
+  font-size: 24rpx;
+  font-family: PingFang SC;
+  font-weight: 500;
+  color: #343434;
+}
+#testing-content .testing-box .testing-stat-view .testing-num .num {
+  color: #A88FEF;
+}
+

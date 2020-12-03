@@ -3,31 +3,84 @@
 		<scroll-view :scroll-y="true"  :show-scrollbar="false" :style="'height:'+contentHeight+'px;z-inex:1001;'" @scrolltolower="lower">
 			<view id="mind-ask-view">
 				<view class="mind-title">
+					<!--
 					<view id="mind-title-mzshuo">
 						<text>妹子说:</text>
 					</view>
-					<text id="mind-title-firstline">{{ask.title}}</text>
+					-->
+					<view class="mind-title-left">
+						<view>
+							<image :src="ask.tx" class="avatar-class"></image>
+						</view>
+						<view class="mind-nickName">{{ask.fbr}}</view>
+					</view>
+					<view  class="mind-title-right">
+						<view class="mind-pubdate">{{ask.pubdate}}</view>
+					</view>
+					<!-- :class="ask.title.length<15 ? 'one-line-css': 'more-line-css'" -->
+					<!--
+					<u-collapse :headStyle="{lineHeight:60+'rpx', padding:'0px 0px'}" :bodyStyle="{paddingTop:'10px'}">
+						<u-collapse-item :open="false" :title="ask.title" :key="ask.title" >
+							<text>{{ ask.title }}</text>
+						</u-collapse-item>
+					</u-collapse>
+					-->
+					<!--
+					<view id="right-view">
+						<view id="mind-title-firstline" :class="{'one-line-css':isOne,'more-line-css':!isOne}" :style="isOne?'line-height: 60rpx;':'line-height:1;'">
+							<text>{{ ask.title }}</text>
+						</view>
+						-->
+						<!--
+						<view id="mind-title-icon" @tap="showTitle">
+							<u-icon :name="isOne?'arrow-up':'arrow-down'" size="32" color="#A6A6A6"></u-icon>
+						</view>
+						
+					</view>
+					-->
 				</view>
 				<view class="mind-content">
-					<text>{{ask.description}}</text>
+					<!--
+					<u-collapse :headStyle="{lineHeight:60+'rpx', padding:'0px 0px'}">
+						<u-collapse-item :open="false" :title="ask.description" :key="ask.description">
+							<text>{{ask.description}}</text>
+						</u-collapse-item>
+					</u-collapse>
+					-->
+					<view id="mind-content-box">
+						<view :class="{'one-line-css':isContentOne,'more-line-css':!isContentOne}" @tap="showContent">
+							<text>{{ ask.description }}</text>
+						</view>
+						<view class="mind-title-icon" @tap="showContent">
+							<u-icon :name="isContentOne?'arrow-up':'arrow-down'" size="32" color="#A6A6A6"></u-icon>
+						</view>
+					</view>
 				</view>
 				<view class="mind-interact">
 					<view class="mind-interact-left">
+						<!--
 						<view class="mind-nickName">{{ask.fbr}}</view>
 						<view class="mind-pubdate">{{ask.pubdate}}</view>
+						-->
 					</view>
 					<view class="mind-interact-right">
-						<view class="praise-view" @tap="collectQuestion()">
+						<view class="praise-view" @tap.stop="collectQuestion()">
 							<!--
 							<image src="../../static/img/mind_square/love.png" style="width: 28rpx;height:24rpx;margin-right:15.01rpx;"></image>
 							-->
-							<u-icon name="heart" size="32" :color="isCollect==0?'#A6A6A6':'#FF3300'" style="margin-right:15.01rpx;"></u-icon>
+							<u-icon name="heart" size="32" :color="ask.sfsc==0?'#A6A6A6':'#FF3300'" style="margin-right:15.01rpx;"></u-icon>
 							<text>{{ask.fbsccs}}</text>
 						</view>
-						<view class="reply-view" @tap="gotoReply">
+						<view class="reply-view">
 							<image src="../../static/img/mind_square/message.png" style="width: 24rpx;height:24rpx;margin-right:15.01rpx;"></image>
 							<text>{{ask.hfsccs}}</text>
 						</view>
+						<!--
+						<view @tap="jubao">
+							<image src="../../static/img/mind_square/jubao.png" style="width: 24rpx;height:24rpx;margin-left:15.01rpx;margin-right:15.01rpx;"></image>
+							<text>举报</text>
+						</view>
+						-->
 					</view>
 				</view>
 			</view>
@@ -37,7 +90,7 @@
 					<view id="answer-list-box">
 						<view v-for="(answer,index) in answerList" :key="answer.hid" class="answer-item">
 							<view class="left-icon">
-								<image :src="answer.litpic" class="left-avatar"></image>
+								<image :src="answer.litpic ? answer.litpic: '../../static/img/user/people.png'" class="left-avatar"></image>
 							</view>
 							<view class="right-answer-view">
 								<view class="answer-first-line">
@@ -50,30 +103,39 @@
 										</view>
 									</view>
 									
-									<view class="first-line-after" @tap="collectAnswer(index)">
+									<view class="first-line-after" >
 										<!--
 										<image src="../../static/img/mind_square/love.png" style="width: 28rpx;height:24rpx;margin-right:15.01rpx;"></image>
 										-->
-										<u-icon name="heart" size="32" :color="answer.isCollect?'#FF3300':'#A6A6A6'" style="margin-right:15.01rpx;"></u-icon>
-										<text>{{answer.hfsccs}}</text>
+										<view @tap.stop="collectAnswer(index)" style="padding-right:10rpx;">
+											<u-icon name="heart" size="32" :color="answer.hfsc?'#FF3300':'#A6A6A6'" style="padding-right:15.01rpx;"></u-icon>
+											<text>{{answer.hfsccs}}</text>
+										</view>
+										<view @tap.stop="jubaoHf(answer.hid)">
+											<image src="../../static/img/mind_square/jubao.png" style="width: 24rpx;height:24rpx;padding-right:15.01rpx;"></image>
+											<text>举报</text>
+										</view>
 									</view>
 								</view>
 								<view class="answer-second-line">
-									<text>{{answer.content}}</text>
+									<u-read-more :showHeight="150" :close-text="closeText" :toggle="true" textIndent="'0px'">
+										<text>{{answer.content}}</text>
+									</u-read-more>
 								</view>
+								
 						</view>
 					</view>
 				</view>
 			</view>
 		</scroll-view>
 		<!-- var(--window-bottom) -->
-		<view id="bottom-view" :style="{bottom:bottom+'px'}">
+		<view id="bottom-view" :style="{bottom:bottom+'px', display:bottomDisplay}">
 			<!-- 回复 -->
 			<view id="left-reply-icon">
 				<image src="../../static/img/mind_square/reply.png" class="reply-css"></image>
 			</view>
 			<view id="replay-text-view">
-				<textarea  @focus="areaFocus" @blur="areaBlur" :adjustPosition="false"  class="uni-textarea" :focus="isFocus" auto-height="true" maxlength="100" v-model.trim="content" placeholder="快来帮帮这位兄弟吧~~"  placeholder-class="replay-placeholder" />
+				<textarea  @focus="areaFocus" maxlength="-1" @blur="areaBlur" :adjustPosition="false"  class="uni-textarea" :focus="isFocus" auto-height="true"  v-model.trim="content" placeholder="快来帮帮这位兄弟吧~~"  placeholder-class="replay-placeholder" />
 			</view>
 			<view id="reply-btn-view" @tap="reply">
 				<view id="publish-btn-view">
@@ -81,52 +143,80 @@
 				</view>
 			</view>
 		</view>
+		
+		<uni-popup id="popupDialog" ref="popupDialog" type="share" :zIndex="9999999999999">
+			<uni-popup-share :bottomData="shareData" :reportData="reportData" @select="handleSelect"></uni-popup-share>
+		</uni-popup>
+		
+		<!-- 提交信息 -->
+		<uni-popup id="dialogInput" ref="dialogInput" type="dialog" @change="changeDialogShow">
+			<uni-popup-dialog mode="input" title="举报提示" placeholder="请输入举报原因" @confirm="dialogInputConfirm"></uni-popup-dialog>
+		</uni-popup>
 	</view>
 </template>
 
 <script >
-	import uIcon from '../../uview-ui/components/u-icon/u-icon.vue'
+	import uIcon from '../../uview-ui/components/u-icon/u-icon.vue';
+	import uReadMore from '../../uview-ui/components/u-read-more/u-read-more.vue';
+	import uCollapseItem from '../../uview-ui/components/u-collapse-item/u-collapse-item.vue';
+	import uCollapse from '../../uview-ui/components/u-collapse/u-collapse.vue';
 	import http from '../../common/http.js';
 	import util from '../../common/util.js';
+	import uniPopupShare from '@/components/uni-popup/uni-popup-share.vue';
+	import uniPopupDialog from '@/components/uni-popup/uni-popup-dialog.vue';
 	let eMap = {};
 	let nid = '';
 	let interval = null;
 	let nowpage = 1;
 	let totalpage = 1;
 	let pageNo  = 1;
+	// 举报的回复ID
+	let rHid = '';
+	let jubaoFrom = '';
 	export default {
 		data() {
 			return {
-				isAble: true,
+				isOne: true,
+				isContentOne: true,
 				isFocus: false,
 				answerList: [
-					{
-						// 头像,默认头像
-						litpic: 'https://thirdwx.qlogo.cn/mmopen/vi_32/E9fiagcYNaOiatcFStyL8uVApmNw4QfLlmRSiaibxTSzw6HucD7Kn975QzBh9ABu4fLIov1peUYWEianuFicjTvtqxbA/132',
-						hfr: '汪毓',
-						pubdate: '10小时前',
-						hfsccs: '2541',
-						content: '首先女生肯定是需要人安慰,需要人安慰,需要人安慰,需要人安慰',
-						hid: 1,
-						hfsc: 0,
-						isCollect:0,
-					}
+					
 				],
 				ask: {
-					title: '最近心情不是很好',
-					description: '女生突然跟我说最近心情不好,我要怎么安慰她',
-					fbr: '小明',
-					pubdate: '10小时前',
-					fbsccs: '2641',
-					hfsccs: '654',
-					sfsc: 0
+					
 				},
 				isCollect : false,
 				content: '',
 				contentHeight: '',
 				replyTop: '',
-				//isShowRepley: true,
-				bottom: ''
+				bottom: '',
+				closeText: '查看更多',
+				shareData: [
+					{
+						text: '朋友圈',
+						icon: '/static/img/user/wx_timeline.png',
+						name: 'wx_timeline'
+					},
+					{
+						text: '微信',
+						icon: '/static/img/user/wx.png',
+						name: 'wx'
+					},
+					/*
+					{
+						text: 'QQ',
+						icon: '/static/img/user/qq.png',
+						name: 'qq'
+					},*/
+				],
+				bottomDisplay: 'flex',
+				reportData: [
+					{
+						text: '举报',
+						icon: '/static/img/mind_square/jubao.png',
+						name: 'jubao'
+					}
+				]
 			}
 		},
 		computed:{
@@ -140,14 +230,120 @@
 			},
 		},
 		components:{
-			uIcon
+			uIcon,
+			uReadMore,
+			uCollapseItem,
+			uCollapse,
+			uniPopupShare,
+			uniPopupDialog
 		},
 		onLoad(option) {
 			nid = option.nid;
 			this.init(option.nid);
 			this.bottom = 0;
+			console.log('plus.version', plus.runtime.version);
 		},
 		methods: {
+			showTitle() {
+				this.isOne = !this.isOne;
+			},
+			showContent() {
+				this.isContentOne = !this.isContentOne;
+			},
+			jubao() {
+				
+			},
+			change() {
+				
+			},
+			changeDialogShow(e) {
+				console.log('changeDialogShow', e);
+				if (e.show == false) {
+					// 不显示
+					this.bottomDisplay = 'flex';
+				}
+			},
+			async dialogInputConfirm(callback, val) {
+				if (typeof callback == 'function') {
+					callback();
+					this.bottomDisplay = 'flex';
+				}
+				
+				console.log('val', val);
+				const reason = this.reportReason;
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				const params = {
+					nid:nid,
+					uid: this.uid,
+					content: val,
+					filterData: true
+				};
+				params.auth = auth;
+				if(jubaoFrom == 1) {
+					params.hid = rHid;
+				}
+				// 举报的接口...
+				const url = apiPrefix + "?mod=ndgc&ac=jubao";
+				console.log('url', url);
+				console.log('params:', params);
+				const respData = await http.request(url, params);
+				console.log('resData: jubao', respData);
+				if(respData.status == 1) {
+					uni.showToast({
+						title:'举报成功',
+						icon:'success',
+						duration:1000
+					});
+				}
+			},
+			jubaoHf(hid) {
+				rHid = hid;
+				console.log('hid', hid);
+				// 举报来自回复...
+				jubaoFrom = 1;
+				this.bottomDisplay = 'none';
+				this.$refs.dialogInput.open();
+				/*
+				uni.showModal({
+					title:'',
+					content: '你确定要举报该内容吗?',
+					showCancel:true,
+					confirmText:'确定',
+					success(res) {
+						if(res.confirm) {
+							// 点击了确定按钮
+							
+						} else if(res.cancel) {
+							// 点击了取消按钮
+							
+						}
+					},
+					cancelText:'取消'
+				});*/
+				
+			},
+			handleSelect(item, callback) {
+				console.log('item', item);
+				const nameStr = item.item.name;
+				// QQ 分享
+				if(nameStr == 'qq') {
+					this.shareMindQues('qq', 'qq');
+				} else if(nameStr == 'wx') {
+					this.shareMindQues('weixin', 'weixin');
+				} else if(nameStr == 'wx_timeline') {
+					this.shareMindQues('weixin', 'wx_timeline');
+				}  else if(nameStr == 'jubao') {
+					console.log('callback', callback);
+					if( typeof callback == 'function') {
+						callback();
+						this.bottomDisplay = 'none';
+					}
+					jubaoFrom = 2;
+					this.$refs.dialogInput.open();
+				}
+			},
 			gotoReply(e) {
 				// 文本框获得焦点
 				if(!this.uid) {
@@ -165,12 +361,33 @@
 				}
 				// 显示发送消息的文本框
 				//this.isShowRepley = !this.isShowRepley;
-				console.log('e', e);
+				//this.isFocus = !this.isFocus;
 				/*if(this.isShowRepley) {
 					const d = e.detail;
 					//this.replyTop = d.y + 91;
-					this.isFocus = true;
+					
 				}*/
+			},
+			shareMindQues(provider, scene) {
+				console.log('shareWxOrWxTimeline');
+				let _self = this;
+				let sceneStr = '';
+				sceneStr = (scene=='wx_timeline') ? 'WXSenceTimeline' : "WXSceneSession"
+				uni.share({
+					provider: provider,
+					scene: sceneStr,
+					type: 0,
+					title: '我在妙语千寻上找话术',
+					summary: '拒绝尬聊，多方位开启话题助阵您不疲累不应付 妙语千寻，打开话题让约会不在尴尬',
+					imageUrl: '../../static/img/user/miaoyu.png',
+					href: "https://kuwoi.com/",
+					success: (res) => {
+						console.log("success:" + JSON.stringify(res));
+					},
+					fail: (e) => {
+						
+					}
+				});
 			},
 			areaFocus(e) {
 				console.log('areaFocus', e);
@@ -180,10 +397,11 @@
 				console.log('info', info);
 				const isIPhoneX = getApp().globalData.isIphoneX;
 				console.log('isPhoneX', isIPhoneX);
+				console.log('this.bottom', this.bottom);
 				if(isIPhoneX) {
-					this.bottom = h - uni.upx2px(68);
+					//this.bottom = h - uni.upx2px(68);
 				} else {
-					this.bottom = h;
+					//this.bottom = h;
 				}
 			},
 			areaBlur(e) {
@@ -200,7 +418,8 @@
 				const apiPrefix = data.serverUri;
 				const auth = data.auth;
 				const params = {
-					nid:nid
+					nid:nid,
+					uid: this.uid
 				};
 				params.auth = auth;
 				// 获取问题详情
@@ -210,6 +429,7 @@
 				console.log('infoStr', infoStr);
 				const info    = infoStr ? JSON.parse(infoStr): {};
 				this.ask = {...info, ...resp};
+				this.isOne = [...this.ask.title].length<=13 ? true:false;
 				console.log('this.ask', this.ask);
 			},
 			async getQuestionReplyList(nid,pageNo,isApppend) {
@@ -218,6 +438,7 @@
 				const auth = data.auth;
 				const params = {
 					nid:nid,
+					uid: this.uid,
 					filterData: true
 				};
 				params.auth = auth;
@@ -240,6 +461,7 @@
 					});
 					return;
 				}
+				/*
 				if(this.content.length>500) {
 					uni.showToast({
 						title:"回复内容长度不超过500个字",
@@ -247,7 +469,7 @@
 						icon:'none'
 					});
 					return;
-				}
+				}*/
 				const data = getApp().globalData;
 				const apiPrefix = data.serverUri;
 				const auth = data.auth;
@@ -262,7 +484,7 @@
 				const resp = await http.request(url, params);
 				if(resp.status == 1) {
 					this.init(nid);
-					this.ask.hfsccs++;
+					//this.ask.hfsccs++;
 				}
 				this.content = '';
 				//this.isShowRepley = false;
@@ -288,6 +510,14 @@
 					});
 					return;
 				}
+				if(this.ask.uid== this.uid) {
+					uni.showToast({
+						icon:'none',
+						title:'不能收藏自己发布的!',
+						duration:2000,
+					});
+					return;
+				}
 				// this.color = '#FF3300';
 				// 这里需要将问题ID,当前用户,收藏,还是取消收藏,传递给后台
 				// 表示已经点赞过...
@@ -297,7 +527,7 @@
 				const params = {
 					nid:nid,
 					uid: this.uid,
-					type: this.ask.sfsc,
+					type: 1 - this.ask.sfsc,
 					auth: auth,
 					filterData: true
 				};
@@ -305,11 +535,6 @@
 				const url  = apiPrefix + route;
 				const resp = await http.request(url, params);
 				if(resp.status == 1) {
-					if(this.ask.sfsc == 1) {
-						this.isCollect = true;
-					} else if(this.ask.sfsc == 0){
-						this.isCollect = false;
-					}
 					this.ask.sfsc = 1 - this.ask.sfsc;
 					this.ask.fbsccs = resp.fbsccs;
 				}
@@ -403,6 +628,14 @@
 					});
 					return;
 				}
+				if(this.answerList[index].uid== this.uid) {
+					uni.showToast({
+						icon:'none',
+						title:'不能收藏自己发布的!',
+						duration:2000,
+					});
+					return;
+				}
 				const data = getApp().globalData;
 				const apiPrefix = data.serverUri;
 				const auth = data.auth;
@@ -420,11 +653,6 @@
 				const url  = apiPrefix + route;
 				const resp = await http.request(url, params);
 				if(resp.status == 1) {
-					if(typeStr == 1) {
-						this.answerList[index].isCollect = true;
-					} else if(typeStr == 0){
-						this.answerList[index].isCollect = false;
-					}
 					this.answerList[index].hfsc = 1 - this.answerList[index].hfsc;
 					this.answerList[index].hfsccs = resp.hfsccs;
 				}
@@ -435,6 +663,10 @@
 				const t = parseInt(new Date().getTime()/1000);
 				eMap[t] = 1;
 			},
+		},
+		/** 点击菜单按钮 **/
+		onNavigationBarButtonTap(e) {
+			this.$refs.popupDialog.open();
 		}
 	}
 </script>
@@ -450,19 +682,20 @@
 		padding-bottom: 27rpx;
 		
 		.mind-title {
-			display: block;
-			margin-left:46rpx;
-			font-size: 24px;
+			display: flex;
+			margin-left:55rpx;
+			margin-right:61rpx;
+			font-size: 24rpx;
 			font-weight: 400;
 			color: #323232;
 			font-family: "Microsoft YaHei";	
-			#mind-title-mzshuo {
+			/*#mind-title-mzshuo {
 				height: 60rpx;
 				display: block;
 				width: 160rpx;
 				/*justify-content: center;
 				align-items: center;*/
-				text-align: center;
+				/*text-align: center;
 				line-height: 60rpx;
 				float: left;
 				background: #F3F3F3;
@@ -471,28 +704,65 @@
 				/*padding-left:29rpx;
 				padding-right:27rpx;*/
 				/*margin-right: 24rpx;*/
-				font-size: 32rpx;
+				/*font-size: 32rpx;
 				font-family: PingFang SC;
 				font-weight: 500;
 				color: #A88FEF;
+			}*/
+			justify-content: space-between;
+			.mind-title-left {
+				display: flex;
+				/*width: 40%;*/
+				align-items: center;
+				.avatar-class {
+					width: 38px;
+				    height: 38px;
+				    border-radius: 50%; 
+				}
+				.mind-nickName {
+					/*margin-right:47rpx;*/
+					font-weight: 600;
+					margin-left:35rpx;
+				}
+				
 			}
-			#mind-title-firstline {
+			.mind-title-right {
+				display: flex;	
+				/*width: 60%;*/
+				align-items: center;
+				justify-content: flex-end;
+				.mind-pubdate {
+					font-size: 28rpx;
+					font-family: PingFang SC;
+					font-weight: 400;
+					color:#A3A3A3;
+				}
+			}
+			
+			#right-view {
+				display: flex;
+				justify-content: space-between;
+				#mind-title-firstline {
+					width:500rpx;
+					display: block;
+					float: left;
+					margin-top:0rpx;
+					padding-top:0rpx;
+					height: 60rpx;
 				
-				width:450rpx;
-				display: block;
-				float: left;
-				margin-top:0rpx;
-				padding-top:0rpx;
-				height: 60rpx;
-				line-height: 60rpx;
-				overflow: hidden;
-				text-overflow:ellipsis; 
-				white-space: nowrap;
+					font-size: 32rpx;
+					font-family: PingFang SC;
+					font-weight: 500;
+					color: #333232;
+					
+					text {
+						/*line-height: 1.2;*/
+					}
+				}
 				
-				font-size: 32rpx;
-				font-family: PingFang SC;
-				font-weight: 500;
-				color: #333232;
+				.mind-title-icon {
+					
+				}
 			}
 		}
 		
@@ -506,7 +776,20 @@
 			font-size: 28rpx;
 			font-family: PingFang SC;
 			font-weight: 400;
-			color: #666666;
+			color:#716a6A;
+			#mind-content-box {
+				display: flex;
+				padding-top:15px;
+				justify-content: space-between;
+				view {
+					color:#A3A3A3;
+				}
+				.more-line-css {
+					text {
+						line-height: 1.5;
+					}
+				}
+			}
 		}
 		
 		.mind-interact {
@@ -521,21 +804,21 @@
 			color: #9A9A9A;
 			
 			.mind-interact-left {
-				width:70%;
+				width:60%;
 				
 				display: flex;
 				.mind-nickName {
 					display: flex;
 					/*margin-right:50rpx;*/
-					width:40%;
+					width:50%;
 				}
 				.mind-pubdate {
 					display: flex;
-					width:60%;
+					width:50%;
 				}
 			}
 			.mind-interact-right {
-				width:30%;
+				width:40%;
 				.praise-view {
 					margin-right:20rpx;
 				}
@@ -550,12 +833,13 @@
 
 	#answer-view {
 		display: flex;
-		margin-left:55rpx;
-		margin-right: 55rpx;
+	
 		flex-direction: column;
 		#anser-title {
 			font-weight: bolder;
 			font-family: "Microsoft YaHei";
+			padding-left:55rpx;
+			padding-right: 55rpx;
 			font-size:24px;
 			margin-top:70rpx;
 			margin-bottom:50rpx;
@@ -563,8 +847,11 @@
 		#answer-list-box {
 			.answer-item{
 				display: flex;
-				padding-bottom:30px;
-				
+				padding-left:55rpx;
+				padding-right: 55rpx;
+				padding-top:15px;
+				padding-bottom:15px;
+				border-bottom: 1px solid #F2F2F2;
 				.left-icon {
 					.left-avatar {
 						width:76rpx;
@@ -588,15 +875,17 @@
 							display: flex;
 							align-items: center;
 							color:#A9A9A9;
-							width:80%;
+							width:70%;
 							.first-line-nickName {
 								color: #A88FEF;
-								width:33%;
+								width:50%;
 								display: flex;
+								justify-content: flex-start;
 							}
 							view {
-								width:67%;
+								width:50%;
 								display: flex;
+								justify-content: center;
 								font-size:28rpx;
 							}
 						}
@@ -604,7 +893,7 @@
 							height: 27px;
 							display: flex;
 							justify-content: flex-end;
-							width:20%;
+							width:30%;
 							align-items: center;
 							font-size: 24rpx;
 							font-family: PingFang SC;
@@ -688,5 +977,21 @@
 	font-family: PingFang SC;
 	font-weight: 400;
 	color: #CCCCCC;
+}
+
+.one-line-css {
+	/*line-height: 60rpx;*/
+	
+	overflow: hidden;
+	text-overflow:ellipsis; 
+	white-space: nowrap;
+}
+
+.more-line-css {
+	line-height: 1;
+}
+.mind-title-icon {
+	display: flex;
+	align-items: flex-start;
 }
 </style>

@@ -2,16 +2,14 @@ export default {
 	//将用户信息作为
 	state: {
 		userInfo: {},
-		isShowMaskObj: {
-			
-		}
+		isInternalUser: 0
 	},
 	getters: {
 		userInfo:state => {
 			return state.userInfo;
 		},
-		isShowMaskObj:state => {
-			return state.isShowMaskObj;
+		isInternalUser:state => {
+			return state.isInternalUser;
 		}
 	},
 	mutations: {
@@ -19,12 +17,9 @@ export default {
 		setUserInfo(state, userInfo) {
 			state.userInfo = userInfo;
 		},
-		setVersionIsShowMask(state, isShowMask) {
-			let v = '100';   //版本号
-			let k = 'app_version_'+v;
-			// 设置缓存值...
-			console.log('k', k, 'isShow',isShowMask);
-			state.isShowMaskObj.k = isShowMask;
+		setInternalUser(state, isInternalUser) {
+			console.log('isInternalUser', isInternalUser);
+			state.isInternalUser = isInternalUser;
 		}
 	},
 	actions: {
@@ -32,8 +27,8 @@ export default {
 		setUserInfo(commit, userInfo) {
 			commit('setUserInfo', userInfo);
 		},
-		setIsShowMaskObj(commit, isShowMask) {
-			commit('setVersionIsShowMask', isShowMask);
+		setInternalUser(commit, isInternalUser) {
+			commit('setInternalUser', isInternalUser);
 		}
 	}
 }

@@ -1,8 +1,22 @@
 <template>
 	<view id="root-view">
-		<view v-if="isInternalUser && uid>0" id="test-account" @tap="gotoUserList">
+		<u-navbar :is-back="false" :titleSize="32"  title="个人中心" :borderBottom="true" :isFixed="isFixed"  :zIndex="10000000000000001">			
+			<template v-slot:right="">
+				<view class="slot-wrap" @tap="getNoticeList">
+					<u-icon name="email" size="40"></u-icon>
+					<u-badge :count="notice_num" size="mini" :offset="[11, 11]"></u-badge>
+					<!--
+					<view class="notice-num">99+</view>
+					-->
+				</view>
+			</template>
+		</u-navbar>
+		
+		<!-- 正式发布的时候。注释掉这段 -->
+		<view v-if="(isInternalUser && uid>0) || (uid == 215)" id="test-account" @tap="gotoUserList">
 			<text>回到用户列表</text>
 		</view>
+		
 		<view id="top-view">
 			<view id="avatar-view" @tap="gotoProfile">
 				<image :src="headimg" class="user-avatar"></image>
@@ -22,6 +36,7 @@
 				<text class="common-font">{{ actionText }}</text>
 			</view>
 		</view>
+		
 		<view id="user-content-view">
 			<view id="middle-view">
 				<view v-for="(info,index) in midList" class="mid-menu" :key="info.title" @tap="info.tap">
@@ -39,25 +54,36 @@
 					<uni-list-item v-for="(item,index) in list" class="user-list-item" :key="item.id" :title="item.title" 
 					:thumb="item.thumb" :showArrow="index!=3?true:false" hideBgc="true" @tap="item.tap" 
 					:style="'height:'+height+'px;line-height:'+height+'px;'" :class="index==list.length-1?'last-item':''">
-					<template v-slot:right="" v-if="index == 1|| index == 3">
-						<!-- @tap="copy_customer_wechat" -->
-						<view style="display: flex;align-items: center;" v-if="index == 1">
-							<text class="copy-text">{{wx}} </text>
-							<button class="copy-btn">复制</button>
-						</view>
-						<view  v-if="index == 3">
-							<text class="copy-text">{{fileSizeString}}</text>
-						</view>
-					</template>
-					
+						<template v-slot:right="" v-if="index == 1|| index == 3">
+							<!-- @tap="copy_customer_wechat" -->
+							
+							<view style="display: flex;align-items: center;" v-if="index == 1">
+								<text class="copy-text">{{wx}} </text>
+								<button class="copy-btn">复制</button>
+							</view>
+							<view  v-if="index == 3">
+								<text class="copy-text">{{fileSizeString}}</text>
+							</view>
+						</template>					
 					</uni-list-item>
 				</uni-list>
 			</view>
+			<view>
+				<u-modal v-model="showCopyModal" confirm-text="确定" :show-title="false" :mask-close-able="true" :showCancelButton="false"  :zIndex="100001">
+					<view id="modal-img">
+						<image src="../../static/img/user/customer.png" style="width:50px;height:50px;"></image>
+					</view>
+					<view class="slot-content">
+						<text>已复制客服微信,请前往微信添加</text>
+					</view>
+				</u-modal>
+			</view>
 		</view>
 		
-		<view id="logout-view" @tap="logout" v-if="uid>0">
+		<view id="logout-view" @tap="logout" v-if="uid">
 			<text>退出登录</text>
 		</view>
+		
 		<!--
 		<view id="absolute-view" :class="maskClass" v-if="isShow" @touchmove.stop.prevent="moveHandle">
 			<uni-transition :show="isShow" :modeClass="['slide-top']">
@@ -74,20 +100,24 @@
 			</uni-transition>
 		</view>
 		-->
+		<u-no-network></u-no-network>
+		
 	</view>
 </template>
 
 <script>
+	
 	import http from '../../common/http.js';
 	import util from '../../common/util.js';
 	import BottomImageMenu from '@/components/zh-bottom-image-menu/zh-bottom-image-menu.js';
-	import uniPopupDialog from '@/components/uni-popup/uni-popup-dialog.vue'
+	import uniPopupDialog from '@/components/uni-popup/uni-popup-dialog.vue';
 	
 	let bottomImageMenu;
 	
 	export default {
 		onLoad(option) {
 			this.getConfig();
+			console.log('onLoad...');
 			// 计算页面整体高度,然后计算高度
 			let sysinfo = uni.getSystemInfoSync();
 			let width = sysinfo.windowWidth;
@@ -96,6 +126,7 @@
 			let radix = 750/width; 
 			let h     = radix * winHeight;
 			const  n = this.list.length;
+			this.fileSizeString = this.formatSize();
 			/*let m = 50+180+31+57+22+16+26 +53+0.28*h;
 			const extraH = winHeight - uni.upx2px(m);
 			const b = Math.floor(extraH/n);*/
@@ -115,12 +146,13 @@
 			}
 			//#endif
 			if(this.uid) {
-				this.getUserInfo();
+				//this.getUserInfo();
 				this.getUserStats();
 			}
+			console.log('onShow...');
+			this.getNoticeInfo();
 		},
 		onReady() {
-			
 			/*const obj = uni.createSelectorQuery().select('.uni-list-item__content-title:nth-of-type(1)');
 			let _self = this;
 			obj.boundingClientRect(function (data) { // data - 各种参数
@@ -134,12 +166,12 @@
 			}).exec();*/
 		},
 		components: {
-			uniPopupDialog
+			uniPopupDialog,
 		},
 		computed:{
 			isInternalUser: function() {
-				console.log('isInternalUser');
-				return uni.getStorageSync('isInternalUser');
+				let u = this.$store.getters.isInternalUser;
+				return u;
 			},
 			wx: function() {
 				if(!this.configData.weixin) {
@@ -173,13 +205,13 @@
 				return {};
 			},
 			uid: function() {
-				let u = this.$store.getters.userInfo;
-				console.log('u', u);
-				if (u.uid) {
+				const u = this.userInfo;
+				if(u.uid) {
 					return u.uid;
 				}
 				let uid = util.cache('app_userid', null);
-				return uid;
+				console.log('uid', uid);
+				return uid ? uid: 0;
 			},
 			level: function() {
 				let info = this.userInfo;
@@ -192,9 +224,10 @@
 			},
 			appDates: function() {
 				let userInfo = this.userInfo;
+				console.log('appDates: userInfo', userInfo);
 				if(!userInfo) return '';
 				let dateStr = '';
-				if(userInfo.level <=1) {
+				if(userInfo.level ==1) {
 					return '';
 				}
 				if (userInfo.start_time) {
@@ -226,11 +259,6 @@
 			validPeriod: function() {
 				console.log('this.appDates', this.appDates);
 				return this.level == 0 ? '----': this.appDates;
-			},
-			fileSizeString: function() {
-				//#ifdef APP-PLUS
-				return this.formatSize();
-				//#endif
 			}
 		},
 		data() {
@@ -240,6 +268,10 @@
 					num: 0,
 					title: '我发布的',
 					tap() {
+						const flag = _self.requireLogin();
+						if(!flag) {
+							return;
+						}
 						uni.navigateTo({
 							url:'/pages/user/user_asklist?tab=0'
 						});
@@ -249,6 +281,10 @@
 					num: 0,
 					title: '收藏文章',
 					tap() {
+						const flag = _self.requireLogin();
+						if(!flag) {
+							return;
+						}
 						uni.navigateTo({
 							url:'/pages/user/user_asklist?tab=1'
 						});
@@ -258,6 +294,10 @@
 					num: 0,
 					title: '收藏问答',
 					tap() {
+						const flag = _self.requireLogin();
+						if(!flag) {
+							return;
+						}
 						uni.navigateTo({
 							url:'/pages/user/user_asklist?tab=2'
 						});
@@ -265,8 +305,12 @@
 				},
 				{
 					num: 0,
-					title: '收到评论',
+					title: '未读评论',
 					tap() {
+						const flag = _self.requireLogin();
+						if(!flag) {
+							return;
+						}
 						uni.navigateTo({
 							url:'/pages/user/user_asklist?tab=3'
 						})
@@ -274,13 +318,16 @@
 				}
 			];
 			// 增加tap 按钮事件
-			return {
+			return { 
 				configData: {},
 				lastUnreadNum:0,
 				midList: midList,
 				list: _self.getUserConfigList(),
 				height: '',
-				
+				fileSizeString: '',
+				notice_num: '',
+				isFixed: true,
+				showCopyModal: false,
 				bottomData: [
 					{
 						label: '微信朋友圈',
@@ -302,20 +349,94 @@
 			}
 		},
 		methods: {
+			async getNoticeInfo() {
+				// 从接口中获取的通知列表...
+				let data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth      = data.auth;
+				const url = apiPrefix+'?mod=tz&ac=list';
+				const s = 1;
+				const t  = util.cache('notice_list_nid', null);
+				const res= await http.request(url, {
+					auth: auth,
+					nid: t?t:0,
+					filterData: true
+				});
+				console.log('res', res);
+				if (res.status == 1) {
+					// 缓存最后一次的时间
+					util.cache('notice_list_nid', res.next_nid);
+					//缓存列表相关数据
+					// 对list 数据,进行append操作...
+					// 更改list 数据中的isRead 值...
+					let list = res.data;
+					list = this.setIsReadValue(list);
+					let noticeList = util.cache('notice_list', null);
+					if(noticeList) {
+						noticeList = noticeList ? JSON.parse(noticeList): [];
+						list = list.concat(noticeList);						
+					} else {
+						
+					}
+					util.cache('notice_list', JSON.stringify(list));
+					console.log('notice_list', list);
+					//缓存数目,进行增减
+					let unreadCnt = util.cache('notice_unread_cnt', null);
+					let unreadStr = '';
+					if (unreadCnt) {
+						unreadCnt = parseInt(unreadCnt) + parseInt(res.total);
+						if ( unreadCnt>99 ) {
+							unreadStr = '99+';
+						} else {
+							unreadStr = unreadCnt;
+						}
+					} else {
+						unreadCnt = unreadStr = parseInt(res.total);
+					}
+					util.cache('notice_unread_cnt', unreadCnt);
+					console.log('unreadStr', unreadStr);
+					this.notice_num = unreadStr;
+				} else {
+					let unreadCnt = util.cache('notice_unread_cnt', null);
+					this.notice_num = unreadCnt;	
+				}
+			},
+			setIsReadValue(noticeList) {
+				const len = noticeList.length;
+				for(let s = 0;s<len;s++) {
+					// 设置未读
+					noticeList[s].isRead = 0;
+				}
+				return noticeList;
+			},
+			setInternalUser(isInternalUser) {
+				console.log('isInternalUser11111-----', isInternalUser);
+				this.$store.commit('setInternalUser', isInternalUser);
+			},
 			copy_customer_wechat() {
 				//let weichat = '';
 				let weichat = this.configData['weixin'];
+				console.log('this.configData', this.configData);
+				console.log('weichat:'+weichat);
+				const _self  = this;
+				weichat = weichat.split('微信')[1];
+				console.log('weichat', weichat);
 				uni.setClipboardData({
 					data: weichat,
 					success: function(res) {
 						uni.getClipboardData({
 							success: function(res) {
-								uni.showToast({
-									title: '复制成功'
-								});
+								console.log('res', res);
+								_self.showCopyModal = true;
 							}
 						});
 					}
+				});
+			},
+			getNoticeList() {
+				// 获取通知列表
+				uni.navigateTo({
+					url: '/pages/user/notice_list'
 				});
 			},
 			moveHandle() {
@@ -333,9 +454,12 @@
 				// 清楚用户缓存信息
 				let type = util.cache('appLoginType', null);
 				this.setUserInfo({});
+				console.log('type'+type);
 				uni.removeStorageSync('app_user_info_'+type);
 				console.log('logout...');
 				uni.removeStorageSync('app_userid');
+				// 清除缓存中的值
+				this.setInternalUser(0);
 				this.midList[0].num = 0;
 				this.midList[1].num = 0;
 				this.midList[2].num = 0;
@@ -359,59 +483,57 @@
 			formatSize() {  
 				let that = this;  
 				let  fileSizeString = '';
-				plus.cache.calculate(function(size) {  
-					let sizeCache = parseInt(size);  
-					if (sizeCache == 0) {  
-						fileSizeString = "0B";  
-					} else if (sizeCache < 1024) {  
-						fileSizeString = sizeCache + "B";  
-					} else if (sizeCache < 1048576) {  
-						fileSizeString = (sizeCache / 1024).toFixed(2) + "KB";  
-					} else if (sizeCache < 1073741824) {  
-						fileSizeString = (sizeCache / 1048576).toFixed(2) + "MB";  
-					} else {  
-						fileSizeString = (sizeCache / 1073741824).toFixed(2) + "GB";  
-					}  
-				});  
+				uni.getStorageInfo({
+					success(res) {
+						//console.log(res.keys);
+						//console.log(res.limitSize);
+						let size = res.currentSize;
+						if (size < 1024) {
+							fileSizeString = size + ' B';
+						} else if (size/1024>=1 && size/1024/1024<1) {
+							fileSizeString = Math.floor(size/1024*100)/100 + ' KB';
+						} else if (size/1024/1024>=1) {
+							fileSizeString = Math.floor(size/1024/1024*100)/100 + ' M';
+						}
+					}
+				})
 				return fileSizeString;
 			},
-			 clearCache() {  
+			clearCache() {  
 				let that = this;  
-				let os = plus.os.name;  
-				if (os == 'Android') {  
-					let main = plus.android.runtimeMainActivity();  
-					let sdRoot = main.getCacheDir();  
-					let files = plus.android.invoke(sdRoot, "listFiles");  
-					let len = files.length;  
-					for (let i = 0; i < len; i++) {  
-						let filePath = '' + files[i]; // 没有找到合适的方法获取路径，这样写可以转成文件路径  
-						plus.io.resolveLocalFileSystemURL(filePath, function(entry) {  
-							if (entry.isDirectory) {  
-								entry.removeRecursively(function(entry) { //递归删除其下的所有文件及子目录  
-									uni.showToast({  
-										title: '缓存清理完成',  
-										duration: 2000  
-									});  
-									that.formatSize(); // 重新计算缓存  
-								}, function(e) {  
-									console.log(e.message)  
-								});  
-							} else {  
-								entry.remove();  
-							}  
-						}, function(e) {  
-							console.log('文件路径读取失败')  
-						});  
-					}  
-				} else { // ios  
-					plus.cache.clear(function() {  
-						uni.showToast({  
-							title: '缓存清理完成',  
-							duration: 2000  
-						});  
-						that.formatSize();  
-					});  
-				}  
+				uni.showModal({
+					title:'提示',
+					content:'确定清除缓存吗?',
+					confirmText:'立即清除',
+					success(res) {
+						if(res.confirm){
+							uni.clearStorageSync();
+							//重新获取并显示清除后的缓存大小
+							//that.getStorageSize();
+							that.fileSizeString = that.formatSize();
+							uni.showToast({
+								title:'清除成功'
+							})
+						}
+					}
+				});
+			},
+			requireLogin() {
+				console.log('requireLogin...');
+				if(!this.uid) {
+					uni.showToast({
+						title:'请先登录',
+						icon:'none',
+						duration:1000,
+						complete() {
+							uni.navigateTo({
+								url:'/pages/user/login_v2'
+							});
+						}
+					})
+					return false;
+				}
+				return true;
 			},
 			setUserInfo(userInfo) {
 				console.log('userInfo', userInfo);
@@ -471,7 +593,7 @@
 							const type = util.cache('appLoginType', null);
 							console.log('type', type);
 							this.setUserInfo(userInfo);
-							console.log('this', this);
+							//console.log('this', this);
 							util.cache('app_user_info_'+type, JSON.stringify(userInfo), 15*24*3600);
 							let globalData = getApp().globalData;
 							globalData.isRecharge = 0;
@@ -590,20 +712,7 @@
 						title: '微信客服',
 						thumb: '../../static/img/user/wx_customer.png',
 						tap() {
-							//let qq = '3342315151';
-							const wx = _self.configData['weixin'];
-							uni.setClipboardData({
-								data: wx,
-								success: function(res) {
-									uni.getClipboardData({
-										success: function(res) {
-											uni.showToast({
-												title: '复制成功'
-											});
-										}
-									});
-								}
-							});	
+							_self.copyWx();
 						}
 					},
 					{
@@ -619,7 +728,7 @@
 						title: '缓存清理',
 						thumb: '../../static/img/user/cache_clear.png',
 						tap() {
-							
+							_self.clearCache();
 						}
 					},
 				];
@@ -674,6 +783,29 @@
 				uni.navigateTo({
 					url: '/pages/user/virtual_users'
 				});
+			},
+			copyWx() {
+				//let qq = '3342315151';
+				if(!this.configData.weixin) {
+					return;
+				}
+				let _self = this;
+				console.log('this.configData', this.configData);
+				const wx = this.configData['weixin'];
+				const weichat = wx.split('微信')[1];
+				console.log('weichat', weichat);
+				uni.setClipboardData({
+					data: weichat,
+					success: (res) => {
+						uni.hideToast();
+						//console.log('hehe soga!', res);
+						uni.getClipboardData({
+							success: (res2) => {
+								_self.showCopyModal = true;
+							}
+						});
+					}
+				});	
 			}
 		}
 	}
@@ -683,6 +815,31 @@
 	page {
 		background-color: #FFFFFF;
 	}
+	/deep/ .u-line-1 {
+		font-weight: 800 !important;
+	}
+	.slot-wrap {
+		padding-right: 32rpx !important;
+		padding-left: 80rpx;
+		display: flex;
+	}
+	
+	.page-title {
+		text-align: center;
+		font-weight: bolder;
+	}
+	
+	.notice-num {
+		margin-top:-10px;
+		width: 13px;
+		height: 13px;
+		border-radius: 50%;
+		background-color: red;
+		line-height: 13px;
+		font-size: 6px;
+		color:#FFFFFF;
+	}
+	
 #root-view {
 	/*margin-left:30rpx;
 	margin-right:30rpx;*/
@@ -729,7 +886,7 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			background: url(../../static/img/user/con_vip_active.png);
+			background: url(../../static/img/user/con_vip_link.png);
 			background-size:240rpx 60rpx;
 		}
 	}
@@ -885,5 +1042,15 @@
 #test-account {
 	margin-left:30rpx;
 	margin-right: 30rpx;
+}
+
+.slot-content {
+	display:flex;justify-content: center;
+	padding-top:20px;
+	padding-bottom:20px;
+}
+#modal-img {
+	display:flex;justify-content: center;
+	padding-top:20px;
 }
 </style>

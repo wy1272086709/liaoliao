@@ -1,14 +1,24 @@
 <template>
 	<view class="uni-popup-share" :style="{height: height+'px'}">
 		<view class="uni-share-title"><text class="uni-share-title-text">{{title}}</text></view>
-		<view class="uni-share-content">
-			<view class="uni-share-content-box">
+		<view class="uni-share-content" :style="reportData.length>0?'border-bottom:1px solid #F2F2F2':''">
+			<view class="uni-share-content-box" :style="reportData.length>0?'justify-content:flex-start':''">
 				<view class="uni-share-content-item" v-for="(item,index) in bottomData" :key="index" @tap="select(item,index)">
 					<image class="uni-share-image" :src="item.icon" mode="aspectFill"></image>
 					<text class="uni-share-text">{{item.text}}</text>
 				</view>
 			</view>
 		</view>
+		
+		<view class="uni-share-content">
+			<view class="uni-share-content-box" :style="reportData.length>0?'justify-content:flex-start':''">
+				<view class="uni-share-content-item" v-for="(info,m) in reportData" :key="m" @tap="select2(info,m)">
+					<image class="uni-share-image" :src="info.icon" mode="aspectFill"></image>
+					<text class="uni-share-text">{{info.text}}</text>
+				</view>
+			</view>
+		</view>
+		
 		<view class="uni-share-button-box">
 			<button class="uni-share-button" @tap="close">取消</button>
 		</view>
@@ -56,7 +66,15 @@
 			}, 
 			bottomData : {
 				type: Array,
-				default: defaultArr
+				default: function() {
+					return defaultArr;
+				}
+			},
+			reportData: {
+				type: Array,
+				default: function() {
+					return [];
+				}
 			},
 			height: {
 				type: [ String, Number ],
@@ -75,6 +93,15 @@
 			 * 选择内容
 			 */
 			select(item, index) {
+				console.log('item', item, 'index', index);
+				this.$emit('select', {
+					item,
+					index
+				}, () => {
+					this.popup.close()
+				})
+			},
+			select2(item, index) {
 				console.log('item', item, 'index', index);
 				this.$emit('select', {
 					item,
@@ -117,6 +144,7 @@
 		flex-direction: row;
 		justify-content: center;
 		padding-top: 10px;
+		
 	}
 	
 	.uni-share-content-box {

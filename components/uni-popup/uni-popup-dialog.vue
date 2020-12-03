@@ -1,11 +1,12 @@
 <template>
 	<view class="uni-popup-dialog">
-		<view class="uni-dialog-title" v-if="!isHideTitle">
-			<text class="uni-dialog-title-text" :class="['uni-popup__'+dialogType]">{{title}}</text>
+		<view class="uni-dialog-title" v-if="!isHideTitle" >
+			<text class="uni-dialog-title-text" :style="mode === 'input'? 'color:#000000;':''" :class="['uni-popup__'+dialogType]">{{title}}</text>
 		</view>
-		<view class="uni-dialog-content" :style="isHideTitle?'margin-top: 10px;':''">
+		<view class="uni-dialog-content" :style="(isHideTitle?'margin-top: 10px;':'')+ (mode=='input'?' padding:5px 30px 5px 30px':'')">
 			<text class="uni-dialog-content-text" v-if="mode === 'base'">{{content}}</text>
-			<input v-else class="uni-dialog-input" v-model="val" type="text" :placeholder="placeholder" :focus="focus" >
+			<input v-else-if="mode=='input'" class="uni-dialog-input" v-model="val" type="text" :placeholder="placeholder" :focus="focus">
+			<textarea v-else class="uni-dialog-textarea" v-model="val"  :placeholder="placeholder" :focus="focus"></textarea>
 		</view>
 		<view class="uni-dialog-button-group">
 			<view :class="'uni-dialog-button uni-dialog-cancel'+(isGetPhoneButton ? ' uni-dialog-phone-button':'')" @click="close">
@@ -138,11 +139,12 @@
 		},
 		created() {
 			// 对话框遮罩不可点击
-			this.popup.mkclick = false
+			
 			if (this.mode === 'input') {
 				this.dialogType = 'info'
 				this.val = this.value
 			} else {
+				this.popup.mkclick = false
 				this.dialogType = this.type
 			}
 		},
@@ -156,7 +158,9 @@
 			onOk() {
 				this.$emit('confirm', () => {
 					this.popup.close()
+					console.log('this.mode', this.mode, 'type:..', typeof this.mode);
 					if (this.mode === 'input') this.val = this.value
+					console.log('this.val', this.val);
 				}, this.mode === 'input' ? this.val : '')
 			},
 			/**
@@ -275,6 +279,7 @@
 	.uni-dialog-input {
 		flex: 1;
 		font-size: 14px;
+		color:#716a6A;
 	}
 
 	.uni-popup__success {

@@ -10,22 +10,39 @@
 	<view id="user-content">
 		<template v-if="curTabIndex ==0 || curTabIndex == 2 || curTabIndex == 3">		
 			<view class="mind-ask-view" v-for="(item,index) in mindList" :key="item.nid" @tap="gotoDetail(curTabIndex, item)">
-				<view class="mind-title">
+				<view class="mind-title" v-if="curTabIndex == 2|| curTabIndex == 3">
+					<!--
 					<text class="mz_shuo">妹子说: </text> 
 					<text class="girl_title">{{item.title}} </text>
+					-->
+					<view class="mind-title-left">
+						<view>
+							<image :src="item.tx?item.tx:'../../static/img/user/people.png'" class="avatar-class"></image>
+						</view>
+						<view class="mind-nickName">{{item.fbr}}</view>
+					</view>
+					<view  class="mind-title-right">
+						<view class="mind-pubdate">{{item.pubdate}}</view>
+					</view>
 				</view>
 				<view class="mind-content">
-					<text>{{item.description}}</text>
-					<text style="color:blue;" v-if="curTabIndex == 3">查看更多</text>
+					<view class="hidden-elipse-css">
+						<text>{{item.description}}</text>
+					</view>
+					<navigator :url="'/pages/mind_square/ask-ques-list?nid='+item.nid">
+						<text style="color:blue;" v-if="curTabIndex == 3">查看更多</text>
+					</navigator>
 				</view>
 				<view class="mind-interact">
 					<view class="mind-interact-left">
 						<!--
 						<view class="mind-nickName">{{item.nickName}}</view>
-						-->
+						
 						<view class="mind-pubdate">{{item.pubdate}}</view>
+						-->
 					</view>
 					<view class="mind-interact-right">
+						<!-- @tap.stop="clickPraise(index)" -->
 						<view class="praise-view" @tap.stop="clickPraise(index)">
 							<!--
 							<image :src="loveSrc" style="width: 28rpx;height:24rpx;margin-right:15.01rpx;"></image>
@@ -182,6 +199,12 @@
 		components:{
 			uIcon
 		},
+		onShow() {
+			const index = this.curTabIndex;
+			if (index == 3) {
+				this.getMyComment(1);
+			}
+		},
 		computed:{
 			headerClass() {
 				
@@ -252,38 +275,32 @@
 				const data = getApp().globalData;
 				const apiPrefix = data.serverUri;
 				const auth = data.auth;
+				console.log('myPublish', this.uid);
 				const params = {
 					uid: this.uid,
 					auth: auth,
 					nowpage: pageNo,
 					filterData: true
 				};
+				console.log('myPublish params:', params);
 				const route = '?mod=ndgc&ac=my_list';
 				const url  = apiPrefix + route;
 				const respData = await http.request(url,params);
-				//
+				
 				console.log('respData', respData);
 				if(respData.status == 1) {
 					if(!isAppend) {
 						this.publishList = respData.data;
-						totalpage = respData.totalpage;
+						
 					} else {
 						this.publishList = this.publishList.concat(respData.data);
 					}
+					totalpage = respData.totalpage;
 				}
 			},
 			// 获取收藏文章
 			async getMyCollectArticle(pageNo, isAppend) {
-				this.articleList = [
-					{ 
-						// 标题
-						title: '有哪些你身边超甜的爱情故事？', 
-						// 描述
-						desc: '有哪些你身边超甜的爱情故事？有哪些你身边超甜的爱情故事…',
-						//缩略图
-						thumbUrl: '../../static/img/love_skills/thumb.png'
-					}
-				];
+				console.log('isAppend', isAppend);
 				const data = getApp().globalData;
 				const apiPrefix = data.serverUri;
 				const auth = data.auth;
@@ -293,23 +310,24 @@
 					nowpage: pageNo,
 					filterData: true
 				};
+				console.log('getMyCollectArticle: pageNo, isAppend', pageNo, isAppend);
+				console.log('params:',params);
 				const route = '?mod=news&ac=wz_sc_list';
 				const url  = apiPrefix + route;
 				const respData = await http.request(url,params);
-				//
+				
 				console.log('respData', respData);
 				if(respData.status == 1) {
 					if(!isAppend) { 
 						this.articleList = respData.data;
-						totalpage = respData.totalpage;
 					} else {
 						this.articleList = this.articleList.concat(respData.data);
 					}
+					totalpage = respData.totalpage;
 				}
 			},
 			// 获取收藏问答
 			async getMyCollectAskAndAnswer(pageNo, isAppend) {
-				nowpage = 1;
 				//?mod=ndgc&ac=my_wd
 				const data = getApp().globalData;
 				const apiPrefix = data.serverUri;
@@ -317,7 +335,7 @@
 				const params = {
 					uid: this.uid,
 					auth: auth,
-					nowpage: nowpage,
+					nowpage: pageNo,
 					filterData: true
 				};
 				const route = '?mod=ndgc&ac=my_fbsc';
@@ -326,14 +344,16 @@
 				if(respData.status == 1) {
 					if(!isAppend) { 
 						this.quesAndAnswer = respData.data;
-						totalpage = respData.totalpage;
+						
 					} else {
 						this.quesAndAnswer = this.quesAndAnswer.concat(respData.data);
 					}
+					totalpage = respData.totalpage;
 				}
 				console.log('my_fbsc', respData);
 			},
 			delMap(map) {
+				if(!map) return;
 				let m = Object.keys(map);
 				if(m.length<=1) {
 					return;
@@ -357,7 +377,7 @@
 				const params = {
 					uid: this.uid,
 					auth: auth,
-					nowpage: nowpage,
+					nowpage: pageNo,
 					filterData: true
 				};
 				const route = '?mod=ndgc&ac=my_wd';
@@ -366,15 +386,19 @@
 				if(respData.status == 1) {
 					if(!isAppend) { 
 						this.collectCommentList = respData.data;
-						totalpage = respData.totalpage;
+						
 					} else {
 						this.collectCommentList = this.collectCommentList.concat(respData.data);
 					}
+					totalpage = respData.totalpage;
 				}
 			},
 			getColor(index) {
 				let color = '';
-				if (this.mindList[index].isCollect) {
+				if(this.curTabIndex == 2) {
+					return '#FF3300';
+				}
+				if (this.mindList[index].sfsc) {
 					color = '#FF3300';
 				} else { 
 					color = '#A6A6A6';
@@ -382,9 +406,11 @@
 				return color;
 			},
 			// 这里其实是收藏
-			clickPraise(index) {
+			async clickPraise(index) {
+				if(this.curTabIndex == 2 || this.curTabIndex ==0) return;
+				console.log('clickPraise...');
 				// 只保留最后两个元素
-				this.delMap();
+				this.delMap(eMap);
 				const t1 = parseInt(new Date().getTime()/1000);
 				// 不允许连续点击两次或者更多次...
 				if(eMap[t1]) {
@@ -404,11 +430,28 @@
 				// this.color = '#FF3300';
 				// 这里需要将问题ID,当前用户,收藏,还是取消收藏,传递给后台
 				// 表示已经点赞过...
-				this.mindList[index].isCollect = 1 - this.mindList[index].isCollect;
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				const type = 1- this.mindList[index].sfsc;
+				const params = {
+					nid:this.mindList[index].nid,
+					uid: this.uid,
+					type: type,
+					auth: auth,
+					filterData: true
+				};
+				const route = '?mod=ndgc&ac=fb_sc';
+				const url  = apiPrefix + route;
+				const resp = await http.request(url, params);
+				let list = this.mindList[index];
+				if(resp.status == 1) {
+					this.mindList[index].sfsc = type;
+					this.mindList[index].fbsccs = resp.fbsccs;
+				}
+				console.log('this.mindList', this.mindList);
 				const t = parseInt(new Date().getTime()/1000);
 				eMap[t] = 1;
-				// 当后台相应成功后,点赞数+1.
-				this.mindList[index].click_praise+=1;
 			},
 			reply() {
 				// 进入详情页面
@@ -425,7 +468,7 @@
 			interval = setTimeout(function() {
 				nowpage++;
 				console.log('page....',nowpage);
-				method(nowpage, true);
+				method(nowpage, 1);
 			}, 500);
 		}
 	}
@@ -435,14 +478,16 @@
 #root-view {
 	display: flex;
 	flex-direction: column;
-	margin-left: 46rpx;
-	margin-right: 46rpx;
+	
 	
 	#user-header {
 		display: flex;
+		padding-left: 46rpx;
+		padding-right: 46rpx;
+		border-bottom: 1px solid #F2F2F2;
 		justify-content: space-between;
 		margin-top:56rpx;
-		margin-bottom: 89rpx;
+		padding-bottom: 69rpx;
 		font-size: 32rpx;
 		font-family: PingFang SC;
 		font-weight: 800;
@@ -469,9 +514,17 @@
 			}
 		}
 	}
+
+	#user-content {
+		
+	}
 }
 .mind-article-view {
-	margin-bottom: 58rpx;
+	padding-bottom: 29rpx;
+	padding-top: 29rpx;
+	padding-left: 46rpx;
+	padding-right: 46rpx;
+	border-bottom: 1px solid #F2F2F2;
 	display: flex;
 	/*height: 200rpx;*/
 	.content-img-view  {
@@ -529,10 +582,42 @@
 .mind-ask-view {
 	display: flex;
 	flex-direction: column;
-	margin-bottom:78rpx;
+	padding-left: 46rpx;
+	padding-right: 46rpx;
+	border-bottom: 1px solid #F2F2F2;
+	padding-top: 39rpx;
+	padding-bottom:39rpx;
 	.mind-title {
-		display: block;
-		.mz_shuo {
+		display: flex;
+		justify-content: space-between;
+		.mind-title-left {
+			display: flex;
+			/*width: 40%;*/
+			.avatar-class {
+				width: 38px;
+			    height: 38px;
+			    border-radius: 50%; 
+			}
+			align-items: center;
+			.mind-nickName {
+				/*margin-right:47rpx;*/
+				font-weight: 600;
+				margin-left:35rpx;
+			}
+		}
+		.mind-title-right {
+			display: flex;	
+			/*width: 60%;*/
+			align-items: center;
+			justify-content: flex-end;
+			.mind-pubdate {
+				font-size: 28rpx;
+				font-family: PingFang SC;
+				font-weight: 400;
+				color:#A3A3A3;
+			}
+		}
+		/*.mz_shuo {
 			display: block;
 			font-size: 32rpx;
 			font-family: PingFang SC;
@@ -562,7 +647,8 @@
 			font-family: PingFang SC;
 			font-weight: 500;
 			color: #333232;
-		}
+		}*/
+		
 	}
 	
 	.mind-content {
@@ -574,10 +660,6 @@
 		font-family: PingFang SC;
 		font-weight: 400;
 		color: #666666;
-		white-space:nowrap; 
-		overflow:hidden;
-		// 超出省略号...
-		text-overflow:ellipsis;
 		color: #A3A3A3;
 	}
 	.mind-interact {
@@ -636,5 +718,10 @@
 		font-weight: 400;
 		color: #666666;
 	}
+}
+.hidden-elipse-css {
+	overflow: hidden;
+	text-overflow:ellipsis; white-space: nowrap;
+	display: block;
 }
 </style>

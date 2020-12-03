@@ -1,8 +1,11 @@
 <template>
 	<view id="root-view">
+		<!--
 		<scroll-view id="tab-scroll" :scroll-x="true"  :show-scrollbar="false" :scroll-into-view="scrollInto">
 			<!-- 初始尺寸设置为120rpx,   去掉header-view width 属性, 设置元素的flex-shrink 为0，在子元素上-->
+			<!--
 			<view  class="header-view-box">
+				
 				<view  v-for="(tab,index) in tabArr" :key="tab.navId" :id="'tab_'+tab.navId" :data-index="index" @tap.cancel="switchTab(index)" :style="'flex-basis:'+basisWidth+'rpx;'">
 					<view>
 						<text :style="index==activeTabIndex ? 'border-bottom: 4rpx solid #A88FEF;color:#A88FEF': ''">{{ tab.title }}</text>
@@ -10,29 +13,44 @@
 				</view>
 			</view>
 		</scroll-view>
+		-->
+		<u-tabs v-if="control" gutter="33" bg-color="#F2F2F2" :name="'title'" :bold="bold" :active-color="activeColor" :list="tabArr"
+		@change="change" :bar-width="110" :current="activeTabIndex" :is-scroll="isScroll"></u-tabs>
 		
 		<view id="testing-content">
-			<view v-for="(item,index) in testingList" class="testing-box" :key="item.nid">
-				<view class="testing-title-view " @tap="gotoTesting(item)" :style="{backgroundImage:'url('+item.thumbUrl+')'}">
-					<view class="has-pass">
-						<view :style="item.test_status == 1 ? 'background-color:#419FFF;':'background-color:#E93EE3'">{{ statusText(index) }}</view>
-					</view>
-					<view class="testing-title">
-						{{item.title}}
-					</view>
-				</view>
-				<view class="testing-stat-view">
-					<view class="testing-stat-button" @tap="gotoTesting(item)">
-						<view v-if="!uid || item.test_status == 0">立即测试</view>
-						<view v-if="uid && item.test_status == 1">再测一遍</view>
-					</view>
-					<view class="testing-num">
-						<text class="num">{{item.test_num}}</text>
-						<text>人测过</text>
-					</view>
-				</view>
-			</view>
+			<swiper :current="activeTabIndex" :scroll-with-animation="true" 	@change="switchTestingTab" :style="'width:100%;height:'+scrollHeight+'px;'">
+				<swiper-item :style="'width:100%;height:'+scrollHeight+'px;'" v-for="item in tabArr" :key="item.navId" class="swiper-item-css">
+					<scroll-view :enable-flex="true" enable-back-to-top="true" :style="'height:'+scrollHeight+'px;'" :scroll-y="true"  @scrolltolower="lower">
+						<view style="height:20px;">
+							
+						</view>
+						<view class="scroll-view-content">
+							<view class="testing-box" v-for="(item,index) in testingList" :key="item.nid">
+								<view class="testing-title-view " @tap="gotoTesting(item)" :style="{backgroundImage:'url('+item.thumbUrl+')'}">
+									<view class="has-pass">
+										<view :style="item.test_status == 1 ? 'background-color:#419FFF;':'background-color:#E93EE3'">{{ statusText(index) }}</view>
+									</view>
+									<view class="testing-title">
+										{{item.title}}
+									</view>
+								</view>
+								<view class="testing-stat-view">
+									<view class="testing-stat-button" @tap="gotoTesting(item)">
+										<view v-if="!uid || item.test_status == 0">立即测试</view>
+										<view v-if="uid && item.test_status == 1">再测一遍</view>
+									</view>
+									<view class="testing-num">
+										<text class="num">{{item.test_num}}</text>
+										<text>人测过</text>
+									</view>
+								</view>
+							</view>
+						</view>
+					</scroll-view>
+				</swiper-item>
+			</swiper>
 		</view>
+		
 	</view>
 </template>
 
@@ -55,7 +73,7 @@
 				activeTabIndex: 0,
 				scrollInto: '',
 				testingList: [ 
-					{
+					/*{
 						title: '测测你的IQ值是多少?',
 						num: '666',
 						status: 1,
@@ -63,10 +81,15 @@
 						title: '抽签测今天运势',
 						num: '666',
 						status: 0,
-					}
+					}*/
 				],
+				scrollHeight: '',
 				status: 0,
-				
+				current: 0,
+				isScroll: true,
+				bold: true,
+				control: true,
+				activeColor: '#A88FEF'
 			}
 		},
 		computed:{
@@ -79,8 +102,10 @@
 				return uid ? uid: 0;	
 			},
 			basisWidth: function() {
-				const n = this.tabArr.length;
-				return  Math.floor(686/n);
+				//const n = this.tabArr.length;
+				//const m = Math.ceil(n/2);
+				//return  Math.floor(686/m);
+				return 171.5;
 			},
 			cid: function() {
 				return this.tabArr.length>0 ? this.tabArr[this.activeTabIndex].navId: 0;
@@ -89,6 +114,8 @@
 		onLoad() {
 			this.getTestingList(1);
 			this.getTestingTab();
+			const sysinfo = uni.getSystemInfoSync();
+			this.scrollHeight = sysinfo.windowHeight - uni.upx2px(106);
 		},
 		onReachBottom() {
 			// 获取第二页的测一测列表
@@ -105,8 +132,41 @@
 			}, 500);
 		},
 		methods: {
+			lower() {
+				let _self = this;
+				console.log('lower page',nowpage);
+				if(nowpage>=totalpage) {
+					clearTimeout(interval);
+					return;
+				}
+				interval = setTimeout(function() {
+					nowpage++;
+					console.log('page....',nowpage);
+					_self.getTestingList(nowpage, true);
+				}, 500);
+			},
+			change(index) {
+				this.activeTabIndex = index;
+				nowpage = 1;
+				// 这里刷新测试列表...
+				this.getTestingList(1);
+			},
 			switchTab(index) {
 				this.activeTabIndex = index;
+				//this.scrollInto = 'tab_'+this.tabArr[index].navId;
+				// 切换tab 重置nowpage 值
+				nowpage = 1;
+				// 这里刷新测试列表...
+				this.getTestingList(1);
+			},
+			switchTestingTab(e) {
+				const thisCurr = e.detail.current || e.currentTarget.dataset.index || 0;
+				console.log('thisCurr', thisCurr);
+				if(thisCurr == this.activeTabIndex) {
+					return;
+				}
+				this.activeTabIndex = thisCurr;
+				this.scrollInto = 'tab_'+this.tabArr[thisCurr].navId;
 				// 切换tab 重置nowpage 值
 				nowpage = 1;
 				// 这里刷新测试列表...
@@ -150,6 +210,7 @@
 					let tabArr = [];
 					for(let m =0;m<l;m++) {
 						const info = {
+							//title:r[m].firstNav.title,
 							title:r[m].firstNav.title,
 							navId:r[m].firstNav.navId,
 						}
@@ -193,6 +254,14 @@
 	page {
 		background-color: #F2F2F2;
 	}
+	
+	::-webkit-scrollbar {
+		width: 0;
+		height: 0;
+		background-color: transparent;
+		display: none;
+	} 
+	
 #tab-scroll {
 	display: flex;
 	height: 50rpx;
@@ -233,12 +302,17 @@
 	display: flex;
 	margin-left:32rpx;
 	margin-right: 32rpx;
-	justify-content: space-between;
-	margin-top:20px;
-	flex-wrap: wrap;
-	
+	.swiper-item-css {
+		.scroll-view-content {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+		}
+	}
 	.testing-box {
 		background: #FFFFFF;
+		display: flex;
+		flex-direction: column;
 		width: 320rpx;
 		height: 340rpx;
 		margin-bottom: 33rpx;

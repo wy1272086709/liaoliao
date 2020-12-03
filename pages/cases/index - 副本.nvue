@@ -1,0 +1,684 @@
+<template>
+	<view class="root-view">
+		<swiper class="swiper" :circular="true"  :indicator-dots="true" :autoplay="true" :interval="6000" :duration="500">
+			<swiper-item   class="swiper-item-class" 
+			@tap="gotoAdsUrl(index2)" v-for="(ad,index2) in adsArr" :key="ad.ad_id">
+				<image :lazy-load="true" :src="ad.ad_img"  class="ads-image"></image>
+			</swiper-item>
+		</swiper>
+		<!--
+		<view class="line-h"></view>
+		-->
+		 <!--
+		 <u-sticky :offset-top="offsetTop" class="sticky">-->
+		 
+		<scroll-view :class="{'header-view': true, 'sticky-fixed':isFixed}" :duration="100"  :scroll-x="true"  :show-scrollbar="false" :scroll-into-view="scrollInto" >
+			<view  class="header-view-box">
+				<!-- 初始尺寸设置为120rpx,   去掉header-view width 属性, 设置元素的flex-shrink 为0，在子元素上-->
+				<view @tap="switchTab(index)" v-for="(tab,index) in tabArr" :id="'tab_'+tab.firstNav.navId" :key="getNavKey(tab.firstNav.navId)" class="common-tab-view">
+					<view>
+						<text :class="index==caseTabIndex ? 'active-tab-class':'common-tab-class'">{{ tab.firstNav.title }}</text>
+					</view>
+				</view>
+			</view>
+		</scroll-view>
+		<!--
+		</u-sticky>
+		-->	
+		<swiper :current="caseTabIndex" :duration="300" @change="switchCasesTab"  :style="'flex: 1;width:100%;'">
+			<swiper-item v-for="(tab,index) in tabArr" class="swiper-item" :key="index">
+				<!-- :scroll-top="scrollTop" enable-back-to-top="true" :style="'height:'+scrollHeight+'rpx;'" :scroll-y="true" @scrolltoupper="upper" @scrolltolower="lower"  -->
+				<list  class="content-view scroll-v list" enableBackToTop="true" scroll-y loadmoreoffset="15" @loadmore="lower">
+					<cell v-for="(item,m) in list"  :key="item.id">
+						<cases-list :item="item" @getArticleView="getArticleView"></cases-list>
+					</cell>
+				</list>
+			</swiper-item>
+		</swiper>
+		
+		
+	</view>
+</template>
+
+<script>
+	import http from '../../common/http.js';
+	import util from '../../common/util.js';
+	import casesList from '../../common/cases_list.nvue';
+	let eMap = {};
+	let totalPage = 1;
+	let nowpage = 1;
+	let cid = 0;
+	let interval = null;
+	let tabTitle = '';
+	let cacheTab = {};
+	export default {
+		data() {
+			return {
+				tabArr: [],
+				list: [],
+				swiperIdx: 0,
+				recommendList: [],
+				caseTabIndex: 0,
+				isIphoneX: false,
+				scrollHeight: '',
+				isShowMask: false,
+				maskClass: '',
+				tabTop: '',
+				tabLeft: '',
+				isFixed: false,
+				adsArr: [],
+				offsetTop: '',
+				scrollInto: "",
+			}
+		},
+		computed: {
+			uid: function() {
+				let uid = util.cache('wx_userid', null);
+				if (uid) {
+					return uid;
+				}
+				if (this.$store.getters.userInfo.uid) {
+					return this.$store.getters.userInfo.uid;
+				}
+				return 0;
+			}
+		},
+		onShow() {
+			
+		},
+		onShareAppMessage() {
+			console.log('share....');
+			let pages = getCurrentPages() //获取加载的页面
+			let currentPage = pages[pages.length-1] //获取当前页面的对象
+			let url = currentPage.route //当前页面url
+			return {
+				title: '恋爱技巧',
+				path: "/"+url,
+				success: function() {
+					console.log('share success!');
+				},
+				fail: function() {
+					console.log('share..sucess!');
+				}
+			};
+		},
+		onHide() {
+			eMap = {};
+		},
+		onReady() {
+			
+		},
+		onPullDownRefresh() {
+			console.log('页面下拉刷新');
+			let _self = this;
+			_self.getCaseList(cid, true, 1);
+			setTimeout(function() {				
+				uni.stopPullDownRefresh();
+			}, 200);
+		},
+		onLoad(option) {
+		
+			// #ifdef APP-PLUS || H5
+			this.offsetTop = 24;
+			// #endif 
+			//console.log('option', option);
+			let sysinfo = uni.getSystemInfoSync();
+			let screenHeight = sysinfo.screenHeight;
+			let width = sysinfo.windowWidth;
+			let winHeight    = sysinfo.windowHeight;
+			let radix = 750/width; 
+			console.log('winHeight', winHeight);
+			let isIphoneX = getApp().globalData.isIphoneX;
+			this.isIphoneX = isIphoneX;
+			let bottom = isIphoneX ? 30: 0;
+			//#ifdef MP-WEIXIN || MP-QQ
+			this.scrollHeight  = winHeight*radix - 81  -bottom;
+			//#endif
+			//#ifndef MP-WEIXIN || MP-QQ
+			this.scrollHeight  = winHeight*radix - 81  -bottom;
+			//#endif
+			winHeight = winHeight - 60;
+			if (isIphoneX) {
+				winHeight    = winHeight - 30/radix;
+			} 
+			this.getAdsInfo();
+			this.tabTop = uni.upx2px(81+320+27)+16;
+			let appCid = option.app_cid;
+			console.log('appCid', appCid);
+			this.getRecommendImages();
+			this.getHuashuTabbar(appCid);
+		},
+		mounted() {
+			
+		},
+		components:{
+			casesList
+		},
+		beforeDestroy() {
+			if(interval) {
+				clearTimeout(interval);
+			}
+			eMap = null;
+		},
+		onPageScroll(e) {
+			console.log('e onPageScroll...', e);
+			// 240+24
+			if(e.scrollTop>uni.upx2px(240)) {
+				this.isFixed = true;
+			} else {
+				this.isFixed = false;
+			}
+		},
+		methods: {
+			gotoNext() {
+				uni.switchTab({
+					url: '/pages/mind_square/index'
+				});
+			},
+			moveHandle() {
+				return false;
+			},
+			getArticleView(id) {
+				// 获取文章详情信息
+				uni.navigateTo({
+					url:'/pages/cases/detail?id='+id+'&cid='+cid+"&title="+tabTitle
+				});
+			},
+			getAdsInfo() {
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				let _self = this;
+				const url = apiPrefix + "?mod=ad&ac=get_ad";
+				http.request(url, {
+					auth: auth,
+					filterData: true,
+					cid: 6
+				}).then(resp => {
+					if(resp.status == 1) {
+						this.adsArr = resp.data;
+						this.base_lsit = resp.data;
+					}
+					console.log('adsArr:', this.adsArr);
+				})
+			},
+			gotoAdsUrl(index) {
+				let href = this.adsArr[index].ad_content;
+				if(!href) return;
+				uni.navigateTo({
+					url: href
+				});
+			},
+			getNavKey(navId) {
+				return 'tab_'+navId;
+			},
+			upper() {
+				
+			},
+			scroll(e) {
+				console.log('e', e);
+			},
+			selectedBanner(item, index) {
+				console.log('s', item, index);
+			},
+			bindchange(e) {
+				this.swiperIdx = e.detail.current;
+			},
+			bannerChange () {
+				
+			},
+			gotoViewArticle(id, cid, title) {
+				const url = '/pages/cases/detail?id='+id+'&cid='+cid+'&title='+title;
+				console.log('url', url);
+				uni.navigateTo({
+					url:url
+				});
+			},
+			getRecommendImages() {
+				let data = getApp().globalData
+				const apiPrefix = data.serverUri;
+				const auth      = data.auth;
+				let url = apiPrefix+'?mod=news&ac=banner';
+				http.request(url, {
+					auth:auth,
+					filterData:true
+				}).then(resp => {
+					console.log('getRecommendImages resp', resp);
+					this.recommendList = resp.data;
+					//this.banner = this.getBannerPics(resp.data);
+				})
+			},
+			getBannerPics(recommendArr) {
+				let n = recommendArr.length;
+				let srcArr = [];
+				for(let i = 0;i<n;i++) {
+					srcArr.push({ image: recommendArr[i].litpic,id:recommendArr[i].nid } );
+				}
+				console.log('banners:',srcArr);
+				return srcArr;
+			},
+			tabArrData(tabArr) {
+				// 需要隐藏一个元素
+				let index = this.caseTabIndex;
+				let len = tabArr.length;
+				let navData = tabArr;
+				//console.log('index', index);
+				if( index>=4) {
+					// 只保留最后三个
+					for (let m = 0; m<=index-4;m++) {
+						navData[m].display = 'none';
+					}
+					for (let x = index-3;x<=index;x++) {
+						navData[x].display = 'flex';
+					}
+				} else {
+					for (let m = 0;m<4;m++) {
+						//console.log('m',m);
+						navData[m].display = 'flex';
+					} 
+				} 
+				return navData;
+			},
+			onReachBottom() {
+				console.log('to lower!');
+				let _self = this;
+				console.log('page',nowpage);
+				if(nowpage>=totalPage) {
+					clearTimeout(interval);
+					return;
+				}
+				interval = setTimeout(function() {
+					nowpage++;
+					console.log('page....',nowpage);
+					_self.getCaseList(cid, false,nowpage);
+				}, 500);
+			},
+			lower() {
+				console.log('to lower!');
+				let _self = this;
+				console.log('page',nowpage);
+				if(nowpage>=totalPage) {
+					clearTimeout(interval);
+					return;
+				}
+				interval = setTimeout(function() {
+					nowpage++;
+					console.log('page....',nowpage);
+					_self.getCaseList(cid, false,nowpage);
+				}, 500);
+			},
+			getCaseList(cid, firstLoad, page) {
+				const k = cid+'_'+page;
+				if (cacheTab[k] && cacheTab[k].length>0) {
+					console.log('cache', cacheTab[k], 'k',k);
+					this.list = cacheTab[k];
+					return;
+				}
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				let _self = this;
+				const url = apiPrefix + "?mod=news&ac=list";
+				http.request(url, {
+					auth: auth,
+					cid: cid,
+					uid: this.uid,
+					nowpage: page,
+					filterData: true
+				}).then(resp => {
+					//console.log('resp', resp);
+					let typeStr = Object.prototype.toString.call(resp.data);
+					let isArray = false;
+					if(typeStr.indexOf('Array')!== -1) {
+						resp.data = this.initHuashuListImage(resp.data);
+						isArray   = true;
+						totalPage = resp.totalpage;
+					} 
+					if(firstLoad) {
+						if(isArray) {
+							this.list = resp.data;
+						} else {
+							this.list = [];
+						}
+					} else {
+						if(!isArray) {
+							return;
+						}
+						let len = resp.data.length;
+						this.list = this.list.concat(resp.data);
+					}
+					const k = cid+'_'+page;
+					cacheTab[k] = this.list;
+					// 5 分钟之后，缓存设置为空
+					setTimeout(()=>{
+						cacheTab[k] = [];
+					}, 5*3600);
+				});
+			},
+			initHuashuListImage(list) {
+				let n = list.length;
+				for(let m = 0;m<n;m++)
+				{
+					if(!list[m].thumbUrl) {
+						list[m].thumbUrl = '/static/img/love_skills/thumb.png';
+					} else {
+						list[m].thumbUrl = list[m].thumbUrl;
+					}
+				}
+				//console.log('list',list);
+				return list;
+			},
+			// 获取话术tab页
+			getHuashuTabbar(cId) {
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				let _self = this;
+				const url = apiPrefix + "?mod=news&ac=get_all_cid";
+				http.request(url, {
+					auth: auth
+				}).then(resp => {
+					//console.log('resp', resp);
+					this.tabArr = _self.initTabData(resp);
+					if(cId) {
+						const tabIndex = this.getActiveTabIndex(cId);
+						this.scrollInto = 'tab_'+cId;
+						this.caseTabIndex = tabIndex;
+						cid = cId;
+						tabTitle = _self.tabArr[tabIndex].firstNav.title;
+					} else {
+					//console.log('tabArr', this.tabArr);
+						cid    = _self.tabArr[0].firstNav.navId;
+						tabTitle = _self.tabArr[0].firstNav.title;
+					}
+					this.getCaseList(cid, true, 1);
+				});
+			},
+			initTabData(tabData) {
+				let n = tabData.length;
+				for(let s = 0;s<n;s++) {
+					tabData[s].display = 'flex';
+				}
+				return tabData;
+			},
+			switchCasesTab(e) {
+				console.log('switch1');
+				nowpage = 1;
+				let thisCurr = e.detail.current || e.currentTarget.dataset.index || 0;
+				console.log('thisCurr', thisCurr);
+				if(thisCurr == this.caseTabIndex) {
+					return;
+				}
+				this.caseTabIndex = thisCurr;
+				let navId = this.tabArr[thisCurr].firstNav.navId;
+				cid  = navId;
+				tabTitle = this.tabArr[thisCurr].firstNav.title;
+				//this.changeTabDisplay(thisCurr);
+				const t = parseInt(new Date().getTime()/1000);
+				this.delMap(eMap);
+				if (typeof eMap[t]!='undefined') {
+					return;
+				}
+				this.scrollInto = 'tab_'+navId;
+				this.getCaseList(navId, true, 1);
+				eMap[t] = 1;
+				console.log('eMap1111', eMap);
+			},
+			getIndexColor(index) {
+				let colorArr = ['#FF0000 ', '#FF7F00', '#FFFF00 ', '#00FF00', '#00FFFF', '#0000FF', '#8B00FF']
+				return colorArr[index%7];
+			},
+			delMap(map) {
+				let m = Object.keys(map);
+				if(m.length<=1) {
+					return;
+				}
+				for(let i = 0;i<m.length;i++)
+				{
+					if(i == m.length -1) {
+						continue;
+					}
+					// 删除最后一个元素之外的所有元素...
+					delete map[m[i]];
+				}
+				return map;
+			},
+			getActiveTabIndex(cId) {
+				const tArr = this.tabArr;
+				console.log('tabArr', this.tabArr, '---', cId);
+				const n = tArr.length;
+				for(let j = 0;j<n;j++) {
+					let m = tArr[j].firstNav.navId;
+					if(m === cId) {
+						return j;
+					}
+				}
+				return -1;
+			},
+			switchTab(index) {
+				nowpage = 1;
+				console.log('switch2');
+				console.log('switchTab index:', index);
+				// 切换面板
+				if(index == this.caseTabIndex) {
+					return;
+				}
+				this.caseTabIndex = index;
+				let navId = this.tabArr[index].firstNav.navId;
+				cid  = navId;
+				tabTitle = this.tabArr[index].firstNav.title;
+				//this.changeTabDisplay(index);
+				const t = parseInt(new Date().getTime()/1000);
+				this.delMap(eMap);
+				// 不准同一秒内发送两次请求
+				if (typeof eMap[t]!='undefined') {
+					return;
+				}
+				this.scrollInto = 'tab_'+navId;
+				this.getCaseList(navId, true, 1);
+				eMap[t] = 1;
+				console.log('eMap', eMap);
+			},
+			changeTabDisplay(index) {
+				let n = this.tabArr.length;
+				if( index>=3) {
+					// 只保留最后三个
+					for (let m = 0; m<=index-3;m++) {
+						//console.log('m,', m);
+						this.tabArr[m].display = 'none';
+					}
+					for (let x = index-2;x<=index;x++) {
+						//console.log('x,', x);
+						this.tabArr[x].display = 'flex';
+					}
+				} else {
+					console.log('index', index);
+					for (let m = 0;m<3;m++) {
+						//console.log('m<4',m);
+						this.tabArr[m].display = 'flex';
+					} 
+				} 
+			}
+		}
+	}
+</script>
+
+<style>
+.root-view {
+	flex: 1;
+	/*justify-content: flex-start;*/
+	flex-direction: column;
+	/*background: linear-gradient(150deg,rgba(35,105,230,1) 0%,rgba(21,185,218,1) 100%);*/
+	background-color: rgba(255,255,255, 1);
+}
+
+
+
+/* 隐藏滚动条 */	
+.border-active {
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color:rgba(255,255,255,1);
+}
+
+.header-view {
+	flex-direction: row;
+	height: 70rpx;
+	margin-top:11rpx;
+	width:750rpx;
+	/*z-index:99999999;*/
+}
+
+.u-sticky {
+	width:680rpx !important;
+	height: 70rpx;
+	margin-left:35rpx;
+	/*padding-bottom: 10rpx;*/
+	margin-right: 35rpx;
+}
+
+.header-view-box {
+	padding-top:10rpx;
+	/*margin-left: 32rpx;
+	margin-right: 32rpx;*/
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.scroll-v {
+   flex: 1;
+}
+
+.common-tab-view {
+	height:60rpx;
+	/*
+	padding-left: 20rpx;
+	padding-right: 20rpx;*/
+	width: 187.5rpx;
+	flex-wrap: nowrap;
+	background-color:rgba(255,255,255,1);
+	/*border-radius:30rpx;*/
+	/*border:3rpx solid rgba(236,236,236,1);*/
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	/*color:#FFFFFF;*/
+}
+	
+.swiper {
+	margin-left:32rpx;
+	margin-right:32rpx;
+	width:686rpx;
+	margin-top:24rpx;
+	height:320rpx;
+	border-radius: 27rpx;
+}
+
+.ads-image {
+	width: 686rpx;
+	height:320rpx;
+	/*will-change: transform;*/
+}
+
+.swiper-view {
+	flex-direction:column;
+	width:100%;
+	height:100%;
+	justify-content:center;
+	align-items:center;
+}
+
+.swiper-view-title {
+	position:absolute;
+	top:300rpx;
+	font-size:27rpx;
+	font-family:SimHei;
+	font-weight:400;
+	color:rgba(255,255,255,1);
+}
+
+
+.swiper-item-class {
+	justify-content: center;
+	align-items: center;
+}
+
+.active {
+	transform: none;
+	
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in;
+	transition-delay: 0s;
+}
+
+.quiet {
+	transform: scale(0.8333333);
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in;
+	transition-delay: 0s;
+}
+
+
+
+.article-swiper {
+	width:750rpx;
+}
+
+.refresh {
+	height: 64rpx;
+}
+
+.content-view {
+	width: 680rpx;
+	flex-direction: column;
+}
+
+
+.line-h {
+	height: 1rpx;
+	background-color: #cccccc;
+}
+
+.swiper-item {
+	flex: 1;
+	flex-direction: row;
+}
+
+.padding-cell {
+	height: 30rpx;
+}
+
+.active-tab-class {
+	color:#A88FEF;
+	padding-bottom:9rpx;
+	border-bottom-width:1px ;
+	border-bottom-style:solid;
+	border-bottom-color:#A88FEF;
+	font-size: 32rpx;
+	font-family: PingFang SC;
+	font-weight: 800;
+}
+
+.common-tab-class {
+	font-size: 32rpx;
+	font-family: PingFang SC;
+	font-weight: 800;
+	color:#131313; 
+}
+
+.mask-active-tab {
+	background-color:transparent;
+	color:#FFFFFF;
+}
+.sticky-fixed {
+	/* #ifdef H5 */
+	position: sticky;
+	top: 44px;
+	/* #endif */
+	/* #ifndef H5 */
+	position: fixed;
+	top: 0;
+	/* #endif */
+	z-index: 999;
+}
+</style>

@@ -55,21 +55,26 @@
 					<view id="pay-box-combo">
 						<view class="pay-box-combo-css" @tap="showPayDialog(2, 'VIP1')">
 							<text>{{yuedu_money}}/月</text>
+							<text>,充值送 {{yuedu_jifen}} 积分</text>
 						</view>
 						<view class="pay-box-combo-css" @tap="showPayDialog(3, 'VIP2')">
 							<text>{{jidu_money}}/季</text>
+							<text>,充值送 {{jidu_jifen}} 积分</text>
 						</view>
 						<view class="pay-box-combo-css" @tap="showPayDialog(4, 'VIP3')">
 							<text>{{niandu_money}}/年</text>
+							<text>,充值送 {{niandu_jifen}} 积分</text>
 						</view>
 					</view>
 				</view>
+				<!--
 				<view id="pay-box-right">
 					<!--
 					<view class="pay-box-method">
 						<text>分享获得</text>
 					</view>
 					-->
+					<!--
 					<view class="common-line-font pay-box-share-line1">
 						<text style="color: #272727;">分享好友自动开通</text>
 					</view>
@@ -82,6 +87,7 @@
 						</view>
 					</view>
 				</view>
+				-->
 			</view>
 		</view>
 		<uni-popup id="popupDialog" ref="popupDialog" type="select">
@@ -148,7 +154,10 @@
 							_self.shareWxOrWxTimeline('wx', 'weixin');
 						}
 					}
-				]
+				],
+				yuedu_jifen: '2',
+				niandu_jifen: '2',
+				jidu_jifen: '3',
 			}
 		},
 		components:{
@@ -650,9 +659,9 @@
 		margin-top:60rpx;
 		background-color: #FFFFFF;
 		padding-top:57rpx;
-		padding-left: 27rpx;
+		padding-bottom: 42rpx;
 		#info-vip {
-			
+			padding-left: 27rpx;
 			display: flex;
 			align-items: center;
 		}
@@ -666,10 +675,11 @@
 			#pay-box-left {
 				display: flex;
 				flex-direction: column;
-				width: 284rpx;
+				//width: 284rpx;
+				width: 608rpx;
 				height:358rpx;
 				background-image: url(../../static/img/user/pay_vip/method1.png);
-				background-size: 284rpx 358rpx;
+				background-size: 608rpx 358rpx;
 				background-repeat: no-repeat;
 				/*border:1px solid red;*/
 				/*.pay-box-method {
@@ -697,7 +707,10 @@
 					padding-top:98rpx;
 					.pay-box-combo-css {
 						margin-bottom:19rpx;
-						width:210rpx;
+						//width:210rpx;
+						/*width: 608rpx;*/
+						padding-left:20px;
+						padding-right: 20px;
 						height: 60rpx;
 						display: flex;
 						justify-content: center;

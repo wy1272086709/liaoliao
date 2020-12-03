@@ -1,0 +1,121 @@
+<template>
+	<view class="tabs">
+		<view :style="'height:'+ headerViewHeight+ 'px;'" class="header-view">
+			<view class="status-line" :style="'height:'+lineHeight+'px;'"></view>
+			<view class="header-content-view">
+				<view class="header-title-view">
+					<text>小秒教程</text>
+				</view>
+				<view class="header-search-view">
+					<uni-search-bar :placeholder="'搜索教程内容'" ></uni-search-bar>
+				</view>
+			</view>
+		</view>
+		<view class="line-h"></view>
+		<scroll-view id="tab-bar" class="scroll-h" :scroll-x="true" :show-scrollbar="false" :scroll-into-view="scrollInto">
+			<view v-for="(tab,index) in tabBars" :key="tab.id" class="uni-tab-item" :id="tab.id" :data-current="index" @click="ontabtap">
+				<text class="uni-tab-item-title" :class="tabIndex==index ? 'uni-tab-item-title-active' : ''">{{tab.name}}</text>
+			</view>
+		</scroll-view>
+		
+		<view class="line-h"></view>
+		<swiper :current="tabIndex" class="swiper-box" style="flex: 1;" :duration="300" @change="ontabchange">
+		    <swiper-item class="swiper-item" v-for="(tab,index1) in newsList" :key="index1">
+				<video class="video" :id="item.id" :ref="item.id" :src="item.src" :controls="false" :loop="true"
+				    :show-center-play-btn="false"></video>
+			</swiper-item>
+		</swiper>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				scrollInto: '',
+				index: 0,
+				tabIndex: 0,
+				headerViewHeight: '',
+				lineHeight: '',
+				newsList: [
+					
+				],
+				tabBars: [
+					{id: 1, name: '推荐'},
+					{id: 2, name: '官方赛事'},
+					{id: 3, name: '视频流'},
+					{id: 4, name: '影响联盟'},
+					{id: 5, name: '鹰眼视频'},
+				]
+			}
+		},
+		onLoad() {
+			const systemInfo = uni.getSystemInfoSync();
+			this.lineHeight  = systemInfo.statusBarHeight;
+			this.headerViewHeight = systemInfo.statusBarHeight  + 44;
+		},
+		methods: {
+			ontabtap(e) {
+				const index = e.target.dataset.current;
+				this.tabIndex = index;
+				this.scrollInto = this.tabBars[index].id;
+			},
+			ontabchange() {
+				
+			}
+		}
+	}
+</script>
+
+<style>
+.tabs {
+	flex: 1;
+	/*margin-left: 32rpx;
+	margin-right: 32rpx;*/
+	flex-direction: column;
+	overflow: hidden;
+	background-color: #FFFFFF;
+}
+.header-view {
+	flex-direction: column;
+}
+.header-content-view {
+	flex-direction: row;
+}
+.header-title-view {
+	height: 60px;
+}
+.header-search-view {
+	height: 60px;
+}
+.scroll-h {
+	width: 750rpx;
+	height: 80rpx;
+	flex-direction: row;
+}
+	
+.line-h {
+	height: 1rpx;
+	background-color: #cccccc;
+}
+
+.uni-tab-item {
+	flex-wrap: nowrap;
+	padding-left: 34rpx;
+	padding-right: 34rpx;
+}
+
+.uni-tab-item-title {
+	color: #555;
+	font-size: 30rpx;
+	height: 80rpx;
+	line-height: 80rpx;
+	flex-wrap: nowrap;
+}
+
+.uni-tab-item-title-active {
+	color: #007AFF;
+}
+
+
+</style>

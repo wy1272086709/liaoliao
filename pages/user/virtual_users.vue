@@ -35,6 +35,10 @@
 			
 		},
 		methods: {
+			setInternalUser(isInternalUser) {
+				console.log('isInternalUser11111-----', isInternalUser);
+				this.$store.commit('setInternalUser', isInternalUser);
+			},
 			async getUserList() {
 				const modStr = '?mod=user&ac=test_user_list';
 				const data = getApp().globalData;
@@ -48,14 +52,14 @@
 					console.log('info', r);
 					this.userList = r;
 				} catch(e) {
-					
+					console.log('e', e);
 				}
 			},
 			switchUser(uid) {
 				// 切换用户,
 				this.setUserInfo({});
 				uni.removeStorageSync('app_user_info_1');
-				uni.setStorageSync('isInternalUser', 1);
+				this.setInternalUser(1);
 				console.log('logout...');
 				uni.removeStorageSync('app_userid');	
 				util.cache('app_userid', uid);			

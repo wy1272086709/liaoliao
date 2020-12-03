@@ -46,7 +46,7 @@
 				<button  form-type="submit" @tap="login()" style="border:0px solid #000000;">登录/注册</button>
 			</view>
 			
-			<view id="third-login-text" :style="'margin-top:'+thirdLoginTop+'px;margin-bottom:'+thirdLoginBottom+'px;'">Or Sign in with:</view>
+			<view id="third-login-text" :style="'margin-top:'+thirdLoginTop+'px;margin-bottom:'+thirdLoginBottom+'px;'">{{loginMsg}}</view>
 			<view id="login-view">
 				<!--
 				<view style="margin-right:73rpx;">
@@ -54,7 +54,10 @@
 				</view>
 				-->
 				<view @tap="thirdLoginByWx">
-					<image src="/static/img/user/login/wexin.png" style="height:44px;width:44px;"></image>
+					<!-- margin-right:50rpx; -->
+					<view class="sign-in-with-wx" :style="(system >= 13 && platform==2) ? 'margin-right:50rpx':''">
+						<image src="/static/img/user/login/wexin.png" style="height:44px;width:44px;"></image>
+					</view>
 				</view>
 				<view @tap="thirdLoginByApple">
 					<view class="sign-in-with-apple" v-if="system >= 13 && platform==2">
@@ -101,15 +104,18 @@
 				platform: getApp().globalData.platform,
 				top: '',
 				bottom: '',
+				loginMsg: '',
 			};
 		},
 		onLoad() {
 			let info = uni.getSystemInfoSync();
 			const system = info.system ? parseInt(info.system.split('.')[0]): 0;
-			console.log('system:', system, 'info', info);
+			this.system = system;
+			console.log('system:', system, 'info', info, 'platform', this.platform);
 			let winWidth = info.windowWidth;
 			let ratio = 750/winWidth;
 			ratio = ratio.toFixed(2);
+			this.loginMsg = this.platform == 1? '第三方登录:': 'Or Sign in with:';
 			this.lineHeight =  info.statusBarHeight * ratio +40+ 'rpx';
 			this.bgViewHeight = info.windowHeight * 0.3673;
 			this.marginTop    = info.windowHeight * 0.0359;
@@ -209,6 +215,10 @@
 			},
 			thirdLoginByApple() {
 				console.log('thirdLoginByApple');
+				let flag3 = this.validateUserAllow();
+				if(!flag3) {
+					return;
+				}
 				let _self = this;
 				uni.login({
 				    provider: 'apple',
@@ -227,6 +237,21 @@
 									logintype: 'app_apple',
 									filterData: true
 								};
+								if(u && u.fullName) {
+									if(u.fullName) {
+										params.nickName = u.fullName.givenName;
+										if(!params.nickName) {
+											params.nickName = u.fullName.familyName;
+										}
+										if(!params.nickName) {
+											params.nickName = u.fullName.giveName;
+										}
+									} else {
+										params.nickName = 'apple';
+									}
+								} else {
+									params.nickName = 'apple';
+								}
 								_self.insertAppleLoginUserInfo(params);
 				            }
 				        });
@@ -262,19 +287,15 @@
 				console.log('login apple resp', resp);
 				if (resp.status == 1) {
 					// 3 表示apple 登录
-					let userInfoStr = util.cache('app_user_info_3', null);
-					let userInfoObj = {};
-					if(userInfoStr) {
-						userInfoObj = JSON.parse(userInfoStr);
-					} else {
-						userInfoObj   =  {};
-						userInfoObj.avatarUrl = params.avatarUrl;
-						userInfoObj.phone = "";
-						userInfoObj.nickName = params.nickName;
-						userInfoObj.uid   = resp.data.uid;
-						// 首次登录之后level 为1,如果用户没有充值,后期再改...
-						userInfoObj.level = 1;
-					}
+					const d = resp.data;
+					const userInfoObj   =  {
+							avatarUrl: params.avatarUrl,
+							phone:     params.phone,
+							nickName:  params.nickName,
+							level:      d.cid,
+							start_time: d.start_time,
+							end_time:   d.end_time
+					};
 					console.log('insertAppleLoginUserInfo', userInfoObj);
 					this.loginFunc(userInfoObj, 3);
 				}
@@ -288,12 +309,14 @@
 				
 				if(this.phone == 'test' && this.validate_code == 'test') {
 					let userInfoStr = util.cache('app_user_info_1', null);
+					console.log('userInfoStr', userInfoStr);
 					let userInfoObj = {};
 					if(userInfoStr) {
 						userInfoObj = JSON.parse(userInfoStr);
+						console.log('userInfoObj', userInfoObj);
 					} else {
 						userInfoObj.avatarUrl = '';
-						userInfoObj.phone = this.phone;
+						userInfoObj.phone = '';
 						userInfoObj.nickName = 'test';
 						userInfoObj.uid   = 258;
 						// 首次登录之后level 为1,如果用户没有充值,后期再改...
@@ -319,19 +342,22 @@
 				if(resp.status == 1) {
 					// 保存token
 					console.log('', resp);
-					let userInfoStr = util.cache('app_user_info_1', null);
-					let userInfoObj = {};
-					if(userInfoStr) {
-						userInfoObj = JSON.parse(userInfoStr);
-					} else {
-						userInfoObj   =  {};
-						userInfoObj.avatarUrl = '';
-						userInfoObj.phone = this.phone;
-						userInfoObj.nickName = '*'.repeat(7)+(this.phone.substr(7, 4));;
-						userInfoObj.uid   = resp.data.uid;
-						// 首次登录之后level 为1,如果用户没有充值,后期再改...
-						userInfoObj.level = 1;
-					}
+					const d = resp.data;
+					const userInfoObj   =  {
+						avatarUrl: d.avatarurl,
+						nickName:  d.nickName,
+						uid: d.uid,
+						level: d.cid,
+						start_time: d.start_time,
+						end_time:   d.end_time,
+					};
+					/*userInfoObj.avatarUrl = '';
+					userInfoObj.phone = this.phone;
+					userInfoObj.nickName = '*'.repeat(7)+(this.phone.substr(7, 4));;
+					userInfoObj.uid   = resp.data.uid;
+					// 首次登录之后level 为1,如果用户没有充值,后期再改...
+					userInfoObj.level = 1;*/
+					
 					//getApp().globalData.appLoginType = 1;
 					this.loginFunc(userInfoObj, 1, resp.data.token);
 					
@@ -354,7 +380,7 @@
 				// 跳转到个人中心,后续逻辑..
 				// 苹果登录,同时没有绑定手机号
 				let url = '';
-				if((type == 3|| type == 2) && !userInfoObj.phone) {
+				if((type == 2) && !userInfoObj.phone) {
 					url = '/pages/user/save_phone';
 				} else {
 					url = '/pages/user/user_index';
@@ -367,11 +393,12 @@
 					title:"登录成功!",
 					duration:0,
 					complete() {
-						if(type == 1 || (userInfoObj.phone && (type == 3|| type == 2))) {
+						// 手机号登录，或者苹果登录
+						if( (type == 1 || type == 3) || (userInfoObj.phone && type == 2) ) {
 							uni.switchTab({
 								url: url
 							});
-						} else if((type == 3|| type == 2) && !userInfoObj.phone) {
+						} else if((type == 2) && !userInfoObj.phone) {
 							uni.redirectTo({
 								url: url,
 								complete() {
@@ -403,6 +430,7 @@
 					            success: function (loginRes) {
 									  console.log("App微信获取用户信息成功",loginRes);
 					                  //that.getApploginData(loginRes)  //请求登录接口方法
+									  console.log('wx login success!');
 									  let data = loginRes;
 									  uni.request({
 										  url: "https://api.weixin.qq.com/sns/userinfo?access_token="+
@@ -426,6 +454,7 @@
 												gender: resData.sex,
 												country: resData.country,
 												province: resData.province,
+												platform: data.platform,
 												city: resData.city,
 												logintype: 'wx_app',
 												auth: auth,
@@ -439,20 +468,12 @@
 												if (resp.status == 1) {
 													//getApp().globalData.appLoginType = 2;
 													util.cache('appLoginType', 2);
-													let userInfoStr = util.cache('app_user_info_2', null);
-													console.log('userInfoStr', userInfoStr);
-													let userInfoObj = {};
-													if(userInfoStr) {
-														userInfoObj = JSON.parse(userInfoStr);
-													} else {
-														userInfoObj   = { nickName: resData.nickname, avatarUrl: resData.headimgurl, 
-														uid: resp.data.id, level:resp.data.cid, phone: resp.data.phone };
-													}
+													const userInfoObj   = { nickName: resData.nickname, avatarUrl: resData.headimgurl, 
+														uid: resp.data.id, level:resp.data.cid, phone: resp.data.phone,
+														 start_time:resp.data.start_time, end_time:resp.data.end_time};
+													
 													console.log('userInfoObj', userInfoObj);
-													/*let u = this.getStoreUserInfo();
-													console.log('u', u);
-													console.log('userInfoObj', userInfoObj);
-													this.setUserInfo(userInfoObj);*/
+
 													console.log('resp.data', resp.data);
 													util.cache('app_userid', resp.data.id, 15*24*3600);
 													util.cache('app_user_info_2', JSON.stringify(userInfoObj), 15*24*3600);
@@ -493,7 +514,10 @@
 								},
 					            fail:function(res){
 					              console.log("App微信获取用户信息失败",res);
-				              	}
+				              	},
+								complete(res) {
+									console.log('wx login complete!');
+								}
 				            });
 						}
 				     }
@@ -788,5 +812,8 @@ view {
 	flex-direction: column;
 }
 
+.sign-in-with-wx {
+	height:44px;width:44px;
+}
 
 </style>

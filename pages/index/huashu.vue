@@ -38,7 +38,7 @@
 						<text :class="searchText">{{item.title}}</text>
 					</view>
 					-->
-					<view class="huashu-line" v-for="(line,key,index) in item.content" :key="index+'_'+index2" @tap.stop="lineFunc(line, index2, index)">
+					<view class="huashu-line" v-for="(line,key,index) in item.content" :key="getKey(index,index2)" @tap.stop="lineFunc(line, index2, index)">
 						<view class="huashu-sex">
 							<template v-if="line.split('@@')[0] == 1">
 								<image class="huashu-sex-image" src="../../static/img/index/man.png"></image>
@@ -296,6 +296,9 @@
 			uni.startPullDownRefresh();
 		},
 		methods: {
+			getKey(index, index2) {
+				return index+'_'+index2;
+			},
 			//#ifdef MP-QQ
 			copy_customer_qq() {
 				let qq = '3342315151';
@@ -434,7 +437,8 @@
 					title:'"搜索结果"'
 				});
 				let params = {
-					filterData:true
+					filterData:true,
+					version: 'v2'
 				};
 				if (keyword) {
 					params.keyword = keyword;
@@ -521,7 +525,6 @@
 						title = '请先登录';
 						url   = '/pages/user/login_v2';
 					}
-					
 					uni.showToast({
 						icon:'none',
 						title: title,
@@ -535,7 +538,8 @@
 					return;
 				}
 				let content = line.split('@@')[1];
-				//console.log('content', content);
+				content = content.replace(/<span style='(.*?)'>(.*?)<\/span>/, "$2");
+				console.log('content', content);
 				uni.setClipboardData({
 					data: content,
 					success: function(res) {
@@ -704,7 +708,6 @@ view, scroll-view {
 #content-view {
 	display: flex;
 	overflow-y: scroll;
-	flex: 1;
 	-webkit-overflow-scrolling:touch;
 	flex-direction: column;
 	width:750rpx;
@@ -721,7 +724,9 @@ view, scroll-view {
 	margin-left:32rpx;
 	margin-right:32rpx;
 	border-radius:19rpx;
+	padding-bottom: 20rpx;
 	margin-bottom: 60rpx;
+	box-sizing:content-box;
 }
 .jiacu {
 	font-weight: bold;
@@ -747,10 +752,6 @@ view, scroll-view {
 
 .huashu-link-view {
 	height: 15rpx;
-}
-
-.huashu-article-first {
-	
 }
 
 .huashu-link {
@@ -793,8 +794,6 @@ view, scroll-view {
 }
 .huashu-content {
 	width:486rpx;
-	height: 40rpx;
-	line-height: 40rpx;
 }
 
 .huashu-content-text {

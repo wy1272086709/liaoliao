@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "导航吸附",
+  "navigationBarBackgroundColor": "#2369E6",
+  "backgroundColor": "#2369E6",
+  "navigationBarTextStyle": "white",
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "u-toast": "/uview-ui/components/u-toast/u-toast",
+    "u-sticky": "/uview-ui/components/u-sticky/u-sticky",
+    "u-subsection": "/uview-ui/components/u-subsection/u-subsection"
+  }
+}

@@ -5,9 +5,13 @@ let debug = true;
 
 export default {
 	onLaunch: function() {
-		// #ifdef APP-PLUS
-		plus.screen.lockOrientation = 'portrait-primary';
-		// #endif
+		let s1 = new Date();
+		console.log('Launch start1:', s1.getTime());
+		//#ifdef APP-PLUS
+		plus.screen.lockOrientation('portrait'); //锁死屏幕方向为竖屏  
+		
+		//#endif
+		
 		let _self = this;
 		console.log('on Launch!');
 		uni.getSystemInfo({
@@ -16,15 +20,28 @@ export default {
 		        let modelmes = res.model;
 				let platform = res.platform.toLowerCase();
 				//android: 安卓, ios: IOS, devtools:PC
-				if (platform == 'android'  || platform == 'devtools') {
+				if (platform == 'android') {
 					_self.globalData.platform = 1;	
-				} else if(platform == 'ios' ){
+				} else if(platform == 'ios' || platform == 'devtools' ){
 					_self.globalData.platform = 2;
 				}
-		        if (modelmes.search('iPhone X') != -1) {
+		        if (modelmes.search('iPhone X') != -1 || modelmes.search('iPhoneX')!=-1) {
 		          _self.globalData.isIphoneX = true;
 		        }
-				
+				 //console.log('App Launch')
+				switch (platform) {
+					case 'android':
+						//console.log('运行Android上') 
+						plus.navigator.closeSplashscreen();
+						break;
+					case 'ios':
+						//console.log('运行iOS上') 
+						plus.navigator.closeSplashscreen();
+						break;
+					default:
+						//console.log('运行在开发者工具上') 
+						break;
+				}
 		        uni.setStorageSync('modelmes', modelmes)
 		      }
 		});
@@ -146,10 +163,7 @@ export default {
 		let minutes = 15*24*3600;
 		util.cache('wx_userinfo', userInfoStr, minutes);
 		console.log('App Show');
-		
 		//#endif
-		
-		
 	},
 	onHide: function() {
 		console.log('App Hide');
@@ -168,7 +182,9 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "uview-ui/index.scss";
+
 /* 解决头条小程序组件内引入字体不生效的问题 */
 /* #ifdef MP-TOUTIAO */
 @font-face {
@@ -176,4 +192,7 @@ export default {
 	src: url('/static/uni.ttf');
 }
 /* #endif */
+
+
+
 </style>

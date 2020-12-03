@@ -169,6 +169,7 @@
 			current: {
 				immediate: true,
 				handler(nVal, oVal) {
+					console.log('nVal'+nVal+','+oVal);
 					// 视图更新后再执行移动操作
 					this.$nextTick(() => {
 						this.currentIndex = nVal;
@@ -261,6 +262,7 @@
 			scrollByIndex() {
 				// 当前活动tab的布局信息，有tab菜单的width和left(为元素左边界到父元素左边界的距离)等信息
 				let tabInfo = this.tabQueryInfo[this.currentIndex];
+				console.log('tabInfo', tabInfo);
 				if (!tabInfo) return;
 				// 活动tab的宽度
 				let tabWidth = tabInfo.width;
@@ -273,6 +275,7 @@
 				let left = tabInfo.left + tabInfo.width / 2 - this.parentLeft;
 				// 计算当前活跃item到组件左边的距离
 				this.scrollBarLeft = left - uni.upx2px(this.barWidth) / 2;
+				console.log('this.scrollBarLeft', this.scrollBarLeft);
 				// 第一次移动滑块的时候，barFirstTimeMove为true，放到延时中将其设置false
 				// 延时是因为scrollBarLeft作用于computed计算时，需要一个过程需，否则导致出错
 				if(this.barFirstTimeMove == true) {

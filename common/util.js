@@ -53,6 +53,7 @@ class util {
 			//获取缓存
 			let val = uni.getStorageSync(key);
 			let tmp = val.split("|");
+			//console.log('tmp', tmp);
 			if(tmp[1] == -1) {
 				return tmp[0];
 			}

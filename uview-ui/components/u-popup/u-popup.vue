@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import uMask from '../../components/u-mask/u-mask.vue';
 /**
  * popup 弹窗
  * @description 弹出层容器，用于展示弹窗、信息提示等内容，支持上、下、左、右和中部弹出。组件只提供容器，内部内容由用户自定义
@@ -194,6 +195,9 @@ export default {
 			type: [String, Number],
 			default: 250
 		}
+	},
+	components:{
+		uMask
 	},
 	data() {
 		return {

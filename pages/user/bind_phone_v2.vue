@@ -12,7 +12,8 @@
 			</view>
 			<view id="code-view">
 				<input type="text" id="validate_code" ref="codeRef" @blur="validateCodeStr()" name="code" v-model.trim="validate_code"  placeholder="请输入短信验证码" placeholder-class="text-placeholder-class" />
-				<button   @tap="sendCode()" :style="'height:'+sendCodeBtnHeight+'px;'" class="send-code-btn" :disabled="disabled">{{sendMsg}}</button>
+				<!-- :style="'height:'+sendCodeBtnHeight+'px;'" -->
+				<button   @tap="sendCode()"  class="send-code-btn" :disabled="disabled">{{sendMsg}}</button>
 			</view>	
 			<view id="error-code-view" >
 				<text>{{codeErrorMsg}}</text>
@@ -299,7 +300,7 @@ view {
 		font-size: 24rpx;
 		font-family: PingFang SC;
 		font-weight: 400;
-		color: #B2B2B2;
+		color: red;
 	}
 	.error-text{
 		/*margin-left:5px;*/
@@ -352,12 +353,11 @@ view {
 	#error-tel-view {
 		height: 20px;
 		/*margin-left:53rpx;*/
-		color:#B2B2B2;
+		color:red;
 		padding-left:27rpx;
 		font-size: 24rpx;
 		font-family: PingFang SC;
 		font-weight: 400;
-		color: #B2B2B2;
 		
 		margin-top:18rpx;
 		margin-bottom:50rpx;

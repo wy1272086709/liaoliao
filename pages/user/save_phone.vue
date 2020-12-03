@@ -10,7 +10,8 @@
 				</view>
 				<input id="phone-id" type="text" ref="phoneRef" @blur="validatePhone()" name="phone" v-model.trim="phone"  placeholder="请输入手机号" placeholder-class="text-placeholder-class" />
 				<view>
-					<button   @tap="sendCode()" :style="'height:'+sendCodeBtnHeight+'px;'" class="send-code-btn" :disabled="disabled">{{sendMsg}}</button>
+					<!-- :style="'height:'+sendCodeBtnHeight+'px;'" -->
+					<button   @tap="sendCode()"  class="send-code-btn" :disabled="disabled">{{sendMsg}}</button>
 				</view>
 			</view>
 			<view id="error-tel-view">
@@ -250,8 +251,7 @@
 										url: '/pages/user/user_index'
 									});
 								}
-							})
-							
+							});
 						}
 					} else {
 						let msg = resp.message;
@@ -373,7 +373,7 @@ view {
 		
 		.send-code-btn {
 			display: flex;
-			font-size: 16rpx;
+			font-size: 28rpx;
 			font-family: PingFang SC;
 			font-weight: 400;
 			color: #343434;
@@ -388,6 +388,7 @@ view {
 		
 		button::after {
 			border:0px;
+			background-color: transparent;
 		}
 	}
 

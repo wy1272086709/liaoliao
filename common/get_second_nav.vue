@@ -2,21 +2,25 @@
 	<view :style="index==2?'flex-wrap:wrap':''">
 		<template>
 			<template v-if="index==0 || index == 5">
-				<view  v-for="(nav,index2) in secondNav" class="second-nav-three-row" :style="'background-image:url('+nav.litpic+');'+(index2==0 ? 'margin-right:24rpx': (index2==1?'margin-right:26rpx':''))"  @tap="enter_huashu(nav.title, nav.navId);" :key="nav.navId">
+				<view  v-for="(nav,index2) in secondNav" class="second-nav-three-row" :style="(index2==0 ? 'margin-right:24rpx': (index2==1?'margin-right:26rpx':''))"  @tap="enter_huashu(nav.title, nav.navId);" :key="nav.navId">
+					<image :src="nav.litpic" style="width: 100%;height: 100%;"></image>
 					<text class="second-nav-text">{{nav.title}}</text>
 				</view>
 			</template>
 			<template v-else-if="index == 1">
 				<view style="flex-direction: row;">
-					<view class="second-nav-three-left" :key="secondNav.length>0?secondNav[0].navId:'index_0'" :style="'background-image:url('+secondNav[0].litpic+');'" @tap="enter_huashu(secondNav[0].title, secondNav[0].navId);"> 
+					<view class="second-nav-three-left" :key="secondNav.length>0?secondNav[0].navId:'index_0'"  @tap="enter_huashu(secondNav[0].title, secondNav[0].navId);"> 
+						<image :src="secondNav[0].litpic" class="img-size"></image>
 						<text class="second-nav-text-left">{{secondNav[0].title}}</text>
 					</view>
 					<view class="second-nav-three-right"> 
-						<view class="second-nav-right-one" :key="secondNav.length>0?secondNav[1].navId:'index_1'" :style="'background-image:url('+secondNav[1].litpic+');'" @tap="enter_huashu(secondNav[1].title, secondNav[1].navId);">
+						<view class="second-nav-right-one" :key="secondNav.length>0?secondNav[1].navId:'index_1'"  @tap="enter_huashu(secondNav[1].title, secondNav[1].navId);">
+							<image :src="secondNav[1].litpic" style="width:100%;height: 152rpx;"></image>
 							<text class="second-nav-right-one-text">{{secondNav[1].title}}</text>
 							<text  class="second-nav-right-one-content">{{secondNav[1].content}} </text>
 						</view>
-						<view class="second-nav-right-two" :key="secondNav.length>0?secondNav[2].navId:'index_2'" :style="'background-image:url('+secondNav[2].litpic+');'" @tap="enter_huashu(secondNav[2].title, secondNav[2].navId);">
+						<view class="second-nav-right-two" :key="secondNav.length>0?secondNav[2].navId:'index_2'"  @tap="enter_huashu(secondNav[2].title, secondNav[2].navId);">
+							<image :src="secondNav[2].litpic" style="width: 100%;height: 153rpx;"></image>
 							<text class="second-nav-right-two-text">{{secondNav[2].title}}</text>
 							<text  class="second-nav-right-two-content">{{secondNav[2].content}} </text>
 						</view>
@@ -122,6 +126,7 @@
 	.second-nav-three-row {
 		width:212rpx;
 		height:212rpx;
+		position: relative;
 		background-size:contain;	
 	}
 	
@@ -133,6 +138,10 @@
 		margin-right:15rpx;
 		border-radius:20rpx 20rpx 20rpx 20rpx;
 	}
+	.img-size {
+		width:100%;
+		height: 100%;
+	}
 	
 	.second-nav-three-right {
 		flex-direction: column;
@@ -141,7 +150,8 @@
 	.second-nav-right-one {
 		width:336rpx;
 		height:153rpx;
-		background-size: contain;
+		position: relative;
+		/*background-size: contain;*/
 		margin-bottom:15rpx;
 		flex-direction: column;
 		justify-content: flex-start;
@@ -159,6 +169,7 @@
 	
 	.second-nav-right-one-text {
 		display: flex;
+		position: absolute;
 		margin-left:156rpx;
 		margin-top:38rpx;
 		font-size:34rpx;
@@ -169,6 +180,7 @@
 	
 	.second-nav-right-two-text {
 		display: flex;
+		position: absolute;
 		margin-left:150rpx;
 		margin-top:40rpx;
 		font-size:34rpx;
@@ -179,7 +191,8 @@
 	
 	.second-nav-right-one-content {
 		display: flex;
-		margin-top:17rpx;
+		position: absolute;
+		margin-top:100rpx;
 		margin-left:144rpx;
 		padding-left:9rpx;
 		padding-right:9rpx;
@@ -197,10 +210,9 @@
 	
 	.second-nav-right-two-content {
 		display: flex;
-		margin-top:13rpx;
+		position: absolute;
+		margin-top:100rpx;
 		margin-left:130rpx;
-		padding-top:6rpx;
-		padding-bottom:7rpx;
 		height:30rpx;
 		background:rgba(234,104,162,1);
 		border-radius:15rpx;
@@ -287,6 +299,7 @@
 	.four-part-one {
 		width:325rpx;
 		height:189rpx;
+		position: relative;
 		background:linear-gradient(17deg,rgba(131,91,213,1),rgba(234,148,199,1));
 		border-radius:10rpx;
 		margin-right: 32rpx;
@@ -299,6 +312,7 @@
 	.four-part-two {
 		width:329rpx;
 		height:165rpx;
+		position: relative;
 		background:linear-gradient(17deg,rgba(53,174,166,1),rgba(158,224,133,1));
 		border-radius:10rpx;
 		margin-bottom: 22rpx;
@@ -309,6 +323,7 @@
 	
 	.four-part-three {
 		width:325rpx;
+		position: relative;
 		height:189rpx;
 		background:linear-gradient(17deg,rgba(255,115,137,1),rgba(255,180,140,1));
 		border-radius:10rpx;
@@ -415,6 +430,7 @@
 	.second-nav-text {
 		display: flex;
 		height:29rpx;
+		position: absolute;
 		margin-top:33rpx;
 		padding-left:10rpx;
 		padding-right:10rpx;
@@ -430,6 +446,7 @@
 	
 	.second-nav-text-left {
 		margin-left:106rpx;
+		position: absolute;
 		margin-top:243rpx;
 		font-size:32rpx;
 		font-family:SourceHanSansSC;

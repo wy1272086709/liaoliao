@@ -1,6 +1,6 @@
 <template>
 	<view class="u-collapse-item" :style="[itemStyle]">
-		<view :hover-stay-time="200" class="u-collapse-head" @tap.stop="headClick" :hover-class="hoverClass" :style="[headStyle]">
+		<view :hover-stay-time="200" class="u-collapse-head"  @tap.stop="headClick" :hover-class="hoverClass" :style="[headStyle]">
 			<block v-if="!$slots['title-all']">
 				<view v-if="!$slots['title']" class="u-collapse-title u-line-1" :style="[{ textAlign: align ? align : 'left' },
 					isShow && activeStyle && !arrow ? activeStyle : '']">
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+	import uIcon from '../../components/u-icon/u-icon.vue';
 	/**
 	 * collapseItem 手风琴Item
 	 * @description 通过折叠面板收纳内容区域（搭配u-collapse使用）
@@ -94,6 +95,9 @@
 				
 			};
 		},
+		components:{
+			uIcon
+		},
 		watch: {
 			open(val) {
 				this.isShow = val;
@@ -112,6 +116,7 @@
 					this.nameSync = this.name ? this.name : this.parent.childrens.length;
 					this.parent.childrens.push(this);
 					this.headStyle = this.parent.headStyle;
+					console.log('this.headStyle', this.headStyle);
 					this.bodyStyle = this.parent.bodyStyle;
 					this.arrowColor = this.parent.arrowColor;
 					this.hoverClass = this.parent.hoverClass;
@@ -200,5 +205,11 @@
 		font-size: 28rpx;
 		color: $u-tips-color;
 		text-align: left;
+	}
+	
+	.u-line-1 {
+	    overflow: hidden;
+	    white-space: nowrap;
+	    text-overflow: ellipsis;
 	}
 </style>

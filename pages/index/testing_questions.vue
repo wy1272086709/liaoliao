@@ -24,8 +24,8 @@
 										</view>
 									</view>
 									<view>
-										<view class="block">
-											<view class="cu-form-group" :style="subject.userAnswer == index?'background-color:#A9A9A9':''" v-for="(option,index) in subject.question_select" :key="option" @tap="radioboxChange(index)">
+										<view class="block" @touchstart.stop="radioboxChange">
+											<view :hover-stay-time="100" :ref="'view'+index" :data-index="index" class="cu-form-group" :style="subject.userAnswer == index?'background-color:#A9A9A9':''" v-for="(option,index) in subject.question_select" :key="index" >
 												<!--
 												<radio color="#09BB07" :value="index" :checked="subject.userAnswer == index?true:false"></radio>
 												-->
@@ -57,24 +57,13 @@
 			return {
 				swiperHeight: '',
 				subjectList: [
-					{
-						"title":"水是液体？",
+					/*{
+						"title":"",
 						"question_select":{
-							'A': "小猫小狗",
-							'B': "金鱼乌龟",
-							'C': "小白兔小仓鼠"
+							
 						},
 						"userAnswer": "",
-					},
-					{
-						"title":"电流分有？", 
-						"question_select":{
-							'A': "舒适休闲类型",
-							'B': "清新甜美类型",
-							'C': "成熟性感类型"
-						},
-						"userAnswer": "",
-					},
+					}*/
 				],
 				subjectIndex: 0,
 				contentHeight: '',
@@ -153,24 +142,27 @@
 					this.subjectIndex = index;			
 				}					
 			},
-			radioboxChange(index) {
+			radioboxChange(e) {
+				//console.log(index);
+				//console.log('clicked'+index);
 				/*let items = this.subjectList[this.subjectIndex].optionList;
 				let values = e.detail.value;
 				console.log('values', values);*/
-				const values = index;
-				
+				const values = e.target.dataset.index;
+				//const values = index;
+				console.log('values', values);
+				if(!values) {
+					return;
+				}
 				this.subjectList[this.subjectIndex].userAnswer = values;
 				if(this.subjectIndex < this.subjectList.length - 1){
 					this.subjectIndex += 1;	
-					index = this.subjectIndex;
 				} else {
-					index = this.subjectList.length;
-					this.subjectIndex = index;
-					// 显示结果页
-					//this.showRes = true;
-					/*
-					*/
+					this.subjectIndex = this.subjectList.length;
 				}
+				console.log('values', values);
+				console.log('this.subjectIndex', this.subjectIndex);
+				
 				this.gotoResultPage();
 			},
 			gotoResultPage() {
@@ -182,6 +174,7 @@
 					for(let m = 0;m<len;m++) {
 						userAnswerStr+=list[m].userAnswer;
 					}
+					console.log('userAnswerStr', userAnswerStr);
 					// 后面覆盖题目覆盖这个值
 					util.cache('testing_select_answer', userAnswerStr);
 					setTimeout(()=>{
@@ -208,19 +201,21 @@
 	}
 	
 	::-webkit-scrollbar { 
-		display: block;
-		width: 16upx!important; 
-		height: 16upx!important;
+		display: flex;
+		width: 1rpx!important; 
+		height: 10rpx!important;
 		background-color: #F2F2F2;
 	}
 	
-	#root-view {
-		
+	#root-view {		
 		margin-left:32rpx;
 		margin-right: 32rpx;
+		box-sizing: border-box;
 		width:686rpx;
+		flex-direction: row;
+		justify-content: center;
+		/*display: flex;*/
 		#ques-progress {
-			
 			display: flex;
 			flex-direction: column;
 			margin-bottom:20px;
@@ -257,6 +252,7 @@
 	}
 	.cu-form-group {
 		display: flex;
+		cursor:pointer;
 		justify-content: flex-start;
 		align-items: center;
 		padding-top: 20rpx;
@@ -271,7 +267,7 @@
 		padding-right: 30upx;
 	}
 
-	.cu-form-group+.cu-form-group {
+	.cu-form-group {
 		border-top: none;
 	}
 

@@ -1,8 +1,8 @@
 <template>
-	<view  :style="{height:height+'px',width:'750rpx'}">
+	<view  :style="{height:height+'px',width:'750rpx'}" @touchmove.prevent="moveHandle">
 		<uni-transition :modeClass="['fade-in']" v-for="(item,index) in srcList" :show="curIndex == index">
-			<view>
-			<image :src="item" class="img-css" :style="{height:height+'px'}"></image>
+			<view :style="{height:height+'px'}">
+			<image :src="item" mode="scaleToFill" class="img-css" ></image>
 			</view>
 			<template v-if="curIndex!=4">
 				<view :style="'position:absolute;top:'+nextTop+'px;left:0rpx;width:100%;z-index:10000000056666'" id="nextBtn" class="mask-text" @tap="gotoNext()">
@@ -45,6 +45,9 @@
 			this.nextTop   = uni.getSystemInfoSync().windowHeight - 60 -50;
 		},
 		methods: {
+			moveHandle() {
+				return false;
+			},
 			gotoNext() {
 				this.curIndex++;
 			},
@@ -61,6 +64,7 @@
 <style>
 .img-css {
 	width:750rpx;
+	height: 100%;
 }
 
 

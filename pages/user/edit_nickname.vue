@@ -19,7 +19,10 @@
 		
 		<view id="content-box">
 			<view id="nickname-box">
-				<input v-model.trim="nickName" focus id="nickName" />
+				<input v-model="nickName" focus id="nickName" @blur="blurFunc" />
+			</view>
+			<view id="error-tel-view">
+				<text>{{errorMsg}}</text>
 			</view>
 			<view id="info-nickname">
 				<text>好昵称可以让你的朋友更容易记住你。</text>
@@ -37,8 +40,8 @@
 		data() {
 			return {
 				nickName: '',
-				lineHeight: '',
-				headerViewHeight: ''
+				//headerViewHeight: '',
+				errorMsg: ''
 			};
 		},
 		onLoad() {
@@ -54,12 +57,20 @@
 		onNavigationBarButtonTap:function(e){
 			console.log(e.text);//提交
 			if (e.text == '保存') {
-				let nameStr = this.nickName;
+				let nameStr = this.nickName.trim();
 				console.log('nameStr', nameStr);
 				this.changeNickName();
 			}
 		},
 		methods:{
+			blurFunc() {
+				const flag = this.validateNickname();
+				if(!flag) {
+					this.errorMsg = '昵称最长10个字符长度!';
+				} else {
+					this.errorMsg = '';
+				}
+			},
 			setUserInfo(userInfo) {
 				this.$store.commit('setUserInfo', userInfo);
 			},
@@ -69,7 +80,18 @@
 			back() {
 				console.log('back');
 			},
+			validateNickname() {
+				const n = [...this.nickName].length;
+				return n<=10 ? true: false;
+			},
 			changeNickName() {
+				const flag = this.validateNickname();
+				if(!flag) {
+					this.errorMsg = '昵称最长10个字符长度!';
+					return;
+				} else {
+					this.errorMsg = '';
+				}
 				uni.showLoading({
 					title: '正在修改'
 				});
@@ -191,5 +213,15 @@
 	height: 60rpx;
 	line-height: 1;
 	align-items: center;
+}
+#error-tel-view {
+	height: 20px;
+	/*margin-left:53rpx;*/
+	padding-left:28rpx;
+	margin-top:18rpx;
+	font-size: 24rpx;
+	font-family: PingFang SC;
+	font-weight: 400;
+	color: red;
 }
 </style>

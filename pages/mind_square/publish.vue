@@ -1,25 +1,30 @@
 <template>
 	<view id="root-view" :style="'height:'+winHeight+';'">
 		<scroll-view class="content">  
+		<!--
 			<view class="info-content">
 				<!--
 				<image src="../../static/img/info.png" style="max-width: 20px;max-height:20px;"></image>
 				-->
+				<!--
 				<text>妹子说</text>
 			</view>
+			-->
 			<form class="form-class">  
+			<!--
 				<view id="girlword-view">
 					<input type="text" name="girlword" maxlength="30" @blur="validateWord" v-model.trim="girlword" placeholder="请输入妹子说的话" class="girlword-input" />
 				</view>
 				<view id="error-girlword-view">
 					<text>{{errorWordMsg}}</text>
 				</view>
-				
+				-->
 				<view class="ques-desc">
 					<text>问题描述</text>
 				</view>
-				<view id="girlword-content-view" :style="{height:(areaHeight-100)+'px'}">
-					<textarea name="content" auto-height="true" @blur="validateContent"  maxlength="500" v-model.trim="content" placeholder="请输入具体内容" class="girlword-textarea"></textarea>
+				<!-- :style="{height:(areaHeight-100)+'px'}" -->
+				<view id="girlword-content-view" :style="{height:textAreaHeight+'px'}">
+					<textarea name="content" :adjust-position="true" @focus="areaFocus"   @blur="validateContent"  maxlength="-1" v-model.trim="content" placeholder="请输入具体内容" class="girlword-textarea"></textarea>
 				</view>
 				<view id="bottom-view">
 					<text class="submitBtn" @tap="onSubmit">
@@ -44,6 +49,7 @@
 				content: '',
 				winHeight: 0,
 				areaHeight: '',
+				textAreaHeight: "150",
 				girlword: '',
 			}
 		},
@@ -61,6 +67,13 @@
 			validateWord() {
 				
 			},
+			areaFocus(e) {
+				const d = e.detail;
+				const extraH = 54+60+60+42+20+60+35+38;
+				let winHeight = uni.getSystemInfoSync().windowHeight;
+				this.textAreaHeight = winHeight - uni.upx2px(extraH) - d.height;
+				console.log('d', d);
+			},
 			validateContent() {
 				
 			},
@@ -71,7 +84,7 @@
 				const auth = data.auth;
 				const url = apiPrefix + "?mod=ndgc&ac=fb_insert";
 				http.request(url, {
-					title: this.girlword,
+					title: '',
 					description: this.content,
 					uid: this.uid,
 					auth:auth,
@@ -135,13 +148,14 @@
 			},
 			isContentValid() {
 				let s = this.content.length;
+				return true;
 				if(s>500) {
 					return false;
 				}
 				return true;
 			},
 			isRequired() {
-				if (!this.girlword || !this.content) {
+				if ( [...this.content].length<=0 ) {
 					return false;
 				}
 				return true;

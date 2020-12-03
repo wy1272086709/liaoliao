@@ -1,5 +1,5 @@
 <template>
-	<view v-if="showPopup" class="uni-popup" :class="[popupstyle]" @touchmove.stop.prevent="clear">
+	<view v-if="showPopup" class="uni-popup" :style="{zIndex: zIndex?zIndex: 99 }" :class="[popupstyle]" @touchmove.stop.prevent="clear">
 		<uni-transition v-if="maskShow" :mode-class="['fade']" :styles="maskClass" :duration="duration" :show="showTrans"
 		 @click="onTap" />
 		<uni-transition :mode-class="ani" :styles="transClass" :duration="duration" :show="showTrans" @click="onTap">
@@ -50,6 +50,10 @@
 			maskClick: {
 				type: Boolean,
 				default: true
+			},
+			zIndex: {
+				type: [ String, Number ],
+				default: 99
 			}
 		},
 		provide() {

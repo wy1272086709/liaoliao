@@ -1,30 +1,15 @@
 {
     "pages" : [
-		// #ifdef MP-WEIXIN || MP-QQ
-		{
-			"path" : "pages/index/index",
-			"style" : {
-				"navigationBarTitleText" : "恋爱话术",
-				
-				"navigationBarBackgroundColor" : "#FFFFFF",
-				"backgroundColor" : "#FFFFFF",
-				"navigationBarTextStyle" : "white",
-				"backgroundTextStyle" : "dark"
-			}
-		},
-		// #endif
-		
-		// #ifdef APP-PLUS || H5
-		{
-			"path" : "pages/index/init",
-			"style" : {
-				"navigationBarTitleText" : "",
-				"navigationStyle" : "custom",
-				"navigationBarBackgroundColor" : "#2369E6",
-				"backgroundColor" : "#FFFFFF",
-				"navigationBarTextStyle" : "white"
-			}
-		},
+        {
+            "path" : "pages/index/init",
+            "style" : {
+                "navigationBarTitleText" : "",
+                "navigationStyle" : "custom",
+                "navigationBarBackgroundColor" : "#2369E6",
+                "backgroundColor" : "#FFFFFF",
+                "navigationBarTextStyle" : "white"
+            }
+        },
         {
             "path" : "pages/index/index",
             "style" : {
@@ -34,29 +19,19 @@
         {
             "path" : "pages/index/guide_page",
             "style" : {
-                "navigationBarTitleText" : "引导页"
+                "navigationStyle" : "custom"
             }
         },
         {
             "path" : "pages/index/app_index",
             "style" : {
                 "navigationBarTitleText" : "",
-				"backgroundColor" : "#FFFFFF",
-				"navigationStyle":"custom",
-                "app-plus" : {
-                    "titleNView" : false
-                }
-            }
-        },
-        {
-            "path" : "pages/user/login",
-            "style" : {
-                "navigationStyle" : "custom",
-                "navigationBarTitleText" : "登录",
-                "navigationBarBackgroundColor" : "#2369E6",
                 "backgroundColor" : "#FFFFFF",
-                "disableScroll" : true,
-                "navigationBarTextStyle" : "white"
+                "navigationStyle" : "custom",
+                "app-plus" : {
+                    "titleNView" : false,
+                    "bounce" : "none"
+                }
             }
         },
         {
@@ -75,8 +50,9 @@
                             {
                                 "text" : "保存",
                                 "background" : "#07C160",
-                                "color" : "white",
-                                "fontSize" : "16px"
+                                "color" : "black",
+                                "fontSize" : "16px",
+                                "marginRight" : "10px"
                             }
                         ]
                     }
@@ -87,14 +63,6 @@
             "path" : "pages/index/keyword_page",
             "style" : {
                 "navigationBarTitleText" : "搜索页"
-            }
-        },
-        {
-            "path" : "pages/user/bind_phone",
-            "style" : {
-                "navigationBarTitleText" : "",
-                "navigationBarBackgroundColor" : "#2369E6",
-                "navigationBarTextStyle" : "white"
             }
         },
         {
@@ -109,125 +77,101 @@
                 "navigationBarTitleText" : "用户协议"
             }
         },
-		{
-		    "path" : "pages/index/sticky",
-		    "style" : {}
-		},
-		{
-		    "path" : "pages/index/testing",
-		    "style" : {
-				"navigationBarTitleText":"测一测"
-			}
-		},
-		{
-		    "path" : "pages/index/testing_result",
-		    "style" : {
-				"navigationBarTitleText":"测试结果"
-			}
-		},
-		{
-		    "path" : "pages/cases/index",
-		    "style" : {
-		        "navigationBarTitleText" : "恋爱技巧"
-		    }
-		},
-		{
-		    "path" : "pages/index/testing_questions",
-		    "style" : {}
-		},
-		{
-		    "path" : "pages/mind_square/index",
-		    "style" : {
-		        "navigationBarTitleText" : "",
-		        "navigationStyle": "custom",
-				"enablePullDownRefresh":true
-		    }
-		},
-		{
-		    "path" : "pages/mind_square/publish",
-		    "style" : {
-		        "navigationBarTitleText" : "发布"
-		    }
-		},
-		{
-		    "path" : "pages/mind_square/ask-ques-list",
-		    "style" : {
-		        "navigationBarTitleText" : "问答详情",
-				"navigationBarBackgroundColor" : "#FFFFFF"
-		    }
-		},
-		{
-		    "path" : "components/blackmonth-swiper/index",
-		    "style" : {}
-		},
-		{
-		    "path" : "pages/index/test",
-		    "style" : {}
-		},
-		{
-		    "path" : "pages/user/user_index",
-		    "style" : {
-				"navigationBarBackgroundColor" : "#FFFFFF"
-			}
-		},
-		{
-		    "path" : "pages/user/one_to_one_university",
-		    "style" : {}
-		},
-		{
-		    "path" : "pages/user/upgrade_user_vip_new",
-		    "style" : {
-				"navigationBarTitleText":"续费VIP"
-			}
-		},
-		{
-		    "path" : "pages/user/user_asklist",
-		    "style" : {}
-		},
-		{
-		    "path" : "pages/user/login_v2",
-		    "style" : {
-				"navigationBarTitleText":"登录/注册"
-			}
-		}
-		,{
-		    "path" : "pages/user/bind_phone_v2",
-		    "style" : {
-				"navigationBarTitleText" : "绑定新手机号"
-			}
-		}
-		,{
-		    "path" : "pages/user/save_phone",
-		    "style" : {}
-		},
-        // #endif
-        
         {
-            "path" : "pages/user/index",
+            "path" : "pages/index/testing",
             "style" : {
-                "navigationBarTitleText" : "个人中心",
-                "navigationBarBackgroundColor" : "#2369E6",
-                "navigationBarTextStyle" : "white",
-                "backgroundColor" : "#2369E6",
-                "disableScroll" : true
+                "navigationBarTitleText" : "测一测"
             }
         },
         {
-            "path" : "pages/user/complaint",
+            "path" : "pages/index/testing_result",
             "style" : {
-                "navigationBarTitleText" : "投诉建议",
-                "navigationBarTextStyle" : "white",
-                "navigationBarBackgroundColor" : "#2369E6",
-                "backgroundColor" : "#2369E6"
+                "navigationBarTitleText" : "测试结果"
             }
         },
         {
-            "path" : "pages/user/upgrade_user_vip",
+            "path" : "pages/cases/index",
             "style" : {
-                "navigationBarTitleText" : "升级VIP",
-                "navigationBarBackgroundColor" : "#FEFEFE",
+                "navigationBarTitleText" : "恋爱技巧"
+            }
+        },
+        {
+            "path" : "pages/index/testing_questions",
+            "style" : {}
+        },
+        {
+            "path" : "pages/mind_square/index",
+            "style" : {
+                "navigationBarTitleText" : "",
                 "navigationStyle" : "custom",
-                "backgroundColor" : "#2369E6"
+                "enablePullDownRefresh" : false,
+                "app-plus" : {
+                    "bounce" : "none"
+                }
+            }
+        },
+        {
+            "path" : "pages/mind_square/publish",
+            "style" : {
+                "navigationBarTitleText" : "发布"
+            }
+        },
+        {
+            "path" : "pages/mind_square/ask-ques-list",
+            "style" : {
+                "navigationBarTitleText" : "问答详情",
+                "navigationBarBackgroundColor" : "#FFFFFF",
+                "app-plus" : {
+                    "softinputMode" : "adjustResize",
+                    "scrollIndicator" : "none",
+                    "bounce" : "none",
+                    "titleNView" : {
+                        "buttons" : [
+                            {
+                                "type" : "menu"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "path" : "pages/user/user_index",
+            "style" : {
+                "navigationBarBackgroundColor" : "#F2F2F2",
+                "navigationStyle" : "custom"
+            }
+        },
+        {
+            "path" : "pages/user/one_to_one_university",
+            "style" : {}
+        },
+        {
+            "path" : "pages/user/upgrade_user_vip_new",
+            "style" : {
+                "navigationBarTitleText" : "续费VIP"
+            }
+        },
+        {
+            "path" : "pages/user/user_asklist",
+            "style" : {}
+        },
+        {
+            "path" : "pages/user/login_v2",
+            "style" : {
+                "navigationBarTitleText" : "登录/注册"
+            }
+        },
+        {
+            "path" : "pages/user/bind_phone_v2",
+            "style" : {
+                "navigationBarTitleText" : "绑定新手机号"
+            }
+        },
+        {
+            "path" : "pages/user/save_phone",
+            "style" : {
+                "navigationBarTitleText" : "完善手机号"
             }
         },
         {
@@ -256,26 +200,86 @@
                 "navigationBarTextStyle" : "white"
             }
         },
-		{
-		    "path" : "pages/sticky/index",
-		    "style" : {
-		        "navigationBarTitleText" : "导航吸附",
-		        "navigationBarBackgroundColor" : "#2369E6",
-		        "backgroundColor" : "#2369E6",
-		        "navigationBarTextStyle" : "white",
-		        "backgroundTextStyle" : "dark"
-		    }
-		}
-        ,{
+        {
             "path" : "pages/user/complaint_v2",
             "style" : {
-				"navigationBarTitleText" : "投诉建议"
-			}
-        }
-        ,{
+                "navigationBarTitleText" : "投诉建议"
+            }
+        },
+        {
             "path" : "pages/index/mask",
             "style" : {
-				"navigationStyle":"custom"
+                "navigationStyle" : "custom"
+            }
+        },
+        {
+            "path" : "pages/user/virtual_users",
+            "style" : {
+                "navigationBarTitleText" : "切换用户"
+            }
+        },
+        {
+            "path" : "pages/user/notice_list",
+            "style" : {
+                "navigationBarTitleText" : "通知"
+            }
+        },
+        {
+            "path" : "pages/user/notice_detail",
+            "style" : {}
+        },
+        /*,{
+            "path" : "pages/index/video",
+            "style" : {
+                "navigationStyle" : "custom"
+            }
+        },*/
+        {
+            "path" : "pages/index/video",
+            "style" : {
+                "navigationStyle" : "custom"
+            }
+        }
+		/*
+        {
+            "path" : "pages/index/test-audio",
+            "style" : {}
+        },
+        {
+            "path" : "pages/index/test-audio",
+            "style" : {}
+        },
+        {
+            "path" : "pages/index/test",
+            "style" : {}
+        },
+        {
+            "path" : "common/luch-audio",
+            "style" : {}
+        },
+        {
+            "path" : "pages/index/demo-index",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/index/test2",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/user/score_list",
+            "style" : {}
+        }*/
+		,
+		{
+		    "path" : "pages/user/score_list",
+		    "style" : {
+				"navigationBarTitleText": "积分"
+			}
+		}
+        ,{
+            "path" : "pages/user/score_pay",
+            "style" : {
+				"navigationBarTitleText":"积分充值"
 			}
         }
     ],
@@ -285,38 +289,42 @@
         "borderStyle" : "black",
         "backgroundColor" : "#ffffff",
         "height" : "50px",
-       "list" : [
-		
-        // #ifdef APP-PLUS || H5
-        {
-		   "pagePath" : "pages/index/app_index",
-		   "iconPath" : "/static/img/tabbar/home_btn_link.png",
-		   "selectedIconPath" : "/static/img/tabbar/home_btn_active.png",
-		   "defaultClass" : "tabbar-icon-class",
-		   "text" : "首页"
-        },
-       	{
-       	    "pagePath" : "pages/mind_square/index",
-       	    "iconPath" : "/static/img/tabbar/brain_btn_link.png",
-       	    "selectedIconPath" : "/static/img/tabbar/brain_btn_active.png",
-       	    "defaultClass" : "tabbar-icon-class",
-       	    "text" : "脑洞广场"
-       	},
-       	{
-       		"pagePath" : "pages/user/user_index",
-       		"iconPath" : "/static/img/tabbar/person_btn_link.png",
-       		"selectedIconPath" : "/static/img/tabbar/person_btn_active.png",
-       		"defaultClass" : "tabbar-icon-class",
-       		"text" : "个人中心"
-       	}
-        // #endif
-       ]
+        "list" : [
+            {
+                "pagePath" : "pages/index/app_index",
+                "iconPath" : "/static/img/tabbar/home_btn_link.png",
+                "selectedIconPath" : "/static/img/tabbar/home_btn_active.png",
+                "defaultClass" : "tabbar-icon-class",
+                "text" : "首页"
+            },
+            {
+                "pagePath" : "pages/mind_square/index",
+                "iconPath" : "/static/img/tabbar/brain_btn_link.png",
+                "selectedIconPath" : "/static/img/tabbar/brain_btn_active.png",
+                "defaultClass" : "tabbar-icon-class",
+                "text" : "妙语广场"
+            },
+            {
+                "pagePath" : "pages/index/video",
+                "iconPath" : "/static/img/tabbar/course_btn_link.png",
+                "selectedIconPath" : "/static/img/tabbar/course_btn_active.png",
+                "defaultClass" : "tabbar-icon-class",
+                "text" : "教程"
+            },
+            {
+                "pagePath" : "pages/user/user_index",
+                "iconPath" : "/static/img/tabbar/person_btn_link.png",
+                "selectedIconPath" : "/static/img/tabbar/person_btn_active.png",
+                "defaultClass" : "tabbar-icon-class",
+                "text" : "个人中心"
+            }
+        ]
     },
     "globalStyle" : {
         "navigationBarTextStyle" : "black",
         "navigationBarTitleText" : "",
         "navigationBarBackgroundColor" : "#F2F2F2",
-        "backgroundColor" : "#FFFFFF"		
+        "backgroundColor" : "#FFFFFF"
     },
     "condition" : {
         "current" : 0,
@@ -334,5 +342,8 @@
                 "path" : "pages/user/user_index"
             }
         ]
+    },
+    "easycom" : {
+        "^u-(.*)" : "@/uview-ui/components/u-$1/u-$1.vue"
     }
 }

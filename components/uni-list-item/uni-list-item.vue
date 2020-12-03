@@ -2,8 +2,8 @@
 	<!-- #ifdef APP-NVUE -->
 	<cell>
 		<!-- #endif -->
-		<view   :class="disabled ? 'uni-list-item--disabled' : ''" :hover-class="disabled || showSwitch ? '' : 'uni-list-item--hover'" class="uni-list-item" @click="onClick">
-			<view class="uni-list-item__container" :class="{'uni-list-item--first':isFirstChild}">
+		<view   :class="disabled ? 'uni-list-item--disabled' : ''" :hover-class="disabled || hideBgc || showSwitch ? '' : 'uni-list-item--hover'" class="uni-list-item" @click="onClick">
+			<view  :class="{'uni-list-item__container':!isBottomEvery,'uni-list-item--first': isBottomEvery?false:isFirstChild, 'uni-list-item-bottom-border': isBottomEvery? true:false }">
 				<view v-if="thumb" class="uni-list-item__icon">
 					<image :src="thumb" class="uni-list-item__icon-img" />
 				</view>
@@ -120,6 +120,11 @@
 				type: [Boolean, String],
 				default: false
 			},
+			hideBgc: {
+				// 点击是否显示背景色
+				type: [Boolean, String],
+				default: false
+			},
 			showSwitch: {
 				// 是否显示Switch
 				type: [Boolean, String],
@@ -169,6 +174,10 @@
 			},
 			showExtraIcon: {
 				// 是否显示扩展图标
+				type: [Boolean, String],
+				default: false
+			},
+			isBottomEvery: {
 				type: [Boolean, String],
 				default: false
 			},
@@ -340,5 +349,36 @@
 		padding-left:0px;
 		padding-right: 0px;
 	}
-
+	
+	.uni-list-item-bottom-border {
+		position: relative;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		/*padding: 24rpx 30rpx;*/
+		padding-left: 0;
+		flex: 1;
+		position: relative;
+		justify-content: space-between;
+		align-items: center;
+		/* #ifdef APP-PLUS */
+		border-top-color: #e5e5e5;
+		border-top-style: solid;
+		border-top-width: 0.5px;
+		/* #endif */
+	}
+	
+	.uni-list-item-bottom-border:after {
+		position: absolute;
+		top:auto;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		height: 1px;
+		content: '';
+		-webkit-transform: scaleY(.5);
+		transform: scaleY(.5);
+		background-color: #e5e5e5;
+	}
 </style>

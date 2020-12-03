@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "问答详情",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "usingComponents": {
+    "u-icon": "/uview-ui/components/u-icon/u-icon",
+    "u-read-more": "/uview-ui/components/u-read-more/u-read-more",
+    "uni-popup": "/components/uni-popup/uni-popup",
+    "u-collapse-item": "/uview-ui/components/u-collapse-item/u-collapse-item",
+    "u-collapse": "/uview-ui/components/u-collapse/u-collapse",
+    "uni-popup-share": "/components/uni-popup/uni-popup-share",
+    "uni-popup-dialog": "/components/uni-popup/uni-popup-dialog"
+  }
+}

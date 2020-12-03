@@ -32,6 +32,8 @@
 </template>
 
 <script>
+	import uPopup from '../../components/u-popup/u-popup.vue';
+	
 	/**
 	 * modal 模态框
 	 * @description 弹出模态框，常用于消息提示、消息确认、在当前页面内完成特定的交互操作
@@ -204,6 +206,9 @@
 			value(n) {
 				if (n === true) this.loading = false;
 			}
+		},
+		components:{
+			uPopup
 		},
 		methods: {
 			confirm() {

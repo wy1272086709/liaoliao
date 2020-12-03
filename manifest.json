@@ -8,6 +8,15 @@
     "app-plus" : {
         "nvueCompiler" : "uni-app",
         "compilerVersion" : 3,
+		"safearea": {
+			"background": "#CCC",
+			"bottom": {
+				"offset": "auto"
+			}
+		},
+        "splashscreen" : {
+            "alwaysShowBeforeRender" : false
+        },
         "modules" : {
             "Share" : {},
             "Statistic" : {},
@@ -55,10 +64,10 @@
                     },
                     "statics" : {
                         "umeng" : {
-                            "appkey_ios" : "友盟统计平台申请应用获取的iOS平台appkey",
-                            "channelid_ios" : "iOS平台的渠道字符串，可输入任意字符串",
-                            "appkey_android" : "友盟统计平台申请应用获取的Android平台appkey",
-                            "channelid_android" : "Android平台的渠道字符串，可输入任意字符串"
+                            "appkey_ios" : "",
+                            "channelid_ios" : "",
+                            "appkey_android" : "",
+                            "channelid_android" : ""
                         }
                     },
                     "apple" : {}

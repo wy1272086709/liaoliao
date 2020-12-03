@@ -1,0 +1,11 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "登录",
+  "navigationBarBackgroundColor": "#2369E6",
+  "backgroundColor": "#FFFFFF",
+  "disableScroll": true,
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "uni-icons": "/components/uni-icons/uni-icons"
+  }
+}

@@ -1,48 +1,39 @@
 <template>
 	<view id="root-view">
-		<swiper class="swiper"  :indicator-dots="true" :autoplay="true" :interval="6000" :duration="500">
-			<block v-for="(ad,index2) in adsArr" :key="ad.ad_id">
-				<swiper-item   class="swiper-item-class" 
-				@tap="gotoAdsUrl(index2)" style="width:750rpx;">
-					<image :src="ad.ad_img"  class="ads-image"></image>
-				</swiper-item>
-			</block>
-		</swiper>
-		 
-		 <u-sticky :offset-top="offsetTop" class="sticky">
-			<scroll-view id="header-view"  :scroll-x="true"  :show-scrollbar="false" :scroll-into-view="scrollInto" >
-				<view  class="header-view-box ">
-					<!-- 初始尺寸设置为120rpx,   去掉header-view width 属性, 设置元素的flex-shrink 为0，在子元素上-->
-					<view @tap="switchTab(index)" v-for="(tab,index) in tabArr" :id="'tab_'+tab.firstNav.navId" :key="getNavKey(tab.firstNav.navId)" class="common-tab-view">
-						<view  :class="index==caseTabIndex ? 'active-tab-class':'common-tab-class'">
-							<text>{{ tab.firstNav.title }}</text>
-						</view>
+		
+		<view>
+			<swiper class="swiper"  :indicator-dots="true" :autoplay="true" :interval="6000" :duration="500">
+				<block v-for="(ad,index2) in adsArr" :key="ad.ad_id">
+					<swiper-item   class="swiper-item-class" 
+					@tap="gotoAdsUrl(index2)">
+						<image :src="ad.ad_img"  class="ads-image"></image>
+					</swiper-item>
+				</block>
+			</swiper>
+		</view>
+		
+		<!-- :bar-width="110" gutter="33" -->
+		<!--
+		<u-tabs ref="tabs"   bg-color="#FFFFFF" :name="'title'" :bold="bold" :active-color="activeColor" :list="tabs"
+		@change="change" :bar-width="110" :gutter="33"  :current="caseTabIndex" :is-scroll="true"></u-tabs>
+		-->
+		<scroll-view class="header-view" :duration="100"  :scroll-x="true"  :show-scrollbar="false" :scroll-into-view="scrollInto" >
+			<view  class="header-view-box">
+				<!-- 初始尺寸设置为120rpx,   去掉header-view width 属性, 设置元素的flex-shrink 为0，在子元素上-->
+				<view @tap="switchTab(index)" v-for="(tab,index) in tabs" :id="'tab_'+tab.navId" :key="getNavKey(tab.navId)" class="common-tab-view">
+					<view>
+						<text :class="index==caseTabIndex ? 'active-tab-class':'common-tab-class'">{{ tab.title }}</text>
 					</view>
 				</view>
-			</scroll-view>
-		</u-sticky>
-		 <!-- :style="'height:'+scrollHeight+'rpx;margin-top:21rpx;'"   enable-back-to-top="true" scroll-y="true" @scrolltoupper="upper"	 @scrolltolower="lower" -->
-		<view>			
-			<view id="article-swiper" :style="'display:'+swiperImageDisplay+';'" v-if="false">
-				<swiper class="swiper" previous-margin="60rpx" next-margin="60rpx"  :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration" :style="'height:'+ swiperHeight+'rpx;'">
-					<block v-for="recommend in recommendList">
-						<swiper-item  :key="recommend.litpic" class="swiper-item-class" 
-						@tap="gotoViewArticle(recommend.nid,recommend.cid,recommend.title)" >
-							<view  class="swiper-view">
-								<image :src="recommend.litpic" :class="'recommend-litpic-class'+(swiperIdx == index ? ' active' : ' quiet')"></image>
-								<text class="swiper-view-title">{{recommend.title}}</text>
-							</view>
-						</swiper-item>
-					</block>
-				</swiper>
 			</view>
-			
-			<swiper :current="caseTabIndex" 	@change="switchCasesTab" :style="'min-height:'+scrollHeight+'rpx;width:100%;'">
-				<swiper-item v-for="(tab,index) in tabArr" :key="tab.firstNav.navId" :style="'min-height:'+scrollHeight+'rpx;'">
-					<!-- :scroll-top="scrollTop" enable-back-to-top="true" :style="'height:'+scrollHeight+'rpx;'"  -->
-					<view id="content-view"   enable-back-to-top="true" :style="'min-height:'+scrollHeight+'rpx;'" :scroll-y="true" @scrolltoupper="upper" @scrolltolower="lower">
+		</scroll-view>
+		
+		<view>			
+			<swiper :current="caseTabIndex" :scroll-with-animation="true" 	@change="switchCasesTab" :style="'min-height:'+scrollHeight+'px;width:100%;'">
+				<swiper-item v-for="(tab,index) in tabs" :key="'tab_'+tab.navId" :style="'min-height:'+scrollHeight+'px;'">
+					<scroll-view id="content-view"  :style="'height:'+scrollHeight+'px;'" :scroll-y="true"  @scrolltolower="lower">
 						<view style="height:16px;"></view>
-						<view v-for="(item,m) in list" class="content-root-view" :style="m==0 ? 'margin-top:0px;':''" @tap="getArticleView(item.id)" :key="item.id">
+						<view v-for="(item,m) in caseContentlist" class="content-root-view" :style="m==0 ? 'margin-top:0px;':''" @tap="getArticleView(item.id)" :key="item.id">
 							<view class="content-img-view">
 								<image :src="item.thumbUrl" class="thumb-class"></image>
 							</view>
@@ -66,48 +57,17 @@
 							</view>
 						</view>
 						<view style="height:16px;"></view>
-					</view>
+					</scroll-view>
 				</swiper-item>
 			</swiper>
-			
-			<!--
-			<view id="absolute-view" :class="maskClass" @touchmove.stop.prevent="moveHandle">
-				<uni-transition :show="isShowMask" :modeClass="['slide-top']">
-					<view class="mask-view" :style="'display:flex;flex-direction:column;position:absolute;top:425rpx;left:200rpx;'">
-						<image src="../../static/img/index/mask/arrow5.png" style="display:flex;width:51rpx;height: 40rpx;left:150rpx;margin-top:-57rpx;"></image>
-						<text class="jiaocheng">各类教程，一学就会，每天都在学习</text>
-					</view>
-					<view class="tab1" :style="'display:flex;position:absolute;top:355rpx;left:67rpx;'">
-						<text class="jiaocheng">{{tab1Title}}</text>
-					</view>
-					<view class="tab2" :style="'display:flex;position:absolute;top:355rpx;left:230rpx;'">
-						<text class="jiaocheng">{{tab2Title}}</text>
-					</view>
-					<view class="tab3" :style="'display:flex;position:absolute;top:355rpx;left:390rpx;'">
-						<text class="jiaocheng">{{tab3Title}}</text>
-					</view>
-					<view :style="'position:absolute;top:'+nextTop+'px;left:0rpx;width:100%;z-index:100000000000000001'" id="nextBtn" @tap="gotoNext">
-						<view>
-							<text>下一步</text>
-						</view>
-					</view>
-				</uni-transition>
-			</view>
-			-->
 		</view>
-		<!--
-		<tabBar :current="1" :position="'fixed'"></tabBar>
-		-->
-		
 	</view>
 </template>
 
 <script>
-	//import tabBar from '../../common/tabbar.vue';
+	
 	import http from '../../common/http.js';
 	import util from '../../common/util.js';
-	import uSticky from '../../uview-ui/components/u-sticky/u-sticky.vue';
-	//import carousel from '@/components/vear-carousel/vear-carousel'
 	let eMap = {};
 	let totalPage = 1;
 	let nowpage = 1;
@@ -118,32 +78,21 @@
 		data() {
 			return {
 				tabArr: [],
-				list: [],
+				caseContentlist: [],
 				swiperIdx: 0,
 				recommendList: [],
 				caseTabIndex: 0,
 				isIphoneX: false,
 				scrollHeight: '',
-				isShowMask: false,
-				maskClass: '',
-				tabTop: '',
-				tabLeft: '',
 				adsArr: [],
 				offsetTop: '',
-				/*indicatorDots: false,
-				autoplay: false,
-				interval: 2000,
-				duration: 500,
-				animationStr: '',
-				banner: [],*/
+				current: 0,
+				isScroll: true,
+				bold: true,
+				control: true,
+				activeColor: '#A88FEF',
 				scrollInto: "",
-				nextTop: '',
-				/*old: {
-					scrollTop:0,
-				},
-				swiperHeight: 399.16,*/
-				//contentHeight: '',
-				//swiperImageDisplay:'none',
+				tabs: [],
 			}
 		},
 		computed: {
@@ -156,23 +105,7 @@
 					return this.$store.getters.userInfo.uid;
 				}
 				return 0;
-			},
-			tab1Title: function() {
-				if(this.tabArr.length<=0) return '';
-				const s = this.tabArr[0].firstNav.title;
-				return s;
-			},
-			tab2Title: function() {
-				if(this.tabArr.length<=0) return '';
-				const s = this.tabArr[1].firstNav.title;
-				return s;
-			},
-			tab3Title: function() {
-				if(this.tabArr.length<=0) return '';
-				const s = this.tabArr[2].firstNav.title;
-				return s;
-			},
-			
+			}		
 		},
 		onShow() {
 			
@@ -208,16 +141,6 @@
 			}, 200);
 		},
 		onLoad(option) {
-			//#ifdef MP-WEIXIN || MP-QQ
-			uni.showShareMenu({
-			    withShareTicket: true
-			});
-			//#endif
-			
-			// #ifdef APP-PLUS || H5
-			this.offsetTop = 24;
-			// #endif 
-			//console.log('option', option);
 			let sysinfo = uni.getSystemInfoSync();
 			let screenHeight = sysinfo.screenHeight;
 			let width = sysinfo.windowWidth;
@@ -227,20 +150,12 @@
 			let isIphoneX = getApp().globalData.isIphoneX;
 			this.isIphoneX = isIphoneX;
 			let bottom = isIphoneX ? 30: 0;
-			//#ifdef MP-WEIXIN || MP-QQ
-			this.scrollHeight  = winHeight*radix - 81  -bottom;
-			//#endif
-			//#ifndef MP-WEIXIN || MP-QQ
-			this.scrollHeight  = winHeight*radix - 81  -bottom;
-			//#endif
-			winHeight = winHeight - 60;
+			this.scrollHeight  = winHeight - uni.upx2px(81+bottom+320);
 			if (isIphoneX) {
 				winHeight    = winHeight - 30/radix;
 			} 
 			this.getAdsInfo();
-			this.tabTop = uni.upx2px(81+320+27)+16;
 			let appCid = option.app_cid;
-			this.nextTop   = winHeight;
 			console.log('appCid', appCid);
 			this.getRecommendImages();
 			this.getHuashuTabbar(appCid);
@@ -250,20 +165,11 @@
 		},
 		components:{
 			//tabBar:tabBar
-			uSticky
+			
 		},
 		beforeDestroy() {
 			if(interval) {
 				clearTimeout(interval);
-			}
-		},
-		onPageScroll(e) {
-			console.log('e onPageScroll...', e);
-			// 240+24
-			if(e.scrollTop>uni.upx2px(240)) {
-				this.offsetTop = 24;
-			} else {
-				this.offsetTop = 0;
 			}
 		},
 		methods: {
@@ -371,7 +277,7 @@
 				} 
 				return navData;
 			},
-			onReachBottom() {
+			/*onReachBottom() {
 				console.log('to lower!');
 				let _self = this;
 				console.log('page',nowpage);
@@ -384,7 +290,7 @@
 					console.log('page....',nowpage);
 					_self.getCaseList(cid, false,nowpage);
 				}, 500);
-			},
+			},*/
 			lower() {
 				console.log('to lower!');
 				let _self = this;
@@ -415,34 +321,25 @@
 					//console.log('resp', resp);
 					let typeStr = Object.prototype.toString.call(resp.data);
 					let isArray = false;
-					if(typeStr.indexOf('Array')!== -1) {
-						resp.data = this.initHuashuListImage(resp.data);
+					const d = resp.data;
+					if(typeStr.length>0) {
+						this.initHuashuListImage(d);
 						isArray   = true;
 						totalPage = resp.totalpage;
 					} 
 					if(firstLoad) {
 						if(isArray) {
-							this.list = resp.data;
+							this.caseContentlist = d;
 						} else {
-							this.list = [];
+							this.caseContentlist = [];
 						}
 					} else {
 						if(!isArray) {
 							return;
 						}
-						let len = resp.data.length;
-						for(let i = 0;i<len;i++)
-						{
-							this.list.push(resp.data[i]);
-						}
+						let len = d.length;
+						this.caseContentlist = this.caseContentlist.concat(d);
 					}
-					/*let n = this.list.length;
-					let sysinfo = uni.getSystemInfoSync();
-					let width = sysinfo.windowWidth;
-					let radix = 750/width; 
-					radix = radix.toFixed(2);
-					this.scrollHeight  = n*160+(n+1)*16*radix;
-					console.log('radix', radix);*/
 				});
 			},
 			initHuashuListImage(list) {
@@ -455,8 +352,6 @@
 						list[m].thumbUrl = list[m].thumbUrl;
 					}
 				}
-				//console.log('list',list);
-				return list;
 			},
 			// 获取话术tab页
 			getHuashuTabbar(cId) {
@@ -468,16 +363,22 @@
 				http.request(url, {
 					auth: auth
 				}).then(resp => {
-					//console.log('resp', resp);
-					this.tabArr = _self.initTabData(resp);
+					console.log('resp', resp);
+					this.tabArr = resp;
+					const n = resp.length;
+					for(let m = 0;m<n;m++) {
+						const nav = resp[m].firstNav;
+						const title = nav.title;
+						this.tabs.push({ title: title,navId: nav.navId });
+					}
+					//this.tabArr = _self.initTabData(resp);
 					if(cId) {
 						const tabIndex = this.getActiveTabIndex(cId);
-						this.scrollInto = 'tab_'+cId;
+						//this.scrollInto = 'tab_'+cId;
 						this.caseTabIndex = tabIndex;
 						cid = cId;
 						tabTitle = _self.tabArr[tabIndex].firstNav.title;
 					} else {
-					//console.log('tabArr', this.tabArr);
 						cid    = _self.tabArr[0].firstNav.navId;
 						tabTitle = _self.tabArr[0].firstNav.title;
 					}
@@ -511,13 +412,24 @@
 				tabTitle = this.tabArr[thisCurr].firstNav.title;
 				//this.changeTabDisplay(thisCurr);
 				this.scrollInto = 'tab_'+navId;
-				const t = parseInt(new Date().getTime()/1000);
-				this.delMap(eMap);
-				if (typeof eMap[t]!='undefined') {
+				//const t = parseInt(new Date().getTime()/1000);
+				//this.delMap(eMap);
+				/*if (typeof eMap[t]!='undefined') {
+					return;
+				}*/
+				this.getCaseList(navId, true, 1);
+				//eMap[t] = 1;
+			},
+			change(index) {
+				nowpage = 1;
+				if( this.caseTabIndex == index) {
 					return;
 				}
+				this.caseTabIndex = index;
+				let navId = this.tabArr[index].firstNav.navId;
+				cid  = navId;
+				tabTitle = this.tabArr[index].firstNav.title;
 				this.getCaseList(navId, true, 1);
-				eMap[t] = 1;
 			},
 			getIndexColor(index) {
 				let colorArr = ['#FF0000 ', '#FF7F00', '#FFFF00 ', '#00FF00', '#00FFFF', '#0000FF', '#8B00FF']
@@ -562,16 +474,16 @@
 				cid  = navId;
 				tabTitle = this.tabArr[index].firstNav.title;
 				//this.changeTabDisplay(index);
-				const t = parseInt(new Date().getTime()/1000);
+				/*const t = parseInt(new Date().getTime()/1000);
 				this.delMap(eMap);
 				// 不准同一秒内发送两次请求
 				if (typeof eMap[t]!='undefined') {
 					return;
-				}
+				}*/
 				this.scrollInto = 'tab_'+navId;
 				this.getCaseList(navId, true, 1);
-				eMap[t] = 1;
-				console.log('eMap', eMap);
+				//eMap[t] = 1;
+				//console.log('eMap', eMap);
 			},
 			changeTabDisplay(index) {
 				let n = this.tabArr.length;
@@ -597,13 +509,9 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	
-page {
-	width:100%;
-	overflow-y: auto;
-	overflow-x: hidden;
-}
+
 
 view {
 	display: flex;
@@ -617,6 +525,11 @@ view {
 	background: rgba(255,255,255, 1);
 }
 
+.u-tabs {
+	width:750rpx;
+	overflow-x: scroll;
+}
+
 /* 隐藏滚动条 */	
 ::-webkit-scrollbar {
 	width: 0;
@@ -624,19 +537,24 @@ view {
 	display: none;
 	color: transparent;
 } 
+.header-view {
+	flex-direction: row;
+	height: 70rpx;
+	margin-top:11rpx;
+	width:750rpx;
+	/*z-index:99999999;*/
+}
 
 .border-active {
 	border-bottom: 2px solid rgba(255,255,255,1);
 }
 
-#header-view {
-	display: flex;
+.header-view-box {
+	padding-top:10rpx;
+	/*margin-left: 32rpx;
+	margin-right: 32rpx;*/
 	flex-direction: row;
-	height: 70rpx;
-	margin-top:11rpx;
-	width:680rpx;
-	/*z-index:99999999;*/
-	
+	justify-content: space-between;
 }
 
 .u-sticky {
@@ -647,14 +565,6 @@ view {
 	margin-right: 35rpx;
 }
 
-#header-view-wrap {
-	position: fixed;
-	height: 70rpx;
-}
-.header-view-box {
-	flex-direction: row;
-	/*z-index:999999;*/
-}
 
 .common-tab-view {
 	display: flex;
@@ -668,22 +578,12 @@ view {
 	justify-content: center;
 	text-align: center;
 	align-items: center;
-	font-size:25rpx;
+	font-size:28rpx;
 	font-family:SimHei;
 	font-weight:400;
 	color:rgba(120,208,125,1);
 	/*color:#FFFFFF;*/
 }
-
-.header-view-box-mask {
-	background:none;
-	color:#FFFFFF;
-}
-
-.header-view-box>view >view {
-	/*z-index:9999999;*/
-}
-
 	
 .swiper {
 	margin-left:32rpx;
@@ -699,82 +599,17 @@ view {
 	height:320rpx;
 }
 
-.swiper-view {
-	flex-direction:column;
-	width:100%;
-	height:100%;
-	justify-content:center;
-	align-items:center;
-}
-
-.swiper-item {
-	width:700rpx;
-	height:100%;
-	border-radius: 27rpx;
-}
-
-.swiper-view-title {
-	display:flex;
-	position:absolute;
-	top:300rpx;
-	font-size:27rpx;
-	font-family:SimHei;
-	font-weight:400;
-	color:rgba(255,255,255,1);
-}
-
-.recommend-litpic-class {
-	width:720rpx;
-	height:100%;	
-	border-radius: 27rpx;
-	/*margin-left:18rpx;
-	margin-right:19rpx;*/
-}
-
-.swiper-item-class>image {
-	
-}
-
 .swiper-item-class {
-	width:712.8rpx;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-
-.swiper-view > .active {
-	transform: none;transition: all 0.2s ease-in 0s;
-}
-
-.swiper-view> .quiet {
-	transform: scale(0.8333333);
-	transition: all 0.2s ease-in 0s;
-}
-
-#header-view>view>view {
-	height:60rpx;
-	flex-basis:219rpx;
-	flex-shrink: 0;
-	
-}
-
-#article-swiper {
-	width:750rpx;
-}
-
-#header-scroll-view {
-	display: flex;
-	flex-direction: row;
-	width:750rpx;
-	padding-bottom:10px;
-	-webkit-overflow-scrolling: touch;
 }
 
 #content-view {
 	display: flex;
 	overflow-y: scroll;
 	-webkit-overflow-scrolling:touch;
-	width: 100%;
+	/*width: 100%;*/
 	/*margin-bottom:16px;*/
 	flex-direction: column;
 }
@@ -812,7 +647,7 @@ view {
 }
 
 .content-desc-view {
-	
+	width:462rpx;
 	font-size: 24rpx;
 	font-family: PingFang SC;
 	font-weight: 400;
@@ -852,6 +687,16 @@ view {
 	margin-right: 46rpx;
 }
 
+.active-tab-class {
+	color:#A88FEF;
+	padding-bottom:9rpx;
+	border-bottom:1px solid #A88FEF;
+}
+.common-tab-class {
+	color:#131313; 
+}
+
+
 .content-title-view>text {
 	font-size: 32rpx;
 	font-family: PingFang SC;
@@ -865,7 +710,7 @@ view {
 	font-weight:400;
 	color:rgba(160,160,160,1);
 }
-
+/*
 #absolute-view {
 	display: flex;
 	flex-direction: column;
@@ -926,5 +771,5 @@ view {
 	justify-content:center;
 	display: flex;
 	align-items: center;
-}
+}*/
 </style>

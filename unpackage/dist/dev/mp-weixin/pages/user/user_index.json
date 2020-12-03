@@ -1,0 +1,10 @@
+{
+  "navigationBarBackgroundColor": "#F2F2F2",
+  "usingComponents": {
+    "uni-list": "/components/uni-list/uni-list",
+    "uni-list-item": "/components/uni-list-item/uni-list-item",
+    "u-modal": "/uview-ui/components/u-modal/u-modal",
+    "u-no-network": "/uview-ui/components/u-no-network/u-no-network",
+    "uni-popup-dialog": "/components/uni-popup/uni-popup-dialog"
+  }
+}

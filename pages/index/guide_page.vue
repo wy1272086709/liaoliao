@@ -1,19 +1,29 @@
 <template>
+	<!-- imgHeight+'px' -->
 	<view class="content" :style="{height:imgHeight+'px'}">
 		<swiper class="swiper"
 		:autoplay="autoplay" 
 		:duration="duration" :indicator-dots="true" @change="change" @transition="transition">
+		<!-- imgHeight+'px' -->
 			<swiper-item v-for="(item,index) in guideImages"  :style="{height:imgHeight+'px'}">
 				<view class="swiper-item">
 					<view class="swiper-item-img">
-						<image :src="item" mode="aspectFit" :style="{height:imgHeight+'px'}"></image>
+						<image :src="item" mode="scaleToFill" :style="{height:imgHeight+'px'}"></image>
 					</view>
 				</view>	
 			</swiper-item>
 		</swiper>
 		<view id="next-btn" v-if="showMenu">
-			<view class="jump-over login-entry-btn" @tap="login()">{{text}}</view>
-			<view class="jump-over" @tap="launchFlag()">{{jumpover}}</view>
+			<view class="jump-over login-entry-btn" @tap="login">
+				<button type="default">
+				{{text}}
+				</button>
+			</view>
+			<view class="jump-over" @tap="launchFlag">
+				<button type="default">
+				{{jumpover}}
+				</button>
+			</view>
 		</view>
 	</view>
 </template>
@@ -85,7 +95,7 @@
 				}
 			},
 			transition(e) {
-				console.log('e transition', e);
+				
 			}
 		}
 	}
@@ -96,12 +106,17 @@
 	display: flex;
 	flex-direction: row;
 }
-
+page {
+ 
+}
+.content {
+	padding-bottom: 0;
+	padding-bottom: constant(safe-area-inset-bottom);  
+	padding-bottom: env(safe-area-inset-bottom);  
+	
+}
 page,.content{
 	width: 100%;
-	height: 100%;
-	background-size: 100% auto ;
-	padding: 0;
 }
 .swiper{
 	width: 100%;
@@ -121,10 +136,10 @@ page,.content{
 .swiper-item-img{
 	width: 100%;
 	height: 100%;
-	margin: 0 auto;
+	/*margin: 0 auto;*/
 }
 .swiper-item-img image{
-	width: 95%;
+	width: 100%;
 	
 }
 
@@ -134,15 +149,24 @@ page,.content{
 	display: flex;
 	width: 100%;
 	justify-content: center;
-	bottom:50px;
+	bottom:125rpx;
 	left: 0px;
 	font-size: 40rpx;
-	font-family: PingFang SC;
-	font-weight: 800;
+	font-family: HYE2GJ;
+	font-weight: 400;
 	color: #333333;
 }
 
 .login-entry-btn {
 	margin-right:60rpx;
+}
+.jump-over>button {
+	padding: 10rpx 10rpx;
+	color:#E2CDFF;
+	background-color: #FFF;
+	line-height: 1.5;
+}
+.jump-over>button::after {
+	border: 1px solid #E2CDFF;
 }
 </style>

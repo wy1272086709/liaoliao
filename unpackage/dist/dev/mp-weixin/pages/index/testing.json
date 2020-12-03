@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "测一测",
+  "usingComponents": {
+    "u-tabs": "/uview-ui/components/u-tabs/u-tabs"
+  }
+}
