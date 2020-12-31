@@ -155,9 +155,9 @@
 						}
 					}
 				],
-				yuedu_jifen: '2',
-				niandu_jifen: '2',
-				jidu_jifen: '3',
+				yuedu_jifen: '',
+				niandu_jifen: '',
+				jidu_jifen: '',
 			}
 		},
 		components:{
@@ -173,13 +173,13 @@
 				return uid ? uid: 0;	
 			}
 		},
-		onLoad() {
+		async onLoad() {
 			console.log('onLoad...');
 			let data = getApp().globalData;
 			this.platform = data.platform;
 			
 			if(this.platform == 1) {
-				this.initVipMoney();
+				await this.initVipMoney();
 			} else {
 				this.yuedu_money = 12;
 				this.jidu_money  = 25;
@@ -231,8 +231,7 @@
 				});
 			},
 			requestPayment(productId) {
-				console.log('requestPayment', productId);
-				
+				console.log('requestPayment', productId);				
 				uni.requestPayment({
 					provider: 'appleiap',
 					orderInfo: {
@@ -397,8 +396,11 @@
 					auth: auth,
 				}).then(resp=>{
 					this.yuedu_money = resp.yue;
+					this.yuedu_jifen   = resp.yue_jifen;
 					this.jidu_money  = resp.ji;
+					this.jidu_jifen   = resp.ji_jifen;
 					this.niandu_money = resp.nian;	
+					this.niandu_jifen    = resp.nian_jifen;
 				});
 			},
 			checkIsInstallWx(){
@@ -433,6 +435,7 @@
 					uid: this.uid,
 					level: level,
 					paytype: paytype,
+					pay_type: 1,
 					filterData: true
 				};
 				console.log('wxpay params:', params);
@@ -504,6 +507,7 @@
 					money: money,
 					uid: this.uid,
 					level: this.level,
+					pay_type: 1,
 					filterData: true,
 					alipay_order: 1
 				};
@@ -556,6 +560,8 @@
 							});
 						}
 					});
+				}).error(res=>{
+					console.log('aplipay res:'+JSON.stringify(res));
 				});	
 			},
 		}

@@ -136,7 +136,7 @@
 	import http from '../../common/http.js';
 	import util from '../../common/util.js';
 	import lsSwiper from '../../components/ls-swiper/index.vue';
-	import fileFunc from '../../common/file_func.js';
+	//import fileFunc from '../../common/file_func.js';
 	export default {
 		data() {
 			return {
@@ -146,7 +146,7 @@
 				navHeight: '',
 				towerStart: 0,
 				direction: '',
-				imgSrc: '',
+				//imgSrc: '',
 				scrollHeight: '',
 				//恋爱技巧栏目内容列表
 				casesNavList: []
@@ -167,6 +167,7 @@
 				this.maskClass = 'maskClass';
 				this.isShowMask= true;
 			}*/
+			this.getCategoryArr();
 		},
 		/*beforeDestroy() {
 			this.casesNavList = this.base_lsit = this.appNavList = this.swiperList = [];

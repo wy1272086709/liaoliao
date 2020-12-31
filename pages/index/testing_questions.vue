@@ -24,7 +24,16 @@
 										</view>
 									</view>
 									<view>
-										<view class="block" @touchstart.stop="radioboxChange">
+										<view class="block" @tap.stop="radioboxChange" v-if="platform == 1">
+											<view :hover-stay-time="100" :ref="'view'+index" :data-index="index" class="cu-form-group" :style="subject.userAnswer == index?'background-color:#A9A9A9':''" v-for="(option,index) in subject.question_select" :key="index" >
+												<!--
+												<radio color="#09BB07" :value="index" :checked="subject.userAnswer == index?true:false"></radio>
+												-->
+												<view class="title text-black">{{option}}</view>
+											</view>
+										</view>
+										
+										<view class="block" @touchstart="radioboxChange" v-else-if="platform == 2">
 											<view :hover-stay-time="100" :ref="'view'+index" :data-index="index" class="cu-form-group" :style="subject.userAnswer == index?'background-color:#A9A9A9':''" v-for="(option,index) in subject.question_select" :key="index" >
 												<!--
 												<radio color="#09BB07" :value="index" :checked="subject.userAnswer == index?true:false"></radio>
@@ -67,6 +76,7 @@
 				],
 				subjectIndex: 0,
 				contentHeight: '',
+				platform: ''
 			}
 		},
 		components: {
@@ -104,6 +114,8 @@
 			uni.setNavigationBarTitle({
 				title:option.title
 			});
+			const p = getApp().globalData.platform;
+			this.platform = p;
 			this.getQuestionInfo(option.nid);
 			uni.getSystemInfo({
 				//获取手机屏幕高度信息，让swiper的高度和手机屏幕一样高                

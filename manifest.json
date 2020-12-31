@@ -1,6 +1,6 @@
 {
     "name" : "myapp",
-    "appid" : "",
+    "appid" : "__UNI__AC0B737",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -8,12 +8,13 @@
     "app-plus" : {
         "nvueCompiler" : "uni-app",
         "compilerVersion" : 3,
-		"safearea": {
-			"background": "#CCC",
-			"bottom": {
-				"offset": "auto"
-			}
-		},
+        "runmode" : "liberate",
+        "safearea" : {
+            "background" : "#CCC",
+            "bottom" : {
+                "offset" : "auto"
+            }
+        },
         "splashscreen" : {
             "alwaysShowBeforeRender" : false
         },
@@ -52,9 +53,19 @@
                     "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
                     "<uses-permission android:name=\"android.permission.RECEIVE_USER_PRESENT\"/>"
-                ]
+                ],
+                "schemes" : [ "miaoyu" ]
             },
-            "ios" : {},
+            "ios" : {
+                "UIBackgroundModes" : [ "audio" ],
+                "urltypes" : [
+                    {
+                        "urlidentifier" : "io.dcloud.miaoyu",
+                        "urlschemes" : [ "miaoyu" ]
+                    }
+                ],
+                "urlschemewhitelist" : [ "miaoyu" ]
+            },
             "sdkConfigs" : {
                 "oauth" : {
                     "weixin" : {
@@ -81,7 +92,8 @@
                 "payment" : {
                     "appleiap" : {}
                 },
-                "push" : {}
+                "push" : {},
+                "ad" : {}
             }
         },
         "nvueLaunchMode" : ""

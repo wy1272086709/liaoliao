@@ -1,6 +1,7 @@
 <template>
 	<view id="root-view">
-		<scroll-view :scroll-y="true"  :show-scrollbar="false" :style="'height:'+contentHeight+'px;z-inex:1001;'" @scrolltolower="lower">
+		<!-- :scroll-y="true"  :show-scrollbar="false"  @scrolltolower="lower" -->
+		<scroll-view :scroll-y="true"  :show-scrollbar="false" @scrolltoupper="upper"  @scrolltolower="lower"  :style="'height:'+contentHeight+'px;z-inex:1001;'">
 			<view id="mind-ask-view">
 				<view class="mind-title">
 					<!--
@@ -8,9 +9,10 @@
 						<text>妹子说:</text>
 					</view>
 					-->
+					
 					<view class="mind-title-left">
 						<view>
-							<image :src="ask.tx" class="avatar-class"></image>
+							<image :src="ask.tx?ask.tx:'../../static/img/user/people.png'" class="avatar-class"></image>
 						</view>
 						<view class="mind-nickName">{{ask.fbr}}</view>
 					</view>
@@ -52,7 +54,7 @@
 							<text>{{ ask.description }}</text>
 						</view>
 						<view class="mind-title-icon" @tap="showContent">
-							<u-icon :name="isContentOne?'arrow-up':'arrow-down'" size="32" color="#A6A6A6"></u-icon>
+							<u-icon :name="isContentOne?'arrow-down':'arrow-up'" size="32" color="#A6A6A6"></u-icon>
 						</view>
 					</view>
 				</view>
@@ -256,6 +258,12 @@
 			change() {
 				
 			},
+			upper() {
+				console.log('upper!..');
+				uni.showNavigationBarLoading();
+				nowpage = 1;
+				this.init(nid, true);
+			},
 			changeDialogShow(e) {
 				console.log('changeDialogShow', e);
 				if (e.show == false) {
@@ -372,6 +380,8 @@
 				console.log('shareWxOrWxTimeline');
 				let _self = this;
 				let sceneStr = '';
+				const shareUrl = 'http://miaoyu66.com/app.html#/pages/index/ask-ques-list?nid='+nid;
+				//const shareUrl = 'miaoyu://pages/index/ask-ques-list?nid='+nid;
 				sceneStr = (scene=='wx_timeline') ? 'WXSenceTimeline' : "WXSceneSession"
 				uni.share({
 					provider: provider,
@@ -380,7 +390,7 @@
 					title: '我在妙语千寻上找话术',
 					summary: '拒绝尬聊，多方位开启话题助阵您不疲累不应付 妙语千寻，打开话题让约会不在尴尬',
 					imageUrl: '../../static/img/user/miaoyu.png',
-					href: "https://kuwoi.com/",
+					href: shareUrl,
 					success: (res) => {
 						console.log("success:" + JSON.stringify(res));
 					},
@@ -407,11 +417,17 @@
 			areaBlur(e) {
 				this.bottom = 0;
 			},
-			init(nid) {
+			async init(nid, stopRefresh) {
 				const systemInfo = uni.getSystemInfoSync();
 				this.contentHeight = systemInfo.windowHeight - uni.upx2px(80);
-				this.getQuestionReplyList(nid, pageNo);
-				this.getQuestionDetail(nid);
+				await this.getQuestionReplyList(nid, 1);
+				await this.getQuestionDetail(nid);
+				if (stopRefresh) {
+					// 隐藏下拉加载...
+					setTimeout(() => {
+						uni.hideNavigationBarLoading();
+					}, 2000);
+				}
 			},
 			async getQuestionDetail(nid) {
 				const data = getApp().globalData;
@@ -866,35 +882,39 @@
 					width: 535rpx;
 					.answer-first-line {
 						display: flex;
-						height: 27px;
+						/*height: 27px;*/
+						height: 76rpx;
 						font-size: 28rpx;
 						font-family: PingFang SC;
 						font-weight: 400;
 						justify-content: space-between;
 						.first-line-before {
 							display: flex;
-							align-items: center;
+							align-items: flex-start;
+							flex-direction: column;
+							justify-content: space-between;
 							color:#A9A9A9;
 							width:70%;
 							.first-line-nickName {
 								color: #A88FEF;
-								width:50%;
+								/*width:50%;*/
 								display: flex;
 								justify-content: flex-start;
 							}
 							view {
-								width:50%;
+								/*width:50%;*/
 								display: flex;
 								justify-content: center;
 								font-size:28rpx;
 							}
 						}
 						.first-line-after {
-							height: 27px;
+							height: 76rpx;
 							display: flex;
+							align-items: flex-start;
 							justify-content: flex-end;
 							width:30%;
-							align-items: center;
+							/*align-items: center;*/
 							font-size: 24rpx;
 							font-family: PingFang SC;
 							font-weight: 400;

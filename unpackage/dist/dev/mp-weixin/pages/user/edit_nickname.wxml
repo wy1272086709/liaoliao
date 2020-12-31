@@ -1,1 +1,0 @@
-<view id="root-view"><view id="content-box"><view id="nickname-box"><input focus="{{true}}" id="nickName" data-event-opts="{{[['input',[['__set_model',['','nickName','$event',['trim']]]]],['blur',[['$forceUpdate']]]]}}" value="{{nickName}}" bindinput="__e" bindblur="__e"/></view><view id="info-nickname"><text>好昵称可以让你的朋友更容易记住你。</text></view></view></view>

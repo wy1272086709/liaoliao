@@ -109,6 +109,10 @@ export default {
 		},
 		contextInit() {
 			console.log('创建');
+			/*
+			if(this.innerAudioContext) {
+				this.innerAudioContext.destroy();
+			}*/
 			let that = this;
 			that.$emit('update:play', false);
 			let innerAudioContext = uni.getBackgroundAudioManager();
@@ -144,8 +148,11 @@ export default {
 				this.innerAudioContext.pause();
 			}
 		},
-		src() {
-			this.innerAudioContext.destroy();
+		src(n, o) {
+			if (n!=o) {
+				console.log('n:'+n+'o:'+o);
+				this.innerAudioContext.destroy();
+			}
 			this.contextInit();
 		}
 	},

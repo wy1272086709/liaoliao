@@ -468,9 +468,9 @@
 												if (resp.status == 1) {
 													//getApp().globalData.appLoginType = 2;
 													util.cache('appLoginType', 2);
-													const userInfoObj   = { nickName: resData.nickname, avatarUrl: resData.headimgurl, 
+													const userInfoObj   = { nickName: resp.data.nickname, avatarUrl: resp.data.avatarurl, 
 														uid: resp.data.id, level:resp.data.cid, phone: resp.data.phone,
-														 start_time:resp.data.start_time, end_time:resp.data.end_time};
+														 start_time:resp.data.start_time, end_time:resp.data.end_time, score:resp.data.jifen};
 													
 													console.log('userInfoObj', userInfoObj);
 

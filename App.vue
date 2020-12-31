@@ -9,42 +9,49 @@ export default {
 		console.log('Launch start1:', s1.getTime());
 		//#ifdef APP-PLUS
 		plus.screen.lockOrientation('portrait'); //锁死屏幕方向为竖屏  
-		
 		//#endif
-		
+	
 		let _self = this;
 		console.log('on Launch!');
-		uni.getSystemInfo({
-		      success: res => {
-				console.log('res', res);
-		        let modelmes = res.model;
-				let platform = res.platform.toLowerCase();
-				//android: 安卓, ios: IOS, devtools:PC
-				if (platform == 'android') {
-					_self.globalData.platform = 1;	
-				} else if(platform == 'ios' || platform == 'devtools' ){
-					_self.globalData.platform = 2;
-				}
-		        if (modelmes.search('iPhone X') != -1 || modelmes.search('iPhoneX')!=-1) {
-		          _self.globalData.isIphoneX = true;
-		        }
-				 //console.log('App Launch')
-				switch (platform) {
-					case 'android':
-						//console.log('运行Android上') 
-						plus.navigator.closeSplashscreen();
-						break;
-					case 'ios':
-						//console.log('运行iOS上') 
-						plus.navigator.closeSplashscreen();
-						break;
-					default:
-						//console.log('运行在开发者工具上') 
-						break;
-				}
-		        uni.setStorageSync('modelmes', modelmes)
-		      }
+		const res = uni.getSystemInfoSync();	      
+		console.log('res', res);
+		let modelmes = res.model;
+		let platform = res.platform.toLowerCase();
+		
+		//android: 安卓, ios: IOS, devtools:PC
+		if (platform == 'android' || platform == 'devtools' ) {
+			_self.globalData.platform = 1;	
+		} else if(platform == 'ios'){
+			_self.globalData.platform = 2;
+		}
+		if (modelmes.search('iPhone X') != -1 || modelmes.search('iPhoneX')!=-1) {
+		  _self.globalData.isIphoneX = true;
+		}
+		 
+		 //#ifdef APP-PLUS
+		switch (platform) {
+			case 'android':
+				//console.log('运行Android上') 
+				plus.navigator.closeSplashscreen();
+				break;
+			case 'ios':
+				//console.log('运行iOS上') 
+				plus.navigator.closeSplashscreen();
+				break;
+			default:
+				//console.log('运行在开发者工具上') 
+				break;
+		}
+		//#endif
+		
+		//#ifdef APP-PLUS
+		plus.globalEvent.addEventListener('newintent', (e)=>{    
+		    let args= plus.runtime.arguments;    
+			console.log('args:'+JSON.stringify(args));
 		});
+		//#endif
+		
+		uni.setStorageSync('modelmes', modelmes);
 	},
 	methods:{
 		checkAppUpdate() {
@@ -158,15 +165,25 @@ export default {
 		}
 	},
 	onShow: function() {
-		//#ifdef MP-WEIXIN || MP-QQ
-		let userInfoStr = util.cache('wx_userinfo');
-		let minutes = 15*24*3600;
-		util.cache('wx_userinfo', userInfoStr, minutes);
-		console.log('App Show');
+		//#ifdef APP-PLUS
+		let args= plus.runtime.arguments;  
+		console.log('args:'+JSON.stringify(args));
+		if (args.pathName!='') {  
+			if (args.pathName == 'pages/mind_square/ask-ques-list') {
+				// 处理args参数，如直达到某新页面等  
+				const nidStr = args.nid;
+				const url = '/pages/mind_square/ask-ques-list?nid='+nidStr;
+				uni.navigateTo({
+					url:  url
+				});
+			}
+		}
 		//#endif
 	},
 	onHide: function() {
 		console.log('App Hide');
+		// 退出的时候,将课程学习进度信息,进行持久化
+		
 	},
 	globalData: {
 		//serverUri: "https://www.kuwoi.com/index.php",

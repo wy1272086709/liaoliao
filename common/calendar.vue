@@ -29,11 +29,11 @@
 				</view>
 				<view v-else>
 					<!-- 已签到日期 -->
-					<view v-if="item.isSign == true" class='cell greenColor bgWhite  '>
+					<view v-if="item.isSign == true" class='cell greenColor bgWhite'>
 						<text>{{item.date}}</text>
 					</view>
-					<!-- 漏签 -->
-					<view @click="clickSignUp(item.date,0)" class="cell redColor bgGray" 
+					<!-- 漏签 @click="clickSignUp(item.date,0)" -->
+					<view  class="cell redColor bgGray" 
 					v-else-if="cur_year<toYear||(cur_year==toYear&&cur_month<toMonth)||(cur_year==toYear&&cur_month==toMonth&&item.date<today)">
 						<!-- 小程序不兼容这个 v-else-if="(new Date(cur_year+'-'+cur_month+'-'+item.date))<(new Date())"> -->
 						<text>{{item.date}}</text>
@@ -47,15 +47,16 @@
 						<text>{{item.date}}</text>
 					</view>
 				</view>
-
 			</view>
 		</view>
+		<!--
 		<view class="TipArea ">
 			Tip:
 			<p>打卡成功后需要你<view class="impTip">同步数据给数据库，切换月或重新进入</view>
 			页面再向数据库读取记录(不会的建议参考我的Demo,而不是单独下个组件过来瞎折腾)。本地打卡不做任何记录，<view class="impTip">仅仅模拟成功</view>
 			</p>
 		</view>
+		-->
 	</view>
 </template>
 
@@ -98,7 +99,6 @@
 			this.cur_year = this.sendYear;
 			this.cur_month = this.sendMonth;
 			this.SignUp = this.dataSource;
-
 			this.calculateEmptyGrids(this.cur_year, this.cur_month);
 			this.calculateDays(this.cur_year, this.cur_month);
 			this.onJudgeSign();
@@ -130,10 +130,8 @@
 					}
 				}
 			},
-
 			// 绘制当月天数占的格子，并把它放到days数组中
 			calculateDays(year, month) {
-
 				const thisMonthDays = this.getThisMonthDays(year, month);
 				// this.columnsLen=Math.ceil(thisMonthDays/7);
 				// console.log(this.columnsLen);
@@ -145,9 +143,7 @@
 					this.days.push(obj);
 				}
 				//console.log(this.days);
-
 			},
-
 			onResChange(newD, oldD) {
 				this.SignUp = newD;
 				this.onJudgeSign();
@@ -165,14 +161,16 @@
 					for (var j = 0; j < daysArr.length; j++) {
 						//年月日相同则打卡成功   						
 						if (year == this.cur_year && month == this.cur_month && daysArr[j].date == day) { //&& signs[i].isSign == "今日已打卡"
-							// console.log(daysArr[j].date, day);
+							console.log(daysArr[j].date, day);
+							console.log('here!');
 							daysArr[j].isSign = true;
+							this.dataSource.push(daysArr[j].date);
 						}
 					}
 				}
+				console.log('days:'+JSON.stringify(this.days));
 				this.days = daysArr;
 			},
-
 			// 切换控制年月，上一个月，下一个月
 			handleCalendar(type) {
 				const cur_year = parseInt(this.cur_year);
@@ -194,16 +192,12 @@
 				}
 				this.calculateEmptyGrids(newYear, newMonth);
 				this.calculateDays(newYear, newMonth);
-
 				this.cur_year = newYear;
 				this.cur_month = newMonth;
-
 				this.SignUp = []; //先清空
 				this.$emit('dateChange', this.cur_year+"-"+this.cur_month); //传给调用模板页面去拿新数据				
 			},
-
 			clickSignUp(date, type) { //type=0补签，type=1当日签到		
-			
 				var str = "签到";
 				if (type == 0) {//如果不需要补签功能直接在这阻止不执行后面的代码就行。
 					str = "补签";
@@ -214,15 +208,11 @@
 					duration: 2000
 				});
 				// this.SignUp.push(this.cur_year + "-" + this.cur_month + "-" + date); //自动加假数据，写了接口就不用了
-				
 				// console.log(this.SignUp);
-				// this.$forceUpdate();
-				
+				// this.$forceUpdate();				
 				this.$emit('clickChange', this.cur_year + "-" + this.cur_month + "-" + date); //传给调用模板页面
-
 				//refresh
 				this.onJudgeSign();
-
 			}
 		}
 	}

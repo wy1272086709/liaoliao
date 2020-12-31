@@ -2,7 +2,7 @@
 	<view>
 		<u-popup :zoom="zoom" mode="center" :popup="false" :z-index="uZIndex" v-model="value" :length="width"
 		 :mask-close-able="maskCloseAble" :border-radius="borderRadius" @close="popupClose" :negative-top="negativeTop">
-			<view class="u-model">
+			<view class="u-model" :style="[modalStyle]">
 				<view v-if="showTitle" class="u-model__title u-line-1" :style="[titleStyle]">{{ title }}</view>
 				<view class="u-model__content">
 					<view :style="[contentStyle]" v-if="$slots.default">
@@ -142,6 +142,12 @@
 			contentStyle: {
 				type: Object,
 				default () {
+					return {}
+				}
+			},
+			modalStyle: {
+				type: Object,
+				default() {
 					return {}
 				}
 			},

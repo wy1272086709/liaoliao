@@ -1,6 +1,6 @@
 <template>
 	<view id="root-view">
-		<u-navbar :is-back="false" :titleSize="32"  title="个人中心" :borderBottom="true" :isFixed="isFixed"  :zIndex="10000000000000001">			
+		<u-navbar :is-back="false" :titleSize="32"  title="个人中心" :borderBottom="true" :isFixed="true"  :zIndex="10000000000000001">			
 			<template v-slot:right="">
 				<view class="slot-wrap" @tap="getNoticeList">
 					<u-icon name="email" size="40"></u-icon>
@@ -54,14 +54,14 @@
 					<uni-list-item v-for="(item,index) in list" class="user-list-item" :key="item.id" :title="item.title" 
 					:thumb="item.thumb" :showArrow="index!=3?true:false" hideBgc="true" @tap="item.tap" 
 					:style="'height:'+height+'px;line-height:'+height+'px;'" :class="index==list.length-1?'last-item':''">
-						<template v-slot:right="" v-if="index == 1|| index == 3">
+						<template v-slot:right="" v-if="index == 4|| index == 6">
 							<!-- @tap="copy_customer_wechat" -->
 							
-							<view style="display: flex;align-items: center;" v-if="index == 1">
+							<view style="display: flex;align-items: center;" v-if="index == 4">
 								<text class="copy-text">{{wx}} </text>
 								<button class="copy-btn">复制</button>
 							</view>
-							<view  v-if="index == 3">
+							<view  v-if="index == 6">
 								<text class="copy-text">{{fileSizeString}}</text>
 							</view>
 						</template>					
@@ -122,15 +122,18 @@
 			let sysinfo = uni.getSystemInfoSync();
 			let width = sysinfo.windowWidth;
 			let winHeight    = sysinfo.windowHeight;
-			this.nextTop = winHeight - 60;
-			let radix = 750/width; 
-			let h     = radix * winHeight;
+			//this.nextTop = winHeight - 60;
+			/*let radix = 750/width; 
+			let h     = radix * winHeight;*/
 			const  n = this.list.length;
+			console.log('n'+n);
 			this.fileSizeString = this.formatSize();
-			/*let m = 50+180+31+57+22+16+26 +53+0.28*h;
-			const extraH = winHeight - uni.upx2px(m);
-			const b = Math.floor(extraH/n);*/
-			this.height = 45;
+			let m = 180+50+31+57+94+73+20;
+			const p = getApp().globalData.platform;
+			const extraH = winHeight - uni.upx2px(m) -45-30-sysinfo.statusBarHeight - (p == 1? 58: 54);
+			const b = Math.floor(extraH/n);
+			this.height = b;
+			//this.height = 45;
 			uni.setNavigationBarTitle({
 				title:'个人中心'
 			});
@@ -141,13 +144,16 @@
 		onShow() {
 			//#ifdef APP-PLUS || H5
 			let globalData = getApp().globalData;
-			if(globalData.isRecharge == 1) {
-				
+			if(globalData.isRecharge == 1 && this.uid) {
+				this.getUserInfo();
 			}
 			//#endif
 			if(this.uid) {
 				//this.getUserInfo();
 				this.getUserStats();
+			}
+			if ((this.isInternalUser && this.uid>0) || (this.uid == 215)) {
+				this.getUserInfo();
 			}
 			console.log('onShow...');
 			this.getNoticeInfo();
@@ -654,6 +660,41 @@
 			},
 			getUserConfigList() {
 				let _self = this;
+				const payScore = {
+					id: 2,
+					title: '积分管理',
+					thumb: '../../static/img/score/score_week_icon.png',
+					tap() {
+						if(!_self.level) {
+							uni.navigateTo({
+								url: '/pages/user/login_v2'
+							});
+							return;
+						}
+						// 已登录,跳转到一对一
+						uni.navigateTo({
+							url:'/pages/user/score_list'
+						});
+					}
+					
+				};
+				const courseStudyLog = {
+					id: 3,
+					title: '课程记录',
+					thumb: '../../static/img/user/onetoone_xueyuan.png',
+					tap() {
+						if(!_self.level) {
+							uni.navigateTo({
+								url: '/pages/user/login_v2'
+							});
+							return;
+						}
+						// 已登录,跳转到一对一
+						uni.navigateTo({
+							url:'/pages/course/course_study_log'
+						});
+					}
+				};
 				let dsOneToOne = {
 					id: 1,
 					title: '一对一学院',
@@ -673,8 +714,10 @@
 				};
 				let config = [
 					//dsOneToOne,
+					payScore,
+					courseStudyLog,
 					{
-						id: 2,
+						id: 4,
 						title: '升级VIP',
 						thumb: '../../static/img/user/user_upgrade_vip.png',
 						tap() {
@@ -691,7 +734,7 @@
 						}
 					},
 					{
-						id: 3,
+						id: 5,
 						title: '投诉建议',
 						thumb: '../../static/img/user/complaint_new.png',
 						tap() {
@@ -708,7 +751,7 @@
 						}
 					},
 					{
-						id: 4,
+						id: 6,
 						title: '微信客服',
 						thumb: '../../static/img/user/wx_customer.png',
 						tap() {
@@ -716,7 +759,7 @@
 						}
 					},
 					{
-						id: 5,
+						id: 7,
 						title: '分享好友',
 						thumb: '../../static/img/user/share_wx_friends.png',
 						tap() {
@@ -724,7 +767,7 @@
 						}
 					},
 					{
-						id: 6,
+						id: 8,
 						title: '缓存清理',
 						thumb: '../../static/img/user/cache_clear.png',
 						tap() {
@@ -732,10 +775,12 @@
 						}
 					},
 				];
-				if(this.level == 0)
-				return config;
-				config.splice(0, 1);
-				return config;
+				if(this.level == 0) {
+					config.splice(0, 3);
+					return config;
+				} else {
+					return config;
+				}
 			},
 			// 获取用户发布的,收藏的文章和问答,收到的评论总数
 			async getUserStats() {

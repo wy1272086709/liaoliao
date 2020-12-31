@@ -8,8 +8,14 @@ import uView from 'uview-ui'
 Vue.use(uView);
 
 
-// i18n部分的配置
+//组件引用方式
+import { ZAudio } from 'zaudio/index.js'
 
+// npm引用方式
+// import { ZAudio } from 'uniapp-zaudio/zaudio/index.js'
+Vue.use(ZAudio)
+
+// i18n部分的配置
 Vue.use(Vuex)
 const store = new Vuex.Store(storeObj)
 Vue.config.productionTip = false

@@ -233,14 +233,7 @@
             "style" : {
                 "navigationStyle" : "custom"
             }
-        },*/
-        {
-            "path" : "pages/index/video",
-            "style" : {
-                "navigationStyle" : "custom"
-            }
-        }
-		/*
+        },*//*
         {
             "path" : "pages/index/test-audio",
             "style" : {}
@@ -269,18 +262,72 @@
             "path" : "pages/user/score_list",
             "style" : {}
         }*/
-		,
-		{
-		    "path" : "pages/user/score_list",
-		    "style" : {
-				"navigationBarTitleText": "积分"
-			}
-		}
-        ,{
+        {
+            "path" : "pages/user/score_list",
+            "style" : {
+                "navigationBarTitleText" : "积分"
+            }
+        },
+        {
             "path" : "pages/user/score_pay",
             "style" : {
-				"navigationBarTitleText":"积分充值"
-			}
+                "navigationBarTitleText" : "积分充值"
+            }
+        },
+        /*{
+            "path" : "pages/index/test",
+            "style" : {}
+        },
+        {
+            "path" : "pages/index/test2",
+            "style" : {}
+        },*/
+        {
+            "path" : "pages/course/audio_detail",
+            "style" : {
+                "navigationStyle" : "custom",
+                "app-plus" : {
+                    "bounce" : "none"
+                }
+            }
+        },
+        {
+            "path" : "pages/course/article_detail",
+            "style" : {}
+        },
+        {
+            "path" : "pages/course/index",
+            "style" : {
+                "navigationStyle" : "custom"
+            }
+        },
+        {
+            "path" : "pages/course/course_study_log",
+            "style" : {
+                "navigationBarTitleText" : "课程记录",
+                "navigationStyle" : "custom"
+            }
+        },
+        {
+            "path" : "pages/course/video_detail",
+            "style" : {
+                "enablePullDownRefresh" : false,
+                "app-plus" : {
+                    "bounce" : "none"
+                }
+            }
+        },
+        /*"titleNView" : {
+					    "buttons" : [
+					        /*{
+					            "type" : "share"
+					        }*///  ]
+        //}
+        {
+            "path" : "pages/user/score_log_list",
+            "style" : {
+                "navigationBarTitleText" : "积分明细"
+            }
         }
     ],
     "tabBar" : {
@@ -305,7 +352,7 @@
                 "text" : "妙语广场"
             },
             {
-                "pagePath" : "pages/index/video",
+                "pagePath" : "pages/course/index",
                 "iconPath" : "/static/img/tabbar/course_btn_link.png",
                 "selectedIconPath" : "/static/img/tabbar/course_btn_active.png",
                 "defaultClass" : "tabbar-icon-class",
@@ -324,7 +371,11 @@
         "navigationBarTextStyle" : "black",
         "navigationBarTitleText" : "",
         "navigationBarBackgroundColor" : "#F2F2F2",
-        "backgroundColor" : "#FFFFFF"
+        "backgroundColor" : "#FFFFFF",
+        "scrollIndicator" : "none",
+        "app-plus" : {
+            "scrollIndicator" : "none" //全局 在APP页面都不显示滚动条
+        }
     },
     "condition" : {
         "current" : 0,
@@ -338,8 +389,12 @@
                 "path" : "pages/mind_square/index"
             },
             {
-                "name" : "test",
+                "name" : "test1",
                 "path" : "pages/user/user_index"
+            },
+            {
+                "name" : "test2",
+                "path" : "pages/course/index"
             }
         ]
     },

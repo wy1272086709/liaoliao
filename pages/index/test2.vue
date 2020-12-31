@@ -1,19 +1,44 @@
 <template>
 	<view class="u-content">
-		<u-parse :html="content"></u-parse>
+		<test-swiper :info="item"></test-swiper>
+		<view @tap="tapFunc" :animation="animationData" style="margin-top:20px;">
+			<text>呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵呵</text>
+		</view>
 	</view>
 </template>
 
 <script>
+	import testSwiper from '../../common/audio_cover.vue';
 	export default {
 		data() {
 			return {
-				//content: `
-				//	<p>露从今夜白，月是故乡明</p><p>呵呵</p><img src="https://cdn.uviewui.com/uview/swiper/2.jpg" />
-				//`
-				content: '<p>1、可以依赖恋人，但是不能依附男人</p><p>2、恋爱很美，但它不是理所当然的存在</p><p>3、别轻易和“好人”在一起</p><p>4、安全感是自己给的</p><p>5、恋爱中，不要试图改变对方</p>'
+				item: {
+					title: '人际交往中性格内向是劣势吗?',
+					status: 0,
+					coverImg: '../../static/img/course/test.jpg'
+				},
+				animationData: {}
 			}
 		},
+		components:{
+			testSwiper
+		},
+		onLoad() {
+			console.log('tap');
+			const a = uni.createAnimation({
+				duration: 2000,
+				timingFunction: "ease",
+				delay: 0
+			});
+			this.animation = a;
+		},
+		methods:{
+			tapFunc() {
+				const a = this.animation;
+				a.width(0).height(0);
+				this.animationData = a.export();
+			}
+		}
 	}
 </script>
 

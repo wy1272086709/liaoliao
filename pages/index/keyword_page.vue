@@ -16,7 +16,7 @@
 			<view id="search-keyword-box">
 				<view v-for="(cnt,word, index) in searchKeywords" :key="word" class="keyword-btn" :style="'background-color:'+getIndexColor(index)+';'" 
 				@tap="searchTagKeyword(word)">
-					<text>{{word}}</text>
+					{{word}}
 				</view>
 			</view>
 		</view>
@@ -125,12 +125,15 @@
 	padding-left:10px;
 	padding-right:10px;
 	height:20px;
+	display: inline-block;
+	line-height: 20px;
 	/*flex-basis: 100rpx;*/
-	justify-content: center;
+	/*justify-content: center;*/
+	text-align: center;
 	margin-right:50rpx;
 	margin-bottom:20rpx;
 	border-radius: 10px;
-	align-items: center;
+	/*align-items: center;*/
 	font-size: 15px;
 	opacity: 0.5;
 	color:#FFFFFF;

@@ -1,9 +1,9 @@
 {
-  "navigationBarTitleText": "话术库",
+  "navigationBarTitleText": "恋爱话术",
+  "navigationBarBackgroundColor": "#2369E6",
+  "backgroundColor": "#2369E6",
   "usingComponents": {
     "uni-icons": "/components/uni-icons/uni-icons",
-    "ls-swiper": "/components/ls-swiper/index",
-    "custom-swiper": "/components/blackmonth-swiper/index",
-    "second-nav": "/common/get_second_nav"
+    "tab-bar": "/common/tabbar"
   }
 }

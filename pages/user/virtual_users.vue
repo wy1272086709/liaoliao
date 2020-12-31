@@ -57,7 +57,9 @@
 			},
 			switchUser(uid) {
 				// 切换用户,
-				this.setUserInfo({});
+				this.setUserInfo({
+					
+				});
 				uni.removeStorageSync('app_user_info_1');
 				this.setInternalUser(1);
 				console.log('logout...');

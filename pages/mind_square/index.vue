@@ -31,7 +31,7 @@
 		</view>
 		-->
 		
-		<scroll-view :style="'height:'+scrollHeight+'px;'"  scroll-y="true"	 @scrolltolower="lower" @scroll="scroll" :scroll-top="scrollTop">
+		<scroll-view :style="'height:'+scrollHeight+'px;'"  scroll-y="true"	 @scrolltolower="lower" @scrolltoupper="upper" @scroll="scroll" :scroll-top="scrollTop">
 		<view id="mind-ask-box" class="content" v-if="mindList.length>0">
 			<view class="mind-ask-view" v-for="(item,index) in mindList" :key="item.nid" @tap="gotoDetail(item.nid,index)">
 				<view class="mind-title">
@@ -140,6 +140,7 @@
 			const info = uni.getSystemInfoSync();
 			this.platform = getApp().globalData.platform;
 			this.scrollHeight = info.windowHeight - info.statusBarHeight - (this.platform == 1? 58: 54);
+			
 		},
 		onShow() {
 			/*const v = util.getVersionValue();
@@ -179,6 +180,11 @@
 			blurFunc() {
 				console.log('blur');
 				
+			},
+			upper() {
+				uni.showNavigationBarLoading();
+				nowpage = 1;
+				this.getMindList(1, false, true);
 			},
 			gotoNext() {
 				uni.switchTab({
@@ -264,7 +270,10 @@
 					console.log('stopRefresh', stopRefresh);
 					if(stopRefresh) {
 						console.log('gor here! stop!');
-						uni.stopPullDownRefresh();
+						//uni.stopPullDownRefresh();
+						setTimeout(()=> {
+							uni.hideNavigationBarLoading();
+						}, 2000);
 					}
 				}
 			},
@@ -414,6 +423,17 @@
 }
 .u-navbar-inner {
 	border-bottom: 1px solid #F2F2F2;
+}
+scroll-view::-webkit-scrollbar {  
+	display: none !important;  
+	width: 0 !important;  
+	height: 0 !important;  
+	-webkit-appearance: none;  
+	background: transparent;  
+}
+//第二种
+::-webkit-scrollbar{
+	  display: none;
 }
 #content {
 	/*#header-ask-box {*/

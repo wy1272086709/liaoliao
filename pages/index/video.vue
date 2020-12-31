@@ -20,43 +20,16 @@
 		<swiper :current="activeTabIndex" :scroll-with-animation="true" 	@change="switchVideoTab" :style="'width:100%;height:'+scrollHeight+'px;'">
 			<swiper-item :class="[ 'swiper-item-css', index==0?'swiper-item-top':'' ]" v-for="(item,index) in tabArr" :key="item.navId">
 				<scroll-view :style="'height:'+scrollHeight+'px;'"  scroll-y="true"	 
-				@scrolltolower="lower" @scroll="scroll" :scroll-top="scrollTop" >
+				@scrolltolower="lower" @scroll="scroll" :scroll-top="scrollTop">
 					<view v-if="activeTabIndex == 0">
-						<view v-for="(info,m) in articeList" class="content-root-view"   @tap="getArticleView(info.id, info.cid, item[0]?item[0].classname:'')" :key="info.id">
-							<view class="common-pic-view" :style="!isRecharge? 'background-image:url('+ info.thumbUrl+')':''">
-								<view :class="[ isRecharge? 'content-img-view': 'default-suo-css']">
-									<image :lazy-load="true" v-if="info.thumbUrl && isRecharge" :src="info.thumbUrl" 
-									 class="thumb-class"
-									@load="loadItemPic(info.thumbUrl)"></image>
-									<!-- 未充值... -->
-									<u-icon name='lock' color='#FFFFFF' size='38' v-if="!isRecharge"></u-icon>
-								</view>
-								<!--
-								<u-lazy-load :image="info.thumbUrl" class="thumb-class"></u-lazy-load>
-								-->
-							</view>
-							<view class="content-titleinfo-view">
-								<view class="content-title-view">
-									<text>{{info.title}}</text>
-								</view>
-								<view class="content-desc-view">
-									<text>{{info.description}}</text>
-								</view>
-								<view class="content-stats-view">
-									<view class="content-stats-view-readnum">
-										<image :lazy-load="true"	src="../../static/img/cases/view.png" class="view-icon-class"></image>
-										<text>{{info.readNum}}</text>
-									</view>
-									<view class="content-stats-view-praisenum">
-										<image :lazy-load="true" src="../../static/img/cases/ok.png" class="praise-icon-class"></image>
-										<text>{{info.wzsccs}}</text>
-									</view>
-								</view>
-							</view>
-						</view>
+						<article-course @view_article="getArticleView" :key="info.id" v-for="(info,m) in articeList" :info="info" :isShowLock="info.isShowLock">
+							
+						</article-course>
 					</view>						
 					<view v-else-if="activeTabIndex == 1">
-						
+						<audio-course @click.native="viewAudio(item)" :title="item.title" :isShowLock="item.isShowLock" :playCnt="item.playCnt" v-for="(item, key) in allAudioList" :key="item.id">
+							
+						</audio-course>
 					</view>
 					<view v-else>
 						<view>
@@ -73,8 +46,14 @@
 </template>
 
 <script>
+	import util from '../../common/util.js';
+	import audioCourse from '../../common/audio_course.vue';
+	import articleCourse from '../../common/article_course.vue';
+	import course from '../../common/view_course.js';
 	let nowpage = 1;
+	import { mapGetters, mapMutations } from 'vuex';
 	export default {
+		
 		data() {
 			return {
 				src: '',
@@ -85,6 +64,7 @@
 				activeTabIndex: 0,
 				isScroll: true,
 				platform: '',
+				
 				bold: true,
 				old: {
 					scrollTop:0,
@@ -99,7 +79,8 @@
 					{ name: '音频专区',navId: 2 }, 
 					{ name: '视频专区', navId: 3 }, 
 				],
-				articeList: []
+				articeList: [],
+				allAudioList: [],
 				/*danmuList: [{
 						text: '第 1s 出现的弹幕',
 						color: '#ff0000',
@@ -115,10 +96,37 @@
 				speedValue: 1.0*/
 			}
 		},
+		mixins:[
+			course
+		],
 		onReady() {
-			// #ifndef MP-ALIPAY
-			this.videoContext = uni.createVideoContext('myVideo')
-			// #endif
+			
+		},
+		onShow() {
+			//渲染当前列表中歌曲的播放的进度
+			//必须放在onShow中A
+			//this.set_renderIndex(this.playIndex);
+		},
+		components:{
+			audioCourse,
+			articleCourse
+		},
+		computed:{
+			//'playIndex',
+			...mapGetters(['audiolist',  'playinfo', 'paused', 'curPlayId']),
+			uid: function() {
+				let uid = util.cache('app_userid', null);
+				console.log('uid', uid);
+				return uid ? uid: 0;
+			},
+			score: {
+				get() {
+					return 999;
+				},
+				set() {
+					
+				}
+			}
 		},
 		onLoad() {
 			const info = uni.getSystemInfoSync();
@@ -135,11 +143,87 @@
 					sfsc: 0,
 					thumbUrl: "http://imgmyqx.ofbei.com/upload1/20201111/20201111163727_759.jpg",
 					title: "什么样的男生比较受欢迎",
-					wzsccs: "1"
+					isShowLock: true,
+					wzsccs: "1",
+					score_num: 10
 				}
 			];
+			this.allAudioList = [
+				{
+					title: '什么样的男生受欢迎1',
+					isShowLock: false,
+					playCnt: '6万',
+					id: 1,
+					score_num: 10,
+					src: '../../static/video/1.mp3'
+				},
+				{
+					title: '什么样的男生受欢迎2',
+					isShowLock: false,
+					id: 2,
+					playCnt: '6万',
+					score_num: 10,
+					src: '../../static/video/2.mp3'
+				}
+			];
+			const audioList = this.allAudioList.filter((info)=> {
+				return !info.isShowLock;
+			});
+			console.log('audioList:'+JSON.stringify(audioList));
+			//设置音频列表
+			this.set_audiolist({
+				data: audioList,
+				status: false
+			});
+			// 
 		},
 		methods: {
+			// 'set_renderIndex','set_audio'
+			...mapMutations([ 'set_audiolist', 'set_playinfo','set_curPlayId' ]),
+			viewAudio(info) {
+				// 跳转到音频详情页...
+				const storeInfo = this.getStoreAudioInfo(info);
+				if(this.curPlayId!=storeInfo.id) {
+					this.set_playinfo({
+						id: storeInfo.id,
+						title: storeInfo.title,
+						src: storeInfo.src,
+						singer: storeInfo.singer,
+						coverImgUrl: storeInfo.coverImgUrl,
+					});
+					
+				}
+				
+				const viewFunc = () => {
+					// 扣除当前用户的积分,然后写进vuex,cache中...
+					if (info.isShowLock) {
+						this.score-=info.score_num;
+						// 扣完积分之后,当前音频
+						this.set_audiolist({
+							data: [...storeInfo],
+							status: true,
+						});
+					}
+					info.isShowLock = false;
+					uni.navigateTo({
+						url: '/pages/index/audio_detail'
+					});
+				};
+				// info 里面需要一个tabIndex;
+				info.tabIndex = 1;
+				const isVisit = this.canVisit(this.uid, info, 1, this.score, viewFunc);
+			},
+			getStoreAudioInfo(info) {
+				const audioInfo = {};
+				['title', 'src', 'singer', 'coverImgUrl', 'id'].forEach((key)=>{
+					audioInfo[key] = info[key];
+				});
+				return audioInfo;
+			},
+			updateScore(score, nid, uid) {
+				// 更新当前用户消耗的积分...
+				
+			},
 			loadItemPic(src) {
 				/*console.log('文章图片');
 				let d = new Date;
@@ -148,17 +232,20 @@
 			videoErrorCallback() {
 				
 			},
-			getArticleView(id, cid, tabTitle) {
-				if(!this.isRecharge) {
+			getArticleView(info) {
+				info.tabIndex = 0;
+				//uid, info, type, score, callback
+				const succCallback = () => {
+					const id = info.id;
+					const cid = info.cid;
+					const tabTitle = info.tabTitle;
+					info.isShowLock = false;
+					// 获取文章详情信息
 					uni.navigateTo({
-						url: '/pages/user/score_list'
+						url:'/pages/cases/detail?id='+id+'&cid='+cid+"&title="+tabTitle
 					});
-					return;
-				}
-				// 获取文章详情信息
-				uni.navigateTo({
-					url:'/pages/cases/detail?id='+id+'&cid='+cid+"&title="+tabTitle
-				});
+				};
+				this.canVisit(this.uid, info, 0,  this.score, succCallback);
 			},
 			switchVideoTab(e) {
 				console.log('e', e);
@@ -308,120 +395,5 @@ view.active {
 	color:#09BB07;
 }
 
-.test-img-css {
-	width: 20vw;
-	
-}
 
-.content-root-view {
-	display: flex;
-	flex-direction:row-reverse;
-	margin-left:32rpx;
-	margin-right: 32rpx;
-	justify-content: space-between;
-	margin-top: 38rpx;
-	.content-img-view  {
-		display: flex;
-		margin-right:22rpx;
-	}
-	
-	.default-suo-css {
-		top:0;
-		bottom: 0;
-		left:0;
-		right:0;
-		margin:0;
-		position: absolute;
-		background-color: rgba(0,0, 0, 0.5);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	
-	.content-titleinfo-view {
-		display: flex;
-		width:496rpx;
-		flex-wrap: wrap;
-		flex-direction: column;
-		justify-content: space-between;
-	}
-	
-	.content-title-view {
-		width:100%;
-		display: block;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		align-items: flex-start;
-		margin-top:0rpx;
-		text {
-			font-size: 32rpx;
-			font-family: PingFang SC;
-			font-weight: 500;
-			color: #333232;
-		}
-	}
-	.content-desc-view {
-		width:492rpx;
-		display: block;
-		overflow: hidden;
-		text-overflow:ellipsis;
-		display: -webkit-box;
-		word-break: break-all;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-		font-size: 24rpx;
-		font-family: PingFang SC;
-		font-weight: 400;
-		color: #A6A6A6;
-	}
-	
-	.content-stats-view {
-		width:492rpx;
-		height:50rpx;
-		display: flex;
-		align-items: flex-end;
-		font-size: 20rpx;
-		font-family: PingFang SC;
-		font-weight: 400;
-		color: #9A9A9A;
-		.content-stats-view-praisenum {
-			.praise-icon-class {
-				width:32rpx;
-				height:20rpx;
-				margin-right:13rpx;
-			}
-		}
-		
-		.content-stats-view-readnum {
-			margin-right: 46rpx;
-			.view-icon-class{
-				width:24rpx;
-				height:24rpx;
-				margin-right: 15rpx;
-			}
-		}
-	}
-}
-
-.common-pic-view {
-	display: flex;
-	/*background-size: 120rpx 120rpx;*/
-	width: 120rpx;
-	height: 120rpx;
-	background-size: 120rpx 120rpx;
-	background-repeat: no-repeat;
-	background-position: center;
-	justify-content: center;
-	position: relative;
-	align-items: center;
-}
-
-.thumb-class {
-	width: 120rpx;
-	height: 120rpx;
-}
-.suo-img-css {
-	width: 35rpx;
-	height: 35rpx;
-}
 </style>
