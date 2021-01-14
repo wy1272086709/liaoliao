@@ -24,23 +24,28 @@
 										</view>
 									</view>
 									<view>
-										<view class="block" @tap.stop="radioboxChange" v-if="platform == 1">
+										<!-- v-if="platform == 1" -->
+										<view class="block">
+											<view :hover-stay-time="100" @tap.stop="radioboxChange" :ref="'view'+index" :data-index="index" class="cu-form-group" :style="subject.userAnswer == index?'background-color:#A9A9A9':''" v-for="(option,index) in subject.question_select" :key="index" >
+												<!--
+												<radio color="#09BB07" :value="index" :checked="subject.userAnswer == index?true:false"></radio>
+												-->
+												<view class="title text-black" @tap.stop="radioboxChange" :data-index="index">
+													<text @tap.stop="radioboxChange" :data-index="index">{{option}}</text>
+												</view>
+											</view>
+										</view>
+										<!--
+										<view class="block" @touchstart.stop="radioboxChange" v-else-if="platform == 2">
 											<view :hover-stay-time="100" :ref="'view'+index" :data-index="index" class="cu-form-group" :style="subject.userAnswer == index?'background-color:#A9A9A9':''" v-for="(option,index) in subject.question_select" :key="index" >
 												<!--
 												<radio color="#09BB07" :value="index" :checked="subject.userAnswer == index?true:false"></radio>
 												-->
-												<view class="title text-black">{{option}}</view>
-											</view>
-										</view>
-										
-										<view class="block" @touchstart="radioboxChange" v-else-if="platform == 2">
-											<view :hover-stay-time="100" :ref="'view'+index" :data-index="index" class="cu-form-group" :style="subject.userAnswer == index?'background-color:#A9A9A9':''" v-for="(option,index) in subject.question_select" :key="index" >
 												<!--
-												<radio color="#09BB07" :value="index" :checked="subject.userAnswer == index?true:false"></radio>
-												-->
 												<view class="title text-black">{{option}}</view>
 											</view>
 										</view>
+										-->
 									</view>
 								</view>
 							</scroll-view>
@@ -61,6 +66,7 @@
 	import util from '../../common/util.js';
 	import http from '../../common/http.js';
 	let nid;
+	let title;
 	export default {
 		data() {
 			return {
@@ -110,10 +116,14 @@
 				this.subjectList[m].userAnswer = '';
 			}
 			nid = option.nid;
-			if(option.title)
-			uni.setNavigationBarTitle({
-				title:option.title
-			});
+			if(option.title) {
+				
+				uni.setNavigationBarTitle({
+					title:option.title
+				});
+				console.log('option.title'+option.title);
+				util.cache('testing_title', option.title);
+			}
 			const p = getApp().globalData.platform;
 			this.platform = p;
 			this.getQuestionInfo(option.nid);
@@ -155,6 +165,8 @@
 				}					
 			},
 			radioboxChange(e) {
+				console.log('e.target:');
+				console.log(e.target);
 				//console.log(index);
 				//console.log('clicked'+index);
 				/*let items = this.subjectList[this.subjectIndex].optionList;

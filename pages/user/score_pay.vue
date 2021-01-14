@@ -123,10 +123,10 @@
 						{ text:'支付宝支付', id:2,  icon: '../../static/img/user/alipay.png' }
 					];
 				}
-				
+				await this.getPriceAndScore();
 				if(this.platform == 1) {
 					//this.initVipMoney();
-					await this.getPriceAndScore();
+					//await this.getPriceAndScore();
 				} else {
 					this.yuedu_money = 12;
 					this.jidu_money  = 25;
@@ -257,8 +257,26 @@
 					showCancel: false
 				})
 			},
+			checkIsInstallWx(){
+				if(!plus.runtime.isApplicationExist({pname:'com.tencent.mm',action:'weixin://'})){
+					// 提示用户
+					uni.showModal({
+						title:"提示",
+						content:"检测到未安装微信,请先安装微信!",
+						showCancel:false,
+						confirmText: '确定',
+						success() {
+							uni.switchTab({
+								url:'/pages/user/user_index'
+							});
+						}
+					});
+					return;
+				}
+			},
 			async appWxPay() {
 				this.checkIsInstallWx();
+				console.log('wx app pay!');
 				const data = getApp().globalData;
 				const apiPrefix = data.serverUri;
 				const auth = data.auth;
@@ -323,9 +341,12 @@
 			},
 			handleSelect(e) {
 				// 支付宝支付
+				console.log('e.item'+JSON.stringify(e.item));
+				console.log('e.item.id:'+e.item.id);
 				if(e.item.id == 2) {
 					this.appAliPay();
 				} else if(e.item.id == 1) {
+					console.log('e'+JSON.stringify(e.item));
 					// 微信支付
 					this.appWxPay();
 				} else if(e.item.id == 3) {

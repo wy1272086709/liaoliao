@@ -1,12 +1,4 @@
-const shallowCopy = (src) => {
-	const dst = {};
-	for (let prop in src) {
-		if (src.hasOwnProperty(prop)) {
-			dst[prop] = src[prop];
-		}
-	}
-	return dst;
-};
+
 export default {
 	namespaced: false,
 	state: {
@@ -79,7 +71,10 @@ export default {
 			}
 			if (data.src) {
 				state.playinfo.src = data.src
+			} else if(data.src===''){
+				state.playinfo.src = '';
 			}
+			
 			if (data.title) {
 				state.playinfo.title = data.title
 			}
@@ -92,6 +87,10 @@ export default {
 			if (data.hasOwnProperty('fromLog')) {
 				state.playinfo.fromLog = data.fromLog;
 			}
+			
+			if (data.hasOwnProperty('isContinue')) {
+				state.playinfo.isContinue = data.isContinue;
+			}
 			//console.log('state.playinfoList'+JSON.stringify(state.playinfoList));
 			// for (var i in data) {
 			// 	if (state.playinfo.hasOwnProperty(i)) {
@@ -102,7 +101,15 @@ export default {
 		},
 		set_pause(state, data) {
 			state.paused = data
-			
+			const shallowCopy = (src) => {
+				const dst = {};
+				for (let prop in src) {
+					if (src.hasOwnProperty(prop)) {
+						dst[prop] = src[prop];
+					}
+				}
+				return dst;
+			};
 			if (data) {
 				const id = state.playinfo.id;
 				const info = state.playinfo;

@@ -1,0 +1,1 @@
+<view id="root-view"><view id="view-article"><u-parse vue-id="21138819-1" html="{{htmls}}" bind:__l="__l"></u-parse></view><view class="top-view"><view class="readtime"><text>{{readTime}}</text></view></view></view>

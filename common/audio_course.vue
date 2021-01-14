@@ -1,32 +1,32 @@
 <template>
-	<view class="wrap" @touchstart="$emit('view_audio')">
-		<view class="left-view">
+	<view class="wrap" @tap.stop="tapFunc">
+		<view class="left-view" @tap.stop="tapFunc">
 			<text class="left-view-title">{{title}}</text>
-			<view class="left-view-desc">
-				<view>
+			<view class="left-view-desc" @tap.stop="tapFunc">
+				<view @tap.stop="tapFunc">
 					<template v-if="courseType == 2">
 						<u-icon name="volume-up" color="#A3A3A3" size="24"></u-icon>
 					</template>
 					<template v-else-if="courseType == 3">
 						<u-icon name="play-right" color="#A3A3A3" size="24"></u-icon>
 					</template>
-					<view class="left-view-play">
+					<view class="left-view-play" @tap.stop="tapFunc">
 						<text>播放{{playCnt}}</text>
 					</view>
 				</view>
 				<view>
-					<view class="left-view-stat">
+					<view class="left-view-stat" @tap.stop="tapFunc">
 						<!--
 						<view class="left-view-stat-readnum">
 							<image 	src="../static/img/cases/view.png" class="view-icon-class"></image>
 							<text>{{readNum}}</text>
 						</view>
 						-->
-						<view class="left-view-stat-praisenum">
+						<view class="left-view-stat-praisenum" @tap.stop="tapFunc" v-if="courseType==2">
 							<image  src="../static/img/cases/ok.png" class="praise-icon-class"></image>
 							<text>{{wzsccs}}</text>
 						</view>
-						<view class="score-css">
+						<view class="score-css" @tap.stop="tapFunc">
 							<image src="../static/img/score/score_week_icon_article.png" class="score-icon-class"></image>
 							<text>{{score_num}}积分</text>
 						</view>
@@ -41,9 +41,9 @@
 			</view>
 		</view>
 		-->
-		<view class="common-pic-view" :style="isShowLock? 'background-image:url('+ thumbUrl+')':''">
+		<view class="common-pic-view" :style="isShowLock? 'background-image:url('+ thumbUrl+')':''" @tap.stop="tapFunc">
 			<!-- @load="loadItemPic(info.thumbUrl)" -->
-			<view :class="[ !isShowLock? 'content-img-view': 'default-suo-css']">
+			<view :class="[ !isShowLock? 'content-img-view': 'default-suo-css']" @tap.stop="tapFunc">
 				<image :lazy-load="true" v-if="thumbUrl && !isShowLock" :src="thumbUrl" 
 				 class="thumb-class"
 				></image>
@@ -116,7 +116,17 @@
 			
 		},
 		methods: {
-			
+			tapFunc() {
+				console.log('audio tap Func')
+				//this.$nextTick(() => {
+					console.log('dom update...');
+					if (this.courseType == 2) {
+						this.$emit('view_audio');
+					} else {
+						this.$emit('view_video');
+					}
+				//});
+			}
 		},
 		created() {
 			

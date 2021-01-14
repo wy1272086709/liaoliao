@@ -4,7 +4,7 @@
 			<view class="title">
 				<text style="font-weight: bold;">{{title}}</text>
 			</view>
-			<view style="display:flex;flex-direction: row;">
+			<view  id="article-info">
 				<view class="author">
 					<text>{{author}}</text>
 				</view>
@@ -44,6 +44,7 @@
 	import http from '../../common/http.js';
 	import util  from '../../common/util.js';
 	let nid;
+	let isRequestFinished = 0;
 	export default {
 		data() {
 			return {
@@ -157,6 +158,9 @@
 				return true;
 			},
 			async thumbup() {
+				if(isRequestFinished!=0) {
+					return;
+				}
 				const isLogin = this.authLogin();
 				if(!isLogin) {
 					uni.showToast({
@@ -185,6 +189,10 @@
 				const url = apiPrefix+'?mod=news&ac=wz_sc';
 				const respData = await http.request(url, params);
 				if(respData.status == 1) {
+					isRequestFinished = 1;
+					setTimeout(()=> {
+						isRequestFinished = 0;
+					}, 1300);
 					this.wzsccs = respData.wzsccs;
 					this.sfsc   = 1- this.sfsc;
 				}
@@ -287,15 +295,13 @@
 	
 	.author {
 		display: flex;
-		margin-top:10px;
-		height: 48rpx;
+		align-items: center;
 		margin-right: 20px;
 		background: rgba(231,243,255,1);
 	}
 	
 	.readtime {
 		display: flex;
-		margin-top: 10px;
 		height: 48rpx;
 	}
 	
@@ -321,6 +327,12 @@
 		justify-content: center;
 		align-items: center;
 		word-break: break-all;
+	}
+	
+	#article-info {
+		display:flex;
+		align-items: center;
+		margin-top: 10px;
 	}
 	
 	.author>text {

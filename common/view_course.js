@@ -1,5 +1,7 @@
+import { mapMutations } from 'vuex';
 export default {
 	methods: {
+		...mapMutations([ 'set_playinfo','setVideoInfo' ]),
 		// callback 为扣除积分的回调...扣除积分之后,跳转到详情页面
 		canVisit(uid, info,  type) {
 			if(!uid) {
@@ -20,6 +22,11 @@ export default {
 			console.log('info'+JSON.stringify(info)+',url'+redirectUrl);
 			// 无锁的时候,就跳转到文章或者音频的详情页面...
 			if (!info.isShowLock) {
+				if (type == 1) {
+					this.setAudioVuex(info);
+				} else if (type == 2) {
+					this.setVideoVuex(info);
+				}
 				uni.navigateTo({
 					url: redirectUrl,
 					complete:(res)=> {
@@ -32,6 +39,30 @@ export default {
 				return;
 			}
 			return true;
+		},
+		setAudioVuex(info) {
+			let playinfo = {
+				id: info.id,
+				title: info.title,
+				src: info.src,
+				singer: info.singer,
+				fromLog: 0,
+				isContinue: 0,
+				coverImgUrl: info.thumbUrl,
+			};
+			const curPlayId = uni.getStorageSync('audio_play_id');
+			console.log('curPlayId:'+curPlayId+',id:'+info.id);
+			if(curPlayId!=info.id) {
+				
+			} else {
+				// 相同的,对应的值...
+				playinfo.isContinue = 1;
+			}
+			console.log('view_course playinfo:'+JSON.stringify(playinfo));
+			this.set_playinfo(playinfo);
+		},
+		setVideoVuex(info) {
+			this.setVideoInfo(info);
 		},
 		getRedirectUrl(info, type) {
 			let redirectUrl = '';

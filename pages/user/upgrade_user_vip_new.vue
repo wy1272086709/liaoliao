@@ -177,9 +177,9 @@
 			console.log('onLoad...');
 			let data = getApp().globalData;
 			this.platform = data.platform;
-			
+			await this.initVipMoney();
 			if(this.platform == 1) {
-				await this.initVipMoney();
+				
 			} else {
 				this.yuedu_money = 12;
 				this.jidu_money  = 25;
@@ -472,10 +472,10 @@
 							});
 						},
 						fail: function(e) {
-							console.log(e);
+							console.log('fail:'+JSON.stringify(e));
 						},
 						complete: function(e) {
-							console.log('complete:', e);
+							console.log('complete:'+JSON.stringify(e));
 						}
 					});
 					
@@ -560,8 +560,8 @@
 							});
 						}
 					});
-				}).error(res=>{
-					console.log('aplipay res:'+JSON.stringify(res));
+				}).catch(err=>{
+					console.log('aplipay res:'+JSON.stringify(err));
 				});	
 			},
 		}

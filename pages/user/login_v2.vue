@@ -19,7 +19,7 @@
 			<!--  :style="'margin-top:'+codeViewTop+'px;'" -->
 			<view id="code-view">
 				<input type="text" id="validate_code" ref="codeRef" @blur="validateCodeStr()" name="code" v-model="validate_code"  placeholder="请输入短信验证码" placeholder-class="text-placeholder-class" />
-				<button   @tap="sendCode()" :style="'height:'+sendCodeBtnHeight+'px;'" class="send-code-btn" :disabled="disabled">{{sendMsg}}</button>
+				<button   @tap.stop="sendCode()" :style="'height:'+sendCodeBtnHeight+'px;'" class="send-code-btn" :disabled="disabled">{{sendMsg}}</button>
 			</view>	
 			<view id="error-code-view" :style="'margin-bottom:'+errorBottom+'px;'">
 				<text>{{codeErrorMsg}}</text>

@@ -9,7 +9,8 @@
 		<view class="content-img">
 			<image :src="imgSrc" :style="{width:maxWidth+'px', height:maxWidth+'px'}"></image>
 		</view>
-		<zaudio @praise="praiseUp" :coverImgUrl="coverImgUrl" :autoplay="true" :continue="true" v-if="isPlay" :dzcs="dzcs" :sfdz="sfdz"></zaudio>
+		<!-- v-if="isPlay", isPlay: false,-->
+		<zaudio @praise="praiseUp" :coverImgUrl="coverImgUrl" :title="title"   :autoplay="true" :continue="true"  :dzcs="dzcs" :sfdz="sfdz"></zaudio>
 	</view>
 </template>
 
@@ -18,6 +19,7 @@
 	import { mapGetters, mapMutations } from 'vuex';
 	import http from '../../common/http.js';
 	import util from '../../common/util.js';
+	let isRequestFinished = 0;
 	export default {
 		data() {
 			return {
@@ -27,9 +29,9 @@
 				imgSrc: '',
 				title: '',
 				coverImgUrl: '',
-				isPlay: false,
 				dzcs: '',
 				sfdz: '',
+				//isPlay: false,
 				height: ''
 			};
 		},
@@ -45,6 +47,7 @@
 			if (!idStr) {
 				idStr = this.playinfo.id;
 			}
+			//this.$audio.src = this.playinfo.src;
 			await this.getAudioSrc(idStr);
 		},
 		computed: {
@@ -64,6 +67,9 @@
 		methods: {
 			...mapMutations(['set_playinfo']),
 			async praiseUp() {
+				if(isRequestFinished!=0) {
+					return;
+				}
 				const data = getApp().globalData;
 				const apiPrefix = data.serverUri;
 				const auth      = data.auth;
@@ -81,6 +87,10 @@
 				const url = apiPrefix+'?mod=product&ac=dz_insert';
 				const resp = await http.request(url, params);
 				if (resp.status == 1) {
+					isRequestFinished = 1;
+					setTimeout(()=> {
+						isRequestFinished = 0;
+					}, 1300);
 					this.sfdz = 1- this.sfdz;
 					this.dzcs = resp.dzcs;
 				}
@@ -109,12 +119,15 @@
 					this.sfdz = respData.sfdz;
 					this.dzcs = respData.dzcs;
 					this.set_playinfo({
-						src: src
+						//src: src,
+						coverImgUrl: respData.litpic
 					});
+					console.log('set playinfo src:'+JSON.stringify(this.playinfo));
 					this.imgSrc = respData.litpic_big;
 					this.coverImgUrl = respData.litpic;
 					this.title = respData.title;
-					this.isPlay = true;
+					
+					//this.isPlay = true;
 				}
 			}
 		}

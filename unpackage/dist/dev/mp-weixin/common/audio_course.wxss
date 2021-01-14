@@ -1,0 +1,186 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.wrap {
+  margin-left: 32rpx;
+  margin-right: 32rpx;
+  border-bottom: 1px solid #F2F2F2;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.wrap .left-view {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: space-between;
+  -webkit-align-items: space-between;
+          align-items: space-between;
+  width: 86%;
+}
+.wrap .left-view-title {
+  font-size: 32rpx;
+  font-family: PingFang SC;
+  font-weight: 500;
+  color: #333232;
+}
+.wrap .left-view-desc {
+  color: #A3A3A3;
+  font-size: 20rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.wrap .left-view-desc view {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.wrap .left-view-desc view:nth-child(1) {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  margin-right: 15rpx;
+}
+.wrap .left-view-desc view:nth-child(2) {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.wrap .left-view-stat {
+  height: 50rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: end;
+  -webkit-align-items: flex-end;
+          align-items: flex-end;
+  /*justify-content: space-between;*/
+  font-size: 20rpx;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: #9A9A9A;
+}
+.wrap .left-view-stat-praisenum .praise-icon-class {
+  width: 32rpx;
+  height: 20rpx;
+  margin-right: 13rpx;
+}
+.wrap .left-view-stat .score-css {
+  margin-left: 20rpx;
+}
+.wrap .left-view-stat .score-css .score-icon-class {
+  margin-right: 12rpx;
+  width: 32rpx;
+  height: 32rpx;
+}
+.wrap .left-view-stat-readnum {
+  margin-right: 46rpx;
+}
+.wrap .left-view-stat-readnum .view-icon-class {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 15rpx;
+}
+.wrap .right-view {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  width: 14%;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.wrap .right-view .bg-view {
+  width: 50rpx;
+  height: 50rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-border-radius: 50%;
+          border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.common-pic-view {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  /*background-size: 120rpx 120rpx;*/
+  width: 120rpx;
+  height: 120rpx;
+  background-size: 120rpx 120rpx;
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  position: relative;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.default-suo-css {
+  background: rgba(0, 0, 0, 0.5);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.thumb-class {
+  width: 120rpx;
+  height: 120rpx;
+}
+.suo-img-css {
+  width: 35rpx;
+  height: 35rpx;
+}
+

@@ -343,6 +343,11 @@
 				this.delMap();
 				const t1 = parseInt(new Date().getTime()/1000);
 				// 不允许连续点击两次或者更多次...
+				// 也不允许1.3内连续点击两次
+				const keys = Object.keys(eMap);
+				if ( parseInt(t1) - parseInt(keys[0])<=1.3 ) {
+					return;
+				}
 				if(eMap[t1]) {
 					return;
 				}
@@ -465,7 +470,7 @@ scroll-view::-webkit-scrollbar {
 				width:360rpx;
 				height: 60rpx;
 				margin-left:20rpx;
-				padding-left: 20rpx;
+				/*padding-left: 20rpx;*/
 				align-items: center;
 				background: #F2F2F2;
 				border-radius: 30rpx;

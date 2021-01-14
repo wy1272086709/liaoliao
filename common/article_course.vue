@@ -1,5 +1,5 @@
 <template>
-	<view  class="content-root-view"   :key="info.id" @touchstart="$emit('view_article', info)">
+	<view  class="content-root-view"   :key="info.id" @tap.stop="$emit('view_article', info)">
 			<view class="common-pic-view" :style="isShowLock? 'background-image:url('+ info.thumbUrl+')':''">
 				<!-- @load="loadItemPic(info.thumbUrl)" -->
 				<view :class="[ !isShowLock? 'content-img-view': 'default-suo-css']">

@@ -21,13 +21,21 @@ export default  {
 			console.log('this.format'+this.format);
 			this.$audio.onCanplay(() => {});
 			this.$audio.onPlay(() => {
-				console.log('this.audio:'+JSON.stringify(this.audio));
-				//const { id: id, src: renderSrc, title: renderTitle, singer: renderSinger, coverImgUrl: renderCoverImgUrl } = this.audio;
+				console.log('this.audio:'+JSON.stringify(this.$audio));
 				// #ifdef APP-PLUS || H5
 				this.set_playinfo({
 					duration: this.format(this.$audio.duration),
 					duration_value: this.$audio.duration
 				});
+				console.log('audio minxins:'+JSON.stringify(this.playinfo));
+				const { src, duration_value, current_value, fromLog } = this.playinfo;
+				console.log('src'+src+','+this.$audio.src);
+				if((fromLog && current_value!=duration_value)) {
+					this.$audio.startTime = parseFloat(current_value);
+					this.$audio.seek(parseFloat(current_value));
+					console.log('current_value:'+current_value+',parseFloat(current_value)'+parseFloat(current_value));
+					
+				}
 				// #endif
 				console.log('this.$audio.duration', this.$audio.duration);
 				this.set_pause(false);
@@ -38,7 +46,9 @@ export default  {
 				this.set_pause(true);
 				const current_value = this.playinfo.current_value;
 				const duration_value= this.playinfo.duration_value;
-				this.updatePlayProgress(current_value, duration_value)
+				if (!this.$audio.paused) {
+					this.updatePlayProgress(current_value, duration_value)
+				}
 			});
 			this.$audio.onStop(() => {
 				console.log('stop');
@@ -67,21 +77,22 @@ export default  {
 				}
 			});
 			this.$audio.onTimeUpdate(() => {
-				//if (this.renderIsPlay) {
-					console.log('this.$audio.currentTime:'+this.$audio.currentTime);
+				console.log('this.$audio.currentTime:'+this.$audio.currentTime);
+				this.set_playinfo({
+					current: this.format(this.$audio.currentTime),
+					current_value: this.$audio.currentTime
+				});
+				// #ifndef APP-PLUS
+				if (this.$audio.duration != this.playinfo.duration_value) {
 					this.set_playinfo({
-						current: this.format(this.$audio.currentTime),
-						current_value: this.$audio.currentTime
+						duration: this.format(this.$audio.duration),
+						duration_value: this.$audio.duration
 					});
-					// #ifndef APP-PLUS
-					if (this.$audio.duration != this.playinfo.duration_value) {
-						this.set_playinfo({
-							duration: this.format(this.$audio.duration),
-							duration_value: this.$audio.duration
-						});
-					}
-					// #endif
-				//}
+				}
+				// #endif
+			});
+			this.$audio.onWaiting(()=> {
+				console.log('waiting...');
 			});
 			this.$audio.onError(() => {
 				this.set_pause(true);
@@ -92,13 +103,6 @@ export default  {
 					icon: 'none',
 					position: 'center'
 				});
-
-				/*this.set_audio({
-					src: '',
-					title: '',
-					singer: '',
-					coverImgUrl: ''
-				});*/
 				this.set_playinfo({
 					current: 0,
 					current_value: 0,
@@ -107,7 +111,7 @@ export default  {
 					title: '',
 					src: ''
 				});
-				this.updatePlayProgress(0, 0);
+				this.updatePlayProgress(0, this.playinfo.duration_value);
 			});
 		
 			this.appCheckReplay(this.$audio, this.store);
@@ -189,6 +193,7 @@ export default  {
 				filterData: true
 			};
 			const resp = await http.request(url, params);
+			console.log('params:'+JSON.stringify(params));
 			console.log('resp:'+JSON.stringify(resp));
 		}
 	}

@@ -1,5 +1,5 @@
 class util {
-	static  buidQuery(params)
+	buidQuery(params)
 	{
 		let keys = Object.keys(params);
 		let len  = keys.length;
@@ -14,12 +14,12 @@ class util {
 		return str.substr(0, m-1);
 	}
 	
-	static setUserInfoToStrorage(userInfo) {
+	setUserInfoToStrorage(userInfo) {
 		let value = JSON.stringify(userInfo);
 		this.cache('wx_userinfo', value);
 	}
 	
-	static dateDifference(sDate1, sDate2) {    //sDate1和sDate2是2006-12-18格式 
+	dateDifference(sDate1, sDate2) {    //sDate1和sDate2是2006-12-18格式 
 		let dateSpan,
 			tempDate,
 			iMinutes;
@@ -31,11 +31,11 @@ class util {
 		return iMinutes;
 	};
 	
-	static getUserInfoFromStorage() {
+	getUserInfoFromStorage() {
 		return this.getObjectFromStorage('wx_userinfo');
 	}
 	
-	static getObjectFromStorage(key)
+	getObjectFromStorage(key)
 	{
 		const userStr = this.cache(key, null);
 		if(userStr) {
@@ -45,7 +45,7 @@ class util {
 		}
 	}
 	
-	static cache (key, value, seconds) {
+	cache (key, value, seconds) {
 		let timestamp = Date.parse(new Date()) / 1000;
 		console.log(timestamp+"==="+key);
 		if (key && value === null) {
@@ -80,7 +80,7 @@ class util {
 		}
 	}
 	
-	static getRect(selector){
+	getRect(selector){
 		return new Promise((resolve) => {
 			let view = uni.createSelectorQuery().select(selector);
 			view.fields({
@@ -93,22 +93,31 @@ class util {
 		})
 	}
 	
-	static getVersionValue() {
-		const v = 100;
+	getVersionValue() {
+		let v = 100;
+		//#ifdef APP-PLUS 
+		v = plus.runtime.versionCode;
+		//#endif
 		let k = 'app_version_'+v;
 		let value = uni.getStorageSync(k);
 		return value;
 	}
 	
-	static removeVersionValue() {
-		const v = 100;
+	removeVersionValue() {
+		let v = 100;
+		//#ifdef APP-PLUS 
+		v = plus.runtime.versionCode;
+		//#endif
 		let k = 'app_version_'+v;
 		let value = uni.removeStorageSync(k);
 		return value;
 	}
 	
-	static setVersionValue() {
-		const v = 100;
+	setVersionValue() {
+		let v = 100;
+		//#ifdef APP-PLUS 
+		v = plus.runtime.versionCode;
+		//#endif
 		let k = 'app_version_'+v;
 		let value = uni.setStorageSync(k, 1);
 		return value;
@@ -116,15 +125,4 @@ class util {
 
 }
 
-export default {
-	buidQuery:util.buidQuery,
-	setUserInfoToStrorage:util.setUserInfoToStrorage,
-	getUserInfoFromStorage:util.getUserInfoFromStorage,
-	getObjectFromStorage:util.getObjectFromStorage,
-	cache:util.cache,
-	dateDifference:util.dateDifference,
-	getRect: util.getRect,
-	getVersionValue: util.getVersionValue,
-	setVersionValue: util.setVersionValue,
-	removeVersionValue: util.removeVersionValue
-};
+export default new util

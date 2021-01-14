@@ -21,7 +21,7 @@
 					</view>						
 					<view v-else-if="activeTabIndex == 1"  class="log-view">
 						<course-log @study="studyCourse" :key="item.nid" v-for="(item,key) in audioLogList" :courseType="2" :title="item.title" 
-						 :cid="item.cid" :id="item.nid" :current_value="item.jdsc" :duration_value="item.zsc"></course-log>
+						 :cid="item.cid" :id="item.nid" :src="item.downurl"  :current_value="item.jdsc" :duration_value="item.zsc"></course-log>
 					</view>
 					<view v-else  class="log-view">
 						<course-log  @study="studyCourse" :key="item.nid" :courseType="3" :src="item.downurl" v-for="(item,key) in videoPayList" :title="item.title" 
@@ -143,11 +143,13 @@
 						v = attrs.current_value;
 					}
 					const info = {
-						id: attrs.id,
+						id:    attrs.id,
 						title: attrs.title,
-						videoUrl: attrs.src,
+						src:   attrs.src,
 						coverImgUrl: attrs.coverImgUrl,
-						current_time: v,
+						isContinue: 1,
+						current_value: v,
+						duration_value: attrs.duration_value,
 						fromLog: 1,
 					};
 					console.log('info'+JSON.stringify(info));
@@ -176,7 +178,7 @@
 					this.setVideoInfo(info);
 					const url = '/pages/course/video_detail';
 					uni.navigateTo({
-						url: url
+						url: url+'?title='+attrs.title
 					});
 				}
 			},

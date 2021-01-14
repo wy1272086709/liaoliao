@@ -120,11 +120,10 @@
 									</view>
 								</view>
 								<view class="answer-second-line">
-									<u-read-more :showHeight="150" :close-text="closeText" :toggle="true" textIndent="'0px'">
+									<u-read-more :shadowStyle="{backgroundImage: 'linear-gradient(-180deg, rgba(255, 255,255, 0) 0%, #fff 80%)',paddingTop: '150rpx',marginTop: '-150rpx'}" :showHeight="150" :close-text="closeText" :toggle="true" textIndent="'0px'">
 										<text>{{answer.content}}</text>
 									</u-read-more>
 								</view>
-								
 						</view>
 					</view>
 				</view>
@@ -511,7 +510,8 @@
 				this.delMap();
 				const t1 = parseInt(new Date().getTime()/1000);
 				// 不允许连续点击两次或者更多次...
-				if(eMap[t1]) {
+				const keys = Object.keys(eMap);
+				if(eMap[t1] || t1 - keys[0]<=1.3) {
 					return;
 				}
 				if(!this.uid) {
@@ -628,8 +628,11 @@
 				// 只保留最后两个元素
 				this.delMap();
 				const t1 = parseInt(new Date().getTime()/1000);
+				const keys = Object.keys(eMap);
+				console.log('keys:'+JSON.stringify(keys));
+				console.log('t1:'+JSON.stringify(t1));
 				// 不允许连续点击两次或者更多次...
-				if(eMap[t1]) {
+				if(eMap[t1] || (t1 - parseInt(keys[0]))<=1.3) {
 					return;
 				}
 				if(!this.uid) {
@@ -737,6 +740,7 @@
 				}
 				.mind-nickName {
 					/*margin-right:47rpx;*/
+					font-size: 14px;
 					font-weight: 600;
 					margin-left:35rpx;
 				}

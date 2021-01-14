@@ -15,7 +15,7 @@
 			</view>
 		</view>
 		<view class="course-log-right">
-			<label>{{studyProgress!=100?'继续学习': '重新学习'}}</label>
+			<label>{{studyProgress!=100&&courseType!=1?'继续学习': '重新学习'}}</label>
 		</view>
 	</view>
 </template>

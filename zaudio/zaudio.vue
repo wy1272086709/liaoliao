@@ -1,5 +1,5 @@
 <template>
-	<view class="imt-audio theme2" v-if="audiolist.length > 0">
+	<view class="imt-audio theme2">
 		<view class="top">
 			<view class="audio-control-wrapper">
 				<image :src="coverImgUrl" mode="aspectFit" class="cover" :class="{ on: !renderData('paused') }"></image>
@@ -10,8 +10,8 @@
 			</view>
 
 			<view>
-				<view class="title">{{ renderData('title') }}</view>
-				<view class="singer">{{ renderData('singer') }}</view>
+				<view class="title">{{ title }}</view>
+				<view class="singer"></view>
 				<view class="praise" @tap="$emit('praise')">
 					<u-icon name='thumb-up' size='32' :color="sfdz?'#FF0000':'#333333'"></u-icon>
 					<text style="margin-left: 10px;">{{dzcs}}</text>
@@ -39,7 +39,7 @@
 <script>
 import { formatSeconds } from './util.js';
 import { mapGetters, mapMutations } from 'vuex';
-import audioMixins from './audio_mixins.js';
+//import audioMixins from './audio_mixins.js';
 export default {
 	props: {
 		default_cover: {
@@ -67,13 +67,21 @@ export default {
 			type: [Number, Boolean],
 			default: 0
 		},
+		title: {
+			type: String,
+			default: ''
+		},
+		singer: {
+			type: String,
+			default: ''
+		},
 		dzcs: {
 			type: [Number, String],
 			default: '1'
 		}
 	},
 	mixins: [
-		audioMixins
+		//audioMixins
 	],
 	computed: {
 		format() {
@@ -91,30 +99,35 @@ export default {
 		}
 	},
 	created() {
-		this.audioInit();
+		//this.audioInit();
+		setTimeout(()=> {
+			const { fromLog, isContinue } = this.playinfo;
+			if (fromLog) {
+				this.$audio.logPlay();
+			} else if (isContinue) {
+				this.$audio.stepPlay(0);
+			} else {
+				this.$audio.operate();
+			}
+		}, 500);
 	},
 	methods: {
 		// 'set_renderIndex','set_audio',
-		...mapMutations([ 'set_playinfo', 'set_pause', 'set_n_pause', 'set_curPlayId']),
+		//...mapMutations([ 'set_playinfo', 'set_pause', 'set_n_pause', 'set_curPlayId']),
 		audioInit() {
 			console.log('ini1');
-			
+			this.initAudioEvents();
 			if (this.autoplay && this.$audio.src) {
-				console.log('autoplay...');
-				const { src, duration_value, current_value, fromLog } = this.playinfo;
+				const src = this.playinfo.src;
 				if (this.$audio.src!=src) {
 					this.$audio.src = src;
-					this.$audio.startTime = 0;
-					this.$audio.seek(0);
 				}
 				this.operation(true);
 			}
 			if (this.$audio.started) return;
 			console.log('init2...');
 			this.$audio.started = true;
-			this.initAudioEvents();
 			console.log('$audio开始监听事件');
-			
 			if (this.autoplay && !this.$audio.src) {
 				const { duration_value, current_value, src, title, singer, coverImgUrl, fromLog } = this.playinfo;
 				console.log('src:'+src);
@@ -122,10 +135,13 @@ export default {
 				this.$audio.title = title;
 				this.$audio.singer = singer;
 				this.$audio.coverImgUrl = coverImgUrl;
+				//this.$audio.startTime = 0;
+				//this.$audio.seek(0);
 				this.operation(true);
 			}
 		},
 		changing(event) {
+			console.log('changing...');
 			this.set_playinfo({
 				current: this.format(event.detail.value),
 				current_value: event.detail.value
@@ -133,36 +149,12 @@ export default {
 		},
 		//播放or暂停,或者从学习记录中跳转过来的。
 		operation(status) {
-			console.log('status:'+status);
-			console.log('this.playinfo:'+JSON.stringify(this.playinfo));
-			console.log('curPlayId'+this.curPlayId);
-			const { fromLog, current_value, duration_value } = this.playinfo;
-			//渲染与播放地址 不同
-			if (status) {
-				// 播放 渲染的数据
-				if ((fromLog && current_value!=duration_value) || (this.curPlayId== this.playinfo.id)) {
-					//this.$audio.startTime = parseFloat(current_value);
-					this.$audio.seek(parseFloat(current_value));
-				} else {
-					console.log('2222');
-					this.$audio.startTime = 0;
-					this.$audio.seek(0);
-				}
-				this.set_curPlayId(this.playinfo.id);
-				this.set_pause(false);
-				this.set_n_pause(false);
-				
-				this.$audio.play();
-			} else {
-				//暂停
-				console.log('xxxxx');
-				this.$audio.pause();
-				this.set_pause(true);
-				this.set_n_pause(true);
-			}
+			//console.log('this.$audio:'+JSON.stringify(this.$audio));
+			this.$audio.controlPlay(status);
 		},
 		//拖动
 		change(e) {
+			console.log('change');
 			this.$audio.seek(e.detail.value);
 		},
 	}

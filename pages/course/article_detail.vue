@@ -45,7 +45,9 @@
 <script>
 	import http from '../../common/http.js';
 	import util  from '../../common/util.js';
+	//import event from '../../common/event.js';
 	let nid;
+	let isRequestFinished = 0;
 	export default {
 		data() {
 			return {
@@ -116,6 +118,16 @@
 				return true;
 			},
 			async thumbup() {
+				/*const func = event.throttle(()=> {
+					this.priseFunc();
+				}, 1000, true);
+				await func();*/
+				this.priseFunc();
+			},
+			async priseFunc() {
+				if(isRequestFinished!=0) {
+					return;
+				}
 				const isLogin = this.authLogin();
 				if(!isLogin) {
 					uni.showToast({
@@ -146,6 +158,10 @@
 				if(respData.status == 1) {
 					this.wzsccs = respData.dzcs;
 					this.sfsc   = 1- this.sfsc;
+					isRequestFinished = 1;
+					setTimeout(()=> {
+						isRequestFinished = 0;
+					}, 1300);
 				}
 			},
 			getTitle() {

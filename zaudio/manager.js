@@ -1,23 +1,21 @@
-import zaudio from './zaudio.vue';
-import store from './store.js';
-
+//import zaudio from './zaudio.vue';
+//import store from './store.js';
 export default {
 	install(Vue) {
-
 		// #ifndef H5
-		var ZAudioCtx = uni.getBackgroundAudioManager()
+		//var ZAudioCtx = uni.getBackgroundAudioManager()
 		// #endif
 		// #ifdef H5
-		Vue.component('zaudio', zaudio)
-		var ZAudioCtx = uni.createInnerAudioContext()
+		//Vue.component('zaudio', zaudio)
+		//var ZAudioCtx = uni.createInnerAudioContext()
 		// #endif
 		
 		
-		Vue.prototype.$audio = ZAudioCtx;
+		//Vue.prototype.$audio = ZAudioCtx;
 
-		if (!store) {
+		/*if (!store) {
 			return
-		}
+		}*/
 		
 		//////////////////此处为app端 判断电话来电后, 音频意外中断之后的继续播放
 		// #ifdef APP-PLUS

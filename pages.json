@@ -30,7 +30,8 @@
                 "navigationStyle" : "custom",
                 "app-plus" : {
                     "titleNView" : false,
-                    "bounce" : "none"
+                    "bounce" : "none",
+					"scrollIndicator" : "none" 
                 }
             }
         },
@@ -312,6 +313,7 @@
             "path" : "pages/course/video_detail",
             "style" : {
                 "enablePullDownRefresh" : false,
+				"navigationBarTitleText": "",
                 "app-plus" : {
                     "bounce" : "none"
                 }

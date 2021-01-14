@@ -69,18 +69,13 @@ export default {
 		playFunc(info) {
 			info.status = 1 - info.status;
 			// 这里要控制音频的播放和暂停
-			this.set_pause(!info.status);
+			this.$audio.operate();
 			// 1 正在播放,0 暂停
-			if (info.status) {
-				this.$audio.play();
-			} else {
-				this.$audio.pause();
-			}
 		},
 		gotoAudio() {
 			// 跳转到音频界面, 
 			this.set_playinfo({
-				fromLog:1
+				isContinue: 1
 			});
 			const idStr = this.playinfo.id;
 			uni.navigateTo({

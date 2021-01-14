@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "课程记录",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-tabs": "/uview-ui/components/u-tabs/u-tabs",
+    "course-log": "/common/course_log"
+  }
+}

@@ -13,12 +13,13 @@
 			}
 		},
 		created() {
-			this.videoId = Date.now() + Math.ceil(Math.random()*10000000)+"";
+			//this.videoId = Date.now() + Math.ceil(Math.random()*10000000)+"";
+			this.videoId = 'myVideo';
+			this.VideoContext = uni.createVideoContext(this.videoId, this);
 		},
 		//ref="video1"
 		mounted() {
 			console.log('mounted...');
-			this.VideoContext = uni.createVideoContext(this.videoId);
 			this.set_curPlayId(this.videoInfo.id);
 			console.log('this.videoInfo'+JSON.stringify(this.videoInfo));
 			const t = this.videoInfo.current_time;

@@ -4576,7 +4576,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ./node_modules/css-loader/dist/runtime/api.js */ 19);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\r\n/*\r\n\t@import \"../../colorui/main.css\";\r\n\t*/\n.tower-swiper {\r\n  height: 420upx;\r\n  position: relative;\r\n  max-width: 750upx;\r\n  overflow: hidden;\n}\n.tower-swiper .tower-item {\r\n  position: absolute;\r\n  width: 300rpx;\r\n  height: 380rpx;\r\n  top: 0;\r\n  bottom: 0;\r\n  left: 50%;\r\n  margin: auto;\r\n  -webkit-transition: all 0.2s ease-in 0s;\r\n  transition: all 0.2s ease-in 0s;\r\n  opacity: 1;\n}\n.tower-swiper .tower-item.none {\r\n  opacity: 0;\n}\n.tower-swiper .tower-item .swiper-item {\r\n  width: 100%;\r\n  height: 100%;\r\n  -webkit-border-radius: 6rpx;\r\n          border-radius: 6rpx;\r\n  overflow: hidden;\n}\nbody {\r\n  background: #FFFFFF;\r\n  font-size: 28rpx;\r\n  color: #333333;\n}\nuni-image {\r\n  will-change: transform;\n}\n#root-view {\r\n  background: #F2F2F2;\n}\n.title-icon {\r\n  width: 8rpx;\r\n  /*height: 36rpx;*/\r\n  display: block;\r\n  float: left;\r\n  height: 40rpx;\r\n  line-height: 1;\r\n  margin-right: 22rpx;\n}\n.slot-wrap {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  -webkit-box-flex: 1;\r\n  -webkit-flex: 1;\r\n          flex: 1;\r\n  margin-top: 35rpx;\r\n  padding-left: 34rpx;\r\n  padding-right: 35rpx;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  margin-bottom: 11rpx;\r\n  padding-bottom: 20rpx;\n}\n.slot-wrap #slot-img {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n.slot-wrap #slot-img uni-image {\r\n  width: 191rpx;\r\n  height: 45rpx;\n}\n.slot-wrap #slot-input {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 400rpx;\r\n  height: 60rpx;\r\n  -webkit-border-radius: 30rpx;\r\n          border-radius: 30rpx;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  background: #F2F2F2;\n}\n.slot-wrap #slot-input #search-icon {\r\n  margin-left: 21rpx;\r\n  margin-right: 19rpx;\n}\n#ads-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-left: 30rpx;\r\n  margin-right: 30rpx;\r\n  width: 690rpx;\r\n  /*background-color: #FFFFFF;*/\r\n  padding-top: 24rpx;\r\n  padding-bottom: 30rpx;\r\n  height: 320rpx;\n}\n.wrap {\r\n  width: 690rpx;\n}\n.padding-css {\r\n  padding-left: 25rpx;\r\n  padding-right: 28rpx;\n}\n#margin-area-view {\r\n  margin-left: 30rpx;\r\n  margin-right: 30rpx;\r\n  margin-top: 54rpx;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  width: 690rpx;\n}\n#margin-area-view .huashu-first-line {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n#margin-area-view .huashu-first-line uni-view {\r\n  display: block;\r\n  height: 40rpx;\r\n  line-height: 1;\n}\n#margin-area-view .huashu-first-line .font-css {\r\n  display: block;\r\n  float: left;\r\n  height: 40rpx;\r\n  line-height: 1;\r\n  font-size: 36rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 800;\r\n  color: #272727;\n}\n#margin-area-view .huashu-first-line .more-text {\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #A6A6A6;\n}\n#margin-area-view #huashu-view-box {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  padding-top: 37rpx;\r\n  padding-bottom: 40rpx;\r\n  margin-bottom: 30.01rpx;\r\n  background: #FFFFFF;\r\n  -webkit-border-radius: 20rpx;\r\n          border-radius: 20rpx;\n}\n#margin-area-view #huashu-view-box .huashu-first-line > uni-text {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\n}\n#margin-area-view #huashu-view-box .huashu-second-line {\r\n  margin-top: 37rpx;\r\n  /*margin-bottom:40px;*/\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\r\n  -webkit-flex-wrap: wrap;\r\n          flex-wrap: wrap;\r\n  /*height: 500rpx;*/\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  -webkit-box-align: space-between;\r\n  -webkit-align-items: space-between;\r\n          align-items: space-between;\n}\n#margin-area-view #huashu-view-box .huashu-second-line .second-nav-three-row {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  width: 190rpx;\r\n  height: 120rpx;\r\n  color: #FFFFFF;\r\n  background-size: contain;\r\n  background-repeat: no-repeat;\r\n  font-size: 20rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\n}\n#margin-area-view #huashu-view-box .huashu-second-line .second-nav-three-row uni-text {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-border-radius: 10rpx;\r\n          border-radius: 10rpx;\r\n  padding: 5rpx 5rpx;\r\n  background-color: rgba(0, 0, 0, 0.5);\n}\n#margin-area-view #huashu-view-box .huashu-second-line .bottom-nav-row {\r\n  position: relative;\r\n  margin-top: 32rpx;\n}\n#margin-area-view #miaoyu-test {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  width: 100%;\r\n  /*max-height:500px;*/\r\n  padding-top: 36rpx;\r\n  padding-bottom: 39rpx;\r\n  background: #FFFFFF;\r\n  -webkit-border-radius: 20rpx;\r\n          border-radius: 20rpx;\r\n  margin-bottom: 30.01rpx;\n}\n#margin-area-view #miaoyu-test .swiperTest {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 100%;\r\n  /*height: 200px;*/\n}\n#margin-area-view #miaoyu-test .swiperTest .tower-swiper {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 100%;\n}\n#margin-area-view #miaoyu-test .swiperTest .tower-swiper .tower-item {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-transform: scale(calc(0.5 + var(--index) / 10));\r\n          transform: scale(calc(0.5 + var(--index) / 10));\r\n  margin-left: calc(var(--left) * 100upx - 150upx);\r\n  z-index: var(--index);\n}\n#margin-area-view #miaoyu-test .swiperTest .tower-swiper .tower-item .swiper-item {\r\n  position: relative;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\n}\n#margin-area-view #miaoyu-test .swiperTest .tower-swiper .tower-item .swiper-item uni-view {\r\n  position: absolute;\r\n  padding: 0rpx 10rpx;\r\n  -webkit-border-radius: 10px;\r\n          border-radius: 10px;\r\n  background-color: rgba(0, 0, 0, 0.5);\r\n  top: 180rpx;\r\n  color: #FFFFFF;\n}\n#margin-area-view #cases-content {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\n}\n#margin-area-view #cases-content .cview {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  background: #FFFFFF;\r\n  -webkit-border-radius: 20rpx;\r\n          border-radius: 20rpx;\r\n  margin-bottom: 30.01rpx;\r\n  padding-top: 38rpx;\r\n  padding-bottom: 34rpx;\n}\n#margin-area-view #cases-content .content-root-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-top: 38rpx;\n}\n#margin-area-view #cases-content .content-root-view .content-img-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-right: 22rpx;\n}\n#margin-area-view #cases-content .content-root-view .content-img-view .thumb-class {\r\n  width: 120rpx;\r\n  height: 120rpx;\n}\n#margin-area-view #cases-content .content-root-view .content-titleinfo-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 496rpx;\r\n  -webkit-flex-wrap: wrap;\r\n          flex-wrap: wrap;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\n}\n#margin-area-view #cases-content .content-root-view .content-title-view {\r\n  width: 100%;\r\n  display: block;\r\n  overflow: hidden;\r\n  text-overflow: ellipsis;\r\n  /*display: -webkit-box;\r\n\t\t\t\tword-break: break-all;\r\n\t\t\t\t-webkit-line-clamp: 1;\r\n\t\t\t\t-webkit-box-orient: vertical;*/\r\n  -webkit-box-align: start;\r\n  -webkit-align-items: flex-start;\r\n          align-items: flex-start;\r\n  margin-top: 0rpx;\n}\n#margin-area-view #cases-content .content-root-view .content-title-view uni-text {\r\n  font-size: 32rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 500;\r\n  color: #333232;\n}\n#margin-area-view #cases-content .content-root-view .content-desc-view {\r\n  width: 492rpx;\r\n  display: block;\r\n  overflow: hidden;\r\n  text-overflow: ellipsis;\r\n  display: -webkit-box;\r\n  word-break: break-all;\r\n  -webkit-line-clamp: 2;\r\n  -webkit-box-orient: vertical;\r\n  font-size: 24rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #A6A6A6;\n}\n#margin-area-view #cases-content .content-root-view .content-stats-view {\r\n  width: 492rpx;\r\n  height: 50rpx;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: end;\r\n  -webkit-align-items: flex-end;\r\n          align-items: flex-end;\r\n  font-size: 20rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #9A9A9A;\n}\n#margin-area-view #cases-content .content-root-view .content-stats-view .content-stats-view-readnum {\r\n  margin-right: 46rpx;\n}\n.view-icon-class {\r\n  width: 32rpx;\r\n  height: 20rpx;\r\n  margin-right: 13rpx;\n}\n.praise-icon-class {\r\n  width: 24rpx;\r\n  height: 24rpx;\r\n  margin-right: 15rpx;\n}\r\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\r\n/*\r\n\t@import \"../../colorui/main.css\";\r\n\t*/\nuni-scroll-view ::-webkit-scrollbar {\r\n  display: none;\r\n  width: 0;\r\n  height: 0;\n}\n.tower-swiper {\r\n  height: 420upx;\r\n  position: relative;\r\n  max-width: 750upx;\r\n  overflow: hidden;\n}\n.tower-swiper .tower-item {\r\n  position: absolute;\r\n  width: 300rpx;\r\n  height: 380rpx;\r\n  top: 0;\r\n  bottom: 0;\r\n  left: 50%;\r\n  margin: auto;\r\n  -webkit-transition: all 0.2s ease-in 0s;\r\n  transition: all 0.2s ease-in 0s;\r\n  opacity: 1;\n}\n.tower-swiper .tower-item.none {\r\n  opacity: 0;\n}\n.tower-swiper .tower-item .swiper-item {\r\n  width: 100%;\r\n  height: 100%;\r\n  -webkit-border-radius: 6rpx;\r\n          border-radius: 6rpx;\r\n  overflow: hidden;\n}\nbody {\r\n  background: #FFFFFF;\r\n  font-size: 28rpx;\r\n  color: #333333;\n}\nuni-image {\r\n  will-change: transform;\n}\n#root-view {\r\n  background: #F2F2F2;\n}\n.title-icon {\r\n  width: 8rpx;\r\n  /*height: 36rpx;*/\r\n  display: block;\r\n  float: left;\r\n  height: 40rpx;\r\n  line-height: 1;\r\n  margin-right: 22rpx;\n}\n.slot-wrap {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  -webkit-box-flex: 1;\r\n  -webkit-flex: 1;\r\n          flex: 1;\r\n  margin-top: 35rpx;\r\n  padding-left: 34rpx;\r\n  padding-right: 35rpx;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  margin-bottom: 11rpx;\r\n  padding-bottom: 20rpx;\n}\n.slot-wrap #slot-img {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n.slot-wrap #slot-img uni-image {\r\n  width: 191rpx;\r\n  height: 45rpx;\n}\n.slot-wrap #slot-input {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 400rpx;\r\n  height: 60rpx;\r\n  -webkit-border-radius: 30rpx;\r\n          border-radius: 30rpx;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  background: #F2F2F2;\n}\n.slot-wrap #slot-input #search-icon {\r\n  margin-left: 21rpx;\r\n  margin-right: 19rpx;\n}\n#ads-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-left: 30rpx;\r\n  margin-right: 30rpx;\r\n  width: 690rpx;\r\n  /*background-color: #FFFFFF;*/\r\n  padding-top: 24rpx;\r\n  padding-bottom: 30rpx;\r\n  height: 320rpx;\n}\n.wrap {\r\n  width: 690rpx;\n}\n.padding-css {\r\n  padding-left: 25rpx;\r\n  padding-right: 28rpx;\n}\n#margin-area-view {\r\n  margin-left: 30rpx;\r\n  margin-right: 30rpx;\r\n  margin-top: 54rpx;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  width: 690rpx;\n}\n#margin-area-view .huashu-first-line {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n#margin-area-view .huashu-first-line uni-view {\r\n  display: block;\r\n  height: 40rpx;\r\n  line-height: 1;\n}\n#margin-area-view .huashu-first-line .font-css {\r\n  display: block;\r\n  float: left;\r\n  height: 40rpx;\r\n  line-height: 1;\r\n  font-size: 36rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 800;\r\n  color: #272727;\n}\n#margin-area-view .huashu-first-line .more-text {\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #A6A6A6;\n}\n#margin-area-view #huashu-view-box {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  padding-top: 37rpx;\r\n  padding-bottom: 40rpx;\r\n  margin-bottom: 30.01rpx;\r\n  background: #FFFFFF;\r\n  -webkit-border-radius: 20rpx;\r\n          border-radius: 20rpx;\n}\n#margin-area-view #huashu-view-box .huashu-first-line > uni-text {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\n}\n#margin-area-view #huashu-view-box .huashu-second-line {\r\n  margin-top: 37rpx;\r\n  /*margin-bottom:40px;*/\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n          flex-direction: row;\r\n  -webkit-flex-wrap: wrap;\r\n          flex-wrap: wrap;\r\n  /*height: 500rpx;*/\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  -webkit-box-align: space-between;\r\n  -webkit-align-items: space-between;\r\n          align-items: space-between;\n}\n#margin-area-view #huashu-view-box .huashu-second-line .second-nav-three-row {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  width: 190rpx;\r\n  height: 120rpx;\r\n  color: #FFFFFF;\r\n  background-size: contain;\r\n  background-repeat: no-repeat;\r\n  font-size: 20rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\n}\n#margin-area-view #huashu-view-box .huashu-second-line .second-nav-three-row uni-text {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-border-radius: 10rpx;\r\n          border-radius: 10rpx;\r\n  padding: 5rpx 5rpx;\r\n  background-color: rgba(0, 0, 0, 0.5);\n}\n#margin-area-view #huashu-view-box .huashu-second-line .bottom-nav-row {\r\n  position: relative;\r\n  margin-top: 32rpx;\n}\n#margin-area-view #miaoyu-test {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  width: 100%;\r\n  /*max-height:500px;*/\r\n  padding-top: 36rpx;\r\n  padding-bottom: 39rpx;\r\n  background: #FFFFFF;\r\n  -webkit-border-radius: 20rpx;\r\n          border-radius: 20rpx;\r\n  margin-bottom: 30.01rpx;\n}\n#margin-area-view #miaoyu-test .swiperTest {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 100%;\r\n  /*height: 200px;*/\n}\n#margin-area-view #miaoyu-test .swiperTest .tower-swiper {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 100%;\n}\n#margin-area-view #miaoyu-test .swiperTest .tower-swiper .tower-item {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-transform: scale(calc(0.5 + var(--index) / 10));\r\n          transform: scale(calc(0.5 + var(--index) / 10));\r\n  margin-left: calc(var(--left) * 100upx - 150upx);\r\n  z-index: var(--index);\n}\n#margin-area-view #miaoyu-test .swiperTest .tower-swiper .tower-item .swiper-item {\r\n  position: relative;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\n}\n#margin-area-view #miaoyu-test .swiperTest .tower-swiper .tower-item .swiper-item uni-view {\r\n  position: absolute;\r\n  padding: 0rpx 10rpx;\r\n  -webkit-border-radius: 10px;\r\n          border-radius: 10px;\r\n  background-color: rgba(0, 0, 0, 0.5);\r\n  top: 180rpx;\r\n  color: #FFFFFF;\n}\n#margin-area-view #cases-content {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\n}\n#margin-area-view #cases-content .cview {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  background: #FFFFFF;\r\n  -webkit-border-radius: 20rpx;\r\n          border-radius: 20rpx;\r\n  margin-bottom: 30.01rpx;\r\n  padding-top: 38rpx;\r\n  padding-bottom: 34rpx;\n}\n#margin-area-view #cases-content .content-root-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-top: 38rpx;\n}\n#margin-area-view #cases-content .content-root-view .content-img-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-right: 22rpx;\n}\n#margin-area-view #cases-content .content-root-view .content-img-view .thumb-class {\r\n  width: 120rpx;\r\n  height: 120rpx;\n}\n#margin-area-view #cases-content .content-root-view .content-titleinfo-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 496rpx;\r\n  -webkit-flex-wrap: wrap;\r\n          flex-wrap: wrap;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\n}\n#margin-area-view #cases-content .content-root-view .content-title-view {\r\n  width: 100%;\r\n  display: block;\r\n  overflow: hidden;\r\n  text-overflow: ellipsis;\r\n  /*display: -webkit-box;\r\n\t\t\t\tword-break: break-all;\r\n\t\t\t\t-webkit-line-clamp: 1;\r\n\t\t\t\t-webkit-box-orient: vertical;*/\r\n  -webkit-box-align: start;\r\n  -webkit-align-items: flex-start;\r\n          align-items: flex-start;\r\n  margin-top: 0rpx;\n}\n#margin-area-view #cases-content .content-root-view .content-title-view uni-text {\r\n  font-size: 32rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 500;\r\n  color: #333232;\n}\n#margin-area-view #cases-content .content-root-view .content-desc-view {\r\n  width: 492rpx;\r\n  display: block;\r\n  overflow: hidden;\r\n  text-overflow: ellipsis;\r\n  display: -webkit-box;\r\n  word-break: break-all;\r\n  -webkit-line-clamp: 2;\r\n  -webkit-box-orient: vertical;\r\n  font-size: 24rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #A6A6A6;\n}\n#margin-area-view #cases-content .content-root-view .content-stats-view {\r\n  width: 492rpx;\r\n  height: 50rpx;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: end;\r\n  -webkit-align-items: flex-end;\r\n          align-items: flex-end;\r\n  font-size: 20rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #9A9A9A;\n}\n#margin-area-view #cases-content .content-root-view .content-stats-view .content-stats-view-readnum {\r\n  margin-right: 46rpx;\n}\n.view-icon-class {\r\n  width: 32rpx;\r\n  height: 20rpx;\r\n  margin-right: 13rpx;\n}\n.praise-icon-class {\r\n  width: 24rpx;\r\n  height: 24rpx;\r\n  margin-right: 15rpx;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -8248,12 +8248,43 @@ var render = function() {
                             "v-uni-view",
                             { attrs: { _i: "15-" + $30 } },
                             [
-                              _vm._$g("16-" + $30, "i")
-                                ? _c(
+                              _c(
+                                "v-uni-view",
+                                {
+                                  staticClass: _vm._$g("16-" + $30, "sc"),
+                                  attrs: { _i: "16-" + $30 }
+                                },
+                                _vm._l(_vm._$g(17 + "-" + $30, "f"), function(
+                                  option,
+                                  index,
+                                  $21,
+                                  $31
+                                ) {
+                                  return _c(
                                     "v-uni-view",
                                     {
-                                      staticClass: _vm._$g("16-" + $30, "sc"),
-                                      attrs: { _i: "16-" + $30 },
+                                      key: option,
+                                      ref: _vm._$g(
+                                        "17-" + $30 + "-" + $31,
+                                        "ref"
+                                      ),
+                                      refInFor: true,
+                                      staticClass: _vm._$g(
+                                        "17-" + $30 + "-" + $31,
+                                        "sc"
+                                      ),
+                                      style: _vm._$g(
+                                        "17-" + $30 + "-" + $31,
+                                        "s"
+                                      ),
+                                      attrs: {
+                                        "hover-stay-time": 100,
+                                        "data-index": _vm._$g(
+                                          "17-" + $30 + "-" + $31,
+                                          "a-data-index"
+                                        ),
+                                        _i: "17-" + $30 + "-" + $31
+                                      },
                                       on: {
                                         click: function($event) {
                                           return _vm.$handleViewEvent($event, {
@@ -8262,133 +8293,68 @@ var render = function() {
                                         }
                                       }
                                     },
-                                    _vm._l(
-                                      _vm._$g(17 + "-" + $30, "f"),
-                                      function(option, index, $21, $31) {
-                                        return _c(
-                                          "v-uni-view",
-                                          {
-                                            key: option,
-                                            ref: _vm._$g(
-                                              "17-" + $30 + "-" + $31,
-                                              "ref"
+                                    [
+                                      _c(
+                                        "v-uni-view",
+                                        {
+                                          staticClass: _vm._$g(
+                                            "18-" + $30 + "-" + $31,
+                                            "sc"
+                                          ),
+                                          attrs: {
+                                            "data-index": _vm._$g(
+                                              "18-" + $30 + "-" + $31,
+                                              "a-data-index"
                                             ),
-                                            refInFor: true,
-                                            staticClass: _vm._$g(
-                                              "17-" + $30 + "-" + $31,
-                                              "sc"
-                                            ),
-                                            style: _vm._$g(
-                                              "17-" + $30 + "-" + $31,
-                                              "s"
-                                            ),
-                                            attrs: {
-                                              "hover-stay-time": 100,
-                                              "data-index": _vm._$g(
-                                                "17-" + $30 + "-" + $31,
-                                                "a-data-index"
-                                              ),
-                                              _i: "17-" + $30 + "-" + $31
-                                            }
+                                            _i: "18-" + $30 + "-" + $31
                                           },
-                                          [
-                                            _c(
-                                              "v-uni-view",
-                                              {
-                                                staticClass: _vm._$g(
-                                                  "18-" + $30 + "-" + $31,
-                                                  "sc"
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.$handleViewEvent(
+                                                $event,
+                                                { stop: true }
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-uni-text",
+                                            {
+                                              attrs: {
+                                                "data-index": _vm._$g(
+                                                  "19-" + $30 + "-" + $31,
+                                                  "a-data-index"
                                                 ),
-                                                attrs: {
-                                                  _i: "18-" + $30 + "-" + $31
-                                                }
+                                                _i: "19-" + $30 + "-" + $31
                                               },
-                                              [
-                                                _vm._v(
-                                                  _vm._$g(
-                                                    "18-" + $30 + "-" + $31,
-                                                    "t0-0"
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.$handleViewEvent(
+                                                    $event,
+                                                    { stop: true }
                                                   )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._$g(
+                                                  "19-" + $30 + "-" + $31,
+                                                  "t0-0"
                                                 )
-                                              ]
-                                            )
-                                          ],
-                                          1
-                                        )
-                                      }
-                                    ),
+                                              )
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
                                     1
                                   )
-                                : _vm._$g("19-" + $30, "e")
-                                ? _c(
-                                    "v-uni-view",
-                                    {
-                                      staticClass: _vm._$g("19-" + $30, "sc"),
-                                      attrs: { _i: "19-" + $30 },
-                                      on: {
-                                        touchstart: function($event) {
-                                          return _vm.$handleViewEvent($event)
-                                        }
-                                      }
-                                    },
-                                    _vm._l(
-                                      _vm._$g(20 + "-" + $30, "f"),
-                                      function(option, index, $22, $32) {
-                                        return _c(
-                                          "v-uni-view",
-                                          {
-                                            key: option,
-                                            ref: _vm._$g(
-                                              "20-" + $30 + "-" + $32,
-                                              "ref"
-                                            ),
-                                            refInFor: true,
-                                            staticClass: _vm._$g(
-                                              "20-" + $30 + "-" + $32,
-                                              "sc"
-                                            ),
-                                            style: _vm._$g(
-                                              "20-" + $30 + "-" + $32,
-                                              "s"
-                                            ),
-                                            attrs: {
-                                              "hover-stay-time": 100,
-                                              "data-index": _vm._$g(
-                                                "20-" + $30 + "-" + $32,
-                                                "a-data-index"
-                                              ),
-                                              _i: "20-" + $30 + "-" + $32
-                                            }
-                                          },
-                                          [
-                                            _c(
-                                              "v-uni-view",
-                                              {
-                                                staticClass: _vm._$g(
-                                                  "21-" + $30 + "-" + $32,
-                                                  "sc"
-                                                ),
-                                                attrs: {
-                                                  _i: "21-" + $30 + "-" + $32
-                                                }
-                                              },
-                                              [
-                                                _vm._v(
-                                                  _vm._$g(
-                                                    "21-" + $30 + "-" + $32,
-                                                    "t0-0"
-                                                  )
-                                                )
-                                              ]
-                                            )
-                                          ],
-                                          1
-                                        )
-                                      }
-                                    ),
-                                    1
-                                  )
-                                : _vm._e()
+                                }),
+                                1
+                              )
                             ],
                             1
                           )
@@ -9881,7 +9847,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ./node_modules/css-loader/dist/runtime/api.js */ 19);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.search-holder {\r\n  margin-left: 21rpx;\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #CCCCCC;\n}\n.u-navbar-inner {\r\n  border-bottom: 1px solid #F2F2F2;\n}\nuni-scroll-view::-webkit-scrollbar {\r\n  display: none !important;\r\n  width: 0 !important;\r\n  height: 0 !important;\r\n  -webkit-appearance: none;\r\n  background: transparent;\n}\n::-webkit-scrollbar {\r\n  display: none;\n}\n#content {\r\n  /*#header-ask-box {*/\r\n  /*}*/\n}\n#content .slot-wrap {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  margin-top: 35rpx;\r\n  padding-left: 32rpx;\r\n  padding-right: 34rpx;\r\n  /*padding-bottom: 20rpx;*/\r\n  margin-bottom: 31rpx;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\n}\n#content .slot-wrap #slot-title {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 160rpx;\r\n  /*flex-shrink: 1;*/\r\n  height: 60rpx;\r\n  font-size: 40rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 800;\r\n  color: #343434;\n}\n#content .slot-wrap #slot-input {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: reverse;\r\n  -webkit-flex-direction: row-reverse;\r\n          flex-direction: row-reverse;\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\r\n  width: 360rpx;\r\n  height: 60rpx;\r\n  margin-left: 20rpx;\r\n  padding-left: 20rpx;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  background: #F2F2F2;\r\n  -webkit-border-radius: 30rpx;\r\n          border-radius: 30rpx;\n}\n#content .slot-wrap #slot-input #search-icon {\r\n  margin-left: 21rpx;\r\n  margin-right: 17rpx;\n}\n#content .slot-wrap #slot-img {\r\n  /*width:60rpx;\r\n\t\t\t\theight: 60rpx;*/\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  height: 60rpx;\r\n  margin-left: 20rpx;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  line-height: 60rpx;\r\n  font-size: 14px;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  background-color: #F2F2F2;\r\n  padding: 0rpx 28rpx;\r\n  -webkit-border-radius: 18rpx;\r\n          border-radius: 18rpx;\n}\n#content .slot-wrap #slot-img uni-view {\r\n  height: 60rpx;\r\n  display: block;\r\n  line-height: 60rpx;\r\n  color: #A890F0;\n}\n#content #mind-ask-box {\r\n  padding-top: 39rpx;\n}\n#content #mind-ask-box .mind-ask-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  padding-bottom: 20rpx;\r\n  margin-top: 20rpx;\r\n  border-bottom: 1px solid #F2F2F2;\r\n  padding-left: 46rpx;\r\n  padding-right: 46rpx;\n}\n#content #mind-ask-box .mind-ask-view .mind-title {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  /*padding-bottom: 10rpx;\r\n\t\t\t\tborder-bottom: 1px solid #F2F2F2;*/\r\n  /*.mz_shuo {\r\n\t\t\t\t\tfont-size:32rpx;\r\n\t\t\t\t\tfont-family: PingFang SC;\r\n\t\t\t\t\tfont-weight: 500;\r\n\t\t\t\t\tcolor: #A890F0;\r\n\t\t\t\t\t\r\n\t\t\t\t\tdisplay: block;\r\n\t\t\t\t\theight: 60rpx;\r\n\t\t\t\t\tbackground: #F3F3F3;\r\n\t\t\t\t\tborder-radius: 30rpx;\r\n\t\t\t\t\ttext-align: center;\r\n\t\t\t\t\tline-height: 60rpx;\r\n\t\t\t\t\twidth: 160rpx;\r\n\t\t\t\t\tmargin-right: 24rpx;\r\n\t\t\t\t\tfloat: left;\r\n\t\t\t\t}\r\n\t\t\t\t.girl_title {\r\n\t\t\t\t\t/*width: 500rpx;*/\r\n  /*width:474rpx;\r\n\t\t\t\t\tdisplay: block;\r\n\t\t\t\t\toverflow: hidden;\r\n\t\t\t\t\theight: 60rpx;\r\n\t\t\t\t\tline-height: 60rpx;\r\n\t\t\t\t\tvertical-align: center;\r\n\t\t\t\t\ttext-overflow:ellipsis; \r\n\t\t\t\t\twhite-space: nowrap;\r\n\t\t\t\t\tfloat: left;\r\n\t\t\t\t\r\n\t\t\t\t\tfont-size: 32rpx;\r\n\t\t\t\t\tfont-family: PingFang SC;\r\n\t\t\t\t\tfont-weight: 500;\r\n\t\t\t\t\tcolor: #333232;\r\n\t\t\t\t}*/\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\n}\n#content #mind-ask-box .mind-ask-view .mind-title .mind-title-left {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  /*width: 40%;*/\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n#content #mind-ask-box .mind-ask-view .mind-title .mind-title-left .avatar-class {\r\n  width: 38px;\r\n  height: 38px;\r\n  -webkit-border-radius: 50%;\r\n          border-radius: 50%;\n}\n#content #mind-ask-box .mind-ask-view .mind-title .mind-title-left .mind-nickName {\r\n  /*margin-right:47rpx;*/\r\n  font-weight: 600;\r\n  margin-left: 35rpx;\n}\n#content #mind-ask-box .mind-ask-view .mind-title .mind-title-right {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  /*width: 60%;*/\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  -webkit-box-pack: end;\r\n  -webkit-justify-content: flex-end;\r\n          justify-content: flex-end;\n}\n#content #mind-ask-box .mind-ask-view .mind-title .mind-title-right .mind-pubdate {\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #A3A3A3;\n}\n#content #mind-ask-box .mind-ask-view .mind-content {\r\n  display: block;\r\n  margin-top: 43rpx;\r\n  margin-bottom: 27rpx;\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  /*color: #666666;*/\r\n  margin-left: 9rpx;\r\n  margin-right: 9rpx;\r\n  overflow: hidden;\r\n  /*height: 60px;*/\r\n  text-overflow: ellipsis;\r\n  display: -webkit-box;\r\n  word-break: break-all;\r\n  -webkit-line-clamp: 6;\r\n  -webkit-box-orient: vertical;\r\n  color: #A3A3A3;\n}\n#content #mind-ask-box .mind-ask-view .mind-interact {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-left: 9rpx;\r\n  font-size: 24rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #9A9A9A;\r\n  /*\r\n\t\t\t\tpadding-top:10px;\r\n\t\t\t\tborder-top: 1px solid #F3F3F3;*/\n}\n#content #mind-ask-box .mind-ask-view .mind-interact .mind-interact-left {\r\n  width: 70%;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\n}\n#content #mind-ask-box .mind-ask-view .mind-interact .mind-interact-right {\r\n  width: 30%;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: end;\r\n  -webkit-justify-content: flex-end;\r\n          justify-content: flex-end;\n}\n#content #mind-ask-box .mind-ask-view .mind-interact .mind-interact-right .praise-view {\r\n  margin-right: 20rpx;\n}\n#search-result-view {\r\n  margin-left: 32rpx;\r\n  margin-right: 32rpx;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  /*height: 300px;*/\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\n}\n#search-result-header {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  height: 60px;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  /*margin-bottom: 10px;*/\r\n  padding-bottom: 21rpx;\r\n  border-bottom: 2px solid #F1F0F0;\n}\n.search-result-title {\r\n  margin-top: 20px;\r\n  margin-bottom: 10px;\n}\n.search-result-title > uni-text {\r\n  font-size: 32rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 800;\r\n  color: #333333;\n}\n.search-total-rows {\r\n  color: #1b1a1a;\r\n  font-weight: bold;\r\n  margin-left: 5px;\r\n  margin-right: 5px;\n}\n.search-result-suggest {\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #616161;\n}\n.search-result-num {\r\n  color: #A88FEF;\r\n  margin-left: 10rpx;\r\n  margin-left: 10rpx;\n}\r\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.search-holder {\r\n  margin-left: 21rpx;\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #CCCCCC;\n}\n.u-navbar-inner {\r\n  border-bottom: 1px solid #F2F2F2;\n}\nuni-scroll-view::-webkit-scrollbar {\r\n  display: none !important;\r\n  width: 0 !important;\r\n  height: 0 !important;\r\n  -webkit-appearance: none;\r\n  background: transparent;\n}\n::-webkit-scrollbar {\r\n  display: none;\n}\n#content {\r\n  /*#header-ask-box {*/\r\n  /*}*/\n}\n#content .slot-wrap {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  margin-top: 35rpx;\r\n  padding-left: 32rpx;\r\n  padding-right: 34rpx;\r\n  /*padding-bottom: 20rpx;*/\r\n  margin-bottom: 31rpx;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\n}\n#content .slot-wrap #slot-title {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 160rpx;\r\n  /*flex-shrink: 1;*/\r\n  height: 60rpx;\r\n  font-size: 40rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 800;\r\n  color: #343434;\n}\n#content .slot-wrap #slot-input {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: reverse;\r\n  -webkit-flex-direction: row-reverse;\r\n          flex-direction: row-reverse;\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\r\n  width: 360rpx;\r\n  height: 60rpx;\r\n  margin-left: 20rpx;\r\n  /*padding-left: 20rpx;*/\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  background: #F2F2F2;\r\n  -webkit-border-radius: 30rpx;\r\n          border-radius: 30rpx;\n}\n#content .slot-wrap #slot-input #search-icon {\r\n  margin-left: 21rpx;\r\n  margin-right: 17rpx;\n}\n#content .slot-wrap #slot-img {\r\n  /*width:60rpx;\r\n\t\t\t\theight: 60rpx;*/\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  height: 60rpx;\r\n  margin-left: 20rpx;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  line-height: 60rpx;\r\n  font-size: 14px;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  background-color: #F2F2F2;\r\n  padding: 0rpx 28rpx;\r\n  -webkit-border-radius: 18rpx;\r\n          border-radius: 18rpx;\n}\n#content .slot-wrap #slot-img uni-view {\r\n  height: 60rpx;\r\n  display: block;\r\n  line-height: 60rpx;\r\n  color: #A890F0;\n}\n#content #mind-ask-box {\r\n  padding-top: 39rpx;\n}\n#content #mind-ask-box .mind-ask-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  padding-bottom: 20rpx;\r\n  margin-top: 20rpx;\r\n  border-bottom: 1px solid #F2F2F2;\r\n  padding-left: 46rpx;\r\n  padding-right: 46rpx;\n}\n#content #mind-ask-box .mind-ask-view .mind-title {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  /*padding-bottom: 10rpx;\r\n\t\t\t\tborder-bottom: 1px solid #F2F2F2;*/\r\n  /*.mz_shuo {\r\n\t\t\t\t\tfont-size:32rpx;\r\n\t\t\t\t\tfont-family: PingFang SC;\r\n\t\t\t\t\tfont-weight: 500;\r\n\t\t\t\t\tcolor: #A890F0;\r\n\t\t\t\t\t\r\n\t\t\t\t\tdisplay: block;\r\n\t\t\t\t\theight: 60rpx;\r\n\t\t\t\t\tbackground: #F3F3F3;\r\n\t\t\t\t\tborder-radius: 30rpx;\r\n\t\t\t\t\ttext-align: center;\r\n\t\t\t\t\tline-height: 60rpx;\r\n\t\t\t\t\twidth: 160rpx;\r\n\t\t\t\t\tmargin-right: 24rpx;\r\n\t\t\t\t\tfloat: left;\r\n\t\t\t\t}\r\n\t\t\t\t.girl_title {\r\n\t\t\t\t\t/*width: 500rpx;*/\r\n  /*width:474rpx;\r\n\t\t\t\t\tdisplay: block;\r\n\t\t\t\t\toverflow: hidden;\r\n\t\t\t\t\theight: 60rpx;\r\n\t\t\t\t\tline-height: 60rpx;\r\n\t\t\t\t\tvertical-align: center;\r\n\t\t\t\t\ttext-overflow:ellipsis; \r\n\t\t\t\t\twhite-space: nowrap;\r\n\t\t\t\t\tfloat: left;\r\n\t\t\t\t\r\n\t\t\t\t\tfont-size: 32rpx;\r\n\t\t\t\t\tfont-family: PingFang SC;\r\n\t\t\t\t\tfont-weight: 500;\r\n\t\t\t\t\tcolor: #333232;\r\n\t\t\t\t}*/\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\n}\n#content #mind-ask-box .mind-ask-view .mind-title .mind-title-left {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  /*width: 40%;*/\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n#content #mind-ask-box .mind-ask-view .mind-title .mind-title-left .avatar-class {\r\n  width: 38px;\r\n  height: 38px;\r\n  -webkit-border-radius: 50%;\r\n          border-radius: 50%;\n}\n#content #mind-ask-box .mind-ask-view .mind-title .mind-title-left .mind-nickName {\r\n  /*margin-right:47rpx;*/\r\n  font-weight: 600;\r\n  margin-left: 35rpx;\n}\n#content #mind-ask-box .mind-ask-view .mind-title .mind-title-right {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  /*width: 60%;*/\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  -webkit-box-pack: end;\r\n  -webkit-justify-content: flex-end;\r\n          justify-content: flex-end;\n}\n#content #mind-ask-box .mind-ask-view .mind-title .mind-title-right .mind-pubdate {\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #A3A3A3;\n}\n#content #mind-ask-box .mind-ask-view .mind-content {\r\n  display: block;\r\n  margin-top: 43rpx;\r\n  margin-bottom: 27rpx;\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  /*color: #666666;*/\r\n  margin-left: 9rpx;\r\n  margin-right: 9rpx;\r\n  overflow: hidden;\r\n  /*height: 60px;*/\r\n  text-overflow: ellipsis;\r\n  display: -webkit-box;\r\n  word-break: break-all;\r\n  -webkit-line-clamp: 6;\r\n  -webkit-box-orient: vertical;\r\n  color: #A3A3A3;\n}\n#content #mind-ask-box .mind-ask-view .mind-interact {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-left: 9rpx;\r\n  font-size: 24rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #9A9A9A;\r\n  /*\r\n\t\t\t\tpadding-top:10px;\r\n\t\t\t\tborder-top: 1px solid #F3F3F3;*/\n}\n#content #mind-ask-box .mind-ask-view .mind-interact .mind-interact-left {\r\n  width: 70%;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\n}\n#content #mind-ask-box .mind-ask-view .mind-interact .mind-interact-right {\r\n  width: 30%;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: end;\r\n  -webkit-justify-content: flex-end;\r\n          justify-content: flex-end;\n}\n#content #mind-ask-box .mind-ask-view .mind-interact .mind-interact-right .praise-view {\r\n  margin-right: 20rpx;\n}\n#search-result-view {\r\n  margin-left: 32rpx;\r\n  margin-right: 32rpx;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  /*height: 300px;*/\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\n}\n#search-result-header {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  height: 60px;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  /*margin-bottom: 10px;*/\r\n  padding-bottom: 21rpx;\r\n  border-bottom: 2px solid #F1F0F0;\n}\n.search-result-title {\r\n  margin-top: 20px;\r\n  margin-bottom: 10px;\n}\n.search-result-title > uni-text {\r\n  font-size: 32rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 800;\r\n  color: #333333;\n}\n.search-total-rows {\r\n  color: #1b1a1a;\r\n  font-weight: bold;\r\n  margin-left: 5px;\r\n  margin-right: 5px;\n}\n.search-result-suggest {\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #616161;\n}\n.search-result-num {\r\n  color: #A88FEF;\r\n  margin-left: 10rpx;\r\n  margin-left: 10rpx;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -12556,7 +12522,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ./node_modules/css-loader/dist/runtime/api.js */ 19);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n#root-view #mind-ask-view {\r\n  margin-top: 39rpx;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  border-bottom: 1px solid  #F2F2F2;\r\n  padding-bottom: 27rpx;\n}\n#root-view #mind-ask-view .mind-title {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-left: 55rpx;\r\n  margin-right: 61rpx;\r\n  font-size: 24rpx;\r\n  font-weight: 400;\r\n  color: #323232;\r\n  font-family: \"Microsoft YaHei\";\r\n  /*#mind-title-mzshuo {\r\n\t\t\t\theight: 60rpx;\r\n\t\t\t\tdisplay: block;\r\n\t\t\t\twidth: 160rpx;\r\n\t\t\t\t/*justify-content: center;\r\n\t\t\t\talign-items: center;*/\r\n  /*text-align: center;\r\n\t\t\t\tline-height: 60rpx;\r\n\t\t\t\tfloat: left;\r\n\t\t\t\tbackground: #F3F3F3;\r\n\t\t\t\tborder-radius: 30rpx;\r\n\t\t\t\tmargin-right: 24rpx;\r\n\t\t\t\t/*padding-left:29rpx;\r\n\t\t\t\tpadding-right:27rpx;*/\r\n  /*margin-right: 24rpx;*/\r\n  /*font-size: 32rpx;\r\n\t\t\t\tfont-family: PingFang SC;\r\n\t\t\t\tfont-weight: 500;\r\n\t\t\t\tcolor: #A88FEF;\r\n\t\t\t}*/\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\n}\n#root-view #mind-ask-view .mind-title .mind-title-left {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  /*width: 40%;*/\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n#root-view #mind-ask-view .mind-title .mind-title-left .avatar-class {\r\n  width: 38px;\r\n  height: 38px;\r\n  -webkit-border-radius: 50%;\r\n          border-radius: 50%;\n}\n#root-view #mind-ask-view .mind-title .mind-title-left .mind-nickName {\r\n  /*margin-right:47rpx;*/\r\n  font-weight: 600;\r\n  margin-left: 35rpx;\n}\n#root-view #mind-ask-view .mind-title .mind-title-right {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  /*width: 60%;*/\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  -webkit-box-pack: end;\r\n  -webkit-justify-content: flex-end;\r\n          justify-content: flex-end;\n}\n#root-view #mind-ask-view .mind-title .mind-title-right .mind-pubdate {\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #A3A3A3;\n}\n#root-view #mind-ask-view .mind-title #right-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\n}\n#root-view #mind-ask-view .mind-title #right-view #mind-title-firstline {\r\n  width: 500rpx;\r\n  display: block;\r\n  float: left;\r\n  margin-top: 0rpx;\r\n  padding-top: 0rpx;\r\n  height: 60rpx;\r\n  font-size: 32rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 500;\r\n  color: #333232;\n}\n#root-view #mind-ask-view .mind-title #right-view #mind-title-firstline uni-text {\r\n  /*line-height: 1.2;*/\n}\n#root-view #mind-ask-view .mind-content {\r\n  display: block;\r\n  margin-left: 55rpx;\r\n  margin-right: 61rpx;\r\n  margin-top: 29rpx;\r\n  margin-bottom: 27rpx;\r\n  word-break: break-all;\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #716a6A;\n}\n#root-view #mind-ask-view .mind-content #mind-content-box {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  padding-top: 15px;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\n}\n#root-view #mind-ask-view .mind-content #mind-content-box uni-view {\r\n  color: #A3A3A3;\n}\n#root-view #mind-ask-view .mind-content #mind-content-box .more-line-css uni-text {\r\n  line-height: 1.5;\n}\n#root-view #mind-ask-view .mind-interact {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  color: #CDCDCD;\r\n  margin-left: 55rpx;\r\n  margin-right: 55rpx;\r\n  width: 640rpx;\r\n  font-size: 24rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #9A9A9A;\n}\n#root-view #mind-ask-view .mind-interact .mind-interact-left {\r\n  width: 60%;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\n}\n#root-view #mind-ask-view .mind-interact .mind-interact-left .mind-nickName {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  /*margin-right:50rpx;*/\r\n  width: 50%;\n}\n#root-view #mind-ask-view .mind-interact .mind-interact-left .mind-pubdate {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 50%;\n}\n#root-view #mind-ask-view .mind-interact .mind-interact-right {\r\n  width: 40%;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: end;\r\n  -webkit-justify-content: flex-end;\r\n          justify-content: flex-end;\n}\n#root-view #mind-ask-view .mind-interact .mind-interact-right .praise-view {\r\n  margin-right: 20rpx;\n}\n#root-view #answer-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\n}\n#root-view #answer-view #anser-title {\r\n  font-weight: bolder;\r\n  font-family: \"Microsoft YaHei\";\r\n  padding-left: 55rpx;\r\n  padding-right: 55rpx;\r\n  font-size: 24px;\r\n  margin-top: 70rpx;\r\n  margin-bottom: 50rpx;\n}\n#root-view #answer-view #answer-list-box .answer-item {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  padding-left: 55rpx;\r\n  padding-right: 55rpx;\r\n  padding-top: 15px;\r\n  padding-bottom: 15px;\r\n  border-bottom: 1px solid #F2F2F2;\n}\n#root-view #answer-view #answer-list-box .answer-item .left-icon {\r\n  margin-right: 25rpx;\n}\n#root-view #answer-view #answer-list-box .answer-item .left-icon .left-avatar {\r\n  width: 76rpx;\r\n  height: 76rpx;\r\n  -webkit-border-radius: 50%;\r\n          border-radius: 50%;\n}\n#root-view #answer-view #answer-list-box .answer-item .right-answer-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  width: 535rpx;\n}\n#root-view #answer-view #answer-list-box .answer-item .right-answer-view .answer-first-line {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  /*height: 27px;*/\r\n  height: 76rpx;\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\n}\n#root-view #answer-view #answer-list-box .answer-item .right-answer-view .answer-first-line .first-line-before {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: start;\r\n  -webkit-align-items: flex-start;\r\n          align-items: flex-start;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  color: #A9A9A9;\r\n  width: 70%;\n}\n#root-view #answer-view #answer-list-box .answer-item .right-answer-view .answer-first-line .first-line-before .first-line-nickName {\r\n  color: #A88FEF;\r\n  /*width:50%;*/\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: start;\r\n  -webkit-justify-content: flex-start;\r\n          justify-content: flex-start;\n}\n#root-view #answer-view #answer-list-box .answer-item .right-answer-view .answer-first-line .first-line-before uni-view {\r\n  /*width:50%;*/\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  font-size: 28rpx;\n}\n#root-view #answer-view #answer-list-box .answer-item .right-answer-view .answer-first-line .first-line-after {\r\n  height: 76rpx;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: start;\r\n  -webkit-align-items: flex-start;\r\n          align-items: flex-start;\r\n  -webkit-box-pack: end;\r\n  -webkit-justify-content: flex-end;\r\n          justify-content: flex-end;\r\n  width: 30%;\r\n  /*align-items: center;*/\r\n  font-size: 24rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #9A9A9A;\n}\n#root-view #answer-view #answer-list-box .answer-item .right-answer-view .answer-second-line {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-top: 29rpx;\r\n  -webkit-flex-wrap: wrap;\r\n          flex-wrap: wrap;\r\n  word-break: break-all;\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #666666;\n}\n#bottom-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  position: fixed;\r\n  z-index: 10001;\r\n  margin: 0rpx 0rpx;\r\n  padding: 20rpx 46rpx;\r\n  /*bottom: 30rpx;*/\r\n  background: #F2F2F2;\r\n  /*height: 120rpx;*/\n}\n#bottom-view #left-reply-icon {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: end;\r\n  -webkit-align-items: flex-end;\r\n          align-items: flex-end;\n}\n#bottom-view #left-reply-icon .reply-css {\r\n  width: 60rpx;\r\n  height: 60rpx;\n}\n#bottom-view #replay-text-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 420rpx;\r\n  /*height: 120rpx;\r\n\t\tmax-height: 120rpx;*/\r\n  padding-left: 20rpx;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  margin-left: 27rpx;\r\n  margin-right: 34rpx;\r\n  /*height: 120rpx;*/\r\n  background-color: #FFFFFF;\r\n  -webkit-border-radius: 30rpx;\r\n          border-radius: 30rpx;\n}\n#bottom-view #replay-text-view uni-textarea {\r\n  height: auto;\r\n  word-wrap: break-word;\n}\n#bottom-view #reply-btn-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: end;\r\n  -webkit-align-items: flex-end;\r\n          align-items: flex-end;\n}\n#bottom-view #reply-btn-view #publish-btn-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 120rpx;\r\n  height: 60rpx;\r\n  background-color: #C3AEFF;\r\n  color: #FFFFFF;\r\n  -webkit-border-radius: 30rpx;\r\n          border-radius: 30rpx;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\n}\n.replay-placeholder {\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #CCCCCC;\n}\n.one-line-css {\r\n  /*line-height: 60rpx;*/\r\n  overflow: hidden;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\n}\n.more-line-css {\r\n  line-height: 1;\n}\n.mind-title-icon {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: start;\r\n  -webkit-align-items: flex-start;\r\n          align-items: flex-start;\n}\r\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n#root-view #mind-ask-view {\r\n  margin-top: 39rpx;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  border-bottom: 1px solid  #F2F2F2;\r\n  padding-bottom: 27rpx;\n}\n#root-view #mind-ask-view .mind-title {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-left: 55rpx;\r\n  margin-right: 61rpx;\r\n  font-size: 24rpx;\r\n  font-weight: 400;\r\n  color: #323232;\r\n  font-family: \"Microsoft YaHei\";\r\n  /*#mind-title-mzshuo {\r\n\t\t\t\theight: 60rpx;\r\n\t\t\t\tdisplay: block;\r\n\t\t\t\twidth: 160rpx;\r\n\t\t\t\t/*justify-content: center;\r\n\t\t\t\talign-items: center;*/\r\n  /*text-align: center;\r\n\t\t\t\tline-height: 60rpx;\r\n\t\t\t\tfloat: left;\r\n\t\t\t\tbackground: #F3F3F3;\r\n\t\t\t\tborder-radius: 30rpx;\r\n\t\t\t\tmargin-right: 24rpx;\r\n\t\t\t\t/*padding-left:29rpx;\r\n\t\t\t\tpadding-right:27rpx;*/\r\n  /*margin-right: 24rpx;*/\r\n  /*font-size: 32rpx;\r\n\t\t\t\tfont-family: PingFang SC;\r\n\t\t\t\tfont-weight: 500;\r\n\t\t\t\tcolor: #A88FEF;\r\n\t\t\t}*/\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\n}\n#root-view #mind-ask-view .mind-title .mind-title-left {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  /*width: 40%;*/\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\n}\n#root-view #mind-ask-view .mind-title .mind-title-left .avatar-class {\r\n  width: 38px;\r\n  height: 38px;\r\n  -webkit-border-radius: 50%;\r\n          border-radius: 50%;\n}\n#root-view #mind-ask-view .mind-title .mind-title-left .mind-nickName {\r\n  /*margin-right:47rpx;*/\r\n  font-size: 14px;\r\n  font-weight: 600;\r\n  margin-left: 35rpx;\n}\n#root-view #mind-ask-view .mind-title .mind-title-right {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  /*width: 60%;*/\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  -webkit-box-pack: end;\r\n  -webkit-justify-content: flex-end;\r\n          justify-content: flex-end;\n}\n#root-view #mind-ask-view .mind-title .mind-title-right .mind-pubdate {\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #A3A3A3;\n}\n#root-view #mind-ask-view .mind-title #right-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\n}\n#root-view #mind-ask-view .mind-title #right-view #mind-title-firstline {\r\n  width: 500rpx;\r\n  display: block;\r\n  float: left;\r\n  margin-top: 0rpx;\r\n  padding-top: 0rpx;\r\n  height: 60rpx;\r\n  font-size: 32rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 500;\r\n  color: #333232;\n}\n#root-view #mind-ask-view .mind-title #right-view #mind-title-firstline uni-text {\r\n  /*line-height: 1.2;*/\n}\n#root-view #mind-ask-view .mind-content {\r\n  display: block;\r\n  margin-left: 55rpx;\r\n  margin-right: 61rpx;\r\n  margin-top: 29rpx;\r\n  margin-bottom: 27rpx;\r\n  word-break: break-all;\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #716a6A;\n}\n#root-view #mind-ask-view .mind-content #mind-content-box {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  padding-top: 15px;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\n}\n#root-view #mind-ask-view .mind-content #mind-content-box uni-view {\r\n  color: #A3A3A3;\n}\n#root-view #mind-ask-view .mind-content #mind-content-box .more-line-css uni-text {\r\n  line-height: 1.5;\n}\n#root-view #mind-ask-view .mind-interact {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  color: #CDCDCD;\r\n  margin-left: 55rpx;\r\n  margin-right: 55rpx;\r\n  width: 640rpx;\r\n  font-size: 24rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #9A9A9A;\n}\n#root-view #mind-ask-view .mind-interact .mind-interact-left {\r\n  width: 60%;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\n}\n#root-view #mind-ask-view .mind-interact .mind-interact-left .mind-nickName {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  /*margin-right:50rpx;*/\r\n  width: 50%;\n}\n#root-view #mind-ask-view .mind-interact .mind-interact-left .mind-pubdate {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 50%;\n}\n#root-view #mind-ask-view .mind-interact .mind-interact-right {\r\n  width: 40%;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: end;\r\n  -webkit-justify-content: flex-end;\r\n          justify-content: flex-end;\n}\n#root-view #mind-ask-view .mind-interact .mind-interact-right .praise-view {\r\n  margin-right: 20rpx;\n}\n#root-view #answer-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\n}\n#root-view #answer-view #anser-title {\r\n  font-weight: bolder;\r\n  font-family: \"Microsoft YaHei\";\r\n  padding-left: 55rpx;\r\n  padding-right: 55rpx;\r\n  font-size: 24px;\r\n  margin-top: 70rpx;\r\n  margin-bottom: 50rpx;\n}\n#root-view #answer-view #answer-list-box .answer-item {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  padding-left: 55rpx;\r\n  padding-right: 55rpx;\r\n  padding-top: 15px;\r\n  padding-bottom: 15px;\r\n  border-bottom: 1px solid #F2F2F2;\n}\n#root-view #answer-view #answer-list-box .answer-item .left-icon {\r\n  margin-right: 25rpx;\n}\n#root-view #answer-view #answer-list-box .answer-item .left-icon .left-avatar {\r\n  width: 76rpx;\r\n  height: 76rpx;\r\n  -webkit-border-radius: 50%;\r\n          border-radius: 50%;\n}\n#root-view #answer-view #answer-list-box .answer-item .right-answer-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  width: 535rpx;\n}\n#root-view #answer-view #answer-list-box .answer-item .right-answer-view .answer-first-line {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  /*height: 27px;*/\r\n  height: 76rpx;\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\n}\n#root-view #answer-view #answer-list-box .answer-item .right-answer-view .answer-first-line .first-line-before {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: start;\r\n  -webkit-align-items: flex-start;\r\n          align-items: flex-start;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  color: #A9A9A9;\r\n  width: 70%;\n}\n#root-view #answer-view #answer-list-box .answer-item .right-answer-view .answer-first-line .first-line-before .first-line-nickName {\r\n  color: #A88FEF;\r\n  /*width:50%;*/\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: start;\r\n  -webkit-justify-content: flex-start;\r\n          justify-content: flex-start;\n}\n#root-view #answer-view #answer-list-box .answer-item .right-answer-view .answer-first-line .first-line-before uni-view {\r\n  /*width:50%;*/\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  font-size: 28rpx;\n}\n#root-view #answer-view #answer-list-box .answer-item .right-answer-view .answer-first-line .first-line-after {\r\n  height: 76rpx;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: start;\r\n  -webkit-align-items: flex-start;\r\n          align-items: flex-start;\r\n  -webkit-box-pack: end;\r\n  -webkit-justify-content: flex-end;\r\n          justify-content: flex-end;\r\n  width: 30%;\r\n  /*align-items: center;*/\r\n  font-size: 24rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #9A9A9A;\n}\n#root-view #answer-view #answer-list-box .answer-item .right-answer-view .answer-second-line {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-top: 29rpx;\r\n  -webkit-flex-wrap: wrap;\r\n          flex-wrap: wrap;\r\n  word-break: break-all;\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #666666;\n}\n#bottom-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  position: fixed;\r\n  z-index: 10001;\r\n  margin: 0rpx 0rpx;\r\n  padding: 20rpx 46rpx;\r\n  /*bottom: 30rpx;*/\r\n  background: #F2F2F2;\r\n  /*height: 120rpx;*/\n}\n#bottom-view #left-reply-icon {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: end;\r\n  -webkit-align-items: flex-end;\r\n          align-items: flex-end;\n}\n#bottom-view #left-reply-icon .reply-css {\r\n  width: 60rpx;\r\n  height: 60rpx;\n}\n#bottom-view #replay-text-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 420rpx;\r\n  /*height: 120rpx;\r\n\t\tmax-height: 120rpx;*/\r\n  padding-left: 20rpx;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  margin-left: 27rpx;\r\n  margin-right: 34rpx;\r\n  /*height: 120rpx;*/\r\n  background-color: #FFFFFF;\r\n  -webkit-border-radius: 30rpx;\r\n          border-radius: 30rpx;\n}\n#bottom-view #replay-text-view uni-textarea {\r\n  height: auto;\r\n  word-wrap: break-word;\n}\n#bottom-view #reply-btn-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: end;\r\n  -webkit-align-items: flex-end;\r\n          align-items: flex-end;\n}\n#bottom-view #reply-btn-view #publish-btn-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 120rpx;\r\n  height: 60rpx;\r\n  background-color: #C3AEFF;\r\n  color: #FFFFFF;\r\n  -webkit-border-radius: 30rpx;\r\n          border-radius: 30rpx;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\n}\n.replay-placeholder {\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #CCCCCC;\n}\n.one-line-css {\r\n  /*line-height: 60rpx;*/\r\n  overflow: hidden;\r\n  text-overflow: ellipsis;\r\n  white-space: nowrap;\n}\n.more-line-css {\r\n  line-height: 1;\n}\n.mind-title-icon {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: start;\r\n  -webkit-align-items: flex-start;\r\n          align-items: flex-start;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -15638,7 +15604,7 @@ var render = function() {
                   attrs: { disabled: _vm._$g(12, "a-disabled"), _i: 12 },
                   on: {
                     click: function($event) {
-                      return _vm.$handleViewEvent($event)
+                      return _vm.$handleViewEvent($event, { stop: true })
                     }
                   }
                 },
@@ -17618,10 +17584,7 @@ var render = function() {
           ),
           _c(
             "v-uni-view",
-            {
-              staticStyle: { display: "flex", "flex-direction": "row" },
-              attrs: { _i: 4 }
-            },
+            { attrs: { id: "article-info", _i: 4 } },
             [
               _c(
                 "v-uni-view",
@@ -18593,7 +18556,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ./node_modules/css-loader/dist/runtime/api.js */ 19);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n#title {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  margin-left: 32rpx;\r\n  margin-right: 32rpx;\r\n  margin-top: 10px;\r\n  margin-bottom: 20px;\n}\n.title > uni-text {\r\n  font-size: 24px;\r\n  font-family: \"Microsoft YaHei\";\r\n  color: #333333;\n}\n.author {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-top: 10px;\r\n  height: 48rpx;\r\n  margin-right: 20px;\r\n  background: #e7f3ff;\n}\n.readtime {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-top: 10px;\r\n  height: 48rpx;\n}\n.readtime > uni-text {\r\n  font-size: 16px;\r\n  font-family: \"Microsoft YaHei\";\r\n  color: #b3b3b3;\n}\n#view-content {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 750rpx;\r\n  -webkit-box-pack: start;\r\n  -webkit-justify-content: flex-start;\r\n          justify-content: flex-start;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  background: white;\n}\n#view-article {\r\n  margin-left: 32rpx;\r\n  margin-right: 32rpx;\r\n  width: 686rpx;\r\n  overflow-x: hidden;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  word-break: break-all;\n}\n.author > uni-text {\r\n  color: blue;\r\n  font-size: 18px;\r\n  font-family: \"Microsoft YaHei\";\r\n  font-weight: 400;\n}\n#view-article uni-text {\r\n  font-size: 18px;\r\n  font-family: \"Microsoft YaHei\";\r\n  font-weight: 400;\n}\n#bottom {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\n}\n#article-bottom {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-bottom: 20rpx;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  width: 180rpx;\r\n  height: 80rpx;\r\n  background: #F3F3F3;\r\n  -webkit-border-radius: 40rpx;\r\n          border-radius: 40rpx;\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #A6A6A6;\n}\n#article-previous-next {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  margin-left: 30.01rpx;\r\n  margin-right: 29rpx;\r\n  padding-bottom: 40rpx;\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #626262;\n}\n#previous-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  height: 60rpx;\r\n  background: #F3F3F3;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\n}\n.article-link {\r\n  display: display;\r\n  width: 330rpx;\r\n  padding-left: 15.01rpx;\r\n  padding-top: 16rpx;\r\n  margin-bottom: 17rpx;\r\n  overflow: hidden;\r\n  /*height: 60px;*/\r\n  text-overflow: ellipsis;\r\n  display: -webkit-box;\r\n  -webkit-line-clamp: 1;\r\n  -webkit-box-orient: vertical;\r\n  color: #A3A3A3;\n}\n#next-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  height: 60rpx;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  background: #F3F3F3;\n}\r\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n#title {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  margin-left: 32rpx;\r\n  margin-right: 32rpx;\r\n  margin-top: 10px;\r\n  margin-bottom: 20px;\n}\n.title > uni-text {\r\n  font-size: 24px;\r\n  font-family: \"Microsoft YaHei\";\r\n  color: #333333;\n}\n.author {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  margin-right: 20px;\r\n  background: #e7f3ff;\n}\n.readtime {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  height: 48rpx;\n}\n.readtime > uni-text {\r\n  font-size: 16px;\r\n  font-family: \"Microsoft YaHei\";\r\n  color: #b3b3b3;\n}\n#view-content {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 750rpx;\r\n  -webkit-box-pack: start;\r\n  -webkit-justify-content: flex-start;\r\n          justify-content: flex-start;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  background: white;\n}\n#view-article {\r\n  margin-left: 32rpx;\r\n  margin-right: 32rpx;\r\n  width: 686rpx;\r\n  overflow-x: hidden;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  word-break: break-all;\n}\n#article-info {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  margin-top: 10px;\n}\n.author > uni-text {\r\n  color: blue;\r\n  font-size: 18px;\r\n  font-family: \"Microsoft YaHei\";\r\n  font-weight: 400;\n}\n#view-article uni-text {\r\n  font-size: 18px;\r\n  font-family: \"Microsoft YaHei\";\r\n  font-weight: 400;\n}\n#bottom {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\n}\n#article-bottom {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-bottom: 20rpx;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  width: 180rpx;\r\n  height: 80rpx;\r\n  background: #F3F3F3;\r\n  -webkit-border-radius: 40rpx;\r\n          border-radius: 40rpx;\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #A6A6A6;\n}\n#article-previous-next {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  margin-left: 30.01rpx;\r\n  margin-right: 29rpx;\r\n  padding-bottom: 40rpx;\r\n  font-size: 28rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 400;\r\n  color: #626262;\n}\n#previous-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  height: 60rpx;\r\n  background: #F3F3F3;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\n}\n.article-link {\r\n  display: display;\r\n  width: 330rpx;\r\n  padding-left: 15.01rpx;\r\n  padding-top: 16rpx;\r\n  margin-bottom: 17rpx;\r\n  overflow: hidden;\r\n  /*height: 60px;*/\r\n  text-overflow: ellipsis;\r\n  display: -webkit-box;\r\n  -webkit-line-clamp: 1;\r\n  -webkit-box-orient: vertical;\r\n  color: #A3A3A3;\n}\n#next-view {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  height: 60rpx;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\r\n  background: #F3F3F3;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -21065,16 +21028,14 @@ var render = function() {
         ],
         1
       ),
-      _vm._$g(5, "i")
-        ? _c("zaudio", {
-            attrs: { _i: 5 },
-            on: {
-              praise: function($event) {
-                return _vm.$handleViewEvent($event)
-              }
-            }
-          })
-        : _vm._e()
+      _c("zaudio", {
+        attrs: { _i: 5 },
+        on: {
+          praise: function($event) {
+            return _vm.$handleViewEvent($event)
+          }
+        }
+      })
     ],
     1
   )
@@ -21203,135 +21164,128 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._$g(0, "i")
-    ? _c(
+  return _c(
+    "v-uni-view",
+    { staticClass: _vm._$g(0, "sc"), attrs: { _i: 0 } },
+    [
+      _c(
         "v-uni-view",
-        { staticClass: _vm._$g(0, "sc"), attrs: { _i: 0 } },
+        { staticClass: _vm._$g(1, "sc"), attrs: { _i: 1 } },
         [
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(1, "sc"), attrs: { _i: 1 } },
+            { staticClass: _vm._$g(2, "sc"), attrs: { _i: 2 } },
             [
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(2, "sc"), attrs: { _i: 2 } },
-                [
-                  _c("v-uni-image", {
-                    staticClass: _vm._$g(3, "sc"),
-                    class: _vm._$g(3, "c"),
-                    attrs: {
-                      src: _vm._$g(3, "a-src"),
-                      mode: "aspectFit",
-                      _i: 3
-                    }
-                  }),
-                  [
-                    _vm._$g(5, "i")
-                      ? _c("v-uni-image", {
-                          staticClass: _vm._$g(5, "sc"),
-                          attrs: { src: _vm._$g(5, "a-src"), alt: "", _i: 5 },
-                          on: {
-                            click: function($event) {
-                              return _vm.$handleViewEvent($event)
-                            }
-                          }
-                        })
-                      : _c("v-uni-image", {
-                          staticClass: _vm._$g(6, "sc"),
-                          attrs: { src: _vm._$g(6, "a-src"), alt: "", _i: 6 },
-                          on: {
-                            click: function($event) {
-                              return _vm.$handleViewEvent($event)
-                            }
-                          }
-                        })
-                  ]
-                ],
-                2
-              ),
-              _c(
-                "v-uni-view",
-                { attrs: { _i: 7 } },
-                [
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
-                    [_vm._v(_vm._$g(8, "t0-0"))]
-                  ),
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
-                    [_vm._v(_vm._$g(9, "t0-0"))]
-                  ),
-                  _c(
-                    "v-uni-view",
-                    {
-                      staticClass: _vm._$g(10, "sc"),
-                      attrs: { _i: 10 },
+              _c("v-uni-image", {
+                staticClass: _vm._$g(3, "sc"),
+                class: _vm._$g(3, "c"),
+                attrs: { src: _vm._$g(3, "a-src"), mode: "aspectFit", _i: 3 }
+              }),
+              [
+                _vm._$g(5, "i")
+                  ? _c("v-uni-image", {
+                      staticClass: _vm._$g(5, "sc"),
+                      attrs: { src: _vm._$g(5, "a-src"), alt: "", _i: 5 },
                       on: {
                         click: function($event) {
                           return _vm.$handleViewEvent($event)
                         }
                       }
+                    })
+                  : _c("v-uni-image", {
+                      staticClass: _vm._$g(6, "sc"),
+                      attrs: { src: _vm._$g(6, "a-src"), alt: "", _i: 6 },
+                      on: {
+                        click: function($event) {
+                          return _vm.$handleViewEvent($event)
+                        }
+                      }
+                    })
+              ]
+            ],
+            2
+          ),
+          _c(
+            "v-uni-view",
+            { attrs: { _i: 7 } },
+            [
+              _c(
+                "v-uni-view",
+                { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
+                [_vm._v(_vm._$g(8, "t0-0"))]
+              ),
+              _c("v-uni-view", {
+                staticClass: _vm._$g(9, "sc"),
+                attrs: { _i: 9 }
+              }),
+              _c(
+                "v-uni-view",
+                {
+                  staticClass: _vm._$g(10, "sc"),
+                  attrs: { _i: 10 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [
+                  _c("u-icon", { attrs: { _i: 11 } }),
+                  _c(
+                    "v-uni-text",
+                    {
+                      staticStyle: { "margin-left": "10px" },
+                      attrs: { _i: 12 }
                     },
-                    [
-                      _c("u-icon", { attrs: { _i: 11 } }),
-                      _c(
-                        "v-uni-text",
-                        {
-                          staticStyle: { "margin-left": "10px" },
-                          attrs: { _i: 12 }
-                        },
-                        [_vm._v(_vm._$g(12, "t0-0"))]
-                      )
-                    ],
-                    1
+                    [_vm._v(_vm._$g(12, "t0-0"))]
                   )
                 ],
                 1
               )
             ],
             1
-          ),
+          )
+        ],
+        1
+      ),
+      _c(
+        "v-uni-view",
+        { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
+        [
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
-            [
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(14, "sc"), attrs: { _i: 14 } },
-                [_vm._v(_vm._$g(14, "t0-0"))]
-              ),
-              _c("v-uni-slider", {
-                staticClass: _vm._$g(15, "sc"),
-                attrs: {
-                  activeColor: _vm._$g(15, "a-activeColor"),
-                  "block-size": "16",
-                  value: _vm._$g(15, "a-value"),
-                  max: _vm._$g(15, "a-max"),
-                  _i: 15
-                },
-                on: {
-                  changing: function($event) {
-                    return _vm.$handleViewEvent($event)
-                  },
-                  change: function($event) {
-                    return _vm.$handleViewEvent($event)
-                  }
-                }
-              }),
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
-                [_vm._v(_vm._$g(16, "t0-0"))]
-              )
-            ],
-            1
+            { staticClass: _vm._$g(14, "sc"), attrs: { _i: 14 } },
+            [_vm._v(_vm._$g(14, "t0-0"))]
+          ),
+          _c("v-uni-slider", {
+            staticClass: _vm._$g(15, "sc"),
+            attrs: {
+              activeColor: _vm._$g(15, "a-activeColor"),
+              "block-size": "16",
+              value: _vm._$g(15, "a-value"),
+              max: _vm._$g(15, "a-max"),
+              _i: 15
+            },
+            on: {
+              changing: function($event) {
+                return _vm.$handleViewEvent($event)
+              },
+              change: function($event) {
+                return _vm.$handleViewEvent($event)
+              }
+            }
+          }),
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
+            [_vm._v(_vm._$g(16, "t0-0"))]
           )
         ],
         1
       )
-    : _vm._e()
+    ],
+    1
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -21366,7 +21320,7 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
 
 {
-  props: ["default_cover", "continue", "autoplay", "themeColor", "coverImgUrl", "sfdz", "dzcs"],
+  props: ["default_cover", "continue", "autoplay", "themeColor", "coverImgUrl", "sfdz", "title", "singer", "dzcs"],
   data: function data() {
     return {
       wxsProps: {} };
@@ -21870,6 +21824,9 @@ var render = function() {
                             _c("u-search", {
                               attrs: { _i: "7-" + _si },
                               on: {
+                                search: function($event) {
+                                  return _vm.$handleViewEvent($event)
+                                },
                                 change: function($event) {
                                   return _vm.$handleViewEvent($event)
                                 }
@@ -22009,7 +21966,7 @@ var render = function() {
                             key: item,
                             attrs: { _i: "18-" + $30 + "-" + $33 },
                             on: {
-                              view_audio: function($event) {
+                              view_video: function($event) {
                                 return _vm.$handleViewEvent($event)
                               }
                             }
@@ -22174,15 +22131,23 @@ var render = function() {
       staticClass: _vm._$g(0, "sc"),
       attrs: { _i: 0 },
       on: {
-        touchstart: function($event) {
-          return _vm.$handleViewEvent($event)
+        click: function($event) {
+          return _vm.$handleViewEvent($event, { stop: true })
         }
       }
     },
     [
       _c(
         "v-uni-view",
-        { staticClass: _vm._$g(1, "sc"), attrs: { _i: 1 } },
+        {
+          staticClass: _vm._$g(1, "sc"),
+          attrs: { _i: 1 },
+          on: {
+            click: function($event) {
+              return _vm.$handleViewEvent($event, { stop: true })
+            }
+          }
+        },
         [
           _c(
             "v-uni-text",
@@ -22191,11 +22156,26 @@ var render = function() {
           ),
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(3, "sc"), attrs: { _i: 3 } },
+            {
+              staticClass: _vm._$g(3, "sc"),
+              attrs: { _i: 3 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event, { stop: true })
+                }
+              }
+            },
             [
               _c(
                 "v-uni-view",
-                { attrs: { _i: 4 } },
+                {
+                  attrs: { _i: 4 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event, { stop: true })
+                    }
+                  }
+                },
                 [
                   _vm._$g(5, "i")
                     ? [_c("u-icon", { attrs: { _i: 6 } })]
@@ -22204,7 +22184,15 @@ var render = function() {
                     : _vm._e(),
                   _c(
                     "v-uni-view",
-                    { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
+                    {
+                      staticClass: _vm._$g(9, "sc"),
+                      attrs: { _i: 9 },
+                      on: {
+                        click: function($event) {
+                          return _vm.$handleViewEvent($event, { stop: true })
+                        }
+                      }
+                    },
                     [
                       _c("v-uni-text", { attrs: { _i: 10 } }, [
                         _vm._v("播放" + _vm._$g(10, "t0-0"))
@@ -22221,25 +22209,55 @@ var render = function() {
                 [
                   _c(
                     "v-uni-view",
-                    { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
+                    {
+                      staticClass: _vm._$g(12, "sc"),
+                      attrs: { _i: 12 },
+                      on: {
+                        click: function($event) {
+                          return _vm.$handleViewEvent($event, { stop: true })
+                        }
+                      }
+                    },
                     [
+                      _vm._$g(13, "i")
+                        ? _c(
+                            "v-uni-view",
+                            {
+                              staticClass: _vm._$g(13, "sc"),
+                              attrs: { _i: 13 },
+                              on: {
+                                click: function($event) {
+                                  return _vm.$handleViewEvent($event, {
+                                    stop: true
+                                  })
+                                }
+                              }
+                            },
+                            [
+                              _c("v-uni-image", {
+                                staticClass: _vm._$g(14, "sc"),
+                                attrs: { src: _vm._$g(14, "a-src"), _i: 14 }
+                              }),
+                              _c("v-uni-text", { attrs: { _i: 15 } }, [
+                                _vm._v(_vm._$g(15, "t0-0"))
+                              ])
+                            ],
+                            1
+                          )
+                        : _vm._e(),
                       _c(
                         "v-uni-view",
-                        { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
-                        [
-                          _c("v-uni-image", {
-                            staticClass: _vm._$g(14, "sc"),
-                            attrs: { src: _vm._$g(14, "a-src"), _i: 14 }
-                          }),
-                          _c("v-uni-text", { attrs: { _i: 15 } }, [
-                            _vm._v(_vm._$g(15, "t0-0"))
-                          ])
-                        ],
-                        1
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
+                        {
+                          staticClass: _vm._$g(16, "sc"),
+                          attrs: { _i: 16 },
+                          on: {
+                            click: function($event) {
+                              return _vm.$handleViewEvent($event, {
+                                stop: true
+                              })
+                            }
+                          }
+                        },
                         [
                           _c("v-uni-image", {
                             staticClass: _vm._$g(17, "sc"),
@@ -22268,12 +22286,25 @@ var render = function() {
         {
           staticClass: _vm._$g(19, "sc"),
           style: _vm._$g(19, "s"),
-          attrs: { _i: 19 }
+          attrs: { _i: 19 },
+          on: {
+            click: function($event) {
+              return _vm.$handleViewEvent($event, { stop: true })
+            }
+          }
         },
         [
           _c(
             "v-uni-view",
-            { class: _vm._$g(20, "c"), attrs: { _i: 20 } },
+            {
+              class: _vm._$g(20, "c"),
+              attrs: { _i: 20 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event, { stop: true })
+                }
+              }
+            },
             [
               _vm._$g(21, "i")
                 ? _c("v-uni-image", {
@@ -22478,8 +22509,8 @@ var render = function() {
       staticClass: _vm._$g(0, "sc"),
       attrs: { _i: 0 },
       on: {
-        touchstart: function($event) {
-          return _vm.$handleViewEvent($event)
+        click: function($event) {
+          return _vm.$handleViewEvent($event, { stop: true })
         }
       }
     },
@@ -22999,7 +23030,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ./node_modules/css-loader/dist/runtime/api.js */ 19);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.speed-list {\r\n  background-color: #000000;\r\n  width: 120px;\r\n  height: 230px;\n}\n::-webkit-scrollbar {\r\n  display: none;\r\n  width: 0;\r\n  height: 0;\r\n  color: transparent;\n}\n.slot-wrap {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 100%;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  /*padding-left:32rpx;*/\r\n  /*padding-right:34rpx;*/\r\n  /*padding-bottom: 20rpx;*/\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  margin-top: 35rpx;\r\n  margin-bottom: 31rpx;\n}\n.slot-wrap #search-box {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: start;\r\n  -webkit-justify-content: flex-start;\r\n          justify-content: flex-start;\r\n  width: 100%;\n}\n.slot-wrap #search-box #slot-title {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-left: 32rpx;\r\n  width: 160rpx;\r\n  /*flex-shrink: 1;*/\r\n  height: 60rpx;\r\n  font-size: 40rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 800;\r\n  color: #343434;\n}\n.slot-wrap #search-box #slot-input {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: reverse;\r\n  -webkit-flex-direction: row-reverse;\r\n          flex-direction: row-reverse;\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\r\n  width: 500rpx;\r\n  height: 60rpx;\r\n  margin-left: 20rpx;\r\n  /*padding-left: 20rpx;*/\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  background: #F2F2F2;\r\n  -webkit-border-radius: 30rpx;\r\n          border-radius: 30rpx;\n}\n#tab-view {\r\n  border-bottom: 1px solid #F2F2F2;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\n}\n.speed-list > uni-view {\r\n  color: #FFFFFF;\r\n  text-align: center;\r\n  font-size: 16px;\r\n  height: 46px;\r\n  line-height: 46px;\n}\n.myVideo {\r\n  width: 686rpx;\r\n  margin-left: 32rpx;\r\n  margin-right: 32rpx;\n}\n.swiper-item-css {\r\n  margin-top: 20px;\n}\n.swiper-item-top {\r\n  margin-top: 0px;\n}\nuni-view.active {\r\n  color: #09BB07;\n}\r\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\n.speed-list {\r\n  background-color: #000000;\r\n  width: 120px;\r\n  height: 230px;\n}\n::-webkit-scrollbar {\r\n  display: none;\r\n  width: 0;\r\n  height: 0;\r\n  color: transparent;\n}\n.slot-wrap {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  width: 100%;\r\n  -webkit-box-orient: vertical;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: column;\r\n          flex-direction: column;\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  /*padding-left:32rpx;*/\r\n  /*padding-right:34rpx;*/\r\n  /*padding-bottom: 20rpx;*/\r\n  -webkit-box-pack: justify;\r\n  -webkit-justify-content: space-between;\r\n          justify-content: space-between;\r\n  margin-top: 35rpx;\r\n  margin-bottom: 31rpx;\n}\n.slot-wrap #search-box {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: start;\r\n  -webkit-justify-content: flex-start;\r\n          justify-content: flex-start;\r\n  width: 100%;\n}\n.slot-wrap #search-box #slot-title {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  margin-left: 32rpx;\r\n  width: 160rpx;\r\n  /*flex-shrink: 1;*/\r\n  height: 60rpx;\r\n  font-size: 40rpx;\r\n  font-family: PingFang SC;\r\n  font-weight: 800;\r\n  color: #343434;\n}\n.slot-wrap #search-box #slot-input {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: reverse;\r\n  -webkit-flex-direction: row-reverse;\r\n          flex-direction: row-reverse;\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\r\n  width: 500rpx;\r\n  height: 60rpx;\r\n  margin-left: 20rpx;\r\n  /*padding-left: 20rpx;*/\r\n  -webkit-box-align: center;\r\n  -webkit-align-items: center;\r\n          align-items: center;\r\n  background: #F2F2F2;\r\n  -webkit-border-radius: 30rpx;\r\n          border-radius: 30rpx;\n}\n .u-tabs {\r\n  width: 100%;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\n}\n#tab-view {\r\n  border-bottom: 1px solid #F2F2F2;\r\n  width: 100%;\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: flex;\r\n  z-index: 99999999999;\r\n  position: fixed;\r\n  -webkit-box-pack: center;\r\n  -webkit-justify-content: center;\r\n          justify-content: center;\n}\n.speed-list > uni-view {\r\n  color: #FFFFFF;\r\n  text-align: center;\r\n  font-size: 16px;\r\n  height: 46px;\r\n  line-height: 46px;\n}\n.myVideo {\r\n  width: 686rpx;\r\n  margin-left: 32rpx;\r\n  margin-right: 32rpx;\n}\n.swiper-item-css {\r\n  margin-top: 20px;\n}\n.swiper-item-top {\r\n  margin-top: 0px;\n}\nuni-view.active {\r\n  color: #09BB07;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -23664,16 +23695,42 @@ var render = function() {
     "v-uni-view",
     { style: _vm._$g(0, "s"), attrs: { id: "root-view", _i: 0 } },
     [
-      _vm._$g(1, "i")
-        ? _c("video-course", {
-            attrs: { _i: 1 },
-            on: {
-              updateVideoProgress: function($event) {
-                return _vm.$handleViewEvent($event)
-              }
-            }
-          })
-        : _vm._e()
+      _c("v-uni-video", {
+        ref: "myVideo",
+        staticClass: _vm._$g(1, "sc"),
+        style: _vm._$g(1, "s"),
+        attrs: {
+          id: "myVideo",
+          autoplay: true,
+          "show-center-play-btn": true,
+          controls: true,
+          "initial-time": _vm._$g(1, "a-initial-time"),
+          src: _vm._$g(1, "a-src"),
+          _i: 1
+        },
+        on: {
+          ended: function($event) {
+            return _vm.$handleViewEvent($event)
+          },
+          exitFullScreen: function($event) {
+            return _vm.$handleViewEvent($event)
+          },
+          pause: function($event) {
+            return _vm.$handleViewEvent($event)
+          },
+          timeupdate: function($event) {
+            return _vm.$handleViewEvent($event)
+          },
+          fullscreenchange: function($event) {
+            return _vm.$handleViewEvent($event)
+          }
+        }
+      }),
+      _c("v-uni-view", {
+        staticClass: _vm._$g(2, "sc"),
+        style: _vm._$g(2, "s"),
+        attrs: { _i: 2 }
+      })
     ],
     1
   )
@@ -23971,7 +24028,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ./node_modules/css-loader/dist/runtime/api.js */ 19);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n#root-view {\r\n\tdisplay: -webkit-box;\r\n\tdisplay: -webkit-flex;\r\n\tdisplay: flex;\r\n\t-webkit-box-align: start;\r\n\t-webkit-align-items: flex-start;\r\n\t        align-items: flex-start;\n}\r\n", ""]);
+exports.push([module.i, "\n#root-view {\r\n\tdisplay: -webkit-box;\r\n\tdisplay: -webkit-flex;\r\n\tdisplay: flex;\r\n\t/*flex-direction: column;\r\n\talign-items: flex-start;*/\n}\n.w-view {\r\n\twidth: 100%;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 

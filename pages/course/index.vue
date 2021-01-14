@@ -6,7 +6,7 @@
 					<view id="search-box">
 						<view id="slot-title" @tap="gotoTop">小妙教程</view>
 						<view id="slot-input">
-							<u-search placeholder="大家都在搜" @change="courseSearch(1)" v-model="keyword" :show-action="false"></u-search>
+							<u-search @search="courseSearch(1)" placeholder="大家都在搜" @change="courseSearch(1)" v-model="keyword" :show-action="false"></u-search>
 						</view>
 					</view>
 				</view>
@@ -18,23 +18,17 @@
 			@change="switchTab" :show-bar="false" :bar-width="110" :current="activeTabIndex" :is-scroll="isScroll"></u-tabs>
 		</view>
 		
-		<swiper :current="activeTabIndex" :scroll-with-animation="true" 	@change="switchCourseTab" :style="'width:100%;height:'+scrollHeight+'px;'">
+		<swiper :current="activeTabIndex" :scroll-with-animation="true" 	@change="switchCourseTab" :style="'width:100%;height:'+scrollHeight+'px;margin-top:80rpx;'">
 			<swiper-item :class="[ 'swiper-item-css', index==0?'swiper-item-top':'' ]" v-for="(item,index) in tabArr" :key="item.navId">
 				<scroll-view :style="'height:'+scrollHeight+'px;'"  scroll-y="true"	 
 				@scrolltolower="lower" @scrolltoupper="upper"   :scroll-top="scrollTop">
 					<view v-if="activeTabIndex == 0">
-						
-						<article-course @view_article="getArticleView" :key="info.id" v-for="(info,m) in articeList" :info="info" :isShowLock="info.isShowLock">
-							
-						</article-course>
-						
+						<article-course @view_article="getArticleView" :key="info.id" v-for="(info,m) in articeList" :info="info" :isShowLock="info.isShowLock"></article-course>
 					</view>						
 					<view v-else-if="activeTabIndex == 1">
-						
-						<audio-course @view_audio="viewAudio(item)" :thumbUrl="item.thumbUrl" :score_num="item.score_num" :title="item.title" :isShowLock="item.isShowLock" :playCnt="item.readNum" v-for="(item, key) in allAudioList" :key="item.id" :wzsccs="item.wzsccs">
-							
+						<!--  @tap.native="viewAudio(item)"   -->
+						<audio-course :courseType="2"  :thumbUrl="item.thumbUrl" @view_audio="viewAudio(item)"  :score_num="item.score_num" :title="item.title" :isShowLock="item.isShowLock" :playCnt="item.readNum" v-for="(item, key) in allAudioList" :key="item.id" :wzsccs="item.wzsccs">
 						</audio-course>
-						
 					</view>
 					<view v-else>
 						<!-- :danmu-list="danmuList" enable-danmu danmu-btn -->
@@ -42,8 +36,7 @@
 						<video class="myVideo" :controls="false" 	 src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
 							@error="videoErrorCallback"></video>
 							-->
-							
-						<audio-course :courseType="3" :thumbUrl="item.thumbUrl" @view_audio="viewVideo(item)" :score_num="item.score_num" :title="item.title" :isShowLock="item.isShowLock" :playCnt="item.readNum" v-for="(item, key) in videoList" :key="item.id"></audio-course>
+						<audio-course :courseType="3" :thumbUrl="item.thumbUrl" @view_video="viewVideo(item)" :score_num="item.score_num" :title="item.title" :isShowLock="item.isShowLock" :playCnt="item.readNum" v-for="(item, key) in videoList" :key="item.id"></audio-course>
 					</view>
 				</scroll-view>
 			</swiper-item>
@@ -97,7 +90,7 @@
 				info: {
 					
 				},
-				isShowCover: '',
+				isShowCover: true,
 				/*danmuList: [{
 						text: '第 1s 出现的弹幕',
 						color: '#ff0000',
@@ -119,17 +112,17 @@
 		onReady() {
 			
 		},
-		onShow() {
+		async onShow() {
+			console.log('onShow...');
 			//渲染当前列表中歌曲的播放的进度
 			//必须放在onShow中A
 			//this.set_renderIndex(this.playIndex);
-			if (this.activeTabIndex == 0) {
-				this.getArticleList(1);
-			} else if(this.activeTabIndex == 1) {
-				this.getAudioList(1);
-			} else if(this.activeTabIndex == 2) {
-				this.getVideoList(1);
-			}
+			this.keyword = '';
+			this.getArticleList(1);
+			this.getAudioList(1);
+			this.getVideoList(1);
+			//const playinfo = { ...mapGetters(['playinfo']) };	
+			console.log('playinfo:'+JSON.stringify(this.playinfo));
 			const title = this.playinfo?this.playinfo.title:'';
 			const status = this.paused|| this.n_pause?0:1;
 			const imgUrl = this.playinfo.coverImgUrl?this.playinfo.coverImgUrl: '';
@@ -139,6 +132,7 @@
 				coverImg: imgUrl,
 				id: this.playinfo.id
 			};
+			console.log('this.playinfo:'+JSON.stringify(this.playinfo));
 			this.isShowCover = this.playinfo.src ? true: false;
 			console.log('this.info'+JSON.stringify(this.info));
 		},
@@ -192,16 +186,16 @@
 				}
 			}
 		},
+		onTabItemTap() {
+			
+		},
 		async onLoad() {
 			console.log('onLoad...');
 			const info = uni.getSystemInfoSync();
 			this.platform = getApp().globalData.platform;
 			this.scrollHeight = info.windowHeight - info.statusBarHeight - (this.platform == 1?58:54) - uni.upx2px(80);
-			await this.getCourseCids();
-			this.getArticleList(1);
-			this.getAudioList(1);
-			this.getVideoList(1);
 			
+			await this.getCourseCids();
 			/*const audioList = this.allAudioList.filter((info)=> {
 				return !info.isShowLock;
 			});
@@ -210,22 +204,33 @@
 		},
 		methods: {
 			// 'set_renderIndex','set_audio'
-			...mapMutations([ 'set_audiolist', 'set_playinfo','set_curPlayId', 'setArticleLogList',
+			...mapMutations([ 'set_audiolist', 'set_playinfo', 'setArticleLogList',
 			 'setVideoInfo', 'setVideoLogList','setUserInfoVals' ]),
 			async viewAudio(info) {
 				// 跳转到音频详情页...
 				const storeInfo = this.getStoreAudioInfo(info);
-				const playinfo = {
-					id: storeInfo.id,
-					title: storeInfo.title,
-					singer: storeInfo.singer,
-					fromLog: 0,
-					coverImgUrl: storeInfo.thumbUrl,
-				};
-				if(this.curPlayId!=storeInfo.id) {
+				console.log('view Audio...');
+				
+				
+				const viewFunc = (storeInfo) => {
+					let playinfo = {
+						id: storeInfo.id,
+						title: storeInfo.title,
+						src: info.src,
+						singer: storeInfo.singer,
+						fromLog: 0,
+						isContinue: 0,
+						coverImgUrl: storeInfo.thumbUrl,
+					};
+					const curPlayId = uni.getStorageSync('audio_play_id');
+					console.log('curPlayId:'+curPlayId+',id:'+storeInfo.id);
+					if(curPlayId!=storeInfo.id) {
+						
+					} else {
+						// 相同的,对应的值...
+						playinfo.isContinue = 1;
+					}
 					this.set_playinfo(playinfo);
-				}
-				const viewFunc = (storeInfo) => {					
 					// 扣除当前用户的积分,然后写进vuex,cache中...
 					this.updateScore(storeInfo.id, this.uid, ()=> {
 						uni.navigateTo({
@@ -250,13 +255,15 @@
 			},
 			closeAudioCover() {
 				console.log('close audio cover...');
+				this.set_playinfo({
+					src: ''
+				});
 				this.isShowCover = false;
 			},
 			async viewVideo(info) {
 				// 跳转到音频详情页...
 				console.log('viewVideo_info:'+JSON.stringify(info));
 				info.fromLog = 1;
-				this.setVideoInfo(info);
 				const viewFunc = (info) => {
 					// 扣除当前用户的积分,然后写进vuex,cache中...
 					if (info.isShowLock) {
@@ -265,6 +272,7 @@
 						this.setVideoLogList(info);
 					}
 					this.updateScore(info.id, this.uid, ()=> {
+						this.setVideoInfo(info);
 						uni.navigateTo({
 							url: '/pages/course/video_detail?isFromIndex=1'
 						});
@@ -373,7 +381,12 @@
 					if (cid == 1) {
 						this.articeList = isAppend? this.articeList.concat(articleList): articleList;
 					} else if(cid == 2) {
-						this.allAudioList = !isAppend? articleList: this.allAudioList.concat(articleList);
+						this.allAudioList = !isAppend? articleList: this.allAudioList.concat(articleList);					const list = this.allAudioList;
+						this.set_audiolist({
+							data: list,
+							status: false
+						});
+						console.log('hehe!');
 					} else if(cid == 3) {
 						this.videoList    = !isAppend? articleList: this.videoList.concat(articleList);
 					}
@@ -432,10 +445,21 @@
 				console.log('e', e);
 				console.log('switchCourseTab...');
 				this.activeTabIndex = e.detail.current;
+				const index = e.detail.current;
 				nowpage = 1;
 				// 这里如果搜索框有值,再进行搜索一下
 				if (this.keyword) {
 					this.courseSearch(1);
+				} else {
+					// 如果没有搜索值
+					if (index == 0) {
+						this.articeList = this.getArticleList(1);
+					} else if(index == 1) {
+						this.allAudioList = this.getAudioList(1);
+					} else if(index == 2) {
+						this.videoList = this.getVideoList(1);
+					}
+					return;
 				}
 			},
 			async getUserScore() {
@@ -506,6 +530,18 @@
 			lower() {
 				// 这里下拉加载数据...
 				const index = this.activeTabIndex;
+				if (this.keyword) {
+					totalpage = totalpage4;
+					if (nowpage>=totalpage) {
+						return;
+					}
+					setTimeout(()=>{
+						nowpage++;
+						this.courseSearch(nowpage, true);
+					}, 500);
+					return;
+				}
+				// 这里下拉加载数据
 				if (index == 0) {
 					totalpage = totalpage1;
 					if (nowpage>=totalpage) {
@@ -533,19 +569,7 @@
 						nowpage++;
 						this.getVideoList(nowpage, true);
 					}, 500);
-				} 
-				
-				if (this.keyword) {
-					totalpage = totalpage4;
-					if (nowpage>=totalpage) {
-						return;
-					}
-					setTimeout(()=>{
-						nowpage++;
-						this.courseSearch(nowpage, true);
-					}, 500);
 				}
-				// 这里下拉加载数据
 			},
 			upper() {
 				// 上拉加载下一页
@@ -862,10 +886,17 @@
 		}
 	}
 }
-
+/deep/ .u-tabs {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
 #tab-view {
 	border-bottom: 1px solid #F2F2F2;
+	width: 100%;
 	display: flex;
+	z-index: 99999999999;
+	position: fixed;
 	justify-content: center;
 }
 .speed-list >view {

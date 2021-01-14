@@ -9,6 +9,13 @@ export default {
 		console.log('Launch start1:', s1.getTime());
 		//#ifdef APP-PLUS
 		plus.screen.lockOrientation('portrait'); //锁死屏幕方向为竖屏  
+		let global = {};
+		plus.runtime.getProperty(plus.runtime.appid, function(inf) {
+			global.version = inf.version;
+			console.log('global'+global.version);
+		});
+		console.log('version:'+plus.runtime.version+',code:'+plus.runtime.versionCode);
+		console.log('global:'+JSON.stringify(global));
 		//#endif
 	
 		let _self = this;
@@ -49,118 +56,73 @@ export default {
 		    let args= plus.runtime.arguments;    
 			console.log('args:'+JSON.stringify(args));
 		});
+		this.checkAppUpdate();
 		//#endif
 		
 		uni.setStorageSync('modelmes', modelmes);
 	},
 	methods:{
-		checkAppUpdate() {
+		async checkAppUpdate() {
 			// #ifdef APP-PLUS
-			let global = {};
-			plus.runtime.getProperty(plus.runtime.appid, function(inf) {
-				global.version = inf.version;
-			});
-			// 锁定屏幕方向
-			// plus.screen.lockOrientation('portrait-primary'); //锁定
-			// 检测升级
-			let self = this;
-			uni.getSystemInfo({
-				success: function(res) {
-					self.platform = res.platform;
-									// 获取系统平台 ios 安卓  以后可能有鸿蒙系统
-				}
-			});
-			let data = {
-				// 系统版本
-				version: global.version,
-				// 系统平台
-				os: this.platform
-			};
-			let url = global.host + '/api/update/checkversion';
-			uni.request({
-				url: url, //检查更新的服务器地址
-				// dataType:"GET",
-				data: data,
-				success: res => {
-					if (res.data.code == 1 && res.data.isUpdate) {
-						// 提醒用户更新
-						uni.showModal({
-							content: res.data.note ? res.data.note : '是否更新',
-							success: showResult => {
-								if (showResult.confirm) {
-									plus.runtime.openURL(res.data.data.url);
-								}
-							}
-						});
-					}
-				}
-			});
+			plus.runtime.getProperty(plus.runtime.appid, async (widgetInfo) => {
+				const p = this.globalData.platform;
+				const url = this.globalData.serverUri;
+				const auth = this.globalData.auth;
+				const suffix = '?';
+				/*const res = await http.request(  
+					url+suffix,
+					{  
+						auth: auth,
+						version:  widgetInfo.version, // 应用版本号 （资源包版本）                
+						platform: p
+					}   
+				);  */
+				console.log('result');
+				this.downloadApp();
+			});   
 			// #endif
 		},
-		/**
-		  * 下载小程序新版本并重启应用
-		  */
-		downLoadAndUpdate(updateManager) {
-		    uni.showLoading();
-		    //静默下载更新小程序新版本
-		    updateManager.onUpdateReady(function () {
-		      uni.hideLoading();
-		      //新的版本已经下载好，调用 applyUpdate 应用新版本并重启
-		      updateManager.applyUpdate();
-		    });
-		    updateManager.onUpdateFailed(function () {
-		      // 新的版本下载失败
-		      uni.showModal({
-		        title: '已经有新版本了哟~',
-		        content: '新版本已经上线啦~，请您删除当前小程序，重新搜索打开哟~',
-		      });
-		    });
+		downloadApp(res) {
+			//const data = res.data;
+			const data = {
+				isUpdate: true,
+				path:     'http://kuxou.com/upload1/20210113/__UNI__AC0B737.wgt'
+			};
+			const _self = this;
+			uni.showModal({
+				title: '提示',
+				content:'检测到最新包,是否升级到最新版本?',
+				complete() {
+					_self.confirmDownload(data);
+				}
+			});
 		},
-		updateVersion() {
-			let manager = uni.canIUse('getUpdateManager');
-			if (manager) {
-				console.log('updateVersion');
-				const updateManager = uni.getUpdateManager();    // 获取更新管理器对象
-				let _self = this;
-				updateManager.onCheckForUpdate(function(res){
-					console.log('updateVersion res', res);
-					if(res.hasUpdate) {
-						updateManager.onUpdateReady(function(){
-							uni.showModal({
-								title:'更新提示',
-								content:'新版本已经准备好，点击确定重新启动',
-								showCancel:false,
-								success:res=>{
-									if(res.confirm){
-										_self.downLoadAndUpdate(updateManager);
-									} else if(res.cancel) {
-										//#ifdef MP-WEIXIN
-										uni.showModal({
-										  title: '温馨提示~',
-										  content: '本次版本更新涉及到新的功能添加，旧版本无法正常访问的哦~',
-										  showCancel:false,//隐藏取消按钮
-										  confirmText:"确定更新",//只保留确定更新按钮
-										  success: function(res) {
-											if (res.confirm) {
-											  //下载新版本，并重新应用
-											  _self.downLoadAndUpdate(updateManager)
-											}
-										  }
-										});
-										//#endif
-									}
-								}
-							})
-						});
-						updateManager.onUpdateFailed(function(){
-							uni.showModal({
-								title:'提示',
-								content:'检查到有新版本，但是下载失败，请检查网络设置',
-								showCancel:false
-							});
-						});
-					}
-				});
+		confirmDownload(data) {
+			const p = this.globalData.platform;
+			// 更新包
+			if (data.isUpdate) {
+				if (p == 1) {
+					console.log('data.data.path',data.path)
+					uni.downloadFile({ // 下载资源包
+						url: data.path,  
+						success: (downloadResult) => { 
+							console.log('downloadResult',downloadResult)
+							if (downloadResult.statusCode === 200) {  
+								plus.runtime.install(downloadResult.tempFilePath, { // 安装资源包 
+									force: false  
+								}, () => {  
+									console.log('install success...');  
+									plus.runtime.restart(); // 重启APP  
+								}, (e) => {  
+									console.error('install fail...');  
+								});  
+							}  
+						}  
+					}); 
+				} else {
+					// IOS 包,跳转到应用市场
+					plus.runtime.openURL(data.path);
+				}
 			}
 		}
 	},
@@ -168,6 +130,7 @@ export default {
 		//#ifdef APP-PLUS
 		let args= plus.runtime.arguments;  
 		console.log('args:'+JSON.stringify(args));
+		this.checkAppUpdate();
 		if (args.pathName!='') {  
 			if (args.pathName == 'pages/mind_square/ask-ques-list') {
 				// 处理args参数，如直达到某新页面等  
@@ -183,7 +146,6 @@ export default {
 	onHide: function() {
 		console.log('App Hide');
 		// 退出的时候,将课程学习进度信息,进行持久化
-		
 	},
 	globalData: {
 		//serverUri: "https://www.kuwoi.com/index.php",

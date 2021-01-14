@@ -69,8 +69,9 @@
 				}
 			},
 			gotoTesting() {
+				const titleStr = util.cache('testing_title', null);
 				uni.redirectTo({
-					url:'/pages/index/testing_questions?nid='+nid
+					url:'/pages/index/testing_questions?nid='+nid+'&title='+titleStr
 				});
 			},
 			gotoTestingList() {

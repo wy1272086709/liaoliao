@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "",
+  "backgroundColor": "#FFFFFF",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "u-no-network": "/uview-ui/components/u-no-network/u-no-network",
+    "ls-swiper": "/components/ls-swiper/index"
+  }
+}

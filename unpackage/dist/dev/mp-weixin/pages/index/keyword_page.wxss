@@ -1,0 +1,102 @@
+
+view {
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+}
+#root-view {
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+}
+#search-tags {
+	width:686rpx;
+	/*background:rgba(255,255,255,1);*/
+	margin-left: 32rpx;
+	margin-right: 32rpx;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+}
+#seach-title {
+	font-size: 30rpx;
+	font-family: PingFang SC;
+	font-weight: 800;
+	color: #131313;
+	margin-top:10px;
+	margin-bottom: 25px;
+}
+#search-view-box {
+	width:750rpx;
+	/*border-bottom: 1px solid #CCCCCC;*/
+}
+#search-view {
+	width:686rpx;
+	height:60rpx;
+	padding-left: 10rpx;
+	padding-right: 10rpx;
+	/*background:rgba(255,255,255,1);*/
+	background: #F3F3F3;
+	-webkit-border-radius: 30rpx;
+	        border-radius: 30rpx;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	margin-left: 32rpx;
+	margin-right: 32rpx;
+	margin-top:25px;
+}
+#search-keyword-box {
+	width:100%;
+	-webkit-box-pack: start;
+	-webkit-justify-content: flex-start;
+	        justify-content: flex-start;
+	-webkit-flex-wrap: wrap;
+	        flex-wrap: wrap;
+}
+.keyword-btn {
+	padding-left:10px;
+	padding-right:10px;
+	height:20px;
+	display: inline-block;
+	line-height: 20px;
+	/*flex-basis: 100rpx;*/
+	/*justify-content: center;*/
+	text-align: center;
+	margin-right:50rpx;
+	margin-bottom:20rpx;
+	-webkit-border-radius: 10px;
+	        border-radius: 10px;
+	/*align-items: center;*/
+	font-size: 15px;
+	opacity: 0.5;
+	color:#FFFFFF;
+	font-family: Microsoft YaHei !important;
+}
+#search-text {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	height:80rpx;
+	font-size:27rpx;
+	font-family:SourceHanSansSC;
+	font-weight:400;
+	color:rgba(0,0,0,1);
+	width:90%;
+	margin-left:5px;
+}
+.search-class {
+	font-size: 28rpx;
+	font-family: PingFang SC;
+	font-weight: 400;
+	color: #B2B2B2;
+}
+#search-btn-view {
+	/*width:15%;*/
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+}
+

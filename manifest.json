@@ -2,8 +2,8 @@
     "name" : "myapp",
     "appid" : "__UNI__AC0B737",
     "description" : "",
-    "versionName" : "1.0.0",
-    "versionCode" : "100",
+    "versionName" : "2.0.0",
+    "versionCode" : 200,
     "transformPx" : false,
     "app-plus" : {
         "nvueCompiler" : "uni-app",
@@ -22,7 +22,8 @@
             "Share" : {},
             "Statistic" : {},
             "Payment" : {},
-            "OAuth" : {}
+            "OAuth" : {},
+            "VideoPlayer" : {}
         },
         "distribute" : {
             "android" : {

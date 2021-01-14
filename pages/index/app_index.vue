@@ -17,7 +17,7 @@
 			</template>
 		</u-navbar>
 		
-		<scroll-view :style="'height:'+scrollHeight+'px;'"  :scroll-y="true"	 @scrolltolower="lower">
+		<scroll-view :style="'height:'+scrollHeight+'px;'"  :scroll-y="true" @scrolltolower="lower">
 			<view id="root-view">
 				<view id="ads-view">
 					<ls-swiper :list="base_lsit" imgKey="ad_img" :crown="true" :loop="true" :shadow='true' :height="160" :previousMargin="60"
@@ -452,7 +452,11 @@
 	/*
 	@import "../../colorui/main.css";
 	*/
-   
+   scroll-view ::-webkit-scrollbar {
+		display: none;
+	   width: 0;
+	   height: 0;
+   }
 	
 .tower-swiper {
 	height: 420upx;
