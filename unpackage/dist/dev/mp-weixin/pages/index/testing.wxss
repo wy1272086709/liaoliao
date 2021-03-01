@@ -119,10 +119,8 @@ page {
   display: flex;
   width: 320rpx;
   height: 260rpx;
-  -webkit-border-top-left-radius: 20rpx;
-          border-top-left-radius: 20rpx;
-  -webkit-border-top-right-radius: 20rpx;
-          border-top-right-radius: 20rpx;
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
@@ -155,10 +153,8 @@ page {
   font-size: 26rpx;
   background-color: #E93EE3;
   color: #FFFFFF;
-  -webkit-border-bottom-left-radius: 36rpx;
-          border-bottom-left-radius: 36rpx;
-  -webkit-border-top-right-radius: 20rpx;
-          border-top-right-radius: 20rpx;
+  border-bottom-left-radius: 36rpx;
+  border-top-right-radius: 20rpx;
 }
 #testing-content .testing-box .testing-title-view .testing-title {
   display: -webkit-box;
@@ -195,8 +191,7 @@ page {
   width: 120rpx;
   height: 40rpx;
   border: 1px solid #A88FEF;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
           justify-content: center;

@@ -41,8 +41,7 @@ page {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
           justify-content: space-between;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   background-color: #FFFFFF;
   -webkit-flex-wrap: wrap;
           flex-wrap: wrap;
@@ -97,8 +96,7 @@ page {
   width: 210rpx;
   height: 60rpx;
   background: #C3AEFF;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
   line-height: 60rpx;
   text-align: center;
   font-size: 28rpx;

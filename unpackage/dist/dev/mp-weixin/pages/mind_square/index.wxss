@@ -84,8 +84,7 @@ scroll-view::-webkit-scrollbar {
   -webkit-box-direction: reverse;
   -webkit-flex-direction: row-reverse;
           flex-direction: row-reverse;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   width: 360rpx;
   height: 60rpx;
   margin-left: 20rpx;
@@ -94,8 +93,7 @@ scroll-view::-webkit-scrollbar {
   -webkit-align-items: center;
           align-items: center;
   background: #F2F2F2;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
 }
 #content .slot-wrap #slot-input #search-icon {
   margin-left: 21rpx;
@@ -118,8 +116,7 @@ scroll-view::-webkit-scrollbar {
   font-weight: 400;
   background-color: #F2F2F2;
   padding: 0rpx 28rpx;
-  -webkit-border-radius: 18rpx;
-          border-radius: 18rpx;
+  border-radius: 18rpx;
 }
 #content .slot-wrap #slot-img view {
   height: 60rpx;
@@ -199,8 +196,7 @@ scroll-view::-webkit-scrollbar {
 #content #mind-ask-box .mind-ask-view .mind-title .mind-title-left .avatar-class {
   width: 38px;
   height: 38px;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
 }
 #content #mind-ask-box .mind-ask-view .mind-title .mind-title-left .mind-nickName {
   /*margin-right:47rpx;*/

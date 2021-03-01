@@ -31,6 +31,9 @@ export default {
 		} else if(platform == 'ios'){
 			_self.globalData.platform = 2;
 		}
+		if (!modelmes) {
+			return;
+		}
 		if (modelmes.search('iPhone X') != -1 || modelmes.search('iPhoneX')!=-1) {
 		  _self.globalData.isIphoneX = true;
 		}
@@ -62,69 +65,101 @@ export default {
 		uni.setStorageSync('modelmes', modelmes);
 	},
 	methods:{
+		// #ifdef APP-PLUS
 		async checkAppUpdate() {
-			// #ifdef APP-PLUS
+			
 			plus.runtime.getProperty(plus.runtime.appid, async (widgetInfo) => {
 				const p = this.globalData.platform;
 				const url = this.globalData.serverUri;
 				const auth = this.globalData.auth;
-				const suffix = '?';
-				/*const res = await http.request(  
+				const suffix = '?mod=bb&ac=check_version';
+				console.log('widgetInfo:'+JSON.stringify(widgetInfo));
+				const res = await http.request(  
 					url+suffix,
 					{  
 						auth: auth,
-						version:  widgetInfo.version, // 应用版本号 （资源包版本）                
-						platform: p
+						bbh:  widgetInfo.version, // 应用版本号 （资源包版本）                
+						cid: p,
+						filterData: true
 					}   
-				);  */
-				console.log('result');
-				this.downloadApp();
+				);  
+				console.log('res:'+JSON.stringify(res));
+				if (res.version) {
+					res.version = res.version.replace(/\./g, '');
+					const v = parseInt(res.version);
+					console.log('widgetInfo.versionCode'+widgetInfo.versionCode+',v='+v);
+					// 小于最新的版本号，升级
+					if (parseInt(widgetInfo.versionCode)<v && res.sfgx == 1) {
+						console.log('result');
+					// 版本号判断,是否低于最高版本,如果低于,则需要安装
+						this.downloadApp(res.downurl);
+					}
+				}
 			});   
-			// #endif
+			
 		},
-		downloadApp(res) {
+		downloadApp(path) {
 			//const data = res.data;
 			const data = {
-				isUpdate: true,
-				path:     'http://kuxou.com/upload1/20210113/__UNI__AC0B737.wgt'
+				path:     path
 			};
 			const _self = this;
-			uni.showModal({
-				title: '提示',
-				content:'检测到最新包,是否升级到最新版本?',
-				complete() {
-					_self.confirmDownload(data);
-				}
-			});
+			// 是否取消更新
+			const isReject = util.cache('isRejectUpdate', null);
+			if (!isReject) {
+				uni.showModal({
+					title: '提示',
+					content:'检测到最新包,是否升级到最新版本?',
+					complete(res) {
+						if (res.confirm) {
+							// 安卓才有升级更新中的提示
+							if (_self.globalData.platform == 1) {
+								uni.showLoading({
+									title: '升级更新中...',
+									mask: true
+								})
+							}
+							_self.confirmDownload(data);
+						} else {
+							const d = new Date();
+							const todayLastTime = new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1);
+							// 距离当前23点59分59秒,剩余的时间
+							const diff = Math.round((todayLastTime.getTime() - d.getTime())/1000);
+							console.log('diff'+diff);
+							util.cache('isRejectUpdate', 1, diff); // 将当前日志的缓存写进去...
+						}
+					}
+				});
+			}
 		},
 		confirmDownload(data) {
 			const p = this.globalData.platform;
 			// 更新包
-			if (data.isUpdate) {
-				if (p == 1) {
-					console.log('data.data.path',data.path)
-					uni.downloadFile({ // 下载资源包
-						url: data.path,  
-						success: (downloadResult) => { 
-							console.log('downloadResult',downloadResult)
-							if (downloadResult.statusCode === 200) {  
-								plus.runtime.install(downloadResult.tempFilePath, { // 安装资源包 
-									force: false  
-								}, () => {  
-									console.log('install success...');  
-									plus.runtime.restart(); // 重启APP  
-								}, (e) => {  
-									console.error('install fail...');  
-								});  
-							}  
+			if (p == 1) {
+				console.log('data.data.path',data.path)
+				uni.downloadFile({ // 下载资源包
+					url: data.path,  
+					success: (downloadResult) => { 
+						console.log('downloadResult',downloadResult)
+						if (downloadResult.statusCode === 200) {  
+							plus.runtime.install(downloadResult.tempFilePath, { // 安装资源包 
+								force: true  
+							}, () => {  
+								console.log('install success...');  
+								uni.hideLoading();
+								plus.runtime.restart(); // 重启APP  
+							}, (e) => {  
+								console.error('install fail...'+JSON.stringify(e));  
+							});  
 						}  
-					}); 
-				} else {
-					// IOS 包,跳转到应用市场
-					plus.runtime.openURL(data.path);
-				}
+					}  
+				}); 
+			} else {
+				// IOS 包,跳转到应用市场
+				plus.runtime.openURL(data.path);
 			}
 		}
+		// #endif
 	},
 	onShow: function() {
 		//#ifdef APP-PLUS

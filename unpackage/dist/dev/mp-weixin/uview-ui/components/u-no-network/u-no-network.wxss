@@ -74,8 +74,7 @@
   color: #909399;
   font-size: 28rpx;
   padding: 6rpx 30rpx;
-  -webkit-border-radius: 3px;
-          border-radius: 3px;
+  border-radius: 3px;
 }
 .u-retry-hover.data-v-b9702e00 {
   color: #fff;

@@ -237,12 +237,12 @@
 				const url = apiPrefix +'?mod=ndgc&ac=search';
 				const res = await http.request(url, params);
 				if(res.status == 1) {
-					if(!isAppend) {
+					if(!isAppend) {        
 						this.mindList = res.data;
 					} else {
 						this.mindList = this.mindList.concat(res.data);
 					}
-					console.log('this.mindList', this.mindList);
+					console.log('this.mindList', this.mindList);             
 					totalpage = res.totalpage;
 				}
 			},

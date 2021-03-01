@@ -167,7 +167,11 @@
 				this.maskClass = 'maskClass';
 				this.isShowMask= true;
 			}*/
+			//this.getCategoryArr();
+			this.getSwiperList();
 			this.getCategoryArr();
+			this.getAdsInfo();
+			this.getNavList();
 		},
 		/*beforeDestroy() {
 			this.casesNavList = this.base_lsit = this.appNavList = this.swiperList = [];
@@ -179,10 +183,10 @@
 			this.platform = getApp().globalData.platform;
 			this.navHeight= this.platform == 2 ? 54:58;
 			this.scrollHeight = info.windowHeight - (this.platform == 2? 54:58) -info.statusBarHeight;			
-			this.getSwiperList();
+			/*this.getSwiperList();
 			this.getCategoryArr();
 			this.getAdsInfo();
-			this.getNavList();
+			this.getNavList();*/
 			/*const url = 'http://imgmyqx.ofbei.com/upload1/20201016/20201016145146_992.jpg';
 			fileFunc.createDir(url);
 			const fileName = plus.io.convertLocalFileSystemURL("_downloads/upload1/20201016/20201016145146_992.jpg");

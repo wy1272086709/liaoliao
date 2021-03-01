@@ -116,8 +116,7 @@ view {
   width: 686rpx;
   margin-top: 24rpx;
   height: 320rpx;
-  -webkit-border-radius: 27rpx;
-          border-radius: 27rpx;
+  border-radius: 27rpx;
 }
 .ads-image {
   width: 686rpx;

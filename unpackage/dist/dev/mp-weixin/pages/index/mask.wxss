@@ -22,8 +22,7 @@
 	width:180rpx;
 	height:60rpx;
 	background: #FFFFFF;
-	-webkit-border-radius: 30rpx;
-	        border-radius: 30rpx;
+	border-radius: 30rpx;
 	-webkit-box-pack:center;
 	-webkit-justify-content:center;
 	        justify-content:center;
@@ -53,8 +52,7 @@
 	width:180rpx;
 	height:60rpx;
 	background: #A88FEF;
-	-webkit-border-radius: 30rpx;
-	        border-radius: 30rpx;
+	border-radius: 30rpx;
 	-webkit-box-pack:center;
 	-webkit-justify-content:center;
 	        justify-content:center;

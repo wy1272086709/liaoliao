@@ -1,5 +1,5 @@
 <template>
-	<view id="root-view" :style="{}">
+	<view id="root-view">
 		<!--
 		<video-course @updateVideoProgress="updatePlayProgress" :url="videoInfo.videoUrl" :height="h" :width="w" v-if="isShowVideo"></video-course>
 		-->

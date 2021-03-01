@@ -94,7 +94,7 @@ class util {
 	}
 	
 	getVersionValue() {
-		let v = 100;
+		let v = 200;
 		//#ifdef APP-PLUS 
 		v = plus.runtime.versionCode;
 		//#endif
@@ -104,7 +104,7 @@ class util {
 	}
 	
 	removeVersionValue() {
-		let v = 100;
+		let v = 200;
 		//#ifdef APP-PLUS 
 		v = plus.runtime.versionCode;
 		//#endif
@@ -114,7 +114,7 @@ class util {
 	}
 	
 	setVersionValue() {
-		let v = 100;
+		let v = 200;
 		//#ifdef APP-PLUS 
 		v = plus.runtime.versionCode;
 		//#endif

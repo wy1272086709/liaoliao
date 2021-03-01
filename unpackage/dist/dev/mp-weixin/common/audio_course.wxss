@@ -129,8 +129,7 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
   background: rgba(0, 0, 0, 0.5);
   -webkit-box-pack: center;
   -webkit-justify-content: center;

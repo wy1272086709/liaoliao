@@ -72,8 +72,7 @@ view,scroll-view {
 .ads-image {
 	width: 686rpx;
 	height:320rpx;	
-	-webkit-border-radius: 15px;	
-	        border-radius: 15px;
+	border-radius: 15px;
 }
 #contact-btn-view {
 	height: 112rpx;
@@ -162,12 +161,10 @@ view,scroll-view {
 
 	background: rgba(36, 104, 231, 1);
 	margin-top:144rpx;
-	-webkit-border-radius:20px;
-	        border-radius:20px;
+	border-radius:20px;
 	height:80rpx;
 
 	
-
 
 
 

@@ -86,8 +86,7 @@
   -webkit-box-direction: reverse;
   -webkit-flex-direction: row-reverse;
           flex-direction: row-reverse;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   width: 500rpx;
   height: 60rpx;
   margin-left: 20rpx;
@@ -96,14 +95,25 @@
   -webkit-align-items: center;
           align-items: center;
   background: #F2F2F2;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
 }
-#tab-view {
-  border-bottom: 1px solid #F2F2F2;
+ .u-tabs {
+  width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+#tab-view {
+  border-bottom: 1px solid #F2F2F2;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  z-index: 99999999999;
+  position: fixed;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
           justify-content: center;

@@ -127,13 +127,11 @@
   -webkit-box-flex: 1;
   -webkit-flex: 1;
           flex: 1;
-  -webkit-border-radius: 10px;
-          border-radius: 10px;
+  border-radius: 10px;
   color: #666;
   font-size: 16px;
 }
 .uni-share-button.data-v-34ce0f14::after {
-  -webkit-border-radius: 50px;
-          border-radius: 50px;
+  border-radius: 50px;
 }
 

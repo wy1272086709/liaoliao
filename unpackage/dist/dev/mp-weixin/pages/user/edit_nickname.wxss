@@ -100,13 +100,11 @@ view {
 #nickname-box {
   border-bottom: 1px solid #B2E3CF;
   background: #F3F3F3;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   padding-left: 25rpx;
   height: 60rpx;
   background: #F3F3F3;
-  -webkit-border-radius: 10rpx;
-          border-radius: 10rpx;
+  border-radius: 10rpx;
 }
 #info-nickname {
   color: #A5A5A5;

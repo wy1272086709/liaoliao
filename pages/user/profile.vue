@@ -2,7 +2,8 @@
 	<view>
 		<view id="list">
 			<uni-list>
-				<uni-list-item title="头像" @tap="switchImage" isBottomEvery="1">
+				<!--switchImage -->
+				<uni-list-item title="头像" @tap="chooseAvatar" isBottomEvery="1">
 					<template v-slot:right="">
 						<image id="image-size" :src="avatarUrl"></image>
 					</template>
@@ -40,6 +41,60 @@
 		components: {
 		
 		},
+		created() {
+			const _self = this;
+			// 监听从裁剪页发布的事件，获得裁剪结果
+			uni.$on('uAvatarCropper', path => {
+				this.avatar = path;
+				console.log('avatar here!');
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				const formData = {
+					'auth':auth,
+					'uid': uid
+				};
+				console.log('formData:'+JSON.stringify(formData));
+				console.log('path:'+path);
+				console.log('url:'+apiPrefix +'?mod=user&ac=img_xg');
+				// 可以在此上传到服务端
+				uni.uploadFile({
+					url : apiPrefix +'?mod=user&ac=img_xg',
+					filePath: path,
+					name: 'file',
+					formData: formData,
+					success: function (uploadFileRes) {
+						console.log(uploadFileRes);
+						let dataStr = uploadFileRes.data
+						let dataObj = JSON.parse(dataStr);
+						if(dataObj.status == 1) {
+							console.log('dataObj', dataObj);
+							let imgSrc = dataObj.data.img;
+							console.log('imgSec', imgSrc);
+							let uInfo  = _self.getStoreUserInfo();
+							uInfo.avatarUrl =  imgSrc;
+							console.log('uInfo', uInfo);
+							_self.setUserInfo(uInfo);
+							let type = util.cache('appLoginType', null);
+							let userInfoStr = util.cache('app_user_info_'+type,null);
+							if(userInfoStr) {
+								let uInfo = JSON.parse(userInfoStr);
+								uInfo.avatarUrl = imgSrc;
+								// 计算属性
+								let uStr = JSON.stringify(uInfo);
+								util.cache('app_user_info_'+type, uStr, 15*24*3600);
+							}
+						} else {
+							uni.showToast({
+								icon:"none",
+								title:dataObj.message,
+								duration:2000
+							});
+						}
+					 }
+				});
+			});
+		},
 		computed:{
 			userInfo: function() {
 				let uInfo = this.getStoreUserInfo();
@@ -71,6 +126,7 @@
 				avatarUrl: '',
 				nickName: ''*/
 				bottom: '',
+				avatar: ''
 			}
 		},
 		onLoad() {
@@ -84,6 +140,52 @@
 			this.getUserInfo();
 		},
 		methods: {
+			uploadUserAvatar(res) {
+				const data = getApp().globalData;
+				const apiPrefix = data.serverUri;
+				const auth = data.auth;
+				let formData = {
+					'auth':auth,
+					'uid': uid
+				};
+				const _self = this;
+				const uploadTask = uni.uploadFile({
+					 url : apiPrefix +'?mod=user&ac=img_xg',
+					 filePath: res.tempFilePaths[0],
+					 name: 'file',
+					 formData: formData,
+					 success: function (uploadFileRes) {
+						// "data": "{\"status\":1,\"message\":\"success\",\"data\":{\"uid\":\"207\",\"img\":\"https:\\/\\/kuxou.com\\/upload1\\/5f464a78d164d.jpg\"}}",
+						    console.log(uploadFileRes);
+							let dataStr = uploadFileRes.data
+							let dataObj = JSON.parse(dataStr);
+							if(dataObj.status == 1) {
+								console.log('dataObj', dataObj);
+								let imgSrc = dataObj.data.img;
+								console.log('imgSec', imgSrc);
+								let uInfo  = _self.getStoreUserInfo();
+								uInfo.avatarUrl =  imgSrc;
+								console.log('uInfo', uInfo);
+								_self.setUserInfo(uInfo);
+								let type = util.cache('appLoginType', null);
+								let userInfoStr = util.cache('app_user_info_'+type,null);
+								if(userInfoStr) {
+									let uInfo = JSON.parse(userInfoStr);
+									uInfo.avatarUrl = imgSrc;
+									// 计算属性
+									let uStr = JSON.stringify(uInfo);
+									util.cache('app_user_info_'+type, uStr, 15*24*3600);						
+								}
+							} else {
+								uni.showToast({
+									icon:"none",
+									title:dataObj.message,
+									duration:2000
+								});
+							}
+					  }
+				});
+			},
 			// 是否有摄像机权限
 			isHasCameraPermission(platForm) {
 				// 1 是安卓
@@ -170,9 +272,30 @@
 			getStoreUserInfo() {
 				return this.$store.getters.userInfo;
 			},
-			switchImage(obj) {
-				console.log('switch image!!!!');
+			chooseAvatar() {
 				let _self = this;
+				const flag = this.judgePhotosPermission();
+				if (!flag) return;
+				console.log('here!');
+				console.log('route:'+this.$u.route);
+				// 此为uView的跳转方法，详见"文档-JS"部分，也可以用uni的uni.navigateTo
+				this.$u.route({
+					// 关于此路径，请见下方"注意事项"
+					url: '/uview-ui/components/u-avatar-cropper/u-avatar-cropper',
+					// 内部已设置以下默认参数值，可不传这些参数
+					params: {
+						// 输出图片宽度，高等于宽，单位px
+						destWidth: 300,
+						// 裁剪框宽度，高等于宽，单位px
+						rectWidth: 200,
+						// 输出的图片类型，如果'png'类型发现裁剪的图片太大，改成"jpg"即可
+						fileType: 'jpg',
+					},complete(res) {
+						console.log('navigate res:'+JSON.stringify(res));
+					}
+				});
+			},
+			judgePhotosPermission() {
 				let platForm = getApp().globalData.platform;
 				let hasCameraPermission = this.isHasCameraPermission(platForm);
 				let hasPhotoPermission  = this.isHasPhotoPermission(platForm);
@@ -190,6 +313,13 @@
 						return;
 					}
 				}
+				return true;
+			},
+			switchImage(obj) {
+				console.log('switch image!!!!');
+				let _self = this;
+				const flag = this.judgePhotosPermission();
+				if (!flag) return;
 				uni.chooseImage({
 					count: 1, //默认9
 					//'compressed'
@@ -199,50 +329,8 @@
 						console.log(JSON.stringify(res.tempFilePaths));
 						// 文件上传发送http 请求到服务端..
 						console.log('res', res);
+						_self.uploadUserAvatar(res);
 						//_self.defaultSrc = res.tempFilePaths[0];
-						const data = getApp().globalData;
-						const apiPrefix = data.serverUri;
-						const auth = data.auth;
-						let formData = {
-							'auth':auth,
-							'uid': uid
-						};
-						const uploadTask = uni.uploadFile({
-							 url : apiPrefix +'?mod=user&ac=img_xg',
-							 filePath: res.tempFilePaths[0],
-							 name: 'file',
-							 formData: formData,
-							 success: function (uploadFileRes) {
-								    console.log(uploadFileRes);
-									// "data": "{\"status\":1,\"message\":\"success\",\"data\":{\"uid\":\"207\",\"img\":\"https:\\/\\/kuxou.com\\/upload1\\/5f464a78d164d.jpg\"}}",
-									let dataStr = uploadFileRes.data
-									let dataObj = JSON.parse(dataStr);
-									if(dataObj.status == 1) {
-										console.log('dataObj', dataObj);
-										let imgSrc = dataObj.data.img;
-										console.log('imgSec', imgSrc);
-										let uInfo  = _self.getStoreUserInfo();
-										uInfo.avatarUrl =  imgSrc;
-										console.log('uInfo', uInfo);
-										_self.setUserInfo(uInfo);
-										let type = util.cache('appLoginType', null);
-										let userInfoStr = util.cache('app_user_info_'+type,null);
-										if(userInfoStr) {
-											let uInfo = JSON.parse(userInfoStr);
-											uInfo.avatarUrl = imgSrc;
-											// 计算属性
-											let uStr = JSON.stringify(uInfo);
-											util.cache('app_user_info_'+type, uStr, 15*24*3600);						
-										}
-									} else {
-										uni.showToast({
-											icon:"none",
-											title:dataObj.message,
-											duration:2000
-										});
-									}
-							  }
-						});
 					}
 				});
 			},

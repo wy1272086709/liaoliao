@@ -48,11 +48,6 @@
           "name": "test2",
           "id": 3,
           "pathName": "pages/course/index"
-        },
-        {
-          "name": "test3",
-          "id": 4,
-          "pathName": "pages/index/test_video"
         }
       ]
     }

@@ -343,8 +343,7 @@ page {
 #root-view {
   margin-left: 32rpx;
   margin-right: 32rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   width: 686rpx;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
@@ -380,8 +379,7 @@ page {
 }
 #root-view #ques-option {
   background-color: #FFFFFF;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
 }
 #root-view #view-testing {
   background-color: #FFFFFF;

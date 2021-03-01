@@ -24,8 +24,7 @@
 .background.data-v-5d5567fc {
   width: 210rpx;
   height: 270rpx;
-  -webkit-box-shadow: 0rpx 0rpx 15rpx rgba(0,0,0,0.5);
-          box-shadow: 0rpx 0rpx 15rpx rgba(0,0,0,0.5);
+  box-shadow: 0rpx 0rpx 15rpx rgba(0,0,0,0.5);
 }
 .item-text.data-v-5d5567fc {
   position: absolute;

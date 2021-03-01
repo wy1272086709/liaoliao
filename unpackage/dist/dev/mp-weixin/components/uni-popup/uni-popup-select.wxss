@@ -117,13 +117,11 @@
   -webkit-box-flex: 1;
   -webkit-flex: 1;
           flex: 1;
-  -webkit-border-radius: 50px;
-          border-radius: 50px;
+  border-radius: 50px;
   color: #666;
   font-size: 16px;
 }
 .uni-select-button.data-v-4ff68816::after {
-  -webkit-border-radius: 50px;
-          border-radius: 50px;
+  border-radius: 50px;
 }
 

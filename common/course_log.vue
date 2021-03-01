@@ -37,7 +37,7 @@
 			}
 		},
 		props: {
-			id: {
+			nid: {
 				default: 1,
 				type: [Number,String]
 			},

@@ -61,8 +61,7 @@
   width: 160rpx;
   height: 60rpx;
   background: #F3F3F3;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
   font-size: 32rpx;
   font-family: PingFang SC;
   font-weight: 500;
@@ -81,8 +80,7 @@
   -webkit-align-items: center;
           align-items: center;
   background: #F3F3F3;
-  -webkit-border-radius: 10rpx;
-          border-radius: 10rpx;
+  border-radius: 10rpx;
   margin-bottom: 60rpx;
   padding-left: 24rpx;
 }
@@ -115,8 +113,7 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-border-radius: 10rpx;
-          border-radius: 10rpx;
+  border-radius: 10rpx;
   background: #F9F9F9;
   height: 350px;
   border-radius: 10rpx;
@@ -153,8 +150,7 @@
           justify-content: center;
   margin-right: 27rpx;
   background-color: #E93EE3;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
   height: 60rpx;
   color: #FFFFFF;
   font-size: 16px;
@@ -174,8 +170,7 @@
           align-items: center;
   height: 60rpx;
   background: #F3F3F3;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
   font-size: 28rpx;
   font-family: PingFang SC;
   font-weight: 500;

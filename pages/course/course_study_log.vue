@@ -17,15 +17,15 @@
 				
 					<view v-if="activeTabIndex == 2" class="log-view">
 						<course-log v-for="(item,key) in articleLogList"  :courseType="1" :title="item.title" 
-						@study="studyCourse" :cid="item.cid" :id="item.nid" :key="item.nid" :status="2"></course-log>
+						@study="studyCourse" :cid="item.cid" :nid="item.nid" :key="item.nid" :status="2"></course-log>
 					</view>						
 					<view v-else-if="activeTabIndex == 1"  class="log-view">
 						<course-log @study="studyCourse" :key="item.nid" v-for="(item,key) in audioLogList" :courseType="2" :title="item.title" 
-						 :cid="item.cid" :id="item.nid" :src="item.downurl"  :current_value="item.jdsc" :duration_value="item.zsc"></course-log>
+						 :cid="item.cid" :nid="item.nid" :src="item.downurl"  :current_value="item.jdsc" :duration_value="item.zsc"></course-log>
 					</view>
 					<view v-else  class="log-view">
 						<course-log  @study="studyCourse" :key="item.nid" :courseType="3" :src="item.downurl" v-for="(item,key) in videoPayList" :title="item.title" 
-						:cid="item.cid" :id="item.nid" :current_value="item.jdsc" :duration_value="item.zsc"></course-log>
+						:cid="item.cid" :nid="item.nid" :current_value="item.jdsc" :duration_value="item.zsc"></course-log>
 					</view>					
 				</scroll-view>
 			</swiper-item>

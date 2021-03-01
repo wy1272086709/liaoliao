@@ -43,8 +43,7 @@ page {
   padding-right: 31rpx;
 }
 #root-view #result-box {
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   word-break: break-all;
   width: 628rpx;
 }
@@ -82,8 +81,7 @@ page {
   width: 180rpx;
   height: 60rpx;
   border: 1px solid #A88FEF;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
           justify-content: center;

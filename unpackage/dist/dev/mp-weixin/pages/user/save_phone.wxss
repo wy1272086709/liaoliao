@@ -52,10 +52,8 @@ view {
 }
 #login-area-view {
   /*background:rgba(252,252,253,1);*/
-  -webkit-border-top-left-radius: 20px;
-          border-top-left-radius: 20px;
-  -webkit-border-top-right-radius: 20px;
-          border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
   border: 1px solid rbga(255, 255, 255);
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -88,8 +86,7 @@ view {
   display: -webkit-flex;
   display: flex;
   /*background: #F3F3F3;*/
-  -webkit-border-radius: 50rpx;
-          border-radius: 50rpx;
+  border-radius: 50rpx;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
@@ -128,8 +125,7 @@ view {
           align-items: center;
   height: 100rpx;
   background: #F3F3F3;
-  -webkit-border-radius: 50rpx;
-          border-radius: 50rpx;
+  border-radius: 50rpx;
   /*background: #F3F3F3;*/
   border-radius: 50rpx;
   padding-left: 27rpx;
@@ -191,8 +187,7 @@ view {
           align-items: center;
   width: 100%;
   background: #C3AEFF;
-  -webkit-border-radius: 50rpx;
-          border-radius: 50rpx;
+  border-radius: 50rpx;
 }
 #login-area-view #submit-view button::after {
   border: none;
@@ -230,8 +225,7 @@ view {
           align-items: center;
   font-size: 16px;
   border: 1px solid black;
-  -webkit-border-radius: 6px;
-          border-radius: 6px;
+  border-radius: 6px;
 }
 #login-area-view #third-login-text {
   display: -webkit-box;

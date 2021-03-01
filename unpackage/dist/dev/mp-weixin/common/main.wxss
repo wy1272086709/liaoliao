@@ -37,8 +37,7 @@ image {
 }
 view,
 text {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .u-font-xs {
   font-size: 22rpx;
@@ -3151,8 +3150,7 @@ page {
   left: 0;
   top: 0;
   pointer-events: none;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
   width: 199.8%;
@@ -3433,8 +3431,7 @@ u-dropdown {
 .imt-audio.theme1 .cover.data-v-ebca495e {
   width: 100%;
   height: 350rpx;
-  -webkit-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.13);
-          box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.13);
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.13);
 }
 .imt-audio.theme1 .play.data-v-ebca495e,
 .imt-audio.theme1 .pause.data-v-ebca495e {
@@ -3461,10 +3458,8 @@ u-dropdown {
   border: 1px solid #cecece;
   width: 90%;
   margin: 0 auto;
-  -webkit-border-radius: 10px;
-          border-radius: 10px;
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   position: absolute;
   bottom: 50px;
@@ -3547,15 +3542,13 @@ u-dropdown {
 .imt-audio.theme2 .cover.data-v-ebca495e {
   width: 120rpx;
   height: 120rpx;
-  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
-          box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
   position: absolute;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
   border: 2px solid #fff;
   animation-fill-mode: forwards;
   -webkit-animation-fill-mode: forwards;
@@ -3571,8 +3564,7 @@ u-dropdown {
   height: 80rpx;
   z-index: 99;
   background: rgba(0, 0, 0, 0.4);
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
 }
 .imt-audio.theme2 .prevbtn.data-v-ebca495e {
   width: 48rpx;
@@ -3592,8 +3584,7 @@ u-dropdown {
   display: -webkit-flex;
   display: flex;
   padding: 40rpx 20rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   max-height: 200rpx;
   position: relative;
 }
@@ -3689,8 +3680,7 @@ u-dropdown {
 .imt-audio.theme3 .cover.data-v-ebca495e {
   width: 120rpx;
   height: 120rpx;
-  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
-          box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -3704,8 +3694,7 @@ u-dropdown {
   height: 80rpx;
   z-index: 99;
   background: rgba(0, 0, 0, 0.4);
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
   position: absolute;
   top: 50%;
   left: 50%;

@@ -49,6 +49,7 @@
 					-->
 				</view>
 			</view>
+			<!--
 			<view id="bottom-view">
 				<uni-list>
 					<uni-list-item v-for="(item,index) in list" class="user-list-item" :key="item.id" :title="item.title" 
@@ -56,7 +57,7 @@
 					:style="'height:'+height+'px;line-height:'+height+'px;'" :class="index==list.length-1?'last-item':''">
 						<template v-slot:right="" v-if="index == 4|| index == 6">
 							<!-- @tap="copy_customer_wechat" -->
-							
+							<!--
 							<view style="display: flex;align-items: center;" v-if="index == 4">
 								<text class="copy-text">{{wx}} </text>
 								<button class="copy-btn">复制</button>
@@ -68,6 +69,7 @@
 					</uni-list-item>
 				</uni-list>
 			</view>
+			-->
 			<view>
 				<u-modal v-model="showCopyModal" confirm-text="确定" :show-title="false" :mask-close-able="true" :showCancelButton="false"  :zIndex="100001">
 					<view id="modal-img">
@@ -142,7 +144,7 @@
 			}*/
 		},
 		onShow() {
-			//#ifdef APP-PLUS || H5
+			//#ifdef APP-PLUS || H5 || MP
 			let globalData = getApp().globalData;
 			if(globalData.isRecharge == 1 && this.uid) {
 				this.getUserInfo();
@@ -177,7 +179,8 @@
 		computed:{
 			isInternalUser: function() {
 				let u = this.$store.getters.isInternalUser;
-				return u;
+				const isInternalUser = uni.getStorageSync('setInternalUser');
+				return u?u:isInternalUser;
 			},
 			wx: function() {
 				if(!this.configData.weixin) {

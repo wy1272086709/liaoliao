@@ -161,8 +161,7 @@
   -webkit-justify-content: center;
           justify-content: center;
   line-height: 1;
-  -webkit-border-radius: 10px;
-          border-radius: 10px;
+  border-radius: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
   font-family: PingFang SC;
@@ -223,8 +222,7 @@
   background-color: #FFA340;
   height: 60px;
   margin-bottom: 10px;
-  -webkit-border-radius: 10px;
-          border-radius: 10px;
+  border-radius: 10px;
 }
 .slot-content #sign-view-content .sign-view-top image {
   display: -webkit-box;

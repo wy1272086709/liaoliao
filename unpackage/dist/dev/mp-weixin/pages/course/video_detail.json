@@ -1,5 +1,6 @@
 {
   "enablePullDownRefresh": false,
+  "navigationBarTitleText": "",
   "usingComponents": {
     "video-course": "/common/video_course"
   }

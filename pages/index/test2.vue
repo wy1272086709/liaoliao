@@ -9,6 +9,27 @@
 
 <script>
 	import testSwiper from '../../common/audio_cover.vue';
+	class A  {
+		constructor(name, age) {
+			this.name = name;
+			this.age = age;
+		}
+	
+		testFunc(data) {
+			console.log('name:'+this.name+',age:'+this.age);
+			const test = () => {
+				console.log('data:'+JSON.stringify(data));
+				const m = () => {
+					console.log('m'+JSON.stringify(data))
+					console.log('name:'+this.name+',age:'+this.age);
+				};
+				m();
+			};
+			test();
+		}
+	}
+	const aObj = new A('wy', 31);
+	aObj.testFunc({ name:'wangyu' });
 	export default {
 		data() {
 			return {

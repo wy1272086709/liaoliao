@@ -56,12 +56,10 @@ page {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   background: -webkit-linear-gradient(45deg, #1F1D21 0%, #534A5C 100%);
   background: linear-gradient(45deg, #1F1D21 0%, #534A5C 100%);
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   height: 127rpx;
   padding-top: 37rpx;
   padding-bottom: 39rpx;
@@ -99,8 +97,7 @@ page {
   -webkit-flex-direction: column;
           flex-direction: column;
   background: #FFFFFF;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   margin-top: -20rpx;
   padding-bottom: 54rpx;
 }
@@ -253,8 +250,7 @@ page {
   font-family: PingFang SC;
   font-weight: 500;
   color: #BC8500;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
   background: #F8E0A8;
 }
 #root-view #bottom-view-box #pay-view-box #pay-box-right {
@@ -323,8 +319,7 @@ page {
   font-family: PingFang SC;
   font-weight: 500;
   color: #BC8500;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
   background: #F8E0A8;
   width: 210rpx;
   height: 60rpx;
@@ -355,8 +350,7 @@ page {
   font-family: PingFang SC;
   font-weight: 500;
   color: #BC8500;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
   background: #F8E0A8;
 }
 .common-line-font {
@@ -369,8 +363,7 @@ page {
   width: 8rpx;
   height: 36rpx;
   background: #A88FEF;
-  -webkit-border-radius: 2rpx;
-          border-radius: 2rpx;
+  border-radius: 2rpx;
   margin-right: 21rpx;
 }
 .vip-privilege {

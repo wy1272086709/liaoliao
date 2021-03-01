@@ -32,8 +32,7 @@ page {
 	
 	height: 520rpx;
 	background: #FFFFFF;
-	-webkit-border-radius: 10rpx;
-	        border-radius: 10rpx;
+	border-radius: 10rpx;
 }
 #complaint-content-view>textarea {
 	width: 636rpx;
@@ -74,8 +73,7 @@ page {
 		        align-items: center;
 		width:100%;
 		background: #C3AEFF;
-		-webkit-border-radius: 50rpx;
-		        border-radius: 50rpx;
+		border-radius: 50rpx;
 }
 #submit-view > button::after {
 	border: none;

@@ -36,15 +36,13 @@ view.data-v-681773a2, scroll-view.data-v-681773a2 {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
-	-webkit-box-sizing:border-box;
-	        box-sizing:border-box;
+	box-sizing:border-box;
 }
 #search-view.data-v-681773a2{
 	width:690rpx;
 	height:60rpx;
 	background: #F3F3F3;
-	-webkit-border-radius: 30rpx;
-	        border-radius: 30rpx;
+	border-radius: 30rpx;
 	-webkit-box-align: center;
 	-webkit-align-items: center;
 	        align-items: center;
@@ -151,12 +149,10 @@ view.data-v-681773a2, scroll-view.data-v-681773a2 {
 	background-color: #F2F2F2;
 	margin-left:32rpx;
 	margin-right:32rpx;
-	-webkit-border-radius:19rpx;
-	        border-radius:19rpx;
+	border-radius:19rpx;
 	padding-bottom: 20rpx;
 	margin-bottom: 60rpx;
-	-webkit-box-sizing:content-box;
-	        box-sizing:content-box;
+	box-sizing:content-box;
 }
 .jiacu.data-v-681773a2 {
 	font-weight: bold;
@@ -165,10 +161,8 @@ view.data-v-681773a2, scroll-view.data-v-681773a2 {
 .huashu-article-title.data-v-681773a2{
 	background:-webkit-linear-gradient(325.832deg,rgba(247,237,215,1) 0%,rgba(233,206,147,1) 100%);
 	background:linear-gradient(124.1678deg,rgba(247,237,215,1) 0%,rgba(233,206,147,1) 100%);
-	-webkit-border-top-left-radius:19rpx;
-	        border-top-left-radius:19rpx;
-	-webkit-border-top-right-radius:19rpx;
-	        border-top-right-radius:19rpx;
+	border-top-left-radius:19rpx;
+	border-top-right-radius:19rpx;
 	height: 85.5rpx;
 	font-size:26rpx;
 	font-family:Microsoft YaHei;
@@ -294,8 +288,7 @@ view.data-v-681773a2, scroll-view.data-v-681773a2 {
 	width: 120rpx;
 	height: 60rpx;
 	background: #C3AEFF;
-	-webkit-border-radius: 30rpx;
-	        border-radius: 30rpx;
+	border-radius: 30rpx;
 	padding-left: 0px;
 	padding-right: 0px;
 	-webkit-box-pack: center;

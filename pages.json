@@ -330,41 +330,47 @@
             "style" : {
                 "navigationBarTitleText" : "积分明细"
             }
-        }
+        },
+		{
+			"path": "uview-ui/components/u-avatar-cropper/u-avatar-cropper",
+			"style": {
+				
+			}
+		}
     ],
     "tabBar" : {
         "color" : "#7A7E83",
         "selectedColor" : "#2985F1",
         "borderStyle" : "black",
         "backgroundColor" : "#ffffff",
-        "height" : "50px",
+        //"height" : "50px",
         "list" : [
             {
                 "pagePath" : "pages/index/app_index",
                 "iconPath" : "/static/img/tabbar/home_btn_link.png",
                 "selectedIconPath" : "/static/img/tabbar/home_btn_active.png",
-                "defaultClass" : "tabbar-icon-class",
+                //"defaultClass" : "tabbar-icon-class",
                 "text" : "首页"
             },
             {
                 "pagePath" : "pages/mind_square/index",
                 "iconPath" : "/static/img/tabbar/brain_btn_link.png",
                 "selectedIconPath" : "/static/img/tabbar/brain_btn_active.png",
-                "defaultClass" : "tabbar-icon-class",
+                //"defaultClass" : "tabbar-icon-class",
                 "text" : "妙语广场"
             },
             {
                 "pagePath" : "pages/course/index",
                 "iconPath" : "/static/img/tabbar/course_btn_link.png",
                 "selectedIconPath" : "/static/img/tabbar/course_btn_active.png",
-                "defaultClass" : "tabbar-icon-class",
+                //"defaultClass" : "tabbar-icon-class",
                 "text" : "教程"
             },
             {
                 "pagePath" : "pages/user/user_index",
                 "iconPath" : "/static/img/tabbar/person_btn_link.png",
                 "selectedIconPath" : "/static/img/tabbar/person_btn_active.png",
-                "defaultClass" : "tabbar-icon-class",
+                //"defaultClass" : "tabbar-icon-class",
                 "text" : "个人中心"
             }
         ]
@@ -374,7 +380,6 @@
         "navigationBarTitleText" : "",
         "navigationBarBackgroundColor" : "#F2F2F2",
         "backgroundColor" : "#FFFFFF",
-        "scrollIndicator" : "none",
         "app-plus" : {
             "scrollIndicator" : "none" //全局 在APP页面都不显示滚动条
         }

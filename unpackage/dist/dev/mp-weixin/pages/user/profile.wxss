@@ -33,8 +33,7 @@ page {
   margin-right: 30rpx;
   width: 690rpx;
   background: #FFFFFF;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
 }
 .uni-list-item:last-child {
   margin-bottom: 5px;
@@ -53,8 +52,7 @@ page {
 #image-size {
   width: 64rpx;
   height: 64rpx;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
   margin-right: 34rpx;
 }
 .bottom-version-text {
@@ -71,8 +69,7 @@ page {
   display: -webkit-flex;
   display: flex;
   width: 690rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   padding: 20rpx;
   -webkit-box-pack: center;
   -webkit-justify-content: center;

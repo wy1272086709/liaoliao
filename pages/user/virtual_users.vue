@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view id="user-list">
-			<view v-for="u in userList" class="u-list" @tap="switchUser(u.uid)">
+			<view v-for="u in userList" class="u-list" @tap="switchUser(u.uid)" :key="u.uid">
 				<text>{{u.ename}} {{u.uid == uid ? '(当前用户)':''}}</text>
 			</view>
 		</view>
@@ -38,6 +38,7 @@
 			setInternalUser(isInternalUser) {
 				console.log('isInternalUser11111-----', isInternalUser);
 				this.$store.commit('setInternalUser', isInternalUser);
+				uni.setStorageSync('setInternalUser', 1);
 			},
 			async getUserList() {
 				const modStr = '?mod=user&ac=test_user_list';

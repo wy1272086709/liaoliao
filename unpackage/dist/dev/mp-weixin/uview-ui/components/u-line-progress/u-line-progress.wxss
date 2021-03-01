@@ -34,8 +34,7 @@
   -webkit-align-items: center;
           align-items: center;
   width: 100%;
-  -webkit-border-radius: 100rpx;
-          border-radius: 100rpx;
+  border-radius: 100rpx;
 }
 .u-active.data-v-0fa21744 {
   width: 0;

@@ -53,8 +53,7 @@
 .red-dot {
   width: 10px;
   height: 10px;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
   background-color: red;
   margin-right: 7px;
 }

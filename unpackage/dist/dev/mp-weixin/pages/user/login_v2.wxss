@@ -62,7 +62,6 @@ view {
   font-family: RTWS YueGothic Trial;
   font-weight: 400;
   color: #FFFFFF;
-  background: -webkit-gradient(linear, left top, left bottom, from(#E700DF), to(#1C84F6));
   background: -webkit-linear-gradient(top, #E700DF 0%, #1C84F6 100%);
   background: linear-gradient(180deg, #E700DF 0%, #1C84F6 100%);
   -webkit-background-clip: text;
@@ -70,10 +69,8 @@ view {
 }
 #login-area-view {
   /*background:rgba(252,252,253,1);*/
-  -webkit-border-top-left-radius: 20px;
-          border-top-left-radius: 20px;
-  -webkit-border-top-right-radius: 20px;
-          border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
   border: 1px solid rbga(255, 255, 255);
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -107,8 +104,7 @@ view {
           justify-content: space-between;
   height: 100rpx;
   background: #F3F3F3;
-  -webkit-border-radius: 50rpx;
-          border-radius: 50rpx;
+  border-radius: 50rpx;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
@@ -206,8 +202,7 @@ view {
   /*margin-top:48rpx;*/
   height: 100rpx;
   background: #F3F3F3;
-  -webkit-border-radius: 50rpx;
-          border-radius: 50rpx;
+  border-radius: 50rpx;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
@@ -252,8 +247,7 @@ view {
           align-items: center;
   width: 100%;
   background: #C3AEFF;
-  -webkit-border-radius: 50rpx;
-          border-radius: 50rpx;
+  border-radius: 50rpx;
 }
 #login-area-view #submit-view button::after {
   border: none;

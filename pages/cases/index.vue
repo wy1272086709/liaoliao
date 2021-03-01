@@ -20,7 +20,7 @@
 		<scroll-view class="header-view" :duration="100"  :scroll-x="true"  :show-scrollbar="false" :scroll-into-view="scrollInto" >
 			<view  class="header-view-box">
 				<!-- 初始尺寸设置为120rpx,   去掉header-view width 属性, 设置元素的flex-shrink 为0，在子元素上-->
-				<view @tap="switchTab(index)" v-for="(tab,index) in tabs" :id="'tab_'+tab.navId" :key="getNavKey(tab.navId)" class="common-tab-view">
+				<view @tap="switchTab(index)" v-for="(tab,index) in tabs" :id="getNavIdStr(tab)" :key="getNavKey(tab.navId)" class="common-tab-view">
 					<view>
 						<text :class="index==caseTabIndex ? 'active-tab-class':'common-tab-class'">{{ tab.title }}</text>
 					</view>
@@ -30,7 +30,7 @@
 		
 		<view>			
 			<swiper :current="caseTabIndex" :scroll-with-animation="true" 	@change="switchCasesTab" :style="'min-height:'+scrollHeight+'px;width:100%;'">
-				<swiper-item v-for="(tab,index) in tabs" :key="'tab_'+tab.navId" :style="'min-height:'+scrollHeight+'px;'">
+				<swiper-item v-for="(tab,index) in tabs" :key="getNavIdStr(tab)" :style="'min-height:'+scrollHeight+'px;'">
 					<scroll-view id="content-view"  :style="'height:'+scrollHeight+'px;'" :scroll-y="true"  @scrolltolower="lower">
 						<view style="height:16px;"></view>
 						<view v-for="(item,m) in caseContentlist" class="content-root-view" :style="m==0 ? 'margin-top:0px;':''" @tap="getArticleView(item.id)" :key="item.id">
@@ -173,6 +173,9 @@
 			}
 		},
 		methods: {
+			getNavIdStr(tab) {
+				return 'tab_'+tab.navId
+			},
 			gotoNext() {
 				
 				uni.switchTab({

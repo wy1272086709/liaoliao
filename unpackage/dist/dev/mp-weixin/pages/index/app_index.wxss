@@ -27,6 +27,11 @@
 /*
 	@import "../../colorui/main.css";
 	*/
+scroll-view ::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
 .tower-swiper {
   height: 420rpx;
   position: relative;
@@ -51,8 +56,7 @@
 .tower-swiper .tower-item .swiper-item {
   width: 100%;
   height: 100%;
-  -webkit-border-radius: 6rpx;
-          border-radius: 6rpx;
+  border-radius: 6rpx;
   overflow: hidden;
 }
 page {
@@ -112,8 +116,7 @@ image {
   display: flex;
   width: 400rpx;
   height: 60rpx;
-  -webkit-border-radius: 30rpx;
-          border-radius: 30rpx;
+  border-radius: 30rpx;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
@@ -199,8 +202,7 @@ image {
   padding-bottom: 40rpx;
   margin-bottom: 30.01rpx;
   background: #FFFFFF;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
 }
 #margin-area-view #huashu-view-box .huashu-first-line > text {
   display: -webkit-box;
@@ -250,8 +252,7 @@ image {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-border-radius: 10rpx;
-          border-radius: 10rpx;
+  border-radius: 10rpx;
   padding: 5rpx 5rpx;
   background-color: rgba(0, 0, 0, 0.5);
 }
@@ -272,8 +273,7 @@ image {
   padding-top: 36rpx;
   padding-bottom: 39rpx;
   background: #FFFFFF;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   margin-bottom: 30.01rpx;
 }
 #margin-area-view #miaoyu-test .swiperTest {
@@ -313,8 +313,7 @@ image {
 #margin-area-view #miaoyu-test .swiperTest .tower-swiper .tower-item .swiper-item view {
   position: absolute;
   padding: 0rpx 10rpx;
-  -webkit-border-radius: 10px;
-          border-radius: 10px;
+  border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.5);
   top: 180rpx;
   color: #FFFFFF;
@@ -337,8 +336,7 @@ image {
   -webkit-flex-direction: column;
           flex-direction: column;
   background: #FFFFFF;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   margin-bottom: 30.01rpx;
   padding-top: 38rpx;
   padding-bottom: 34rpx;

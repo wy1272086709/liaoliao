@@ -10,7 +10,7 @@
 			<uni-icons color="#999999" class="uni-searchbar__box-icon-search" size="18" type="search" />
 			<!-- #endif -->
 			<input v-if="show" :focus="showSync" :placeholder="placeholder" :maxlength="maxlength" @confirm="confirm" class="uni-searchbar__box-search-input" confirm-type="search" type="text" v-model="searchVal" />
-			<text v-else class="uni-searchbar__text-placeholder">{{ placeholder }}</text>
+			<text v-else class="uni-searchbar__text-placeholder" >{{ placeholder }}</text>
 			<view v-if="show && (clearButton==='always'||clearButton==='auto'&&searchVal!=='')" class="uni-searchbar__box-icon-clear" @click="clear">
 				<uni-icons color="#999999" class="" size="24" type="clear" />
 			</view>
@@ -77,7 +77,8 @@
 			maxlength: {
 				type: [Number, String],
 				default: 100
-			}
+			},
+			
 		},
 		data() {
 			return {

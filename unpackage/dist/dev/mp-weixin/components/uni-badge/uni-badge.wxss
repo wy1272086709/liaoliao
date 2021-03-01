@@ -15,8 +15,7 @@
 	height: 20px;
 	line-height: 20px;
 	color: #333;
-	-webkit-border-radius: 100px;
-	        border-radius: 100px;
+	border-radius: 100px;
 	background-color: #f1f1f1;
 	background-color: transparent;
 	text-align: center;

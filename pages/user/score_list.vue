@@ -36,7 +36,7 @@
 		<u-modal v-model="show"  :asyncClose="true" @confirm="signUp"  ref="myModal"
 		:modalStyle="modalStyle" :title-style="{'margin-top': '10px','margin-bottom':'10px'}" 
 		:confirm-text="confirmMsg" :show-title="false" :title="''"  :mask-close-able="true" 
-		:confirmStyle="isSign?{'background-color':'#F5F5F5','color':'#AAAAAA'}:confirmBtnStyle">
+		:confirmStyle="isSign?'background-color：#F5F5F5;color:#AAAAAA':''">
 			<view class="slot-content">
 				<view class="sign-view-title">已连续签到{{totalSign}}天</view>
 				<view id="sign-view-content">
@@ -100,9 +100,7 @@
 				],
 				value: false,
 				modalStyle: {'background-color':'#898AFF'},
-				confirmBtnStyle: {
-					
-				},
+	
 				confirmColor: '#FFFFFF',
 				weekNames: ['星期一', '星期二','星期三', '星期四','星期五', '星期六', '星期日'],
 				taskList: [
